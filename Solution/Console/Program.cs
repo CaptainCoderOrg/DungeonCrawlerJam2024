@@ -1,4 +1,2 @@
-﻿using CaptainCoder.Dungeoneering.Model;
-
-Console.Clear();
+﻿Console.Clear();
 Console.WriteLine("Welcome to Adder!");
