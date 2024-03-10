@@ -5,6 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <_UnityProjectDir>$(SolutionDir)..\DC Jam 2024 Unity\Assets\Dependencies\Model.IO\</_UnityProjectDir>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,5 +17,18 @@
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj" />
   </ItemGroup>
+
+    <Target Name="CopyToUnity" AfterTargets="Build">
+      <ItemGroup>
+      <_FilesToCopy Include="$(TargetDir)Model.IO.*"/>
+    </ItemGroup>
+    <ItemGroup>
+
+    </ItemGroup>
+    <Message Text="_FilesToCopy: @(_FilesToCopy)" Importance="high"/>
+    <Message Text="Destination: @(_FilesToCopy->'$(_UnityProjectDir)%(RecursiveDir)%(Filename)%(Extension)')" Importance="high"/>
+    <Copy SourceFiles="@(_FilesToCopy)" DestinationFiles="@(_FilesToCopy->'$(_UnityProjectDir)%(RecursiveDir)%(Filename)%(Extension)')"/>
+  </Target>
+
 
 </Project>
