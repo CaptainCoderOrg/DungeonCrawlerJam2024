@@ -5,13 +5,22 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
-    <_UnityProjectDir>$(SolutionDir)..\DC Jam 2024 Unity\Assets\Dependencies\Model\</_UnityProjectDir>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <_UnityProjectDir>$(SolutionDir)..\DC Jam 2024 Unity\Assets\Dependencies\DungeonMap.IO\</_UnityProjectDir>
+
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+  </ItemGroup>
 
-  <Target Name="CopyToUnity" AfterTargets="Build">
+  <ItemGroup>
+    <ProjectReference Include="..\DungeonMap\DungeonMap.csproj" />
+  </ItemGroup>
+
+    <Target Name="CopyToUnity" AfterTargets="Build">
       <ItemGroup>
-      <_FilesToCopy Include="$(TargetDir)*"/>
+      <_FilesToCopy Include="$(TargetDir)DungeonMap.IO.*"/>
     </ItemGroup>
     <ItemGroup>
 
@@ -20,5 +29,6 @@
     <Message Text="Destination: @(_FilesToCopy->'$(_UnityProjectDir)%(RecursiveDir)%(Filename)%(Extension)')" Importance="high"/>
     <Copy SourceFiles="@(_FilesToCopy)" DestinationFiles="@(_FilesToCopy->'$(_UnityProjectDir)%(RecursiveDir)%(Filename)%(Extension)')"/>
   </Target>
+
 
 </Project>

@@ -1,6 +1,6 @@
 namespace CaptainCoder.Dungeoneering.Raylib;
 
-using CaptainCoder.Dungeoneering.Model.IO;
+using CaptainCoder.Dungeoneering.DungeonMap.IO;
 
 using Raylib_cs;
 

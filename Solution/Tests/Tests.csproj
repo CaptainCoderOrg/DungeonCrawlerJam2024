@@ -29,8 +29,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Console\Console.csproj" />
-    <ProjectReference Include="..\Model\Model.csproj" />
-    <ProjectReference Include="..\Model.IO\Model.IO.csproj" />
+    <ProjectReference Include="..\DungeonMap\DungeonMap.csproj" />
+    <ProjectReference Include="..\DungeonMap.IO\DungeonMap.IO.csproj" />
   </ItemGroup>
 
 </Project>

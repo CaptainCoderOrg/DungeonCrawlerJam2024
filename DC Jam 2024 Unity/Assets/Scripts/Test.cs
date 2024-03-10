@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using NaughtyAttributes;
-using CaptainCoder.Dungeoneering.Model.IO;
-using CaptainCoder.Dungeoneering.Model;
+using CaptainCoder.Dungeoneering.DungeonMap.IO;
+using CaptainCoder.Dungeoneering.DungeonMap;
 
 [CreateAssetMenu(fileName = "Map", menuName = "DCJam/MapData")]
 public class MapData : ScriptableObject

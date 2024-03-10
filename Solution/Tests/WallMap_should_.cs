@@ -1,7 +1,7 @@
 namespace Tests;
 
-using CaptainCoder.Dungeoneering.Model;
-using CaptainCoder.Dungeoneering.Model.IO;
+using CaptainCoder.Dungeoneering.DungeonMap;
+using CaptainCoder.Dungeoneering.DungeonMap.IO;
 
 using Shouldly;
 

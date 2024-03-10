@@ -1,1 +1,1 @@
-﻿global using CaptainCoder.Dungeoneering.Model;
+﻿global using CaptainCoder.Dungeoneering.DungeonMap;

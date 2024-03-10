@@ -1,4 +1,4 @@
-namespace CaptainCoder.Dungeoneering.Model;
+namespace CaptainCoder.Dungeoneering.DungeonMap;
 public record class Cursor(Position Position, Facing Facing);
 
 public static class CursorExtensions

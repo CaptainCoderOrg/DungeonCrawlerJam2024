@@ -1,4 +1,4 @@
-namespace CaptainCoder.Dungeoneering.Model;
+namespace CaptainCoder.Dungeoneering.DungeonMap;
 
 public record class TileEdge(Position Position, Facing Facing) : IEquatable<TileEdge>
 {

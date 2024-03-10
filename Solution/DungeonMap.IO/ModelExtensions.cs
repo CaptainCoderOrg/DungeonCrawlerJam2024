@@ -1,4 +1,4 @@
-﻿namespace CaptainCoder.Dungeoneering.Model.IO;
+﻿namespace CaptainCoder.Dungeoneering.DungeonMap.IO;
 
 using Newtonsoft.Json;
 

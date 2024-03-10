@@ -1,7 +1,7 @@
 
 using System.Collections.ObjectModel;
 
-namespace CaptainCoder.Dungeoneering.Model;
+namespace CaptainCoder.Dungeoneering.DungeonMap;
 
 public class WallMap()
 {

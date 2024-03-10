@@ -1,4 +1,4 @@
-namespace CaptainCoder.Dungeoneering.Model;
+namespace CaptainCoder.Dungeoneering.DungeonMap;
 
 public readonly record struct Position(int X, int Y);
 

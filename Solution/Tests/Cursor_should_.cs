@@ -1,6 +1,6 @@
 namespace Tests;
 
-using CaptainCoder.Dungeoneering.Model;
+using CaptainCoder.Dungeoneering.DungeonMap;
 
 using Shouldly;
 

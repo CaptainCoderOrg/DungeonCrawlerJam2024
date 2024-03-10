@@ -1,4 +1,4 @@
-namespace CaptainCoder.Dungeoneering.Model;
+namespace CaptainCoder.Dungeoneering.DungeonMap;
 using static WallType;
 public enum WallType
 {
