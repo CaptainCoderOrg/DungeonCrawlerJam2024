@@ -30,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Console\Console.csproj" />
     <ProjectReference Include="..\Model\Model.csproj" />
+    <ProjectReference Include="..\Model.IO\Model.IO.csproj" />
   </ItemGroup>
 
 </Project>

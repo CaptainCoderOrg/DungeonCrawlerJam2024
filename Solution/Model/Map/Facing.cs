@@ -1,0 +1,31 @@
+namespace CaptainCoder.Dungeoneering.Model;
+
+public enum Facing
+{
+    North,
+    East,
+    South,
+    West
+}
+
+public static class FacingExtensions
+{
+    public static Facing[] Values => [Facing.North, Facing.East, Facing.South, Facing.West];
+    public static Facing Rotate(this Facing facing) => facing switch
+    {
+        Facing.North => Facing.East,
+        Facing.East => Facing.South,
+        Facing.South => Facing.West,
+        Facing.West => Facing.North,
+        _ => throw new Exception($"Unknown Facing: {facing}"),
+    };
+
+    public static Facing RotateCounterClockwise(this Facing facing) => facing switch
+    {
+        Facing.North => Facing.West,
+        Facing.West => Facing.South,
+        Facing.South => Facing.East,
+        Facing.East => Facing.North,
+        _ => throw new Exception($"Unknown Facing: {facing}"),
+    };
+}
