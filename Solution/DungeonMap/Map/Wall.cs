@@ -17,4 +17,6 @@ public static class WallTypeExtensions
         SecretDoor => Solid,
         _ => throw new Exception($"Unknown wall type {current}"),
     };
+
+    public static bool IsPassable(this WallType wall) => wall is not Solid;
 }

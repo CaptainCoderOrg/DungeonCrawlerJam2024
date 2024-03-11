@@ -17,6 +17,11 @@ public class Dungeon()
     {
         Walls = walls;
     }
+
+    public bool IsPassable(Position position, Facing facing)
+    {
+        return !Walls.TryGetWall(position, facing, out WallType wall) || wall.IsPassable();
+    }
 }
 
 public record Tile(Position Position, TileWalls Walls);
