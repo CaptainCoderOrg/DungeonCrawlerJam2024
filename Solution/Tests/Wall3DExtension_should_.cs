@@ -1,7 +1,5 @@
 namespace Tests;
 
-using System.Numerics;
-
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.Modeling;
 
@@ -37,7 +35,7 @@ public class WallExtensions_should_
 
             [
                 new TileEdge(new Position(5, 5), Facing.North),
-                new WallBase(new Point2D(5 -0.5f, 5 - HalfCellSize + HalfThickness), new Point2D(5 + 0.5f, 5 - HalfCellSize - HalfThickness)),
+                new WallBase(new Point2D(5 - 0.5f, 5 - HalfCellSize + HalfThickness), new Point2D(5 + 0.5f, 5 - HalfCellSize - HalfThickness)),
             ],
             [
                 new TileEdge(new Position(2, 3), Facing.South),
@@ -70,8 +68,14 @@ public class WallExtensions_should_
                 new WallBase(new Point2D(0, 0), new Point2D(1, 1)),
                 (Point3D[])
                 [
-                    new(0, 0, 0), new (0, 0, 1), new (0, 1, 1), new (0, 1, 0),
-                    new(1, 0, 0), new (1, 0, 1), new (1, 1, 1), new (1, 1, 0),
+                    new(0, 0, 0),
+                    new(0, 0, 1),
+                    new(0, 1, 1),
+                    new(0, 1, 0),
+                    new(1, 0, 0),
+                    new(1, 0, 1),
+                    new(1, 1, 1),
+                    new(1, 1, 0),
                 ],
                 (int[][])
                 [
@@ -87,8 +91,14 @@ public class WallExtensions_should_
                 new WallBase(new Point2D(3, 3), new Point2D(4, 4)),
                 (Point3D[])
                 [
-                    new(3, 0, 3), new (3, 0, 4), new (3, 1, 4), new (3, 1, 3),
-                    new(4, 0, 3), new (4, 0, 4), new (4, 1, 4), new (4, 1, 3),
+                    new(3, 0, 3),
+                    new(3, 0, 4),
+                    new(3, 1, 4),
+                    new(3, 1, 3),
+                    new(4, 0, 3),
+                    new(4, 0, 4),
+                    new(4, 1, 4),
+                    new(4, 1, 3),
                 ],
                 (int[][])
                 [

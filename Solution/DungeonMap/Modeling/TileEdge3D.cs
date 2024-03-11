@@ -36,15 +36,15 @@ public static class WallExtensions
     {
         return (
         [
-            new (wallBase.BaseA.X, 0, wallBase.BaseA.Y),
-            new (wallBase.BaseA.X, 0, wallBase.BaseB.Y),
-            new (wallBase.BaseA.X, extrudeHeight, wallBase.BaseB.Y),
-            new (wallBase.BaseA.X, extrudeHeight, wallBase.BaseA.Y),
+            new(wallBase.BaseA.X, 0, wallBase.BaseA.Y),
+            new(wallBase.BaseA.X, 0, wallBase.BaseB.Y),
+            new(wallBase.BaseA.X, extrudeHeight, wallBase.BaseB.Y),
+            new(wallBase.BaseA.X, extrudeHeight, wallBase.BaseA.Y),
 
-            new (wallBase.BaseB.X, 0, wallBase.BaseA.Y),
-            new (wallBase.BaseB.X, 0, wallBase.BaseB.Y),
-            new (wallBase.BaseB.X, extrudeHeight, wallBase.BaseB.Y),
-            new (wallBase.BaseB.X, extrudeHeight, wallBase.BaseA.Y),
+            new(wallBase.BaseB.X, 0, wallBase.BaseA.Y),
+            new(wallBase.BaseB.X, 0, wallBase.BaseB.Y),
+            new(wallBase.BaseB.X, extrudeHeight, wallBase.BaseB.Y),
+            new(wallBase.BaseB.X, extrudeHeight, wallBase.BaseA.Y),
         ],
 
         // Face vertices must be listed in clockwise order
