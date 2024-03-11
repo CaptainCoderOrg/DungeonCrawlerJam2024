@@ -1,25 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Newtonsoft.Json;
 using NaughtyAttributes;
 using CaptainCoder.Dungeoneering.DungeonMap.IO;
 using CaptainCoder.Dungeoneering.DungeonMap;
+using CaptainCoder.Dungeoneering.DungeonMap.Unity;
+using UnityEngine.ProBuilder;
 
 [CreateAssetMenu(fileName = "Map", menuName = "DCJam/MapData")]
 public class MapData : ScriptableObject
 {
     [field: SerializeField]
     public TextAsset WallData { get; private set; }
+    [field: SerializeField]
+    public Material WallMaterial { get; private set; }
 
     [Button("Load Data")]
     public void DoThing()
     {
         WallMap data = JsonExtensions.LoadModel<WallMap>(WallData.text);
-        foreach (var el in data.Map)
-        {
-            Debug.Log(el.Key + ": " + el.Value);
-        }
+        ProBuilderMesh mesh = MapGeneratorExtensions.ToProBuilderMesh(data);
+        mesh.SetMaterial(mesh.faces, WallMaterial);
+        mesh.name = "New Map";
+        // mesh.Refresh();
+        // mesh.ToMesh();
     }
 
 }
