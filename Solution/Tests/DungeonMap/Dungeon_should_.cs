@@ -6,7 +6,7 @@ using Shouldly;
 
 public class Dungeon_should_
 {
-    public static Dungeon SimpleSquareDungeon 
+    public static Dungeon SimpleSquareDungeon
     {
         get
         {
@@ -19,7 +19,7 @@ public class Dungeon_should_
         }
     }
 
-    public static Dungeon TwoByTwoRoom 
+    public static Dungeon TwoByTwoRoom
     {
         get
         {

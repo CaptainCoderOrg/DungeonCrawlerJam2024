@@ -28,4 +28,13 @@ public static class FacingExtensions
         Facing.East => Facing.North,
         _ => throw new Exception($"Unknown Facing: {facing}"),
     };
+
+    public static Facing Opposite(this Facing facing) => facing switch
+    {
+        Facing.North => Facing.South,
+        Facing.West => Facing.East,
+        Facing.South => Facing.North,
+        Facing.East => Facing.West,
+        _ => throw new Exception($"Unknown Facing: {facing}"),
+    };
 }

@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unity", "Unity", "{61FD3DF2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapGenerator", "Unity\MapGenerator\MapGenerator.csproj", "{5BDDE8E6-85F3-4737-82CF-779DC9D2492B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonCrawler", "DungeonCrawler\DungeonCrawler.csproj", "{BBD54189-D9C1-4A65-B6D2-DA71AFE413CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{5BDDE8E6-85F3-4737-82CF-779DC9D2492B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BDDE8E6-85F3-4737-82CF-779DC9D2492B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BDDE8E6-85F3-4737-82CF-779DC9D2492B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBD54189-D9C1-4A65-B6D2-DA71AFE413CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBD54189-D9C1-4A65-B6D2-DA71AFE413CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBD54189-D9C1-4A65-B6D2-DA71AFE413CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBD54189-D9C1-4A65-B6D2-DA71AFE413CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5BDDE8E6-85F3-4737-82CF-779DC9D2492B} = {61FD3DF2-1C29-4E6A-9206-6F37816124BE}
