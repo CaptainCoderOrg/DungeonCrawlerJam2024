@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\DungeonMap\DungeonMap.csproj" />
+    <ProjectReference Include="..\..\DungeonMap.IO\DungeonMap.IO.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +39,12 @@
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>$(_UnityManagedPath)\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="NaughtyAttributes.Core">
+      <HintPath>$(_UnityManagedPath)\NaughtyAttributes.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NaughtyAttributes.Editor">
+      <HintPath>$(_UnityManagedPath)\NaughtyAttributes.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
 

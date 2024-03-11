@@ -12,8 +12,12 @@ public class Dungeon()
         TileWalls walls = new(north, east, south, west);
         return new Tile(position, walls);
     }
+
+    public Dungeon(WallMap walls) : this()
+    {
+        Walls = walls;
+    }
 }
 
 public record Tile(Position Position, TileWalls Walls);
-
 public record TileWalls(WallType North, WallType East, WallType South, WallType West);
