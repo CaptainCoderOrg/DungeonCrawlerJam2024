@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61ad5b3917106774ab29f7160fbb3e76, type: 3}
   m_Name: Map
   m_EditorClassIdentifier: 
-  <WallData>k__BackingField: {fileID: 4900000, guid: 1c7560e0d1888c849bf3053ba03a7a11, type: 3}
+  <WallData>k__BackingField: {fileID: 4900000, guid: 0ba9b27bc15b6be48ab79c24f010eee1, type: 3}
   <WallMaterial>k__BackingField: {fileID: 2100000, guid: 89a0b3febbe6cb5458eb53575c915e98, type: 2}
