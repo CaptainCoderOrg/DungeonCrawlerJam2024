@@ -2,6 +2,7 @@ namespace CaptainCoder.Dungeoneering.DungeonMap;
 using static WallType;
 public enum WallType
 {
+    None,
     Solid,
     Door,
     SecretDoor,
