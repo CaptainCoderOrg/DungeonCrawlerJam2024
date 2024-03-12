@@ -5,7 +5,7 @@ using CaptainCoder.Dungeoneering.Player;
 
 using Shouldly;
 
-public class PlayerControls_should_
+public class PlayerControls_should
 {
     public static Dungeon NoWalls { get; } = new();
     public static Dungeon SimpleSquareDungeon

@@ -5,7 +5,7 @@ using CaptainCoder.Dungeoneering.DungeonMap.IO;
 
 using Shouldly;
 
-public class WallMap_should_
+public class WallMap_should
 {
     [Fact]
     public void not_update_count_when_setting_matching_shared_wall()

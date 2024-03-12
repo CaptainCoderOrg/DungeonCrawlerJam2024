@@ -4,7 +4,7 @@ using CaptainCoder.Dungeoneering.DungeonMap;
 
 using Shouldly;
 
-public class TileEdge_should_
+public class TileEdge_should
 {
 
     [Fact]

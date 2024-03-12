@@ -4,7 +4,7 @@ using CaptainCoder.Dungeoneering.DungeonMap;
 
 using Shouldly;
 
-public class Cursor_should_
+public class Cursor_should
 {
     [Theory]
     [InlineData(Facing.North, Facing.East)]

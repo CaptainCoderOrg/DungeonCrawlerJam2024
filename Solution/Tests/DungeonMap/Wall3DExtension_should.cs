@@ -7,7 +7,7 @@ using Shouldly;
 
 using static CaptainCoder.Dungeoneering.Modeling.WallExtensions;
 
-public class WallExtensions_should_
+public class WallExtensions_should
 {
     public const float HalfCellSize = DefaultCellSize * 0.5f;
     public const float HalfThickness = DefaultThickness * 0.5f;
