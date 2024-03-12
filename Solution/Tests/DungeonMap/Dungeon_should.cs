@@ -4,7 +4,7 @@ using CaptainCoder.Dungeoneering.DungeonMap;
 
 using Shouldly;
 
-public class Dungeon_should_
+public class Dungeon_should
 {
     public static Dungeon SimpleSquareDungeon
     {
