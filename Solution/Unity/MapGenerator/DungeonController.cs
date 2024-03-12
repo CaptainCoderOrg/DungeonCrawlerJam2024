@@ -13,6 +13,7 @@ public class DungeonController : MonoBehaviour
     public GameObject TileParent { get; private set; } = null!;
     [field: SerializeField]
     public DungeonTile TilePrefab { get; private set; } = null!;
+    public Dungeon Dungeon => _dungeon;
     private Dungeon _dungeon = null!;
 
     void Awake()
