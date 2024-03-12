@@ -43,9 +43,6 @@
     <Reference Include="NaughtyAttributes.Core">
       <HintPath>$(_UnityManagedPath)\NaughtyAttributes.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NaughtyAttributes.Editor">
-      <HintPath>$(_UnityManagedPath)\NaughtyAttributes.Editor.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

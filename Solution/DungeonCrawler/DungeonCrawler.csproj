@@ -15,14 +15,17 @@
 
   <Target Name="CopyToUnity" AfterTargets="Build">
       <ItemGroup>
-      <_FilesToCopy Include="$(TargetDir)\DungeonMap.*" />
+      <_FilesToCopy Include="$(TargetDir)\DungeonCrawler.*" />
     </ItemGroup>
     <ItemGroup>
 
     </ItemGroup>
     <Message Text="_FilesToCopy: @(_FilesToCopy)" Importance="high" />
     <Message Text="Destination: @(_FilesToCopy->'$(_UnityProjectDir)\%(RecursiveDir)%(Filename)%(Extension)')" Importance="high" />
-    <Copy SourceFiles="@(_FilesToCopy)" DestinationFiles="@(_FilesToCopy->'$(_UnityProjectDir)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy 
+      SourceFiles="@(_FilesToCopy)" 
+      DestinationFiles="@(_FilesToCopy->'$(_UnityProjectDir)\%(RecursiveDir)%(Filename)%(Extension)')" 
+      SkipUnchangedFiles="true" />
   </Target>
 
 </Project>

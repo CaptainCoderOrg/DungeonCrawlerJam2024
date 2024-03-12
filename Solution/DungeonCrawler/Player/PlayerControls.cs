@@ -3,6 +3,9 @@ using CaptainCoder.Dungeoneering.DungeonMap;
 
 public static class PlayerControls
 {
+    /// <summary>
+    /// Given a dungeon and a PlayerView performs the specified MovementAction.
+    /// </summary>
     public static PlayerView Move(this Dungeon dungeon, PlayerView view, MovementAction action)
     {
         return action switch
