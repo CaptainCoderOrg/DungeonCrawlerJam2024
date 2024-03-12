@@ -196,7 +196,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 254141901}
-  - component: {fileID: 254141900}
+  - component: {fileID: 254141902}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -204,20 +204,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &254141900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 254141899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -192765389, guid: e64a03241818c9243b61f3970d6a44b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <DungeonController>k__BackingField: {fileID: 584975345}
-  <PlayerViewController>k__BackingField: {fileID: 364136685}
 --- !u!4 &254141901
 Transform:
   m_ObjectHideFlags: 0
@@ -236,6 +222,20 @@ Transform:
   - {fileID: 1200599026}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &254141902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254141899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -192765389, guid: b90570251803dc74fbdd252da788d764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <DungeonController>k__BackingField: {fileID: 584975345}
+  <PlayerViewController>k__BackingField: {fileID: 364136685}
 --- !u!1 &364136683
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 364136683}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1973927087, guid: e64a03241818c9243b61f3970d6a44b5, type: 3}
+  m_Script: {fileID: 1973927087, guid: b90570251803dc74fbdd252da788d764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &584975344
@@ -555,15 +555,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1200599024}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 516584988, guid: e64a03241818c9243b61f3970d6a44b5, type: 3}
+  m_Script: {fileID: 516584988, guid: b90570251803dc74fbdd252da788d764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <InputMapping>k__BackingField: {fileID: 11400000, guid: f69ee71cd1d87f24697e618ab336af98, type: 2}
+  <InputMapping>k__BackingField: {fileID: 11400000, guid: 2218698afa4a1d74a9c2998799ad0f3a, type: 2}
   OnMovementAction:
     m_PersistentCalls:
       m_Calls:
-      - {m_Target: {fileID: 254141900}, m_TargetAssemblyTypeName: CaptainCoder.Dungeoneering.Unity.CrawlingModeController, DungeonCrawlerUnity, m_MethodName: HandleMovement, m_Mode: 0, m_Arguments: {m_ObjectArgument: {fileID: 0}, m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, m_IntArgument: 0, m_FloatArgument: 0, m_StringArgument: , m_BoolArgument: 0}, m_CallState: 2}
-    m_CallsDirty: 1
+      - m_Target: {fileID: 254141902}
+        m_TargetAssemblyTypeName: CaptainCoder.Dungeoneering.Unity.CrawlingModeController,
+          DungeonCrawlerUnity
+        m_MethodName: HandleMovement
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1821339697
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,8 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Console\Console.csproj" />
-    <ProjectReference Include="..\DungeonMap\DungeonMap.csproj" />
-    <ProjectReference Include="..\DungeonMap.IO\DungeonMap.IO.csproj" />
+    <ProjectReference Include="..\DungeonCrawler.IO\DungeonCrawler.IO.csproj" />
     <ProjectReference Include="..\DungeonCrawler\DungeonCrawler.csproj" />
   </ItemGroup>
 

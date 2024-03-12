@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <_UnityProjectDir>$(ProjectDir)..\..\DC Jam 2024 Unity\Assets\Dependencies\DungeonMap.IO</_UnityProjectDir>
+    <_UnityProjectDir>$(ProjectDir)..\..\DC Jam 2024 Unity\Assets\Dependencies\DungeonCrawler.IO</_UnityProjectDir>
 
   </PropertyGroup>
 
@@ -15,12 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DungeonMap\DungeonMap.csproj" />
+    <ProjectReference Include="..\DungeonCrawler\DungeonCrawler.csproj" />
   </ItemGroup>
 
     <Target Name="CopyToUnity" AfterTargets="Build">
       <ItemGroup>
-      <_FilesToCopy Include="$(TargetDir)\DungeonMap.IO.*"/>
+      <_FilesToCopy Include="$(TargetDir)\DungeonCrawler.IO.*"/>
     </ItemGroup>
     <ItemGroup>
 

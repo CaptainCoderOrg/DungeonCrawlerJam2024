@@ -9,19 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1271847969, guid: e64a03241818c9243b61f3970d6a44b5, type: 3}
-  m_Name: NumPadControls
+  m_Script: {fileID: 1271847969, guid: b90570251803dc74fbdd252da788d764, type: 3}
+  m_Name: UserInputMapping
   m_EditorClassIdentifier: 
   <MovementActions>k__BackingField:
-  - Key: 264
+  - Key: 119
     Action: 0
-  - Key: 258
+  - Key: 115
     Action: 1
-  - Key: 260
+  - Key: 113
     Action: 2
-  - Key: 262
+  - Key: 101
     Action: 3
-  - Key: 263
+  - Key: 97
     Action: 4
-  - Key: 265
+  - Key: 100
     Action: 5
