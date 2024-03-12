@@ -5,13 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <_UnityProjectDir>$(ProjectDir)..\..\DC Jam 2024 Unity\Assets\Dependencies\DungeonCrawler</_UnityProjectDir>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NLua" Version="1.7.2" />
-  </ItemGroup>
-
 
   <Target Name="CopyToUnity" AfterTargets="Build">
       <ItemGroup>

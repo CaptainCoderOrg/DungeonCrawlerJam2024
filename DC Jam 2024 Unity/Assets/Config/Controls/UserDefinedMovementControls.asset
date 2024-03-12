@@ -9,19 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1271847969, guid: b90570251803dc74fbdd252da788d764, type: 3}
-  m_Name: UserInputMapping
+  m_Script: {fileID: 1271847969, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
+  m_Name: UserDefinedMovementControls
   m_EditorClassIdentifier: 
   <MovementActions>k__BackingField:
   - Key: 119
     Action: 0
+  - Key: 97
+    Action: 4
   - Key: 115
     Action: 1
+  - Key: 100
+    Action: 5
   - Key: 113
     Action: 2
   - Key: 101
     Action: 3
-  - Key: 97
-    Action: 4
-  - Key: 100
-    Action: 5
