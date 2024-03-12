@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: -10131928, guid: 01b633ee5593e564bb9e7943e41355d5, type: 3}
   m_Name: Test Dungeon Data
   m_EditorClassIdentifier: 
-  <WallMapJson>k__BackingField: {fileID: 4900000, guid: 9eef9ee6e8904ac46ae39d0d8293a91b, type: 3}
+  <WallMapJson>k__BackingField: {fileID: 4900000, guid: 65868023f11506e41a3376e9804934bb, type: 3}
