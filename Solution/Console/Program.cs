@@ -1,13 +1,30 @@
 ﻿using NLua;
+using CaptainCoder.Dungeoneering.DungeonMap;
 
 Console.Clear();
-
-Position pos = new(5, 7);
-
+Position pos = new(0, 0);
 Lua state = new();
 state["pos"] = pos;
-var res = state.DoString("pos.X = 6 return pos")[0];
+state.LoadCLRPackage();
+var res = state.DoString(
+    """
+    import("System")
+    --import("CaptainCoder.Dungeoneering.DungeonMap.Position")
+    --test = Position(0, 0)
+    test = Position
+    pos.X = 6 
+    return test
+    """
+)[0];
 Console.WriteLine(res);
 Console.WriteLine(pos);
 
-record Position(int X, int Y);
+public class SomeClass
+{
+
+    public SomeClass(int X)
+    {
+
+    }
+
+}

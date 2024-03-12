@@ -2,10 +2,10 @@ namespace CaptainCoder.Dungeoneering.DungeonMap;
 
 public enum Facing
 {
-    North,
-    East,
-    South,
-    West
+    North = 0,
+    East = 1,
+    South = 2,
+    West = 3,
 }
 
 public static class FacingExtensions
