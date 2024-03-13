@@ -32,6 +32,7 @@
     <ProjectReference Include="..\Console\Console.csproj" />
     <ProjectReference Include="..\DungeonCrawler.IO\DungeonCrawler.IO.csproj" />
     <ProjectReference Include="..\DungeonCrawler\DungeonCrawler.csproj" />
+    <ProjectReference Include="..\DungeonCrawler.Scripting\DungeonCrawler.Scripting.csproj" />
   </ItemGroup>
 
 </Project>

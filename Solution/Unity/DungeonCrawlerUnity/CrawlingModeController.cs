@@ -1,3 +1,4 @@
+using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.DungeonMap.Unity;
 using CaptainCoder.Dungeoneering.Player;
@@ -23,7 +24,7 @@ public class CrawlingModeController : MonoBehaviour, ITileEventContext
         }
     }
 
-    public Dungeon Dungeon { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public Dungeon Dungeon { get; set; } = default!;
 
     public void HandleMovement(MovementAction action)
     {

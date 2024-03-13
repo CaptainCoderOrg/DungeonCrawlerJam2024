@@ -12,7 +12,8 @@
     "precompiledReferences": [
         "DungeonCrawler.dll",
         "DungeonCrawlerUnity.dll",
-        "nunit.framework.dll"
+        "nunit.framework.dll",
+        "DungeonCrawler.Scripting.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

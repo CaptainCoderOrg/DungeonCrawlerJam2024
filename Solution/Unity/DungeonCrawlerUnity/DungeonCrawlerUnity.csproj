@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\DungeonCrawler.IO\DungeonCrawler.IO.csproj" />
+    <ProjectReference Include="..\..\DungeonCrawler.Scripting\DungeonCrawler.Scripting.csproj" />
     <ProjectReference Include="..\..\DungeonCrawler\DungeonCrawler.csproj" />
     <ProjectReference Include="..\MapGenerator\MapGenerator.csproj" />
   </ItemGroup>

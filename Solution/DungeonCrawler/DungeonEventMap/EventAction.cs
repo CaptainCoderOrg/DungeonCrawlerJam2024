@@ -1,6 +1,7 @@
+namespace CaptainCoder.Dungeoneering.DungeonMap;
+
 using CaptainCoder.Dungeoneering.Player;
 
-namespace CaptainCoder.Dungeoneering.DungeonMap;
 public abstract record EventAction
 {
     public abstract void Invoke(ITileEventContext context);
