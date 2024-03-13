@@ -52,7 +52,7 @@ public class DungeonEventMap_should
         DungeonEventMap map = new();
         Position pos = new(0, 0);
         map.AddEvent(pos, DamageEvent);
-        
+
         IReadOnlyDictionary<Position, List<TileEvent>> events = map.Events;
 
         events[pos].Count.ShouldBe(1);
@@ -109,11 +109,11 @@ public class DungeonEventMap_should
         JavaScriptEventAction event0 = new("event0");
         JavaScriptEventAction event1 = new("event1");
         JavaScriptEventAction event2 = new("event2");
-        Position pos0 = new(0,0);
-        Position pos1 = new(0,0);
+        Position pos0 = new(0, 0);
+        Position pos1 = new(0, 0);
         map.AddEvent(pos0, new TileEvent(EventTrigger.OnEnter, event0));
         map.AddEvent(pos0, new TileEvent(EventTrigger.OnExit, event1));
-        map.AddEvent(pos1, new TileEvent(EventTrigger.OnEnter, event2)); 
+        map.AddEvent(pos1, new TileEvent(EventTrigger.OnEnter, event2));
 
         string json = map.ToJson();
         DungeonEventMap restored = JsonExtensions.LoadModel<DungeonEventMap>(json);
