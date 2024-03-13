@@ -8,9 +8,9 @@ using Shouldly;
 
 public class DungeonEventMap_should
 {
-    static readonly MockEventAction TeleportPlayerMock = new("Teleport Player");
+    static readonly JavaScriptEventAction TeleportPlayerMock = new("Teleport Player");
     static readonly TileEvent TeleportEvent = new(EventTrigger.OnEnter, TeleportPlayerMock);
-    static readonly MockEventAction DamagePlayerMock = new("Damage Player Mock");
+    static readonly JavaScriptEventAction DamagePlayerMock = new("Damage Player Mock");
     static readonly TileEvent DamageEvent = new(EventTrigger.OnExit, DamagePlayerMock);
 
     public static IEnumerable<object[]> AddEventsAtPositionData => [
@@ -116,9 +116,6 @@ public class DungeonEventMap_should
         map.AddEvent(pos1, new TileEvent(EventTrigger.OnEnter, event2)); 
 
         string json = map.ToJson();
-        /*
-        "{\"Events\":{\"Position { X = 0, Y = 0 }\":[{\"Trigger\":0,\"OnTrigger\":{\"Script\":\"event0\"}},{\"Trigger\":1,\"OnTrigger\":{\"Script\":\"event1\"}},{\"Trigger\":0,\"OnTrigger\":{\"Script\":\"event2\"}}]}}"
-        */
         DungeonEventMap restored = JsonExtensions.LoadModel<DungeonEventMap>(json);
 
         List<TileEvent> expectedEventsAtPos0 = map.EventsAt(pos0);
@@ -130,11 +127,4 @@ public class DungeonEventMap_should
         restored.EventsAt(pos1).ShouldBeSubsetOf(expectedEventsAtPos1);
     }
 
-}
-
-internal record MockEventAction(string Identifier) : EventAction
-{
-    public override void Invoke(ITileEventContext context)
-    {
-    }
 }

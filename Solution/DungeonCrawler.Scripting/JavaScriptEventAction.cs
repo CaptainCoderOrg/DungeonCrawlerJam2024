@@ -3,12 +3,11 @@
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.Player;
 
-
 using Jint;
 
 using Newtonsoft.Json;
 
-public record JavaScriptEventAction(string Script) : EventAction
+public record JavaScriptEventAction(string Script)
 {
     private static readonly string Prelude = $$$"""
         const Facing = { 
@@ -25,7 +24,7 @@ public record JavaScriptEventAction(string Script) : EventAction
             context.View = { Position: { X: x, Y: y }, Facing: f };
         }
         """;
-    public override void Invoke(ITileEventContext context)
+    public void Invoke(ITileEventContext context)
     {
         Engine engine = new();
         string json = context.ToJson();

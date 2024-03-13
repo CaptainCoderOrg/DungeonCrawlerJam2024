@@ -2,6 +2,7 @@ using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.DungeonMap.Unity;
 using CaptainCoder.Dungeoneering.Player;
 using CaptainCoder.Dungeoneering.Player.Unity;
+using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 
 using UnityEngine;
 
