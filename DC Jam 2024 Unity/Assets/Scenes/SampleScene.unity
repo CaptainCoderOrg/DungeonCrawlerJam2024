@@ -298,7 +298,12 @@ MonoBehaviour:
   m_Script: {fileID: 1867413144, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Script>k__BackingField: context.SetPlayerPosition(5, 7)
+  Script: 'context.SetPlayerPosition(5, 7)
+
+    context.SetPlayerFacing(South)
+
+    context.SetPlayerView(4,
+    3, West)'
   <Context>k__BackingField: {fileID: 254141902}
   OnResult:
     m_PersistentCalls:

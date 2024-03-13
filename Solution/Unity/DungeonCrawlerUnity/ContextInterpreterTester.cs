@@ -7,8 +7,9 @@ namespace CaptainCoder.Dungeoneering.Unity;
 
 public class ContextInterpreterTester : MonoBehaviour
 {
+    [TextArea]
     [field: SerializeField]
-    public string Script { get; private set; } = string.Empty;
+    public string Script = string.Empty;
     [field: SerializeField]
     public CrawlingModeController? Context { get; private set; }
 
@@ -19,7 +20,6 @@ public class ContextInterpreterTester : MonoBehaviour
         if (Context is not null)
         {
             Debug.Log($"Executing Lua: {Script}");
-            Console.WriteLine($"Executing Lua: {Script}");
             Interpreter.ExecLua(Script, Context);
             OnResult?.Invoke($"Script executed");
         }
