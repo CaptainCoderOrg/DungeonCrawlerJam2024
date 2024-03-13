@@ -16,7 +16,7 @@ public class InterpreterTester : MonoBehaviour
     {
         Debug.Log($"Executing Lua: {Script}");
         Console.WriteLine($"Executing Lua: {Script}");
-        object result = Interpreter.EvalLua<object>(Script);
+        object result = Interpreter.EvalRawLua<object>(Script);
         Debug.Log($"Lua Interpreter returned: {result}");
         Console.WriteLine($"Lua Interpreter returned: {result}");
         OnResult?.Invoke($"Result: {result}");

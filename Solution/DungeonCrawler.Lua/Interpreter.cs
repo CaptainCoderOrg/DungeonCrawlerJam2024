@@ -1,3 +1,4 @@
+using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.Scripting;
 
 using MoonSharp.Interpreter;
@@ -13,13 +14,15 @@ public static class Interpreter
     {
         Initialize();
         Script lua = new();
-        DynValue dynContext = UserData.Create(new LuaContext(context));
-        lua.Globals.Set("context", dynContext);
+        lua.Globals.Set("context", UserData.Create(new LuaContext(context)));
+        lua.Globals[Facing.North.ToString()] = (int)Facing.North;
+        lua.Globals[Facing.East.ToString()] = (int)Facing.East;
+        lua.Globals[Facing.South.ToString()] = (int)Facing.South;
+        lua.Globals[Facing.West.ToString()] = (int)Facing.West;
         return lua.DoString(script);
     }
-    public static void ExecLua(string script) => EvalLua(script);
-    public static T EvalLua<T>(string script) => EvalLua(script).ToObject<T>();
-    private static DynValue EvalLua(string script)
+    public static T EvalRawLua<T>(string script) => EvalRawLua(script).ToObject<T>();
+    private static DynValue EvalRawLua(string script)
     {
         Initialize();
         Script lua = new();

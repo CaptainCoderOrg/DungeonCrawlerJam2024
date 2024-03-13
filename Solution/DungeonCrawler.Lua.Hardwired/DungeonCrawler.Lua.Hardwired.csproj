@@ -8,10 +8,22 @@
     <PackageReference Include="MoonSharp" Version="2.0.0" />
   </ItemGroup>
 
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
+    
   </PropertyGroup>
+
+  <Target Name="UpdateLuaInitializer" AfterTargets="Build">
+    <!-- 
+      This builds LuaInitializer.cs which modifies DungeonCrawler.Lua which is a
+      dependency of this project. This is a cyclical dependency. However, this
+      should be sufficient *most* of the time. Essentially, running build twice
+      should resolve the problem. There is likely a way to detect when this should
+      be run.
+    -->
+    <Exec Command="dotnet $(TargetDir)$(TargetFileName)" />
+    <Exec Command=".\repl\MoonSharp.exe -W hardwired.lua ..\DungeonCrawler.Lua\LuaInitializer.cs --internals --class:LuaInitializer --namespace:CaptainCoder.Dungeoneering.Scripting" />
+  </Target>
 
 </Project>

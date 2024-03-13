@@ -13,7 +13,7 @@ public class LuaInterpreter_should
     [Fact]
     public void interop_with_LuaAPI()
     {
-        Interpreter.EvalLua<int>("return LuaAPI:Sum(5, 7)").ShouldBe(12);
+        Interpreter.EvalRawLua<int>("return LuaAPI:Sum(5, 7)").ShouldBe(12);
     }
 
     [Fact]
@@ -24,6 +24,43 @@ public class LuaInterpreter_should
         context.SetPlayerPosition(5, 7)
         """, context);
         context.View.ShouldBe(new PlayerView(new Position(5, 7), Facing.North));
+    }
+
+    [Theory]
+    [InlineData(Facing.North)]
+    [InlineData(Facing.East)]
+    [InlineData(Facing.South)]
+    [InlineData(Facing.West)]
+    public void set_player_facing(Facing facing)
+    {
+        IScriptContext context = new TestContext();
+        Interpreter.ExecLua($"""
+        context.SetPlayerFacing({facing})
+        """, context);
+        context.View.ShouldBe(new PlayerView(new Position(0, 0), facing));
+    }
+
+    [Fact]
+    public void set_player_view()
+    {
+        IScriptContext context = new TestContext();
+        Interpreter.ExecLua("""
+        context.SetPlayerView(3, 4, East)
+        """, context);
+        context.View.ShouldBe(new PlayerView(new Position(3, 4), Facing.East));
+    }
+
+    [Fact]
+    public void have_access_to_player_view()
+    {
+        IScriptContext context = new TestContext();
+        context.View = new PlayerView(new Position(5, 7), Facing.East);
+
+        int result = Interpreter.EvalLua<int>("""
+        return context.PlayerView.Position.X
+        """, context);
+
+        result.ShouldBe(5);
     }
 }
 
