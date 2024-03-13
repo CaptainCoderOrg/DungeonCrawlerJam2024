@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonCrawlerUnity", "Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonCrawler.Scripting", "DungeonCrawler.Scripting\DungeonCrawler.Scripting.csproj", "{F05F025A-BD8D-4139-9CE2-F8BDEC0D090D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonCrawler.IO", "DungeonCrawler.IO\DungeonCrawler.IO.csproj", "{02F36858-A571-4B8C-8240-A52AC6AB0322}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{F05F025A-BD8D-4139-9CE2-F8BDEC0D090D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F05F025A-BD8D-4139-9CE2-F8BDEC0D090D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F05F025A-BD8D-4139-9CE2-F8BDEC0D090D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02F36858-A571-4B8C-8240-A52AC6AB0322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02F36858-A571-4B8C-8240-A52AC6AB0322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02F36858-A571-4B8C-8240-A52AC6AB0322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02F36858-A571-4B8C-8240-A52AC6AB0322}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5BDDE8E6-85F3-4737-82CF-779DC9D2492B} = {61FD3DF2-1C29-4E6A-9206-6F37816124BE}

@@ -16,22 +16,19 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DungeonCrawler\DungeonCrawler.csproj" />
+    <ProjectReference Include="..\DungeonCrawler.Scripting\DungeonCrawler.Scripting.csproj" />
   </ItemGroup>
 
     <Target Name="CopyToUnity" AfterTargets="Build">
       <ItemGroup>
-      <_FilesToCopy Include="$(TargetDir)\DungeonCrawler.IO.*"/>
+      <_FilesToCopy Include="$(TargetDir)\DungeonCrawler.IO.*" />
     </ItemGroup>
     <ItemGroup>
 
     </ItemGroup>
-    <Message Text="_FilesToCopy: @(_FilesToCopy)" Importance="high"/>
-    <Message Text="Destination: @(_FilesToCopy->'$(_UnityProjectDir)\%(RecursiveDir)%(Filename)%(Extension)')" Importance="high"/>
-    <Copy 
-      SourceFiles="@(_FilesToCopy)" 
-      DestinationFiles="@(_FilesToCopy->'$(_UnityProjectDir)\%(RecursiveDir)%(Filename)%(Extension)')"
-      SkipUnchangedFiles="true"
-      />
+    <Message Text="_FilesToCopy: @(_FilesToCopy)" Importance="high" />
+    <Message Text="Destination: @(_FilesToCopy->'$(_UnityProjectDir)\%(RecursiveDir)%(Filename)%(Extension)')" Importance="high" />
+    <Copy SourceFiles="@(_FilesToCopy)" DestinationFiles="@(_FilesToCopy->'$(_UnityProjectDir)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
   </Target>
 
 

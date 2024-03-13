@@ -1,2 +1,2 @@
 namespace CaptainCoder.Dungeoneering.DungeonMap;
-public record TileEvent(string Name, EventTrigger Trigger, EventAction OnTrigger);
+public record TileEvent(EventTrigger Trigger, EventAction OnTrigger);
