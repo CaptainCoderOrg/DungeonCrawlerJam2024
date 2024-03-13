@@ -246,6 +246,7 @@ GameObject:
   m_Component:
   - component: {fileID: 323774631}
   - component: {fileID: 323774630}
+  - component: {fileID: 323774632}
   m_Layer: 0
   m_Name: ScriptTest
   m_TagString: Untagged
@@ -268,19 +269,7 @@ MonoBehaviour:
   <Script>k__BackingField: return LuaAPI:Sum(2,4)
   OnResult:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1356798811}
-        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-        m_MethodName: set_text
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!4 &323774631
 Transform:
   m_ObjectHideFlags: 0
@@ -297,6 +286,35 @@ Transform:
   - {fileID: 1814898030}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &323774632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323774629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1867413144, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Script>k__BackingField: context.SetPlayerPosition(5, 7)
+  <Context>k__BackingField: {fileID: 254141902}
+  OnResult:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1356798811}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &363678057
 GameObject:
   m_ObjectHideFlags: 0

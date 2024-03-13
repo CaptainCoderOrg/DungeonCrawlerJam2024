@@ -4,11 +4,13 @@ using CaptainCoder.Dungeoneering.DungeonMap.Unity;
 using CaptainCoder.Dungeoneering.Player;
 using CaptainCoder.Dungeoneering.Player.Unity;
 
+using DungeonCrawler.Lua;
+
 using UnityEngine;
 
 namespace CaptainCoder.Dungeoneering.Unity;
 
-public class CrawlingModeController : MonoBehaviour, ITileEventContext
+public class CrawlingModeController : MonoBehaviour, ITileEventContext, IScriptContext
 {
     [field: SerializeField]
     public DungeonController DungeonController { get; set; } = default!;
