@@ -10,19 +10,27 @@ using Newtonsoft.Json;
 
 public record JavaScriptEventAction(string Script) : EventAction
 {
+    private static readonly string Prelude = $$$"""
+        const Facing = { 
+            North: {{{(int)Facing.North}}}, 
+            East: {{{(int)Facing.East}}}, 
+            West: {{{(int)Facing.West}}}, 
+            South: {{{(int)Facing.South}}}
+        };
+
+        const context = JSON.parse(rawContext);
+
+        context.SetPlayerView = (x, y, f) => 
+        {
+            context.View = { Position: { X: x, Y: y }, Facing: f };
+        }
+        """;
     public override void Invoke(ITileEventContext context)
     {
         Engine engine = new();
         string json = context.ToJson();
         engine.SetValue("rawContext", json);
-        engine.Execute($$$"""
-        const Facing = { North: {{{(int)Facing.North}}}, East: {{{(int)Facing.East}}}, West: {{{(int)Facing.West}}}, South: {{{(int)Facing.South}}}};
-        const context = JSON.parse(rawContext);
-        context.SetPlayerView = (x, y, f) => 
-        {
-            context.View = { Position: { X: x, Y: y }, Facing: f };
-        }
-        """);
+        engine.Execute(Prelude);
         engine.Execute(Script);
         json = engine.Evaluate("JSON.stringify(context);").ToObject() as string ?? throw new Exception($"Could not evaluate context.");
         context.SyncWithJson(json);
