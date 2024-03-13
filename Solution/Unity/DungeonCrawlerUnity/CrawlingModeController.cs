@@ -1,4 +1,3 @@
-using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.DungeonMap.Unity;
 using CaptainCoder.Dungeoneering.Player;
@@ -10,7 +9,7 @@ using UnityEngine;
 
 namespace CaptainCoder.Dungeoneering.Unity;
 
-public class CrawlingModeController : MonoBehaviour, ITileEventContext, IScriptContext
+public class CrawlingModeController : MonoBehaviour, IScriptContext
 {
     [field: SerializeField]
     public DungeonController DungeonController { get; set; } = default!;
@@ -25,8 +24,6 @@ public class CrawlingModeController : MonoBehaviour, ITileEventContext, IScriptC
             Debug.Log($"PlayerView: {value}");
         }
     }
-
-    public Dungeon Dungeon { get; set; } = default!;
 
     public void HandleMovement(MovementAction action)
     {

@@ -11,28 +11,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Jint" Version="3.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup> 
 
-
-
   <ItemGroup>
     <ProjectReference Include="..\DungeonCrawler\DungeonCrawler.csproj" />
+    <ProjectReference Include="..\DungeonCrawler.Lua\DungeonCrawler.Lua.csproj" />
   </ItemGroup>
 
     <Target Name="CopyToUnity" AfterTargets="Build">
       <ItemGroup>
       <_FilesToCopy Include="$(TargetDir)\DungeonCrawler.Scripting.*" />
-      <_JintDll Include="$(TargetDir)\Jint.dll" />
-      <_EsprimaDll Include="$(TargetDir)\Esprima.dll" />
     </ItemGroup>
     <Message Text="_FilesToCopy: @(_FilesToCopy)" Importance="high" />
     <Message Text="Destination: @(_FilesToCopy->'$(_ScriptingDir)\%(RecursiveDir)%(Filename)%(Extension)')" Importance="high" />
     <Copy SourceFiles="@(_FilesToCopy)" DestinationFiles="@(_FilesToCopy->'$(_ScriptingDir)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="@(_JintDll)" DestinationFiles="$(_UnityProjectDir)\Jint\Jint.dll" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="@(_EsprimaDll)" DestinationFiles="$(_UnityProjectDir)\Jint\Esprima.dll" SkipUnchangedFiles="true" />
-
   </Target>
 
 </Project>

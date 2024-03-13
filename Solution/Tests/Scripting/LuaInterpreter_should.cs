@@ -50,17 +50,18 @@ public class LuaInterpreter_should
         context.View.ShouldBe(new PlayerView(new Position(3, 4), Facing.East));
     }
 
-    [Fact]
-    public void have_access_to_player_view()
+    [Theory]
+    [InlineData("return context.PlayerView.Position.X", 5)]
+    [InlineData("return context.PlayerView.Position.Y", 7)]
+    [InlineData("return context.PlayerView.Facing", (int)Facing.East)]
+    public void have_access_to_player_view(string script, int expectedResult)
     {
         IScriptContext context = new TestContext();
         context.View = new PlayerView(new Position(5, 7), Facing.East);
 
-        int result = Interpreter.EvalLua<int>("""
-        return context.PlayerView.Position.X
-        """, context);
+        int result = Interpreter.EvalLua<int>(script, context);
 
-        result.ShouldBe(5);
+        result.ShouldBe(expectedResult);
     }
 }
 

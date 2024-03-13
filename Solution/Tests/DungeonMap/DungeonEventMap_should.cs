@@ -8,9 +8,9 @@ using Shouldly;
 
 public class DungeonEventMap_should
 {
-    static readonly JavaScriptEventAction TeleportPlayerMock = new("Teleport Player");
+    static readonly EventScript TeleportPlayerMock = new("Teleport Player");
     static readonly TileEvent TeleportEvent = new(EventTrigger.OnEnter, TeleportPlayerMock);
-    static readonly JavaScriptEventAction DamagePlayerMock = new("Damage Player Mock");
+    static readonly EventScript DamagePlayerMock = new("Damage Player Mock");
     static readonly TileEvent DamageEvent = new(EventTrigger.OnExit, DamagePlayerMock);
 
     public static IEnumerable<object[]> AddEventsAtPositionData => [
@@ -106,9 +106,9 @@ public class DungeonEventMap_should
     public void be_jsonable()
     {
         DungeonEventMap map = new();
-        JavaScriptEventAction event0 = new("event0");
-        JavaScriptEventAction event1 = new("event1");
-        JavaScriptEventAction event2 = new("event2");
+        EventScript event0 = new("event0");
+        EventScript event1 = new("event1");
+        EventScript event2 = new("event2");
         Position pos0 = new(0, 0);
         Position pos1 = new(0, 0);
         map.AddEvent(pos0, new TileEvent(EventTrigger.OnEnter, event0));
