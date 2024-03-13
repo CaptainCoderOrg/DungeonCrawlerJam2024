@@ -8,8 +8,7 @@
     <!-- <_UnityManagedPath>D:\Unity  Editors\2022.3.6f1\Editor\Data\Managed</_UnityManagedPath> -->
     <_UnityManagedPath>$(ProjectDir)..\ManagedLibs\</_UnityManagedPath>
     <_UnityProjectDir>$(ProjectDir)..\..\..\DC Jam 2024 Unity</_UnityProjectDir>
-    <_OutDepsDir>$(_UnityProjectDir)\Assets\Dependencies\$(ProjectName)</_OutDepsDir>
-    <_ScriptAssembliesDir>$(_UnityProjectDir)\Library\ScriptAssemblies</_ScriptAssembliesDir>
+    <_OutDepsDir>$(_UnityProjectDir)\Assets\Dependencies\DungeonCrawlerUnity</_OutDepsDir>
   </PropertyGroup>
 
   <Target Name="CopyToUnity" AfterTargets="Build">
@@ -25,8 +24,8 @@
   </Target>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DungeonMap\DungeonMap.csproj" />
-    <ProjectReference Include="..\..\DungeonMap.IO\DungeonMap.IO.csproj" />
+    <ProjectReference Include="..\..\DungeonCrawler.IO\DungeonCrawler.IO.csproj" />
+    <ProjectReference Include="..\..\DungeonCrawler.Scripting\DungeonCrawler.Scripting.csproj" />
     <ProjectReference Include="..\..\DungeonCrawler\DungeonCrawler.csproj" />
     <ProjectReference Include="..\MapGenerator\MapGenerator.csproj" />
   </ItemGroup>

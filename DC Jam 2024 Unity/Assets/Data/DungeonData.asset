@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -10131928, guid: 01b633ee5593e564bb9e7943e41355d5, type: 3}
-  m_Name: Test Dungeon Data
+  m_Script: {fileID: -10131928, guid: c0469f36b6bc70d43827a537a8f9bf83, type: 3}
+  m_Name: DungeonData
   m_EditorClassIdentifier: 
   <WallMapJson>k__BackingField: {fileID: 4900000, guid: 65868023f11506e41a3376e9804934bb, type: 3}

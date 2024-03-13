@@ -1,7 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\DungeonMap\DungeonMap.csproj" />
+    <PackageReference Include="NLua" Version="1.7.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DungeonCrawler\DungeonCrawler.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

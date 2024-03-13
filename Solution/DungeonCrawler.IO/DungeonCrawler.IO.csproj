@@ -6,12 +6,22 @@
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <_UnityProjectDir>$(ProjectDir)..\..\DC Jam 2024 Unity\Assets\Dependencies\DungeonCrawler</_UnityProjectDir>
+    <_UnityProjectDir>$(ProjectDir)..\..\DC Jam 2024 Unity\Assets\Dependencies\DungeonCrawler.IO</_UnityProjectDir>
+
   </PropertyGroup>
 
-  <Target Name="CopyToUnity" AfterTargets="Build">
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DungeonCrawler\DungeonCrawler.csproj" />
+    <ProjectReference Include="..\DungeonCrawler.Scripting\DungeonCrawler.Scripting.csproj" />
+  </ItemGroup>
+
+    <Target Name="CopyToUnity" AfterTargets="Build">
       <ItemGroup>
-      <_FilesToCopy Include="$(TargetDir)\DungeonCrawler.*" />
+      <_FilesToCopy Include="$(TargetDir)\DungeonCrawler.IO.*" />
     </ItemGroup>
     <ItemGroup>
 
@@ -20,5 +30,6 @@
     <Message Text="Destination: @(_FilesToCopy->'$(_UnityProjectDir)\%(RecursiveDir)%(Filename)%(Extension)')" Importance="high" />
     <Copy SourceFiles="@(_FilesToCopy)" DestinationFiles="@(_FilesToCopy->'$(_UnityProjectDir)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
   </Target>
+
 
 </Project>

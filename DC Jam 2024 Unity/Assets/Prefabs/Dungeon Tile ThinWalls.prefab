@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2056442146575492029}
-  - component: {fileID: 8927392553293702381}
+  - component: {fileID: 982018494941467045}
   m_Layer: 0
   m_Name: Dungeon Tile ThinWalls
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 7955905278407197450}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8927392553293702381
+--- !u!114 &982018494941467045
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 74234439685249803}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 802405295, guid: 01b633ee5593e564bb9e7943e41355d5, type: 3}
+  m_Script: {fileID: 802405295, guid: c0469f36b6bc70d43827a537a8f9bf83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <NorthWall>k__BackingField: {fileID: 8313052977662747712}

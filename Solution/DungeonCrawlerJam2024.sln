@@ -9,10 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raylib", "Raylib\Raylib.csproj", "{9F114717-B394-4332-A624-1F8B9883BBC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonMap", "DungeonMap\DungeonMap.csproj", "{0EB3855F-6293-4A10-B2B5-0759A17FB50F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonMap.IO", "DungeonMap.IO\DungeonMap.IO.csproj", "{05B2DFDD-F74D-4696-A89A-3043B2D00BCE}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unity", "Unity", "{61FD3DF2-1C29-4E6A-9206-6F37816124BE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapGenerator", "Unity\MapGenerator\MapGenerator.csproj", "{5BDDE8E6-85F3-4737-82CF-779DC9D2492B}"
@@ -20,6 +16,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonCrawler", "DungeonCrawler\DungeonCrawler.csproj", "{BBD54189-D9C1-4A65-B6D2-DA71AFE413CB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonCrawlerUnity", "Unity\DungeonCrawlerUnity\DungeonCrawlerUnity.csproj", "{F2A1BDB1-BD33-44CA-A499-CDDB0996811A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonCrawler.Scripting", "DungeonCrawler.Scripting\DungeonCrawler.Scripting.csproj", "{F05F025A-BD8D-4139-9CE2-F8BDEC0D090D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonCrawler.IO", "DungeonCrawler.IO\DungeonCrawler.IO.csproj", "{02F36858-A571-4B8C-8240-A52AC6AB0322}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,14 +42,6 @@ Global
 		{9F114717-B394-4332-A624-1F8B9883BBC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F114717-B394-4332-A624-1F8B9883BBC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F114717-B394-4332-A624-1F8B9883BBC7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0EB3855F-6293-4A10-B2B5-0759A17FB50F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0EB3855F-6293-4A10-B2B5-0759A17FB50F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0EB3855F-6293-4A10-B2B5-0759A17FB50F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0EB3855F-6293-4A10-B2B5-0759A17FB50F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05B2DFDD-F74D-4696-A89A-3043B2D00BCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05B2DFDD-F74D-4696-A89A-3043B2D00BCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05B2DFDD-F74D-4696-A89A-3043B2D00BCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05B2DFDD-F74D-4696-A89A-3043B2D00BCE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5BDDE8E6-85F3-4737-82CF-779DC9D2492B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5BDDE8E6-85F3-4737-82CF-779DC9D2492B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BDDE8E6-85F3-4737-82CF-779DC9D2492B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -62,6 +54,14 @@ Global
 		{F2A1BDB1-BD33-44CA-A499-CDDB0996811A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2A1BDB1-BD33-44CA-A499-CDDB0996811A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2A1BDB1-BD33-44CA-A499-CDDB0996811A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F05F025A-BD8D-4139-9CE2-F8BDEC0D090D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F05F025A-BD8D-4139-9CE2-F8BDEC0D090D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F05F025A-BD8D-4139-9CE2-F8BDEC0D090D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F05F025A-BD8D-4139-9CE2-F8BDEC0D090D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02F36858-A571-4B8C-8240-A52AC6AB0322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02F36858-A571-4B8C-8240-A52AC6AB0322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02F36858-A571-4B8C-8240-A52AC6AB0322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02F36858-A571-4B8C-8240-A52AC6AB0322}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5BDDE8E6-85F3-4737-82CF-779DC9D2492B} = {61FD3DF2-1C29-4E6A-9206-6F37816124BE}

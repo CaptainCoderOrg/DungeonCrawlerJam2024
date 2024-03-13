@@ -1,5 +1,6 @@
 namespace CaptainCoder.Dungeoneering.DungeonMap;
 
+[Serializable]
 public readonly record struct Position(int X, int Y);
 
 public static class PositionExtensions
