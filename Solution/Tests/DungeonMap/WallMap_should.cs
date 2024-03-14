@@ -49,4 +49,38 @@ public class WallMap_should
             underTest.Map[key].ShouldBe(actual.Map[key]);
         }
     }
+
+    [Theory]
+    [InlineData(5, 5, Facing.North, WallType.Solid)]
+    [InlineData(7, 4, Facing.East, WallType.Solid)]
+    [InlineData(3, 8, Facing.South, WallType.Solid)]
+    [InlineData(14, 17, Facing.West, WallType.Solid)]
+    public void notify_observer_on_set_wall(int x, int y, Facing facing, WallType wall)
+    {
+        WallMap underTest = new();
+        List<(Position, Facing, WallType)> notifications = new();
+        underTest.OnWallChanged += (p, f, w) => notifications.Add((p, f, w));
+        underTest.SetWall(new Position(x, y), facing, wall);
+
+        notifications.Count.ShouldBe(2);
+        notifications.ShouldContain((new Position(x, y), facing, wall));
+        notifications.ShouldContain((new Position(x, y).Step(facing), facing.Opposite(), wall));
+    }
+
+    [Theory]
+    [InlineData(5, 5, Facing.North)]
+    [InlineData(7, 4, Facing.East)]
+    [InlineData(3, 8, Facing.South)]
+    [InlineData(14, 17, Facing.West)]
+    public void notify_observer_on_wall_removed(int x, int y, Facing facing)
+    {
+        WallMap underTest = new();
+        List<(Position, Facing, WallType)> notifications = new();
+        underTest.OnWallChanged += (p, f, w) => notifications.Add((p, f, w));
+        underTest.RemoveWall(new Position(x, y), facing);
+
+        notifications.Count.ShouldBe(2);
+        notifications.ShouldContain((new Position(x, y), facing, WallType.None));
+        notifications.ShouldContain((new Position(x, y).Step(facing), facing.Opposite(), WallType.None));
+    }
 }

@@ -28,10 +28,21 @@ public static class Interpreter
             lua.Globals.Set("context", UserData.Create(new LuaContext(context)));
         }
         lua.Globals.Set("LuaAPI", UserData.Create(new LuaAPI()));
-        lua.Globals[Facing.North.ToString()] = (int)Facing.North;
-        lua.Globals[Facing.East.ToString()] = (int)Facing.East;
-        lua.Globals[Facing.South.ToString()] = (int)Facing.South;
-        lua.Globals[Facing.West.ToString()] = (int)Facing.West;
+        lua.RegisterEnum<Facing>();
+        lua.RegisterEnum<WallType>();
         return lua;
+    }
+
+
+}
+
+public static class LuaExtensions
+{
+    public static void RegisterEnum<TEnum>(this Script lua) where TEnum : struct
+    {
+        foreach (string name in Enum.GetNames(typeof(TEnum)))
+        {
+            lua.Globals[name] = Enum.Parse<TEnum>(name);
+        }
     }
 }

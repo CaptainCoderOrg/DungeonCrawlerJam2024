@@ -5,6 +5,7 @@ namespace CaptainCoder.Dungeoneering.DungeonMap;
 
 public class WallMap()
 {
+    public event Action<Position, Facing, WallType>? OnWallChanged;
     public WallType this[Position position, Facing facing]
     {
         get => GetWall(position, facing);
@@ -12,9 +13,18 @@ public class WallMap()
     }
     private readonly Dictionary<TileEdge, WallType> _map = new();
     public IReadOnlyDictionary<TileEdge, WallType> Map => new ReadOnlyDictionary<TileEdge, WallType>(_map);
-    public void SetWall(Position position, Facing facing, WallType wall) => _map[new TileEdge(position, facing).Normalize()] = wall;
-    public bool RemoveWall(Position position, Facing facing) => _map.Remove(new TileEdge(position, facing).Normalize());
-    public WallType GetWall(Position position, Facing facing) => _map[new TileEdge(position, facing).Normalize()];
+    public void SetWall(Position position, Facing facing, WallType wall)
+    {
+        _map[new TileEdge(position, facing).Normalize()] = wall;
+        Notify(position, facing, wall);
+    }
+    public bool RemoveWall(Position position, Facing facing)
+    {
+        bool result = _map.Remove(new TileEdge(position, facing).Normalize());
+        Notify(position, facing, WallType.None);
+        return result;
+    }
+    public WallType GetWall(Position position, Facing facing) => _map.GetValueOrDefault(new TileEdge(position, facing).Normalize());
     public bool TryGetWall(Position position, Facing facing, out WallType wall) => _map.TryGetValue(new TileEdge(position, facing).Normalize(), out wall);
     public int Count => _map.Count;
 
@@ -24,6 +34,12 @@ public class WallMap()
         {
             _map.Add(edge, wall);
         }
+    }
+
+    private void Notify(Position position, Facing facing, WallType wall)
+    {
+        OnWallChanged?.Invoke(position, facing, wall);
+        OnWallChanged?.Invoke(position.Step(facing), facing.Opposite(), wall);
     }
 }
 
