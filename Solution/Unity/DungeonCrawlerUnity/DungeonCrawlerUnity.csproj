@@ -41,6 +41,12 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>$(_UnityManagedPath)\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(_UnityManagedPath)\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>$(_UnityManagedPath)\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
