@@ -1,4 +1,5 @@
 using CaptainCoder.Dungeoneering.DungeonMap;
+using CaptainCoder.Dungeoneering.Player;
 using CaptainCoder.Dungeoneering.Scripting;
 
 using MoonSharp.Interpreter;
@@ -17,6 +18,8 @@ public static class Interpreter
         if (!s_initialized)
         {
             LuaInitializer.Initialize();
+            UserData.RegisterProxyType<Proxy.PlayerView, PlayerView>(data => new Proxy.PlayerView(data));
+            UserData.RegisterProxyType<Proxy.Position, Position>(data => new Proxy.Position(data));
             s_initialized = true;
         }
         Script lua = new();

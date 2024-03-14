@@ -1,7 +1,6 @@
 namespace Tests;
 
 using CaptainCoder.Dungeoneering.DungeonMap;
-using CaptainCoder.Dungeoneering.Player;
 
 using DungeonCrawler.Lua;
 
@@ -23,7 +22,7 @@ public class LuaInterpreter_should
         Interpreter.ExecLua("""
         context.SetPlayerPosition(5, 7)
         """, context);
-        context.View.ShouldBe(new PlayerView(new Position(5, 7), Facing.North));
+        context.View.ShouldBe(new CaptainCoder.Dungeoneering.Player.PlayerView(new CaptainCoder.Dungeoneering.DungeonMap.Position(5, 7), Facing.North));
     }
 
     [Theory]
@@ -37,7 +36,7 @@ public class LuaInterpreter_should
         Interpreter.ExecLua($"""
         context.SetPlayerFacing({facing})
         """, context);
-        context.View.ShouldBe(new PlayerView(new Position(0, 0), facing));
+        context.View.ShouldBe(new CaptainCoder.Dungeoneering.Player.PlayerView(new CaptainCoder.Dungeoneering.DungeonMap.Position(0, 0), facing));
     }
 
     [Fact]
@@ -47,7 +46,7 @@ public class LuaInterpreter_should
         Interpreter.ExecLua("""
         context.SetPlayerView(3, 4, East)
         """, context);
-        context.View.ShouldBe(new PlayerView(new Position(3, 4), Facing.East));
+        context.View.ShouldBe(new CaptainCoder.Dungeoneering.Player.PlayerView(new CaptainCoder.Dungeoneering.DungeonMap.Position(3, 4), Facing.East));
     }
 
     [Theory]
@@ -57,7 +56,7 @@ public class LuaInterpreter_should
     public void have_access_to_player_view(string script, int expectedResult)
     {
         IScriptContext context = new TestContext();
-        context.View = new PlayerView(new Position(5, 7), Facing.East);
+        context.View = new CaptainCoder.Dungeoneering.Player.PlayerView(new CaptainCoder.Dungeoneering.DungeonMap.Position(5, 7), Facing.East);
 
         int result = Interpreter.EvalLua<int>(script, context);
 
@@ -67,5 +66,5 @@ public class LuaInterpreter_should
 
 internal class TestContext : IScriptContext
 {
-    public PlayerView View { get; set; } = new PlayerView(new Position(0, 0), Facing.North);
+    public CaptainCoder.Dungeoneering.Player.PlayerView View { get; set; } = new CaptainCoder.Dungeoneering.Player.PlayerView(new CaptainCoder.Dungeoneering.DungeonMap.Position(0, 0), Facing.North);
 }

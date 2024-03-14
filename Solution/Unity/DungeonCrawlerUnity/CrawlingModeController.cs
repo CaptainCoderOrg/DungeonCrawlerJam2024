@@ -15,7 +15,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public DungeonController DungeonController { get; set; } = default!;
     [field: SerializeField]
     public PlayerViewController PlayerViewController { get; set; } = default!;
-    public PlayerView View
+    public Player.PlayerView View
     {
         get => PlayerViewController.View;
         set
