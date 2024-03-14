@@ -49,7 +49,7 @@ public class WallMap_should
             underTest.Map[key].ShouldBe(actual.Map[key]);
         }
     }
-    
+
     [Theory]
     [InlineData(5, 5, Facing.North, WallType.Solid)]
     [InlineData(7, 4, Facing.East, WallType.Solid)]
@@ -64,7 +64,7 @@ public class WallMap_should
 
         notifications.Count.ShouldBe(2);
         notifications.ShouldContain((new Position(x, y), facing, wall));
-        notifications.ShouldContain((new Position(x, y).Step(facing), facing.Opposite(), wall));       
+        notifications.ShouldContain((new Position(x, y).Step(facing), facing.Opposite(), wall));
     }
 
     [Theory]
@@ -81,6 +81,6 @@ public class WallMap_should
 
         notifications.Count.ShouldBe(2);
         notifications.ShouldContain((new Position(x, y), facing, WallType.None));
-        notifications.ShouldContain((new Position(x, y).Step(facing), facing.Opposite(), WallType.None));       
+        notifications.ShouldContain((new Position(x, y).Step(facing), facing.Opposite(), WallType.None));
     }
 }

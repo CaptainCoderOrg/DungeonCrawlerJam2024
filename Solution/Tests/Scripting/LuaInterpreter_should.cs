@@ -91,7 +91,7 @@ public class LuaInterpreter_should
     [InlineData("""
         context.SetPlayerFacing(East)
         return context.GetWall()
-        """, 
+        """,
         WallType.None)
     ]
     public void get_wall(string script, WallType expected)
@@ -136,7 +136,7 @@ public class LuaInterpreter_should
         context.CurrentDungeon.Returns(emptyDungeon);
 
         Interpreter.ExecLua(script, context);
-        
+
         WallType actual = emptyDungeon.Walls.GetWall(context.View.Position, context.View.Facing);
         actual.ShouldBe(expected);
         actual = emptyDungeon.Walls.GetWall(context.View.Position.Step(context.View.Facing), context.View.Facing.Opposite());
@@ -160,7 +160,7 @@ public class LuaInterpreter_should
         context.CurrentDungeon.Returns(emptyDungeon);
 
         Interpreter.ExecLua(script, context);
-        
+
         WallType actual = emptyDungeon.Walls.GetWall(new Position(x, y), facing);
         actual.ShouldBe(expected);
         actual = emptyDungeon.Walls.GetWall(new Position(x, y).Step(facing), facing.Opposite());
