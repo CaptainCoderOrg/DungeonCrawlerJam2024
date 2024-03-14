@@ -25,6 +25,8 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         }
     }
 
+    public Dungeon CurrentDungeon { get => DungeonController.Dungeon; }
+
     public void HandleMovement(MovementAction action)
     {
         PlayerViewController.View = DungeonController.Dungeon.Move(PlayerViewController.View, action);

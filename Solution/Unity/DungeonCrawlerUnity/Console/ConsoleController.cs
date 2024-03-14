@@ -99,6 +99,7 @@ public class ConsoleController : MonoBehaviour
         catch (Exception e)
         {
             Write($"Exception occurred: {e.Message}");
+            Debug.Log(e.StackTrace);
         }
     }
 

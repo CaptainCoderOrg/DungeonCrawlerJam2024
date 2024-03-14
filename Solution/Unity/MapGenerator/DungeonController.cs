@@ -24,6 +24,7 @@ public class DungeonController : MonoBehaviour
 
     private void BuildDungeon(Action<GameObject> destroy)
     {
+        Dictionary<Position, DungeonTile> allTiles = new();
         TileParent.transform.DestroyAllChildren(destroy);
 
         for (int x = 0; x < 24; x++)
@@ -34,8 +35,14 @@ public class DungeonController : MonoBehaviour
                 newTile.name = $"({x}, {y})";
                 newTile.transform.position = new Vector3(y, 0, x);
                 newTile.UpdateWalls(_dungeon.GetTile(new Position(x, y)).Walls);
+                allTiles[new Position(x, y)] = newTile;
             }
         }
+        _dungeon.Walls.OnWallChanged += (p, f, w) =>
+        {
+            DungeonTile toUpdate = allTiles[p];
+            toUpdate.UpdateWalls(_dungeon.GetTile(p).Walls);
+        };
     }
     private void BuildDungeon() => BuildDungeon(Destroy);
 
