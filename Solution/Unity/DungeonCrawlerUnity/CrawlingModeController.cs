@@ -25,6 +25,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public PlayerInputHandler PlayerInputHandler { get; set; } = default!;
     public PlayerView View { get => _crawlerMode.CurrentView; set => _crawlerMode.CurrentView = value; }
     public Dungeon CurrentDungeon { get => _crawlerMode.CurrentDungeon; }
+
     public void Awake()
     {
         Dungeon dungeon = new(DungeonData.LoadMap());
@@ -33,7 +34,10 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         PlayerCamera.InstantTransitionToPlayerView(_crawlerMode.CurrentView);
         _crawlerMode.OnViewChange += (newView) => PlayerViewData = new(newView);
         _crawlerMode.OnViewChange += PlayerCamera.InstantTransitionToPlayerView;
+        _crawlerMode.OnMessageAdded += message => Debug.Log(message);
     }
+
+    public void SendMessage(Message message) => _crawlerMode.AddMessage(message);
 
     public void OnEnable()
     {
@@ -49,6 +53,8 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     {
         _crawlerMode.CurrentView = _crawlerMode.CurrentDungeon.Move(_crawlerMode.CurrentView, action);
     }
+
+
 }
 
 [Serializable]
