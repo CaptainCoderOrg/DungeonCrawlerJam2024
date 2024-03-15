@@ -218,7 +218,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 364136684}
-  - {fileID: 584975346}
   - {fileID: 1200599026}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -238,7 +237,8 @@ MonoBehaviour:
     X: 5
     Y: 0
     Facing: 1
-  <DungeonController>k__BackingField: {fileID: 584975347}
+  <DungeonData>k__BackingField: {fileID: 11400000, guid: c967fb833b1f97a4891f9230e354bceb, type: 2}
+  <DungeonBuilder>k__BackingField: {fileID: 584975347}
   <PlayerViewController>k__BackingField: {fileID: 364136686}
 --- !u!1 &363678057
 GameObject:
@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 584975346}
   - component: {fileID: 584975347}
   m_Layer: 0
-  m_Name: DungeonController
+  m_Name: DungeonBuilder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,7 +383,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 254141901}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &584975347
 MonoBehaviour:
@@ -394,11 +394,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 584975344}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -841031028, guid: c0469f36b6bc70d43827a537a8f9bf83, type: 3}
+  m_Script: {fileID: -1258565255, guid: c0469f36b6bc70d43827a537a8f9bf83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Data>k__BackingField: {fileID: 11400000, guid: c967fb833b1f97a4891f9230e354bceb, type: 2}
-  <TileParent>k__BackingField: {fileID: 1821339697}
+  <TileParent>k__BackingField: {fileID: 1821339698}
   <TilePrefab>k__BackingField: {fileID: 982018494941467045, guid: ace6c32cc6fba9f4a8eebe0337edf891, type: 3}
 --- !u!1 &926038615
 GameObject:
@@ -1732,3 +1731,4 @@ SceneRoots:
   - {fileID: 254141901}
   - {fileID: 363678060}
   - {fileID: 2918959136687549707}
+  - {fileID: 584975346}
