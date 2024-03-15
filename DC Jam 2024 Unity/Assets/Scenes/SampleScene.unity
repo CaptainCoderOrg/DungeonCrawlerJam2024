@@ -234,6 +234,10 @@ MonoBehaviour:
   m_Script: {fileID: -192765389, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <PlayerViewData>k__BackingField:
+    X: 5
+    Y: 0
+    Facing: 1
   <DungeonController>k__BackingField: {fileID: 584975347}
   <PlayerViewController>k__BackingField: {fileID: 364136686}
 --- !u!1 &363678057
