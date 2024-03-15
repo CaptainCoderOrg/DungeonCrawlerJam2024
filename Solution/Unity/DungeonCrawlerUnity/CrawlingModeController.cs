@@ -1,6 +1,7 @@
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.DungeonMap.Unity;
 using CaptainCoder.Dungeoneering.Game;
+using CaptainCoder.Dungeoneering.Game.Unity;
 using CaptainCoder.Dungeoneering.Player;
 using CaptainCoder.Dungeoneering.Player.Unity;
 
@@ -25,6 +26,8 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public PlayerInputHandler PlayerInputHandler { get; set; } = default!;
     public PlayerView View { get => _crawlerMode.CurrentView; set => _crawlerMode.CurrentView = value; }
     public Dungeon CurrentDungeon { get => _crawlerMode.CurrentDungeon; }
+    [field: SerializeField]
+    public QueuedMessageRenderer InfoMessageRenderer { get; set; } = default!;
 
     public void Awake()
     {
@@ -34,7 +37,11 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         PlayerCamera.InstantTransitionToPlayerView(_crawlerMode.CurrentView);
         _crawlerMode.OnViewChange += (newView) => PlayerViewData = new(newView);
         _crawlerMode.OnViewChange += PlayerCamera.InstantTransitionToPlayerView;
-        _crawlerMode.OnMessageAdded += message => Debug.Log(message);
+        _crawlerMode.OnMessageAdded += message =>
+        {
+            InfoMessageRenderer.EnqueueMessage(message, 5f);
+            Debug.Log(message);
+        };
     }
 
     public void SendMessage(Message message) => _crawlerMode.AddMessage(message);
