@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 namespace CaptainCoder.Dungeoneering.Player.Unity;
 
-public class PlayerMovementController : MonoBehaviour
+public class PlayerInputHandler : MonoBehaviour
 {
     [field: SerializeField]
     public PlayerInputMapping InputMapping { get; set; } = default!;
