@@ -22,7 +22,7 @@ public class ConsoleController : MonoBehaviour
     [field: SerializeField]
     public CrawlingModeController GameController { get; private set; } = default!;
     [field: SerializeField]
-    public PlayerMovementController PlayerMovementController { get; private set; } = default!;
+    public PlayerInputHandler PlayerMovementController { get; private set; } = default!;
     [field: SerializeField]
     public KeyCode DeactivateKey { get; private set; } = KeyCode.Escape;
 
