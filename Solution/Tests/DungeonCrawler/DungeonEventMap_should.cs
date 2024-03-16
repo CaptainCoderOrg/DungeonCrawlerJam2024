@@ -22,7 +22,7 @@ public class DungeonEventMap_should
     [MemberData(nameof(AddEventsAtPositionData))]
     public void add_event_at_position(Position position, TileEvent eventToAdd)
     {
-        DungeonEventMap map = new();
+        EventMap map = new();
         map.AddEvent(position, eventToAdd);
         map.EventsAt(position).Count.ShouldBe(1);
         map.EventsAt(position).ShouldContain(eventToAdd);
@@ -38,7 +38,7 @@ public class DungeonEventMap_should
 
     public void add_multiple_events_at_position(Position position, TileEvent firstEvent, TileEvent secondEvent)
     {
-        DungeonEventMap map = new();
+        EventMap map = new();
         map.AddEvent(position, firstEvent);
         map.AddEvent(position, secondEvent);
         map.EventsAt(position).Count.ShouldBe(2);
@@ -49,7 +49,7 @@ public class DungeonEventMap_should
     [Fact]
     public void provide_view_of_events()
     {
-        DungeonEventMap map = new();
+        EventMap map = new();
         Position pos = new(0, 0);
         map.AddEvent(pos, DamageEvent);
 
@@ -67,7 +67,7 @@ public class DungeonEventMap_should
     [Fact]
     public void remove_event_by_index()
     {
-        DungeonEventMap map = new();
+        EventMap map = new();
         Position pos = new(0, 0);
         map.AddEvent(pos, DamageEvent);
         map.AddEvent(pos, TeleportEvent);
@@ -84,7 +84,7 @@ public class DungeonEventMap_should
     [Fact]
     public void remove_event_by_index_returns_false_on_no_entry()
     {
-        DungeonEventMap map = new();
+        EventMap map = new();
         bool actual = map.TryRemoveEvent(new Position(0, 0), 0, out _);
         actual.ShouldBeFalse();
     }
@@ -92,7 +92,7 @@ public class DungeonEventMap_should
     [Fact]
     public void remove_all_events_at_position()
     {
-        DungeonEventMap map = new();
+        EventMap map = new();
         Position pos = new(0, 0);
         map.AddEvent(pos, DamageEvent);
         map.AddEvent(pos, TeleportEvent);
@@ -105,7 +105,7 @@ public class DungeonEventMap_should
     [Fact]
     public void be_jsonable()
     {
-        DungeonEventMap map = new();
+        EventMap map = new();
         EventScript event0 = new("event0");
         EventScript event1 = new("event1");
         EventScript event2 = new("event2");
@@ -116,7 +116,7 @@ public class DungeonEventMap_should
         map.AddEvent(pos1, new TileEvent(EventTrigger.OnEnter, event2));
 
         string json = map.ToJson();
-        DungeonEventMap restored = JsonExtensions.LoadModel<DungeonEventMap>(json);
+        EventMap restored = JsonExtensions.LoadModel<EventMap>(json);
 
         List<TileEvent> expectedEventsAtPos0 = map.EventsAt(pos0);
         restored.EventsAt(pos0).Count.ShouldBe(expectedEventsAtPos0.Count);

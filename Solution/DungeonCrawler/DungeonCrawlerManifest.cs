@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
 

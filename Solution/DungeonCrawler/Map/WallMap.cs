@@ -1,6 +1,4 @@
 
-using System.Collections.ObjectModel;
-
 namespace CaptainCoder.Dungeoneering.DungeonMap;
 
 public class WallMap()
@@ -11,28 +9,27 @@ public class WallMap()
         get => GetWall(position, facing);
         set => SetWall(position, facing, value);
     }
-    private readonly Dictionary<TileEdge, WallType> _map = new();
-    public IReadOnlyDictionary<TileEdge, WallType> Map => new ReadOnlyDictionary<TileEdge, WallType>(_map);
+    public Dictionary<TileEdge, WallType> Map { get; set; } = new();
     public void SetWall(Position position, Facing facing, WallType wall)
     {
-        _map[new TileEdge(position, facing).Normalize()] = wall;
+        Map[new TileEdge(position, facing).Normalize()] = wall;
         Notify(position, facing, wall);
     }
     public bool RemoveWall(Position position, Facing facing)
     {
-        bool result = _map.Remove(new TileEdge(position, facing).Normalize());
+        bool result = Map.Remove(new TileEdge(position, facing).Normalize());
         Notify(position, facing, WallType.None);
         return result;
     }
-    public WallType GetWall(Position position, Facing facing) => _map.GetValueOrDefault(new TileEdge(position, facing).Normalize());
-    public bool TryGetWall(Position position, Facing facing, out WallType wall) => _map.TryGetValue(new TileEdge(position, facing).Normalize(), out wall);
-    public int Count => _map.Count;
+    public WallType GetWall(Position position, Facing facing) => Map.GetValueOrDefault(new TileEdge(position, facing).Normalize());
+    public bool TryGetWall(Position position, Facing facing, out WallType wall) => Map.TryGetValue(new TileEdge(position, facing).Normalize(), out wall);
+    public int Count => Map.Count;
 
     public WallMap(IEnumerable<(TileEdge, WallType)> edges) : this()
     {
         foreach ((TileEdge edge, WallType wall) in edges)
         {
-            _map.Add(edge, wall);
+            Map.Add(edge, wall);
         }
     }
 

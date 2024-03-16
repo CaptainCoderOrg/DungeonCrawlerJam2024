@@ -11,28 +11,17 @@ using Newtonsoft.Json;
 /// </summary>
 public static class JsonExtensions
 {
-    public static string ToJson(this WallMap wallMap) => JsonConvert.SerializeObject(wallMap, WallMapJsonConverter.Shared);
-    public static string ToJson(this DungeonEventMap eventMap) => JsonConvert.SerializeObject(eventMap, DungeonEventMapJsonConverter.Shared);
-    public static string ToJson(this DungeonCrawlerManifest crawler) => throw new Exception(); //JsonConvert.SerializeObject(crawler, DungeonCrawlerManifestJsonConverter.Shared);
+    public static JsonConverter[] Converters { get; } = [
+        new DictionaryJsonConverter<TileEdge, WallType>(),
+        new DictionaryJsonConverter<Position, List<TileEvent>>(),
+    ];
+    public static string ToJson(this WallMap wallMap) => JsonConvert.SerializeObject(wallMap, Converters);
+    public static string ToJson(this EventMap eventMap) => JsonConvert.SerializeObject(eventMap, Converters);
+    public static string ToJson(this DungeonCrawlerManifest crawler) => JsonConvert.SerializeObject(crawler, Converters);
 
     public static T LoadModel<T>(string json)
     {
-        if (typeof(T) == typeof(WallMap) && LoadWallMapFromJson(json) is T wallMapResult)
-        {
-            return wallMapResult;
-        }
-        else if (typeof(T) == typeof(DungeonEventMap) && LoadDungeonEventMapFromJson(json) is T dungeonEventMapResult)
-        {
-            return dungeonEventMapResult;
-        }
-        throw new JsonException($"Unable to load model of type \"{typeof(T)}\" from json \"{json}\".");
+        T result = JsonConvert.DeserializeObject<T>(json, Converters) ?? throw new JsonException($"Could not parse DungeonEventMap from \"{json}\"");
+        return result;
     }
-
-    public static DungeonEventMap LoadDungeonEventMapFromJson(string json) =>
-        JsonConvert.DeserializeObject<DungeonEventMap>(json, DungeonEventMapJsonConverter.Shared) ??
-        throw new JsonException($"Could not parse DungeonEventMap from \"{json}\"");
-
-    public static WallMap LoadWallMapFromJson(string json) =>
-        JsonConvert.DeserializeObject<WallMap>(json, WallMapJsonConverter.Shared) ??
-        throw new JsonException($"Could not parse WallMap from \"{json}\"");
 }

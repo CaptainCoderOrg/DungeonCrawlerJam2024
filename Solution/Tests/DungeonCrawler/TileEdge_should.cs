@@ -94,7 +94,7 @@ public class TileEdge_should
     [InlineData(0, 0, Facing.East)]
     public void be_jsonable(int x, int y, Facing facing)
     {
-        TileEdge underTest = new (new Position(x, y), facing);
+        TileEdge underTest = new(new Position(x, y), facing);
         string json = JsonConvert.SerializeObject(underTest);
         TileEdge? actual = JsonConvert.DeserializeObject<TileEdge>(json);
         actual.ShouldBe(underTest);
