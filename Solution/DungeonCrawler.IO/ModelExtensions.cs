@@ -13,7 +13,7 @@ public static class JsonExtensions
 {
     public static string ToJson(this WallMap wallMap) => JsonConvert.SerializeObject(wallMap, WallMapJsonConverter.Shared);
     public static string ToJson(this DungeonEventMap eventMap) => JsonConvert.SerializeObject(eventMap, DungeonEventMapJsonConverter.Shared);
-    public static string ToJson(this DungeonCrawlerManifest crawler) => JsonConvert.SerializeObject(crawler, DungeonCrawlerManifestJsonConverter.Shared);
+    public static string ToJson(this DungeonCrawlerManifest crawler) => throw new Exception(); //JsonConvert.SerializeObject(crawler, DungeonCrawlerManifestJsonConverter.Shared);
 
     public static T LoadModel<T>(string json)
     {

@@ -10,20 +10,34 @@ using Newtonsoft.Json;
 /// default serializer for Dictionary converts the keys to a string which cannot
 /// be correctly deserialized.
 /// </summary>
-public class DungeonCrawlerManifestJsonConverter : JsonConverter<DungeonCrawlerManifest>
+// public class DungeonCrawlerManifestJsonConverter : JsonConverter<DungeonCrawlerManifest>
+// {
+//     public static DungeonCrawlerManifestJsonConverter Shared { get; } = new();
+//     public override DungeonCrawlerManifest? ReadJson(JsonReader reader, Type objectType, DungeonCrawlerManifest? existingValue, bool hasExistingValue, JsonSerializer serializer)
+//     {
+//         SerializableDungeonCrawlerManifest manifest = serializer.Deserialize<SerializableDungeonCrawlerManifest>(reader) ?? throw new Exception($"Could not read WallMap.");
+//         return manifest.ToDungeonCrawlerManifest();
+//     }
+
+//     public override void WriteJson(JsonWriter writer, DungeonCrawlerManifest? value, JsonSerializer serializer)
+//     {
+//         if (value is null) { throw new Exception($"Could not write null DungeonCrawlerManifest."); }
+//         SerializableDungeonCrawlerManifest serializable = new(value);
+//         serializer.Serialize(writer, serializable);
+//     }
+// }
+
+public class DictionaryJsonConverter<TKey, TValue> : JsonConverter<Dictionary<TKey, TValue>>
 {
-    public static DungeonCrawlerManifestJsonConverter Shared { get; } = new();
-    public override DungeonCrawlerManifest? ReadJson(JsonReader reader, Type objectType, DungeonCrawlerManifest? existingValue, bool hasExistingValue, JsonSerializer serializer)
+    public override Dictionary<TKey, TValue>? ReadJson(JsonReader reader, Type objectType, Dictionary<TKey, TValue>? existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
-        throw new Exception();
+        throw new NotImplementedException();
     }
 
-    public override void WriteJson(JsonWriter writer, DungeonCrawlerManifest? value, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, Dictionary<TKey, TValue>? value, JsonSerializer serializer)
     {
-        if (value is null) { throw new Exception($"Could not write null DungeonCrawlerManifest."); }
-        SerializableDungeonCrawlerManifest serializable = new(value);
-        string json = JsonConvert.SerializeObject(serializable);
-        writer.WriteValue(json);
+        if (value is null) { throw new Exception($"Could not write null to dictionary."); }
+        // serializer.Serialize(writer, value.ToSeri);
     }
 }
 
@@ -31,6 +45,12 @@ internal class SerializableDungeonCrawlerManifest(DungeonCrawlerManifest manifes
 {
     public (string, Dungeon)[] DungeonManifest { get; set; } = manifest.DungeonManifest.ToSerializableArray();
     public (string, EventScript)[] ScriptManifest { get; set; } = manifest.ScriptManifest.ToSerializableArray();
+
+    public DungeonCrawlerManifest ToDungeonCrawlerManifest()
+    {
+        DungeonCrawlerManifest manifest = new();
+        throw new NotImplementedException();
+    }
 }
 
 public static class DictionaryExtensions
