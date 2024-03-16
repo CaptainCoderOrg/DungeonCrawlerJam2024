@@ -10,7 +10,7 @@ public class Program
     public static void Main()
     {
         Console.WriteLine("Generating hardwired Lua output");
-        File.WriteAllText("hardwired.lua", Hardwired.GenerateHardwiredLua());
+        File.WriteAllText("hardwired.moonlua", Hardwired.GenerateHardwiredLua());
     }
 }
 
