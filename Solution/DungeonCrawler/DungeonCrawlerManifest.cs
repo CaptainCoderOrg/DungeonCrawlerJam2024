@@ -1,5 +1,6 @@
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
+using CaptainCoder.Utils.DictionaryExtensions;
 
 namespace CaptainCoder.Dungeoneering.DungeonCrawler;
 
@@ -26,6 +27,8 @@ public class DungeonCrawlerManifest : IEquatable<DungeonCrawlerManifest>
 
     public bool Equals(DungeonCrawlerManifest other)
     {
-        throw new NotImplementedException();
+        return DungeonManifest.AllKeyValuesAreEqual(other.DungeonManifest, DungeonEquality) &&
+               ScriptManifest.AllKeyValuesAreEqual(other.ScriptManifest);
+        static bool DungeonEquality(Dungeon d0, Dungeon d1) => d0.Equals(d1);
     }
 }

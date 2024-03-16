@@ -1,7 +1,9 @@
 
+using CaptainCoder.Utils.DictionaryExtensions;
+
 namespace CaptainCoder.Dungeoneering.DungeonMap;
 
-public class WallMap()
+public class WallMap() : IEquatable<WallMap>
 {
     public event Action<Position, Facing, WallType>? OnWallChanged;
     public WallType this[Position position, Facing facing]
@@ -37,6 +39,11 @@ public class WallMap()
     {
         OnWallChanged?.Invoke(position, facing, wall);
         OnWallChanged?.Invoke(position.Step(facing), facing.Opposite(), wall);
+    }
+
+    public bool Equals(WallMap other)
+    {
+        return Map.AllKeyValuesAreEqual(other.Map);
     }
 }
 

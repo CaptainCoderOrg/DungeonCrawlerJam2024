@@ -1,8 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 
+using CaptainCoder.Utils.DictionaryExtensions;
+
 namespace CaptainCoder.Dungeoneering.DungeonMap;
 
-public class EventMap()
+public class EventMap() : IEquatable<EventMap>
 {
     public Dictionary<Position, List<TileEvent>> Events { get; set; } = [];
 
@@ -38,4 +40,14 @@ public class EventMap()
     public void RemoveAllEventsAt(Position position) => Events.Remove(position);
 
     public List<TileEvent> EventsAt(Position position) => Events.GetValueOrDefault(position, []);
+
+    public bool Equals(EventMap other)
+    {
+        return Events.AllKeyValuesAreEqual(other.Events, ListEquality);
+        static bool ListEquality(List<TileEvent> list0, List<TileEvent> list1)
+        {
+            if (list0.Count != list1.Count) { return false; }
+            return list0.ToHashSet().SetEquals(list1);
+        }
+    }
 }

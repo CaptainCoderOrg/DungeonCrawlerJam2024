@@ -1,6 +1,6 @@
 namespace CaptainCoder.Dungeoneering.DungeonMap;
 
-public class Dungeon()
+public class Dungeon() : IEquatable<Dungeon>
 {
     public WallMap Walls { get; private set; } = new();
     public EventMap EventMap { get; private set; } = new();
@@ -23,6 +23,11 @@ public class Dungeon()
     public bool IsPassable(Position position, Facing facing)
     {
         return !Walls.TryGetWall(position, facing, out WallType wall) || wall.IsPassable();
+    }
+
+    public bool Equals(Dungeon other)
+    {
+        return Walls.Equals(other.Walls) && EventMap.Equals(other.EventMap);
     }
 }
 

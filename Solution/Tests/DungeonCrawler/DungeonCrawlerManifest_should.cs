@@ -94,5 +94,17 @@ public class DungeonCrawlerManifest_should
         });
     }
 
-
+    [Fact]
+    public void should_be_equal()
+    {
+        DungeonCrawlerManifest first = MakeManifest();
+        first.ShouldBe(MakeManifest());
+        static DungeonCrawlerManifest MakeManifest()
+        {
+            DungeonCrawlerManifest manifest = new();
+            manifest.AddDungeon("simple", new Dungeon());
+            manifest.AddScript("scriptname", new EventScript("Simple Script"));
+            return manifest;
+        }
+    }
 }

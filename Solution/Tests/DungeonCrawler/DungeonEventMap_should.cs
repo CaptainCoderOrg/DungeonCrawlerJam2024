@@ -127,4 +127,25 @@ public class DungeonEventMap_should
         restored.EventsAt(pos1).ShouldBeSubsetOf(expectedEventsAtPos1);
     }
 
+    [Fact]
+    public void be_equals()
+    {
+        EventMap first = MakeMap();
+        first.ShouldBe(MakeMap());
+
+        static EventMap MakeMap()
+        {
+            EventMap map = new();
+            EventScript event0 = new("event0");
+            EventScript event1 = new("event1");
+            EventScript event2 = new("event2");
+            Position pos0 = new(0, 0);
+            Position pos1 = new(0, 0);
+            map.AddEvent(pos0, new TileEvent(EventTrigger.OnEnter, event0));
+            map.AddEvent(pos0, new TileEvent(EventTrigger.OnExit, event1));
+            map.AddEvent(pos1, new TileEvent(EventTrigger.OnEnter, event2));
+            return map;
+        }
+    }
+
 }

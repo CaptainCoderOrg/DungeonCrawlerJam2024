@@ -83,4 +83,20 @@ public class WallMap_should
         notifications.ShouldContain((new Position(x, y), facing, WallType.None));
         notifications.ShouldContain((new Position(x, y).Step(facing), facing.Opposite(), WallType.None));
     }
+
+    [Fact]
+    public void be_equals()
+    {
+        WallMap first = MakeMap();
+        first.ShouldBe(MakeMap());
+
+        static WallMap MakeMap()
+        {
+            WallMap map = new();
+            map.SetWall(new Position(5, 7), Facing.East, WallType.Solid);
+            map.SetWall(new Position(5, 2), Facing.South, WallType.Door);
+            map.SetWall(new Position(2, 7), Facing.North, WallType.SecretDoor);
+            return map;
+        }
+    }
 }
