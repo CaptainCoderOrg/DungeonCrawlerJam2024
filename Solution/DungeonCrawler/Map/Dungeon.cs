@@ -3,6 +3,7 @@ namespace CaptainCoder.Dungeoneering.DungeonMap;
 public class Dungeon()
 {
     public WallMap Walls { get; private set; } = new();
+    public DungeonEventMap EventMap { get; private set; } = new();
 
     public Tile GetTile(Position position)
     {
