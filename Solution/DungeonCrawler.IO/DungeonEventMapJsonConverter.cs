@@ -2,6 +2,12 @@ namespace CaptainCoder.Dungeoneering.DungeonMap.IO;
 
 using Newtonsoft.Json;
 
+/// <summary>
+/// JsonConverter for DungeonEventMap. This is required to correctly serialize and
+/// deserialize the underlying dictionary which uses non-string as a Key. The
+/// default serializer for Dictionary converts the keys to a string which cannot
+/// be correctly deserialized.
+/// </summary>
 public class DungeonEventMapJsonConverter : JsonConverter<DungeonEventMap>
 {
     public static DungeonEventMapJsonConverter Shared { get; } = new();

@@ -2,6 +2,12 @@ namespace CaptainCoder.Dungeoneering.DungeonMap.IO;
 
 using Newtonsoft.Json;
 
+/// <summary>
+/// JsonConverter for WallMaps. This is required to correctly serialize and
+/// deserialize the underlying dictionary which uses TileEdge as a Key. The
+/// default serializer for Dictionary converts the keys to a string which cannot
+/// be correctly deserialized.
+/// </summary>
 public class WallMapJsonConverter : JsonConverter<WallMap>
 {
     public static WallMapJsonConverter Shared { get; } = new();

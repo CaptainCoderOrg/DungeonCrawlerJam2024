@@ -2,6 +2,8 @@ namespace Tests;
 
 using CaptainCoder.Dungeoneering.DungeonMap;
 
+using Newtonsoft.Json;
+
 using Shouldly;
 
 public class TileEdge_should
@@ -87,5 +89,15 @@ public class TileEdge_should
         first.ShouldNotBe(second);
     }
 
+    [Theory]
+    [InlineData(5, 7, Facing.North)]
+    [InlineData(0, 0, Facing.East)]
+    public void be_jsonable(int x, int y, Facing facing)
+    {
+        TileEdge underTest = new (new Position(x, y), facing);
+        string json = JsonConvert.SerializeObject(underTest);
+        TileEdge? actual = JsonConvert.DeserializeObject<TileEdge>(json);
+        actual.ShouldBe(underTest);
+    }
 
 }
