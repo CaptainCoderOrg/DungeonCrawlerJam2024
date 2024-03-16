@@ -11,6 +11,7 @@ public class DungeonEditorScreen : IScreen
     public Cursor Cursor { get; private set; } = new(new Position(0, 0), Facing.West);
     public WallType Wall { get; private set; } = WallType.Solid;
     public WallMap WallMap { get; private set; } = WallMapExtensions.CreateEmpty(MaxMapSize, MaxMapSize);
+    public DungeonEventMap EventMap { get; private set; } = new();
     private string? _filename = null;
     private readonly InfoOverLayScreen _overlay = new();
     private IScreen? _editorMenu;
@@ -110,7 +111,19 @@ public class DungeonEditorScreen : IScreen
         int offset = CellSize * 2;
         WallMap.Render(offset, offset);
         Cursor.Render(CellSize, offset, offset);
+        RenderInfoAtCursor(offset + (MaxMapSize + 1) * CellSize, 2 * CellSize);
         _overlay.Render();
+    }
+
+    private void RenderInfoAtCursor(int left, int top)
+    {
+        const int fontSize = 20;
+        const int padding = 2;
+        var (pos, facing) = Cursor;
+        Raylib.DrawText($"({pos.X}, {pos.Y}) - {facing}", left, top, fontSize, Color.White);
+        WallType wallType = WallMap.GetWall(pos, facing);
+        Raylib.DrawText($"WallType: {wallType}", left, top + fontSize + padding, fontSize, Color.White);
+        
     }
 
     public void HandleUserInput()

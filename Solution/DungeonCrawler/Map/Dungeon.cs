@@ -3,6 +3,7 @@ namespace CaptainCoder.Dungeoneering.DungeonMap;
 public class Dungeon()
 {
     public WallMap Walls { get; private set; } = new();
+
     public Tile GetTile(Position position)
     {
         Walls.TryGetWall(position, Facing.North, out WallType north);
