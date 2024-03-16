@@ -1,4 +1,5 @@
 using CaptainCoder.Dungeoneering.DungeonMap;
+using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Player;
 
 using MoonSharp.Interpreter;
@@ -9,6 +10,7 @@ public interface IScriptContext
 {
     public CaptainCoder.Dungeoneering.Player.PlayerView View { get; set; }
     public Dungeon CurrentDungeon { get; }
+    public void SendMessage(Message message);
 }
 
 [MoonSharpUserData]
@@ -58,4 +60,7 @@ public class LuaContext(IScriptContext context)
         Facing facing = (Facing)f;
         _target.CurrentDungeon.Walls.SetWall(position, facing, wall);
     }
+
+    public void WriteInfo(string message) => _target.SendMessage(new Message(MessageType.Info, message));
+    public void Debug(string message) => _target.SendMessage(new Message(MessageType.Debug, message));
 }

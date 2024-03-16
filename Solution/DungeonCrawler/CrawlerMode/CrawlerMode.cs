@@ -18,4 +18,14 @@ public class CrawlerMode(Dungeon dungeon, PlayerView playerView)
         }
     }
     public event Action<PlayerView>? OnViewChange;
+    public event Action<Message>? OnMessageAdded;
+    public void AddMessage(Message message) => OnMessageAdded?.Invoke(message);
+}
+
+public record Message(MessageType MessageType, string Text);
+
+public enum MessageType
+{
+    Debug,
+    Info,
 }

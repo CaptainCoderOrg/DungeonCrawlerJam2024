@@ -23,4 +23,16 @@ public class CrawlerMode_should
 
         actual.ShouldBe(expected);
     }
+
+    [Theory]
+    [InlineData(MessageType.Info, "Information")]
+    [InlineData(MessageType.Debug, "Debug Message")]
+    public void notify_observer_on_message(MessageType type, string message)
+    {
+        CrawlerMode underTest = new(new Dungeon(), new PlayerView(new Position(0, 0), Facing.North));
+        Message actual = null!;
+        underTest.OnMessageAdded += (message) => actual = message;
+        Message expected = new(type, message);
+        underTest.AddMessage(expected);
+    }
 }

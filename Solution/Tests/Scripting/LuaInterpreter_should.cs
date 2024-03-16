@@ -1,6 +1,7 @@
 namespace Tests;
 
 using CaptainCoder.Dungeoneering.DungeonMap;
+using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Player;
 
 using DungeonCrawler.Lua;
@@ -166,6 +167,22 @@ public class LuaInterpreter_should
         actual = emptyDungeon.Walls.GetWall(new Position(x, y).Step(facing), facing.Opposite());
         actual.ShouldBe(expected);
     }
+
+    [Theory]
+    [InlineData("""
+    context.WriteInfo("Hello world!")
+    """,
+    MessageType.Info, "Hello world!")]
+    [InlineData("""
+    context.Debug("Debug info.")
+    """,
+    MessageType.Debug, "Debug info.")]
+    public void send_messages(string script, MessageType type, string message)
+    {
+        var context = Substitute.For<IScriptContext>();
+        Interpreter.ExecLua(script, context);
+        context.Received().SendMessage(new Message(type, message));
+    }
 }
 
 internal class TestContext : IScriptContext
@@ -173,4 +190,6 @@ internal class TestContext : IScriptContext
     public CaptainCoder.Dungeoneering.Player.PlayerView View { get; set; } = new CaptainCoder.Dungeoneering.Player.PlayerView(new CaptainCoder.Dungeoneering.DungeonMap.Position(0, 0), Facing.North);
 
     public Dungeon CurrentDungeon => throw new NotImplementedException();
+
+    public void SendMessage(Message message) => throw new NotImplementedException();
 }
