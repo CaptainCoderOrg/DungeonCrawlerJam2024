@@ -9,19 +9,15 @@ using Shouldly;
 
 public class DungeonCrawlerManifest_should
 {
-    public static DungeonCrawlerManifest Empty
-    {
-        get
-        {
-            throw new NotImplementedException();
-        }
-    }
-
+    public static DungeonCrawlerManifest Empty => new();
     public static DungeonCrawlerManifest Simple
     {
         get
         {
-            throw new NotImplementedException();
+            DungeonCrawlerManifest manifest = new();
+            manifest.AddDungeon("simple", Dungeon_should.SimpleSquareDungeon);
+            manifest.AddScript("simpleScript", new EventScript("simple"));
+            return manifest;
         }
     }
 
