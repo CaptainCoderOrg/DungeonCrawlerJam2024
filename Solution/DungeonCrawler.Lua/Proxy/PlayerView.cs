@@ -2,7 +2,7 @@ using MoonSharp.Interpreter;
 
 using DMP = CaptainCoder.Dungeoneering.Player;
 
-namespace DungeonCrawler.Lua.Proxy;
+namespace CaptainCoder.Dungeoneering.Lua.Proxy;
 
 [MoonSharpUserData]
 public class PlayerView(DMP.PlayerView target)

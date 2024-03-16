@@ -1,3 +1,4 @@
+using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.DungeonMap.Unity;
 using CaptainCoder.Dungeoneering.Game;
@@ -5,7 +6,6 @@ using CaptainCoder.Dungeoneering.Game.Unity;
 using CaptainCoder.Dungeoneering.Player;
 using CaptainCoder.Dungeoneering.Player.Unity;
 
-using DungeonCrawler.Lua;
 
 using UnityEngine;
 

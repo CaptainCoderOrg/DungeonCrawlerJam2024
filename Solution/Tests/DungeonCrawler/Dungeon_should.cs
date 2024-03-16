@@ -1,5 +1,6 @@
 namespace Tests;
 
+using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
 
 using Shouldly;
@@ -53,5 +54,22 @@ public class Dungeon_should
     {
         Tile actual = dungeon.GetTile(toCheck);
         actual.ShouldBe(expectedTile);
+    }
+
+    [Fact]
+    public void be_equals()
+    {
+        Dungeon first = MakeDungeon();
+        first.ShouldBe(MakeDungeon());
+        static Dungeon MakeDungeon()
+        {
+            Dungeon dungeon = new();
+            dungeon.Walls.SetWall(new Position(5, 7), Facing.East, WallType.Door);
+            dungeon.Walls.SetWall(new Position(5, 7), Facing.North, WallType.Solid);
+            dungeon.Walls.SetWall(new Position(3, 7), Facing.North, WallType.Solid);
+            dungeon.EventMap.AddEvent(new Position(3, 2), new TileEvent(EventTrigger.OnEnter, new EventScript("Test script")));
+            dungeon.EventMap.AddEvent(new Position(1, 2), new TileEvent(EventTrigger.OnExit, new EventScript("Another Test script")));
+            return dungeon;
+        }
     }
 }

@@ -1,17 +1,11 @@
+using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Player;
 
 using MoonSharp.Interpreter;
 
-namespace DungeonCrawler.Lua;
-
-public interface IScriptContext
-{
-    public CaptainCoder.Dungeoneering.Player.PlayerView View { get; set; }
-    public Dungeon CurrentDungeon { get; }
-    public void SendMessage(Message message);
-}
+namespace CaptainCoder.Dungeoneering.Lua;
 
 [MoonSharpUserData]
 public class LuaContext(IScriptContext context)

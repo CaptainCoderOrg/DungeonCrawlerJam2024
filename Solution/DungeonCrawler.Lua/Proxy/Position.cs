@@ -2,7 +2,7 @@ using MoonSharp.Interpreter;
 
 using DM = CaptainCoder.Dungeoneering.DungeonMap;
 
-namespace DungeonCrawler.Lua.Proxy;
+namespace CaptainCoder.Dungeoneering.Lua.Proxy;
 
 
 [MoonSharpUserData]

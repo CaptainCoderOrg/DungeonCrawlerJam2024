@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-using DungeonCrawler.Lua;
+using CaptainCoder.Dungeoneering.Lua;
 
 using MoonSharp.Interpreter;
 using MoonSharp.Interpreter.Serialization;
@@ -10,7 +10,7 @@ public class Program
     public static void Main()
     {
         Console.WriteLine("Generating hardwired Lua output");
-        File.WriteAllText("hardwired.lua", Hardwired.GenerateHardwiredLua());
+        File.WriteAllText("hardwired.moonlua", Hardwired.GenerateHardwiredLua());
     }
 }
 

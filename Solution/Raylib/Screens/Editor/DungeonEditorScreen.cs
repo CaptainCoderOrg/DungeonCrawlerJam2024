@@ -1,5 +1,6 @@
 namespace CaptainCoder.Dungeoneering.Raylib;
 
+using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap.IO;
 
 using Raylib_cs;
@@ -10,7 +11,7 @@ public class DungeonEditorScreen : IScreen
     public const int CellSize = 16;
     public Cursor Cursor { get; private set; } = new(new Position(0, 0), Facing.West);
     public WallType Wall { get; private set; } = WallType.Solid;
-    public WallMap WallMap { get; private set; } = WallMapExtensions.CreateEmpty(MaxMapSize, MaxMapSize);
+    public Dungeon CurrentDungeon { get; private set; } = new(WallMapExtensions.CreateEmpty(MaxMapSize, MaxMapSize));
     private string? _filename = null;
     private readonly InfoOverLayScreen _overlay = new();
     private IScreen? _editorMenu;
@@ -43,13 +44,13 @@ public class DungeonEditorScreen : IScreen
 
     private void RandomizeMap()
     {
-        WallMap = WallMapExtensions.RandomMap(MaxMapSize, MaxMapSize, .50, .25, .10);
+        CurrentDungeon = new Dungeon(WallMapExtensions.RandomMap(MaxMapSize, MaxMapSize, .50, .25, .10));
         Program.Screen = this;
     }
 
     private void NewMap()
     {
-        WallMap = WallMapExtensions.CreateEmpty(MaxMapSize, MaxMapSize);
+        CurrentDungeon = new Dungeon(WallMapExtensions.CreateEmpty(MaxMapSize, MaxMapSize));
         Program.Screen = this;
     }
 
@@ -60,7 +61,7 @@ public class DungeonEditorScreen : IScreen
             SaveAs();
             return;
         }
-        File.WriteAllText(_filename, WallMap.ToJson());
+        File.WriteAllText(_filename, CurrentDungeon.Walls.ToJson());
         _overlay.AddMessage($"File saved: {_filename}!", Color.Green);
         Program.Screen = this;
     }
@@ -99,7 +100,7 @@ public class DungeonEditorScreen : IScreen
 
             _filename = filename;
             string json = File.ReadAllText(filename);
-            WallMap = JsonExtensions.LoadModel<WallMap>(json);
+            CurrentDungeon = new Dungeon(JsonExtensions.LoadModel<WallMap>(json));
             Program.Screen = this;
         }
     }
@@ -108,13 +109,39 @@ public class DungeonEditorScreen : IScreen
     {
         Raylib.ClearBackground(Color.Black);
         int offset = CellSize * 2;
-        WallMap.Render(offset, offset);
+        CurrentDungeon.Walls.Render(offset, offset);
         Cursor.Render(CellSize, offset, offset);
+        RenderInfoAtCursor(offset + (MaxMapSize + 1) * CellSize, 2 * CellSize);
         _overlay.Render();
+    }
+
+    private void RenderInfoAtCursor(int left, int top)
+    {
+        const int fontSize = 20;
+        const int padding = 2;
+        var (pos, facing) = Cursor;
+        DrawText($"({pos.X}, {pos.Y}) - {facing}");
+        WallType wallType = CurrentDungeon.Walls.GetWall(pos, facing);
+        DrawText($"WallType: {wallType}");
+        DrawText("Scripts:");
+        foreach (TileEvent evt in CurrentDungeon.EventMap.EventsAt(pos))
+        {
+            DrawText($"  {evt.Trigger}: ???");
+        }
+
+        void DrawText(string text)
+        {
+            Raylib.DrawText(text, left, top, fontSize, Color.White);
+            top += fontSize + padding;
+        }
     }
 
     public void HandleUserInput()
     {
+        if (Raylib.IsKeyPressed(KeyboardKey.Minus))
+        {
+            CurrentDungeon.EventMap.AddEvent(Cursor.Position, new TileEvent(EventTrigger.OnEnter, new EventScript("Some Script")));
+        }
         if (Raylib.IsKeyPressed(KeyboardKey.Tab))
         {
             Wall = Wall.Next();
@@ -126,13 +153,13 @@ public class DungeonEditorScreen : IScreen
         }
         if (Raylib.IsKeyPressed(KeyboardKey.Space))
         {
-            if (WallMap.TryGetWall(Cursor.Position, Cursor.Facing, out WallType wall) && wall == Wall)
+            if (CurrentDungeon.Walls.TryGetWall(Cursor.Position, Cursor.Facing, out WallType wall) && wall == Wall)
             {
-                WallMap.RemoveWall(Cursor.Position, Cursor.Facing);
+                CurrentDungeon.Walls.RemoveWall(Cursor.Position, Cursor.Facing);
             }
             else
             {
-                WallMap.SetWall(Cursor.Position, Cursor.Facing, Wall);
+                CurrentDungeon.Walls.SetWall(Cursor.Position, Cursor.Facing, Wall);
             }
         }
         HandleCursorMovement();

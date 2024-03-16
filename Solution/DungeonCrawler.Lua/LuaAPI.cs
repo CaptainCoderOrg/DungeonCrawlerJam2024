@@ -1,6 +1,6 @@
 ﻿using MoonSharp.Interpreter;
 
-namespace DungeonCrawler.Lua;
+namespace CaptainCoder.Dungeoneering.Lua;
 
 [MoonSharpUserData]
 public class LuaAPI
