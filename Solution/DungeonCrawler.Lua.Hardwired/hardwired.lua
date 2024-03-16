@@ -5,14 +5,14 @@ ${
 	["MoonSharp.Interpreter.Serialization.Json.JsonNull"] = ${
 		skip = true,
 	},
-	["DungeonCrawler.Lua.LuaAPI"] = ${
+	["CaptainCoder.Dungeoneering.Lua.LuaAPI"] = ${
 		visibility = "public",
 		class = "MoonSharp.Interpreter.Interop.StandardUserDataDescriptor",
 		members = ${
 			__new = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "__new",
-				decltype = "DungeonCrawler.Lua.LuaAPI",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaAPI",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -20,8 +20,8 @@ ${
 						ctor = true,
 						special = true,
 						visibility = "public",
-						ret = "DungeonCrawler.Lua.LuaAPI",
-						decltype = "DungeonCrawler.Lua.LuaAPI",
+						ret = "CaptainCoder.Dungeoneering.Lua.LuaAPI",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaAPI",
 						static = true,
 						extension = false,
 						params = ${ },
@@ -31,7 +31,7 @@ ${
 			Sum = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "Sum",
-				decltype = "DungeonCrawler.Lua.LuaAPI",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaAPI",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -40,7 +40,7 @@ ${
 						special = false,
 						visibility = "public",
 						ret = "System.Int32",
-						decltype = "DungeonCrawler.Lua.LuaAPI",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaAPI",
 						static = false,
 						extension = false,
 						params = ${
@@ -71,7 +71,7 @@ ${
 			GetType = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "GetType",
-				decltype = "DungeonCrawler.Lua.LuaAPI",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaAPI",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -90,7 +90,7 @@ ${
 			ToString = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "ToString",
-				decltype = "DungeonCrawler.Lua.LuaAPI",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaAPI",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -109,7 +109,7 @@ ${
 			Equals = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "Equals",
-				decltype = "DungeonCrawler.Lua.LuaAPI",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaAPI",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -139,7 +139,7 @@ ${
 			GetHashCode = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "GetHashCode",
-				decltype = "DungeonCrawler.Lua.LuaAPI",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaAPI",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -158,14 +158,14 @@ ${
 		},
 		metamembers = ${ },
 	},
-	["DungeonCrawler.Lua.LuaContext"] = ${
+	["CaptainCoder.Dungeoneering.Lua.LuaContext"] = ${
 		visibility = "public",
 		class = "MoonSharp.Interpreter.Interop.StandardUserDataDescriptor",
 		members = ${
 			__new = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "__new",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -173,15 +173,15 @@ ${
 						ctor = true,
 						special = true,
 						visibility = "public",
-						ret = "DungeonCrawler.Lua.LuaContext",
-						decltype = "DungeonCrawler.Lua.LuaContext",
+						ret = "CaptainCoder.Dungeoneering.Lua.LuaContext",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 						static = true,
 						extension = false,
 						params = ${
 							[1] = ${
 								name = "context",
-								type = "DungeonCrawler.Lua.IScriptContext",
-								origtype = "DungeonCrawler.Lua.IScriptContext",
+								type = "CaptainCoder.Dungeoneering.DungeonCrawler.Scripting.IScriptContext",
+								origtype = "CaptainCoder.Dungeoneering.DungeonCrawler.Scripting.IScriptContext",
 								default = false,
 								out = false,
 								ref = false,
@@ -195,7 +195,7 @@ ${
 			get_PlayerView = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "get_PlayerView",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -204,7 +204,7 @@ ${
 						special = true,
 						visibility = "public",
 						ret = "MoonSharp.Interpreter.DynValue",
-						decltype = "DungeonCrawler.Lua.LuaContext",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 						static = false,
 						extension = false,
 						params = ${ },
@@ -214,7 +214,7 @@ ${
 			SetPlayerPosition = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "SetPlayerPosition",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -223,7 +223,7 @@ ${
 						special = false,
 						visibility = "public",
 						ret = "System.Void",
-						decltype = "DungeonCrawler.Lua.LuaContext",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 						static = false,
 						extension = false,
 						params = ${
@@ -254,7 +254,7 @@ ${
 			SetPlayerFacing = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "SetPlayerFacing",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -263,7 +263,7 @@ ${
 						special = false,
 						visibility = "public",
 						ret = "System.Void",
-						decltype = "DungeonCrawler.Lua.LuaContext",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 						static = false,
 						extension = false,
 						params = ${
@@ -284,7 +284,7 @@ ${
 			SetPlayerView = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "SetPlayerView",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -293,7 +293,7 @@ ${
 						special = false,
 						visibility = "public",
 						ret = "System.Void",
-						decltype = "DungeonCrawler.Lua.LuaContext",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 						static = false,
 						extension = false,
 						params = ${
@@ -334,7 +334,7 @@ ${
 			GetWall = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "GetWall",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -343,7 +343,7 @@ ${
 						special = false,
 						visibility = "public",
 						ret = "System.Int32",
-						decltype = "DungeonCrawler.Lua.LuaContext",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 						static = false,
 						extension = false,
 						params = ${ },
@@ -353,7 +353,7 @@ ${
 			GetWallAt = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "GetWallAt",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -362,7 +362,7 @@ ${
 						special = false,
 						visibility = "public",
 						ret = "System.Int32",
-						decltype = "DungeonCrawler.Lua.LuaContext",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 						static = false,
 						extension = false,
 						params = ${
@@ -403,7 +403,7 @@ ${
 			SetWall = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "SetWall",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -412,7 +412,7 @@ ${
 						special = false,
 						visibility = "public",
 						ret = "System.Void",
-						decltype = "DungeonCrawler.Lua.LuaContext",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 						static = false,
 						extension = false,
 						params = ${
@@ -433,7 +433,7 @@ ${
 			SetWallAt = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "SetWallAt",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -442,7 +442,7 @@ ${
 						special = false,
 						visibility = "public",
 						ret = "System.Void",
-						decltype = "DungeonCrawler.Lua.LuaContext",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 						static = false,
 						extension = false,
 						params = ${
@@ -493,7 +493,7 @@ ${
 			WriteInfo = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "WriteInfo",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -502,7 +502,7 @@ ${
 						special = false,
 						visibility = "public",
 						ret = "System.Void",
-						decltype = "DungeonCrawler.Lua.LuaContext",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 						static = false,
 						extension = false,
 						params = ${
@@ -523,7 +523,7 @@ ${
 			Debug = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "Debug",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -532,7 +532,7 @@ ${
 						special = false,
 						visibility = "public",
 						ret = "System.Void",
-						decltype = "DungeonCrawler.Lua.LuaContext",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 						static = false,
 						extension = false,
 						params = ${
@@ -553,7 +553,7 @@ ${
 			GetType = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "GetType",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -572,7 +572,7 @@ ${
 			ToString = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "ToString",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -591,7 +591,7 @@ ${
 			Equals = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "Equals",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -621,7 +621,7 @@ ${
 			GetHashCode = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "GetHashCode",
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -644,21 +644,21 @@ ${
 				static = false,
 				read = true,
 				write = false,
-				decltype = "DungeonCrawler.Lua.LuaContext",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
 				declvtype = false,
 				type = "MoonSharp.Interpreter.DynValue",
 			},
 		},
 		metamembers = ${ },
 	},
-	["DungeonCrawler.Lua.Proxy.PlayerView"] = ${
+	["CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView"] = ${
 		visibility = "public",
 		class = "MoonSharp.Interpreter.Interop.StandardUserDataDescriptor",
 		members = ${
 			__new = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "__new",
-				decltype = "DungeonCrawler.Lua.Proxy.PlayerView",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -666,8 +666,8 @@ ${
 						ctor = true,
 						special = true,
 						visibility = "public",
-						ret = "DungeonCrawler.Lua.Proxy.PlayerView",
-						decltype = "DungeonCrawler.Lua.Proxy.PlayerView",
+						ret = "CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView",
+						decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView",
 						static = true,
 						extension = false,
 						params = ${
@@ -688,7 +688,7 @@ ${
 			get_Position = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "get_Position",
-				decltype = "DungeonCrawler.Lua.Proxy.PlayerView",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -697,7 +697,7 @@ ${
 						special = true,
 						visibility = "public",
 						ret = "MoonSharp.Interpreter.DynValue",
-						decltype = "DungeonCrawler.Lua.Proxy.PlayerView",
+						decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView",
 						static = false,
 						extension = false,
 						params = ${ },
@@ -707,7 +707,7 @@ ${
 			get_Facing = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "get_Facing",
-				decltype = "DungeonCrawler.Lua.Proxy.PlayerView",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -716,7 +716,7 @@ ${
 						special = true,
 						visibility = "public",
 						ret = "System.Int32",
-						decltype = "DungeonCrawler.Lua.Proxy.PlayerView",
+						decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView",
 						static = false,
 						extension = false,
 						params = ${ },
@@ -726,7 +726,7 @@ ${
 			ToString = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "ToString",
-				decltype = "DungeonCrawler.Lua.Proxy.PlayerView",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -735,7 +735,7 @@ ${
 						special = false,
 						visibility = "public",
 						ret = "System.String",
-						decltype = "DungeonCrawler.Lua.Proxy.PlayerView",
+						decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView",
 						static = false,
 						extension = false,
 						params = ${ },
@@ -745,7 +745,7 @@ ${
 			GetType = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "GetType",
-				decltype = "DungeonCrawler.Lua.Proxy.PlayerView",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -764,7 +764,7 @@ ${
 			Equals = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "Equals",
-				decltype = "DungeonCrawler.Lua.Proxy.PlayerView",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -794,7 +794,7 @@ ${
 			GetHashCode = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "GetHashCode",
-				decltype = "DungeonCrawler.Lua.Proxy.PlayerView",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -817,7 +817,7 @@ ${
 				static = false,
 				read = true,
 				write = false,
-				decltype = "DungeonCrawler.Lua.Proxy.PlayerView",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView",
 				declvtype = false,
 				type = "MoonSharp.Interpreter.DynValue",
 			},
@@ -828,21 +828,21 @@ ${
 				static = false,
 				read = true,
 				write = false,
-				decltype = "DungeonCrawler.Lua.Proxy.PlayerView",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.PlayerView",
 				declvtype = false,
 				type = "System.Int32",
 			},
 		},
 		metamembers = ${ },
 	},
-	["DungeonCrawler.Lua.Proxy.Position"] = ${
+	["CaptainCoder.Dungeoneering.Lua.Proxy.Position"] = ${
 		visibility = "public",
 		class = "MoonSharp.Interpreter.Interop.StandardUserDataDescriptor",
 		members = ${
 			__new = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "__new",
-				decltype = "DungeonCrawler.Lua.Proxy.Position",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.Position",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -850,8 +850,8 @@ ${
 						ctor = true,
 						special = true,
 						visibility = "public",
-						ret = "DungeonCrawler.Lua.Proxy.Position",
-						decltype = "DungeonCrawler.Lua.Proxy.Position",
+						ret = "CaptainCoder.Dungeoneering.Lua.Proxy.Position",
+						decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.Position",
 						static = true,
 						extension = false,
 						params = ${
@@ -872,7 +872,7 @@ ${
 			get_X = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "get_X",
-				decltype = "DungeonCrawler.Lua.Proxy.Position",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.Position",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -881,7 +881,7 @@ ${
 						special = true,
 						visibility = "public",
 						ret = "System.Int32",
-						decltype = "DungeonCrawler.Lua.Proxy.Position",
+						decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.Position",
 						static = false,
 						extension = false,
 						params = ${ },
@@ -891,7 +891,7 @@ ${
 			get_Y = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "get_Y",
-				decltype = "DungeonCrawler.Lua.Proxy.Position",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.Position",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -900,7 +900,7 @@ ${
 						special = true,
 						visibility = "public",
 						ret = "System.Int32",
-						decltype = "DungeonCrawler.Lua.Proxy.Position",
+						decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.Position",
 						static = false,
 						extension = false,
 						params = ${ },
@@ -910,7 +910,7 @@ ${
 			ToString = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "ToString",
-				decltype = "DungeonCrawler.Lua.Proxy.Position",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.Position",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -919,7 +919,7 @@ ${
 						special = false,
 						visibility = "public",
 						ret = "System.String",
-						decltype = "DungeonCrawler.Lua.Proxy.Position",
+						decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.Position",
 						static = false,
 						extension = false,
 						params = ${ },
@@ -929,7 +929,7 @@ ${
 			GetType = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "GetType",
-				decltype = "DungeonCrawler.Lua.Proxy.Position",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.Position",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -948,7 +948,7 @@ ${
 			Equals = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "Equals",
-				decltype = "DungeonCrawler.Lua.Proxy.Position",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.Position",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -978,7 +978,7 @@ ${
 			GetHashCode = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "GetHashCode",
-				decltype = "DungeonCrawler.Lua.Proxy.Position",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.Position",
 				overloads = ${
 					[1] = ${
 						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
@@ -1001,7 +1001,7 @@ ${
 				static = false,
 				read = true,
 				write = false,
-				decltype = "DungeonCrawler.Lua.Proxy.Position",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.Position",
 				declvtype = false,
 				type = "System.Int32",
 			},
@@ -1012,7 +1012,7 @@ ${
 				static = false,
 				read = true,
 				write = false,
-				decltype = "DungeonCrawler.Lua.Proxy.Position",
+				decltype = "CaptainCoder.Dungeoneering.Lua.Proxy.Position",
 				declvtype = false,
 				type = "System.Int32",
 			},

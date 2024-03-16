@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonCrawler", "DungeonCr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonCrawlerUnity", "Unity\DungeonCrawlerUnity\DungeonCrawlerUnity.csproj", "{F2A1BDB1-BD33-44CA-A499-CDDB0996811A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonCrawler.Scripting", "DungeonCrawler.Scripting\DungeonCrawler.Scripting.csproj", "{F05F025A-BD8D-4139-9CE2-F8BDEC0D090D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonCrawler.IO", "DungeonCrawler.IO\DungeonCrawler.IO.csproj", "{02F36858-A571-4B8C-8240-A52AC6AB0322}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonCrawler.Lua", "DungeonCrawler.Lua\DungeonCrawler.Lua.csproj", "{AE114C70-1E06-4A2F-A8B1-2790685F04FD}"
@@ -58,10 +56,6 @@ Global
 		{F2A1BDB1-BD33-44CA-A499-CDDB0996811A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2A1BDB1-BD33-44CA-A499-CDDB0996811A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2A1BDB1-BD33-44CA-A499-CDDB0996811A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F05F025A-BD8D-4139-9CE2-F8BDEC0D090D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F05F025A-BD8D-4139-9CE2-F8BDEC0D090D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F05F025A-BD8D-4139-9CE2-F8BDEC0D090D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F05F025A-BD8D-4139-9CE2-F8BDEC0D090D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{02F36858-A571-4B8C-8240-A52AC6AB0322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{02F36858-A571-4B8C-8240-A52AC6AB0322}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02F36858-A571-4B8C-8240-A52AC6AB0322}.Release|Any CPU.ActiveCfg = Release|Any CPU

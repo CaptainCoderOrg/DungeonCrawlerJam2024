@@ -1,10 +1,10 @@
+using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.Player;
-using CaptainCoder.Dungeoneering.Scripting;
 
 using MoonSharp.Interpreter;
 
-namespace DungeonCrawler.Lua;
+namespace CaptainCoder.Dungeoneering.Lua;
 
 public static class Interpreter
 {
@@ -45,4 +45,9 @@ public static class LuaExtensions
             lua.Globals[name] = Enum.Parse<TEnum>(name);
         }
     }
+}
+
+public static class EventScriptExtensions
+{
+    public static void Invoke(this EventScript script, IScriptContext context) => Interpreter.ExecLua(script.Script, context);
 }

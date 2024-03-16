@@ -123,7 +123,7 @@ public class DungeonEditorScreen : IScreen
         Raylib.DrawText($"({pos.X}, {pos.Y}) - {facing}", left, top, fontSize, Color.White);
         WallType wallType = WallMap.GetWall(pos, facing);
         Raylib.DrawText($"WallType: {wallType}", left, top + fontSize + padding, fontSize, Color.White);
-        
+
     }
 
     public void HandleUserInput()

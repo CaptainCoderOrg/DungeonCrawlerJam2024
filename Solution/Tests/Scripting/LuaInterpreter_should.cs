@@ -1,10 +1,10 @@
 namespace Tests;
 
+using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.Game;
+using CaptainCoder.Dungeoneering.Lua;
 using CaptainCoder.Dungeoneering.Player;
-
-using DungeonCrawler.Lua;
 
 using NSubstitute;
 

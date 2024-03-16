@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-using DungeonCrawler.Lua;
+using CaptainCoder.Dungeoneering.Lua;
 
 using MoonSharp.Interpreter;
 using MoonSharp.Interpreter.Serialization;
