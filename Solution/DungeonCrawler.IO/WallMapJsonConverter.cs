@@ -13,8 +13,7 @@ public class WallMapJsonConverter : JsonConverter<WallMap>
     public static WallMapJsonConverter Shared { get; } = new();
     public override WallMap? ReadJson(JsonReader reader, Type objectType, WallMap? existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
-        string data = reader.Value as string ?? throw new Exception($"Could not read WallMap.");
-        (TileEdge edge, WallType wall)[] elems = JsonConvert.DeserializeObject<(TileEdge, WallType)[]>(data) ?? throw new Exception($"Could not read WallMap.");
+        (TileEdge, WallType)[] elems = serializer.Deserialize<(TileEdge, WallType)[]>(reader) ?? throw new Exception($"Could not read WallMap.");
         return new WallMap(elems);
     }
 
@@ -22,7 +21,6 @@ public class WallMapJsonConverter : JsonConverter<WallMap>
     {
         if (value is null) { throw new Exception($"Could not write null WallMap."); }
         (TileEdge, WallType)[] elems = value.Map.Select(kvp => (kvp.Key, kvp.Value)).ToArray();
-        string json = JsonConvert.SerializeObject(elems);
-        writer.WriteValue(json);
+        serializer.Serialize(writer, elems, elems.GetType());
     }
 }
