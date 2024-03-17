@@ -12,7 +12,7 @@ using Shouldly;
 
 public class Project_should
 {
-    static readonly string root = Path.Combine("C:", "project-root");
+    static readonly string root = Path.Combine("project-root");
     static readonly string dungeonsPath = Path.Combine(root, Project.DungeonDir);
     static readonly string scriptsPath = Path.Combine(root, Project.ScriptDir);
     public static MockFileData SimpleDungeonFile = new(JsonExtensions.ToJson(Dungeon_should.SimpleSquareDungeon));
@@ -68,12 +68,16 @@ public class Project_should
     [Fact]
     public void retrieve_all_dungeon_names_and_paths()
     {
-        IDictionary<string, string> dungeons = MakeProjectFileSystem().GetDungeonPaths(root);
+        MockFileSystem mockFileSystem = MakeProjectFileSystem();
+        var info = mockFileSystem.DriveInfo.GetDrives();
+        IDictionary<string, string> dungeons = mockFileSystem.GetDungeonPaths(root);
         dungeons.Count.ShouldBe(2);
         dungeons.Keys.ShouldBeSubsetOf(["simple", "another"]);
-        dungeons.Values.ShouldBeSubsetOf(
-            [Path.Combine(dungeonsPath, "simple.json"),
-                Path.Combine(dungeonsPath, "another.json")]);
+        dungeons.Values.Select(RemoveDrive).ShouldBeSubsetOf(
+            [$"/{Path.Combine(dungeonsPath, "simple.json")}",
+                $"/{Path.Combine(dungeonsPath, "another.json")}"]);
+        // Remove the drive name to make tests pass on linux machines
+        static string RemoveDrive(string name) => name.Replace("C:\\", "/").Replace("C:/", "/");
     }
 
     [Fact]
