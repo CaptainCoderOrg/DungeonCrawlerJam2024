@@ -5,10 +5,11 @@ using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.DungeonMap.IO;
 
-namespace DungeonCrawler.Editor;
+namespace CaptainCoder.Dungeoneering.Editor;
 
 public static class Project
 {
+    public static IFileSystem DefaultFileSystem = new FileSystem();
     // private readonly IFileSystem _fileSystem = fileSystem;
     public const string ScriptDir = "scripts";
     public const string DungeonDir = "dungeons";

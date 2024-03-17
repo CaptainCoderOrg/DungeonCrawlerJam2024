@@ -2,13 +2,16 @@ namespace CaptainCoder.Dungeoneering.Raylib;
 
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap.IO;
+using CaptainCoder.Dungeoneering.Editor;
 
 using Raylib_cs;
 
-public class DungeonEditorScreen : IScreen
+public class DungeonEditorScreen(string projectName) : IScreen
 {
     public const int MaxMapSize = 24;
     public const int CellSize = 16;
+    private readonly string _dungeonDirectory = Path.Combine(GameConstants.SaveDir, projectName, Project.DungeonDir);
+    public string ProjectName { get; } = projectName;
     public Cursor Cursor { get; private set; } = new(new Position(0, 0), Facing.West);
     public WallType Wall { get; private set; } = WallType.Solid;
     public Dungeon CurrentDungeon { get; private set; } = new(WallMapExtensions.CreateEmpty(MaxMapSize, MaxMapSize));
@@ -26,15 +29,14 @@ public class DungeonEditorScreen : IScreen
                     new MenuScreen("Menu",
                     [
                         new DynamicEntry(
-                            () => "Save " + (_filename ?? string.Empty),
+                            () => "Save " + (Path.GetFileNameWithoutExtension(_filename) ?? string.Empty),
                             _filename is null ? SaveAs : Save
                         ),
                         new StaticEntry("Save As", SaveAs),
                         new StaticEntry("New Map", NewMap),
                         new StaticEntry("Randomize Map", RandomizeMap),
                         new StaticEntry("Load", LoadMap),
-                        new StaticEntry("Return to Editor", () => Program.Screen = this),
-                        new StaticEntry("Exit Editor", Program.Exit),
+                        new StaticEntry("Exit Editor", () => Program.Screen = new ProjectScreen(ProjectName)),
                     ]
                 ));
             }
@@ -44,12 +46,14 @@ public class DungeonEditorScreen : IScreen
 
     private void RandomizeMap()
     {
+        _filename = null;
         CurrentDungeon = new Dungeon(WallMapExtensions.RandomMap(MaxMapSize, MaxMapSize, .50, .25, .10));
         Program.Screen = this;
     }
 
     private void NewMap()
     {
+        _filename = null;
         CurrentDungeon = new Dungeon(WallMapExtensions.CreateEmpty(MaxMapSize, MaxMapSize));
         Program.Screen = this;
     }
@@ -62,7 +66,7 @@ public class DungeonEditorScreen : IScreen
             return;
         }
         File.WriteAllText(_filename, CurrentDungeon.Walls.ToJson());
-        _overlay.AddMessage($"File saved: {_filename}!", Color.Green);
+        _overlay.AddMessage($"File saved: {Path.GetFileNameWithoutExtension(_filename)}!", Color.Green);
         Program.Screen = this;
     }
 
@@ -71,20 +75,19 @@ public class DungeonEditorScreen : IScreen
         Program.Screen = new PromptScreen("Save As", this, OnFinished);
         void OnFinished(string filename)
         {
-            _filename = Path.Combine(".save-data", $"{filename}.json");
+            _filename = Path.Combine(_dungeonDirectory, $"{filename}.json");
             Save();
         }
     }
 
     public void LoadMap()
     {
-        Directory.CreateDirectory(Path.Combine(".save-data"));
-        string[] filenames = Directory.GetFiles(Path.Combine(".save-data"));
+        string[] filenames = Directory.GetFiles(_dungeonDirectory);
         Program.Screen = new ModalMenuScreen(
             this,
             new MenuScreen(
                 "Load Map",
-                filenames.Select((file, ix) => new StaticEntry(file, () => LoadMap(file)))
+                filenames.Select((file, ix) => new StaticEntry(Path.GetFileNameWithoutExtension(file), () => LoadMap(file)))
             )
         );
 
