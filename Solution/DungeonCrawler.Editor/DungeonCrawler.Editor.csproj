@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\DungeonCrawler\DungeonCrawler.csproj" />
+    <ProjectReference Include="..\DungeonCrawler.IO\DungeonCrawler.IO.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TestableIO.System.IO.Abstractions.Wrappers" Version="20.0.34" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

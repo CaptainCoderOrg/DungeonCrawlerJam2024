@@ -2,6 +2,8 @@
 
   <ItemGroup>
     <PackageReference Include="NLua" Version="1.7.2" />
+    <PackageReference Include="TestableIO.System.IO.Abstractions.TestingHelpers" Version="20.0.34" />
+    <PackageReference Include="TestableIO.System.IO.Abstractions.Wrappers" Version="20.0.34" />
   </ItemGroup>
 
   <ItemGroup>

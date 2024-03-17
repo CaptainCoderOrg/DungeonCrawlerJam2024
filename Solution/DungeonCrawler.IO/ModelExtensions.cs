@@ -18,6 +18,7 @@ public static class JsonExtensions
     public static string ToJson(this WallMap wallMap) => JsonConvert.SerializeObject(wallMap, Converters);
     public static string ToJson(this EventMap eventMap) => JsonConvert.SerializeObject(eventMap, Converters);
     public static string ToJson(this DungeonCrawlerManifest crawler) => JsonConvert.SerializeObject(crawler, Converters);
+    public static string ToJson<T>(T data) => JsonConvert.SerializeObject(data, Converters);
 
     public static T LoadModel<T>(string json)
     {
