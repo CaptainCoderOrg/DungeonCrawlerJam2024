@@ -73,7 +73,7 @@ public class Project_should
         dungeons.Keys.ShouldBeSubsetOf(["simple", "another"]);
         dungeons.Values.ShouldBeSubsetOf(
             [Path.Combine(dungeonsPath, "simple.json"),
-             Path.Combine(dungeonsPath, "another.json")]);
+                Path.Combine(dungeonsPath, "another.json")]);
     }
 
     [Fact]
