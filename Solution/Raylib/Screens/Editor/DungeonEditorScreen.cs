@@ -1,6 +1,5 @@
 namespace CaptainCoder.Dungeoneering.Raylib;
 
-using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap.IO;
 using CaptainCoder.Dungeoneering.Editor;
 
@@ -129,7 +128,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
         DrawText("Scripts:");
         foreach (TileEvent evt in CurrentDungeon.EventMap.EventsAt(pos))
         {
-            DrawText($"  {evt.Trigger}: ???");
+            DrawText($"  {evt.Trigger}: {evt.ScriptName}");
         }
 
         void DrawText(string text)
@@ -143,7 +142,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
     {
         if (Raylib.IsKeyPressed(KeyboardKey.Minus))
         {
-            CurrentDungeon.EventMap.AddEvent(Cursor.Position, new TileEvent(EventTrigger.OnEnter, new EventScript("Some Script")));
+            CurrentDungeon.EventMap.AddEvent(Cursor.Position, new TileEvent(EventTrigger.OnEnter, "script.lua"));
         }
         if (Raylib.IsKeyPressed(KeyboardKey.Tab))
         {
