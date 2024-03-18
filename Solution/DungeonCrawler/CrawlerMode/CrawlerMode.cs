@@ -7,7 +7,18 @@ namespace CaptainCoder.Dungeoneering.Game;
 public class CrawlerMode(DungeonCrawlerManifest manifest, Dungeon currentDungeon, PlayerView playerView)
 {
     public DungeonCrawlerManifest Manifest { get; set; } = manifest;
-    public Dungeon CurrentDungeon { get; set; } = currentDungeon;
+    private Dungeon _currentDungeon = currentDungeon;
+    public Dungeon CurrentDungeon
+    {
+        get => _currentDungeon;
+        set
+        {
+            if (_currentDungeon == value) { return; }
+            var exited = _currentDungeon;
+            _currentDungeon = value;
+            OnDungeonChange?.Invoke(new DungeonChangeEvent(exited, _currentDungeon));
+        }
+    }
     private PlayerView _currentView = playerView;
     public PlayerView CurrentView
     {
@@ -25,12 +36,14 @@ public class CrawlerMode(DungeonCrawlerManifest manifest, Dungeon currentDungeon
             }
         }
     }
+    public event Action<DungeonChangeEvent>? OnDungeonChange;
     public event Action<ViewChangeEvent>? OnViewChange;
     public event Action<PositionChangeEvent>? OnPositionChange;
     public event Action<Message>? OnMessageAdded;
     public void AddMessage(Message message) => OnMessageAdded?.Invoke(message);
 }
 
+public record DungeonChangeEvent(Dungeon Exited, Dungeon Entered);
 public record PositionChangeEvent(Position Exited, Position Entered);
 public record ViewChangeEvent(PlayerView Exited, PlayerView Entered);
 

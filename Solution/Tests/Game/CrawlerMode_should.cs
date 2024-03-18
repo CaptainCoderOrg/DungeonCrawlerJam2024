@@ -40,4 +40,21 @@ public class CrawlerMode_should
         Message expected = new(type, message);
         underTest.AddMessage(expected);
     }
+
+    [Fact]
+    public void notify_observer_on_dungeon_change()
+    {
+        Dungeon startDungeon = Dungeon_should.SimpleSquareDungeon;
+        Dungeon nextDungeon = Dungeon_should.TwoByTwoRoom;
+        DungeonCrawlerManifest manifest = new();
+        CrawlerMode underTest = new(manifest, startDungeon, new PlayerView(0, 0, Facing.North));
+        Dungeon? exited = default;
+        Dungeon? entered = default;
+        underTest.OnDungeonChange += evt => (exited, entered) = (evt.Exited, evt.Entered);
+
+        underTest.CurrentDungeon = nextDungeon;
+
+        exited.ShouldBe(startDungeon);
+        entered.ShouldBe(nextDungeon);
+    }
 }

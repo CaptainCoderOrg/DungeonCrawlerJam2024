@@ -45,6 +45,8 @@ public class WallMap() : IEquatable<WallMap>
     {
         return Map.AllKeyValuesAreEqual(other.Map);
     }
+
+    public void ClearOnWallChangedEvents() => OnWallChanged = null;
 }
 
 public static class WallMapExtensions
