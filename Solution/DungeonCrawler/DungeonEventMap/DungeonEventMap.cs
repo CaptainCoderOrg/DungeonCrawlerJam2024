@@ -32,6 +32,10 @@ public class EventMap() : IEquatable<EventMap>
         {
             removed = eventsAtPosition[ix];
             eventsAtPosition.RemoveAt(ix);
+            if (eventsAtPosition.Count == 0)
+            {
+                Events.Remove(position);
+            }
             return true;
         }
         removed = default;

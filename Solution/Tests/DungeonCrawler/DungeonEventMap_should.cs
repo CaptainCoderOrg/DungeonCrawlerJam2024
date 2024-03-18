@@ -47,6 +47,15 @@ public class DungeonEventMap_should
     }
 
     [Fact]
+    public void not_have_key_when_last_event_is_removed_from_position()
+    {
+        EventMap map = new();
+        map.AddEvent(new Position(0, 0), new TileEvent(EventTrigger.OnEnter, "scriptName"));
+        map.TryRemoveEvent(new Position(0, 0), 0, out _);
+        map.Events.Keys.Count.ShouldBe(0);
+    }
+
+    [Fact]
     public void provide_view_of_events()
     {
         EventMap map = new();
