@@ -183,6 +183,61 @@ public class LuaInterpreter_should
         Interpreter.ExecLua(script, context);
         context.Received().SendMessage(new Message(type, message));
     }
+
+    [Theory]
+    [InlineData("in-tavern", "true", true)]
+    [InlineData("in-tavern", "false", false)]
+    [InlineData("gold", "10", 10)]
+    [InlineData("name", "'bob'", "bob")]
+    public void set_global_variable(string name, string value, object expected)
+    {
+        IScriptContext context = Substitute.For<IScriptContext>();
+        context.State = new GameState();
+        string script = $"""
+        context.SetVariable("{name}", {value})
+        """;
+
+        Interpreter.ExecLua(script, context);
+
+        context.State.GlobalVariables.Count.ShouldBe(1);
+        context.State.GlobalVariables[name].ShouldBe(expected);
+    }
+
+    [Theory]
+    [InlineData("in-tavern", true)]
+    [InlineData("in-tavern", false)]
+    [InlineData("gold", 10)]
+    [InlineData("name", "bob")]
+    public void get_global_variable(string name, object expected)
+    {
+        IScriptContext context = Substitute.For<IScriptContext>();
+        context.State = new GameState();
+        context.State.GlobalVariables[name] = expected;
+        string script = $"""
+        return context.GetVariable("{name}")
+        """;
+
+        object actual = Interpreter.EvalLua<object>(script, context);
+        actual.ShouldBe(expected);
+    }
+
+    [Theory]
+    [InlineData("no-value")]
+    [InlineData("no-value2")]
+    [InlineData("tricky")]
+    public void get_unset_global_returns_nil(string name)
+    {
+        IScriptContext context = Substitute.For<IScriptContext>();
+        context.State = new GameState();
+        string script = $"""
+        return context.GetVariable("{name}") == nil
+        """;
+
+        bool actual = Interpreter.EvalLua<bool>(script, context);
+        actual.ShouldBeTrue();
+    }
+
+
 }
 
 internal class TestContext : IScriptContext
@@ -190,6 +245,8 @@ internal class TestContext : IScriptContext
     public CaptainCoder.Dungeoneering.Player.PlayerView View { get; set; } = new CaptainCoder.Dungeoneering.Player.PlayerView(new CaptainCoder.Dungeoneering.DungeonMap.Position(0, 0), Facing.North);
 
     public Dungeon CurrentDungeon => throw new NotImplementedException();
+
+    public GameState State { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
     public void SendMessage(Message message) => throw new NotImplementedException();
 }
