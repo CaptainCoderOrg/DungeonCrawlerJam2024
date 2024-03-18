@@ -64,7 +64,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
             SaveAs();
             return;
         }
-        File.WriteAllText(_filename, CurrentDungeon.Walls.ToJson());
+        File.WriteAllText(_filename, JsonExtensions.ToJson(CurrentDungeon));
         _overlay.AddMessage($"File saved: {Path.GetFileNameWithoutExtension(_filename)}!", Color.Green);
         Program.Screen = this;
     }
@@ -102,7 +102,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
 
             _filename = filename;
             string json = File.ReadAllText(filename);
-            CurrentDungeon = new Dungeon(JsonExtensions.LoadModel<WallMap>(json));
+            CurrentDungeon = JsonExtensions.LoadModel<Dungeon>(json);
             Program.Screen = this;
         }
     }
@@ -122,6 +122,8 @@ public class DungeonEditorScreen(string projectName) : IScreen
         const int fontSize = 20;
         const int padding = 2;
         var (pos, facing) = Cursor;
+        string dungeonName = Path.GetFileNameWithoutExtension(_filename) ?? "Untitled Dungeon";
+        DrawText($"{dungeonName}");
         DrawText($"({pos.X}, {pos.Y}) - {facing}");
         WallType wallType = CurrentDungeon.Walls.GetWall(pos, facing);
         DrawText($"WallType: {wallType}");
