@@ -1,5 +1,6 @@
 namespace Tests;
 
+using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Player;
@@ -15,12 +16,16 @@ public class CrawlerMode_should
     [InlineData(3, 18, Facing.South)]
     public void notify_observer_when_view_changes(int x, int y, Facing facing)
     {
-        CrawlerMode underTest = new(new Dungeon(), new PlayerView(new Position(0, 0), Facing.North));
-        PlayerView actual = null!;
+        // Arrange
+        CrawlerMode underTest = new(new DungeonCrawlerManifest(), new Dungeon(), new PlayerView(new Position(0, 0), Facing.North));
+        ViewChangeEvent actual = null!;
         underTest.OnViewChange += (newView) => actual = newView;
-        PlayerView expected = new(x, y, facing);
-        underTest.CurrentView = expected;
+        ViewChangeEvent expected = new(new PlayerView(new Position(0, 0), Facing.North), new(x, y, facing));
 
+        // Act
+        underTest.CurrentView = new PlayerView(x, y, facing);
+
+        // Assert
         actual.ShouldBe(expected);
     }
 
@@ -29,7 +34,7 @@ public class CrawlerMode_should
     [InlineData(MessageType.Debug, "Debug Message")]
     public void notify_observer_on_message(MessageType type, string message)
     {
-        CrawlerMode underTest = new(new Dungeon(), new PlayerView(new Position(0, 0), Facing.North));
+        CrawlerMode underTest = new(new DungeonCrawlerManifest(), new Dungeon(), new PlayerView(new Position(0, 0), Facing.North));
         Message actual = null!;
         underTest.OnMessageAdded += (message) => actual = message;
         Message expected = new(type, message);
