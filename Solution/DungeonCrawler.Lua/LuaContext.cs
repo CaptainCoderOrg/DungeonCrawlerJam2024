@@ -59,4 +59,9 @@ public class LuaContext(IScriptContext context)
     public object GetVariable(string name) => _target.State.GlobalVariables.GetValueOrDefault(name);
     public void WriteInfo(string message) => _target.SendMessage(new Message(MessageType.Info, message));
     public void Debug(string message) => _target.SendMessage(new Message(MessageType.Debug, message));
+    public void ChangeDungeon(string dungeonName, int x, int y, Facing facing)
+    {
+        _target.CurrentDungeon = _target.Manifest.DungeonManifest[dungeonName];
+        _target.View = new PlayerView(x, y, facing);
+    }
 }

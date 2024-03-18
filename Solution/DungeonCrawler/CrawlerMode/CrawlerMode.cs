@@ -6,8 +6,8 @@ namespace CaptainCoder.Dungeoneering.Game;
 
 public class CrawlerMode(DungeonCrawlerManifest manifest, Dungeon currentDungeon, PlayerView playerView)
 {
-    public DungeonCrawlerManifest Manifest { get; private set; } = manifest;
-    public Dungeon CurrentDungeon { get; private set; } = currentDungeon;
+    public DungeonCrawlerManifest Manifest { get; set; } = manifest;
+    public Dungeon CurrentDungeon { get; set; } = currentDungeon;
     private PlayerView _currentView = playerView;
     public PlayerView CurrentView
     {
