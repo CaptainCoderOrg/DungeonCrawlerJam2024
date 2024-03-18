@@ -9,7 +9,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
 {
     public const int MaxMapSize = 24;
     public const int CellSize = 16;
-    private readonly string _dungeonDirectory = Path.Combine(GameConstants.SaveDir, projectName, Project.DungeonDir);
+    private readonly string _dungeonDirectory = Path.Combine(EditorConstants.SaveDir, projectName, Project.DungeonDir);
     public string ProjectName { get; } = projectName;
     public Cursor Cursor { get; private set; } = new(new Position(0, 0), Facing.West);
     public WallType Wall { get; private set; } = WallType.Solid;

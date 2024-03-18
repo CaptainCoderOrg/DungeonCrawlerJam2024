@@ -2,6 +2,12 @@
 
 using System.Text.Json;
 
+using CaptainCoder.Dungeoneering.DungeonCrawler;
+using CaptainCoder.Dungeoneering.DungeonMap.IO;
+using CaptainCoder.Dungeoneering.Editor;
+
+using CommandLine;
+
 using Raylib_cs;
 
 public class Program
@@ -11,7 +17,40 @@ public class Program
     public static ScreenConfig Config { get; set; } = InitScreenConfig();
     private static bool s_isRunning = true;
 
-    public static void Main()
+    public class Options
+    {
+        [Option('o', "out", Required = false, HelpText = "The output file when building")]
+        public string? OutPath { get; set; } = null;
+        [Option('b', "build", Required = false, HelpText = "Build the specified project and exit")]
+        public string? BuildProject { get; set; } = null;
+    }
+
+    public static void Main(string[] args)
+    {
+        Parser.Default.ParseArguments<Options>(args)
+            .WithParsed<Options>(o =>
+        {
+            if (o.BuildProject is null)
+            {
+                RunEditor();
+            }
+            else
+            {
+                Build(o.BuildProject, o.OutPath);
+            }
+        });
+    }
+
+    public static void Build(string projectName, string? outDir)
+    {
+        outDir ??= Path.Combine(EditorConstants.SaveDir, $"{projectName}.json");
+        Console.WriteLine($"Building project {projectName}");
+        DungeonCrawlerManifest manifest = Project.DefaultFileSystem.Build(Path.Combine(EditorConstants.SaveDir, projectName));
+        Console.WriteLine($"Success! Writing manifest to {outDir}");
+        File.WriteAllText(outDir, manifest.ToJson());
+    }
+
+    public static void RunEditor()
     {
         InitWindow();
         Raylib.InitAudioDevice();
@@ -28,7 +67,6 @@ public class Program
         }
         SaveScreenConfig(new ScreenConfig(Raylib.GetCurrentMonitor()));
         Raylib.CloseWindow();
-
     }
 
     public static void Exit() => s_isRunning = false;
@@ -62,7 +100,7 @@ public class Program
                 Console.Error.WriteLine(e.StackTrace);
             }
         }
-        return GameConstants.Default;
+        return EditorConstants.Default;
     }
 
     /// <summary>
@@ -72,9 +110,9 @@ public class Program
     private static void InitWindow()
     {
         Raylib.SetWindowState(ConfigFlags.HiddenWindow);
-        Raylib.InitWindow(GameConstants.MinScreenWidth, GameConstants.MinScreenHeight, "Dungeon Editor | Main Window");
+        Raylib.InitWindow(EditorConstants.MinScreenWidth, EditorConstants.MinScreenHeight, "Dungeon Editor | Main Window");
         Raylib.SetWindowState(ConfigFlags.ResizableWindow);
-        Raylib.SetWindowMinSize(GameConstants.MinScreenWidth, GameConstants.MinScreenHeight);
+        Raylib.SetWindowMinSize(EditorConstants.MinScreenWidth, EditorConstants.MinScreenHeight);
         CenterWindow();
 
         Raylib.BeginDrawing();

@@ -19,8 +19,8 @@ public class ProjectScreen : IScreen
             new StaticEntry("Dungeon Editor", () => Program.Screen = new DungeonEditorScreen(projectName)),
             new StaticEntry("Build", () =>
             {
-                DungeonCrawlerManifest manifest = Project.DefaultFileSystem.Build(Path.Combine(GameConstants.SaveDir, ProjectName));
-                File.WriteAllText(Path.Combine(GameConstants.SaveDir, $"{ProjectName}.json"), manifest.ToJson());
+                DungeonCrawlerManifest manifest = Project.DefaultFileSystem.Build(Path.Combine(EditorConstants.SaveDir, ProjectName));
+                File.WriteAllText(Path.Combine(EditorConstants.SaveDir, $"{ProjectName}.json"), manifest.ToJson());
             }),
             new StaticEntry("Close Project", () => Program.Screen = new ProjectSelectionScreen())
         ]
