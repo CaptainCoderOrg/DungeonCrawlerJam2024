@@ -48,3 +48,9 @@ function context.Debug(message) end
 
 --- Writes information to the player.
 function context.WriteInfo(message) end
+
+--- Sets a global variable that can be used between scripts
+function context.SetVariable(name, value) end
+
+--- Retrieves a global variable or nil if no value was previously set
+function context.GetVariable(name) end

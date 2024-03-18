@@ -30,6 +30,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public Dungeon CurrentDungeon { get => _crawlerMode.CurrentDungeon; }
     [field: SerializeField]
     public QueuedMessageRenderer InfoMessageRenderer { get; set; } = default!;
+    public GameState State { get; set; } = new();
 
     public void Awake()
     {

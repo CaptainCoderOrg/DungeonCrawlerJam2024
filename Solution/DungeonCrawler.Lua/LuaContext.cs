@@ -55,6 +55,8 @@ public class LuaContext(IScriptContext context)
         _target.CurrentDungeon.Walls.SetWall(position, facing, wall);
     }
 
+    public void SetVariable(string name, DynValue value) => _target.State.GlobalVariables[name] = value.ToObject();
+    public object GetVariable(string name) => _target.State.GlobalVariables.GetValueOrDefault(name);
     public void WriteInfo(string message) => _target.SendMessage(new Message(MessageType.Info, message));
     public void Debug(string message) => _target.SendMessage(new Message(MessageType.Debug, message));
 }

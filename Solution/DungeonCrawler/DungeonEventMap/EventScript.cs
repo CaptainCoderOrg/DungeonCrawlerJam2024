@@ -9,6 +9,7 @@ public record EventScript(string Script);
 
 public interface IScriptContext
 {
+    public GameState State { get; set; }
     public PlayerView View { get; set; }
     public Dungeon CurrentDungeon { get; }
     public void SendMessage(Message message);
