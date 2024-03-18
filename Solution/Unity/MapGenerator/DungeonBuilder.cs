@@ -1,6 +1,8 @@
 using UnityEngine;
 
 namespace CaptainCoder.Dungeoneering.DungeonMap.Unity;
+
+using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonMap.IO;
 using CaptainCoder.Unity;
 
@@ -37,12 +39,11 @@ public class DungeonBuilder : MonoBehaviour
     }
 }
 
-[CreateAssetMenu(fileName = "DungeonData", menuName = "Data/Dungeon")]
-public class DungeonData : ScriptableObject
+[CreateAssetMenu(fileName = "DungeonData", menuName = "Data/Manifest")]
+public class DungeonManifestData : ScriptableObject
 {
     [field: SerializeField]
-    public TextAsset? WallMapJson { get; private set; }
+    public TextAsset? ManifestJson { get; private set; }
 
-    // [Button("Load Data")]
-    public WallMap LoadMap() => JsonExtensions.LoadModel<WallMap>(WallMapJson!.text);
+    public DungeonCrawlerManifest LoadManifest() => JsonExtensions.LoadModel<DungeonCrawlerManifest>(ManifestJson!.text);
 }
