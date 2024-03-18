@@ -1,5 +1,9 @@
 namespace CaptainCoder.Dungeoneering.Raylib;
 
+using CaptainCoder.Dungeoneering.DungeonCrawler;
+using CaptainCoder.Dungeoneering.DungeonMap.IO;
+using CaptainCoder.Dungeoneering.Editor;
+
 using Raylib_cs;
 
 public class ProjectScreen : IScreen
@@ -13,7 +17,11 @@ public class ProjectScreen : IScreen
         _menu = new MenuScreen(projectName,
         [
             new StaticEntry("Dungeon Editor", () => Program.Screen = new DungeonEditorScreen(projectName)),
-            new StaticEntry("Build", () => { }),
+            new StaticEntry("Build", () =>
+            {
+                DungeonCrawlerManifest manifest = Project.DefaultFileSystem.Build(Path.Combine(GameConstants.SaveDir, ProjectName));
+                File.WriteAllText(Path.Combine(GameConstants.SaveDir, $"{ProjectName}.json"), manifest.ToJson());
+            }),
             new StaticEntry("Close Project", () => Program.Screen = new ProjectSelectionScreen())
         ]
         );

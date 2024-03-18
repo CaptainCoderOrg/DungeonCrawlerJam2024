@@ -17,8 +17,8 @@ public class ProjectSelectionScreen : IScreen
     private MenuScreen ProjectOptions()
     {
         MenuScreen screen = new("Select a Project", [
+            .. CreateProjectEntries(),
             new StaticEntry("New Project", CreateNewProject),
-            .. CreateProjectEntries()
         ]);
         return screen;
     }
