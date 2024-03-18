@@ -5,8 +5,7 @@ using System.IO.Abstractions.TestingHelpers;
 using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap.IO;
-
-using DungeonCrawler.Editor;
+using CaptainCoder.Dungeoneering.Editor;
 
 using Shouldly;
 

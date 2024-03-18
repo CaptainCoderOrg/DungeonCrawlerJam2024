@@ -13,6 +13,7 @@ public class PromptScreen(string prompt, IScreen previousScreen, Action<string> 
     public string UserInput { get; private set; } = string.Empty;
     private readonly StringBuilder _builder = new();
     public IScreen PreviousScreen { get; } = previousScreen;
+    public bool RenderPreviousScreen { get; set; } = true;
 
     public void HandleUserInput()
     {
@@ -30,8 +31,8 @@ public class PromptScreen(string prompt, IScreen previousScreen, Action<string> 
 
         if (Raylib.IsKeyPressed(KeyboardKey.Enter) && _builder.Length > 0)
         {
-            OnFinish.Invoke(_builder.ToString());
             Program.Screen = PreviousScreen;
+            OnFinish.Invoke(_builder.ToString());
             return;
         }
 
@@ -49,7 +50,8 @@ public class PromptScreen(string prompt, IScreen previousScreen, Action<string> 
 
     public void Render()
     {
-        PreviousScreen.Render();
+        if (RenderPreviousScreen) { PreviousScreen.Render(); }
+        else { Raylib.ClearBackground(Color.Black); }
         Prompt.DrawCentered(50, 48, Color.White);
         string userInput = _builder.ToString();
         userInput = userInput != string.Empty ? userInput : "Enter a Name";

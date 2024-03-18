@@ -9,9 +9,9 @@ using Shouldly;
 public class DungeonEventMap_should
 {
     static readonly EventScript TeleportPlayerMock = new("Teleport Player");
-    static readonly TileEvent TeleportEvent = new(EventTrigger.OnEnter, TeleportPlayerMock);
+    static readonly TileEvent TeleportEvent = new(EventTrigger.OnEnter, "teleport.lua");
     static readonly EventScript DamagePlayerMock = new("Damage Player Mock");
-    static readonly TileEvent DamageEvent = new(EventTrigger.OnExit, DamagePlayerMock);
+    static readonly TileEvent DamageEvent = new(EventTrigger.OnExit, "damage.lua");
 
     public static IEnumerable<object[]> AddEventsAtPositionData => [
         [new Position(5, 5), TeleportEvent],
@@ -106,14 +106,11 @@ public class DungeonEventMap_should
     public void be_jsonable()
     {
         EventMap map = new();
-        EventScript event0 = new("event0");
-        EventScript event1 = new("event1");
-        EventScript event2 = new("event2");
         Position pos0 = new(0, 0);
         Position pos1 = new(0, 0);
-        map.AddEvent(pos0, new TileEvent(EventTrigger.OnEnter, event0));
-        map.AddEvent(pos0, new TileEvent(EventTrigger.OnExit, event1));
-        map.AddEvent(pos1, new TileEvent(EventTrigger.OnEnter, event2));
+        map.AddEvent(pos0, new TileEvent(EventTrigger.OnEnter, "event0"));
+        map.AddEvent(pos0, new TileEvent(EventTrigger.OnExit, "event1"));
+        map.AddEvent(pos1, new TileEvent(EventTrigger.OnEnter, "event2"));
 
         string json = map.ToJson();
         EventMap restored = JsonExtensions.LoadModel<EventMap>(json);
@@ -136,14 +133,11 @@ public class DungeonEventMap_should
         static EventMap MakeMap()
         {
             EventMap map = new();
-            EventScript event0 = new("event0");
-            EventScript event1 = new("event1");
-            EventScript event2 = new("event2");
             Position pos0 = new(0, 0);
             Position pos1 = new(0, 0);
-            map.AddEvent(pos0, new TileEvent(EventTrigger.OnEnter, event0));
-            map.AddEvent(pos0, new TileEvent(EventTrigger.OnExit, event1));
-            map.AddEvent(pos1, new TileEvent(EventTrigger.OnEnter, event2));
+            map.AddEvent(pos0, new TileEvent(EventTrigger.OnEnter, "event0"));
+            map.AddEvent(pos0, new TileEvent(EventTrigger.OnExit, "event1"));
+            map.AddEvent(pos1, new TileEvent(EventTrigger.OnEnter, "event2"));
             return map;
         }
     }

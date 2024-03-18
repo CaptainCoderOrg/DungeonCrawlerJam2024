@@ -7,7 +7,7 @@ using Raylib_cs;
 public class Program
 {
     public const string ConfigFile = "dungeoneering.config";
-    public static IScreen Screen { get; set; } = new DungeonEditorScreen();
+    public static IScreen Screen { get; set; } = new ProjectSelectionScreen();
     public static ScreenConfig Config { get; set; } = InitScreenConfig();
     private static bool s_isRunning = true;
 
