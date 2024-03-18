@@ -19,7 +19,7 @@ public class SelectScriptScreen(SelectTriggerScreen triggerScreen, EventTrigger 
         ]);
         return screen;
     }
-    public IEnumerable<MenuEntry> ScriptOptions => Project.DefaultFileSystem.GetScriptNames(Path.Combine(GameConstants.SaveDir, TriggerScreen.ProjectName)).Select(name => new StaticEntry(name, () => AddEvent(name)));
+    public IEnumerable<MenuEntry> ScriptOptions => Project.DefaultFileSystem.GetScriptNames(Path.Combine(EditorConstants.SaveDir, TriggerScreen.ProjectName)).Select(name => new StaticEntry(name, () => AddEvent(name)));
     public void AddEvent(string scriptName)
     {
         TriggerScreen.Map.AddEvent(TriggerScreen.Position, new TileEvent(Trigger, scriptName));

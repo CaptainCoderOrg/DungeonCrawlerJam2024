@@ -31,7 +31,7 @@ public class ProjectSelectionScreen : IScreen
     public static List<string> GetProjectList()
     {
         IFileSystem fs = Project.DefaultFileSystem;
-        return [.. fs.Directory.EnumerateDirectories(GameConstants.SaveDir).Where(fs.IsProjectDirectory)];
+        return [.. fs.Directory.EnumerateDirectories(EditorConstants.SaveDir).Where(fs.IsProjectDirectory)];
     }
     public void HandleUserInput()
     {
@@ -50,7 +50,7 @@ public class ProjectSelectionScreen : IScreen
         static void OnFinished(string projectName)
         {
             var fs = Project.DefaultFileSystem;
-            string path = Path.Combine(GameConstants.SaveDir, projectName);
+            string path = Path.Combine(EditorConstants.SaveDir, projectName);
             try
             {
                 fs.InitializeProjectDirectory(path);
