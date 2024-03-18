@@ -12,7 +12,6 @@ public class DungeonBuilder : MonoBehaviour
     public Transform TileParent { get; private set; } = null!;
     [field: SerializeField]
     public DungeonTile TilePrefab { get; private set; } = null!;
-
     public void Build(Dungeon dungeon) => BuildDungeon(TileParent, TilePrefab, Destroy, dungeon);
 
     public static void BuildDungeon(Transform parent, DungeonTile tilePrefab, Action<GameObject> destroy, Dungeon dungeon)
@@ -31,11 +30,14 @@ public class DungeonBuilder : MonoBehaviour
                 allTiles[new Position(x, y)] = newTile;
             }
         }
-        dungeon.Walls.OnWallChanged += (p, f, w) =>
+
+        // TODO: Is there a memory leak here when the dungeon changes?
+        dungeon.Walls.OnWallChanged += UpdateWalls;
+        void UpdateWalls(Position position, Facing facing, WallType wall)
         {
-            DungeonTile toUpdate = allTiles[p];
-            toUpdate.UpdateWalls(dungeon.GetTile(p).Walls);
-        };
+            DungeonTile toUpdate = allTiles[position];
+            toUpdate.UpdateWalls(dungeon.GetTile(position).Walls);
+        }
     }
 }
 

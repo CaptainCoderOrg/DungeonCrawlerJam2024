@@ -49,6 +49,13 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
             InfoMessageRenderer.EnqueueMessage(message, 5f);
             Debug.Log(message);
         };
+        _crawlerMode.OnDungeonChange += ChangeDungeon;
+    }
+
+    public void ChangeDungeon(DungeonChangeEvent evt)
+    {
+        evt.Exited.Walls.ClearOnWallChangedEvents();
+        DungeonBuilder.Build(evt.Entered);
     }
 
     public void SendMessage(Message message) => _crawlerMode.AddMessage(message);
