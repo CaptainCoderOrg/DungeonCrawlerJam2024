@@ -142,7 +142,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
     {
         if (Raylib.IsKeyPressed(KeyboardKey.Minus))
         {
-            CurrentDungeon.EventMap.AddEvent(Cursor.Position, new TileEvent(EventTrigger.OnEnter, "script.lua"));
+            Program.Screen = new ScriptsScreen(this, ProjectName, Cursor.Position, CurrentDungeon.EventMap);
         }
         if (Raylib.IsKeyPressed(KeyboardKey.Tab))
         {

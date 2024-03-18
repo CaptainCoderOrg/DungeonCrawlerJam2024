@@ -7,7 +7,7 @@ public class MenuScreen(string title, IEnumerable<MenuEntry> items, int maxShown
     const int SelectedFontSize = 32;
     const int NotSelectedFontSize = 20;
     const int Padding = 16;
-    const int TitleFontSize = 48;
+    const int TitleFontSize = 40;
     public int MaxItemsShown { get; } = maxShown;
     private readonly MenuEntry[] _items = [.. items];
     private readonly string _title = title;
