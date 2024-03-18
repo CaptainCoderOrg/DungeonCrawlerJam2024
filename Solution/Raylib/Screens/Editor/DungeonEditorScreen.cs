@@ -113,8 +113,19 @@ public class DungeonEditorScreen(string projectName) : IScreen
         int offset = CellSize * 2;
         CurrentDungeon.Walls.Render(offset, offset);
         Cursor.Render(CellSize, offset, offset);
+        RenderScriptedTiles(offset, CurrentDungeon.EventMap.Events.Keys);
         RenderInfoAtCursor(offset + (MaxMapSize + 1) * CellSize, 2 * CellSize);
         _overlay.Render();
+    }
+
+    private void RenderScriptedTiles(int offset, IEnumerable<Position> positions)
+    {
+        foreach (Position position in positions)
+        {
+            int top = offset + position.Y * CellSize + 3;
+            int left = offset + position.X * CellSize + 3;
+            Raylib.DrawCircle(left, top, 1, Color.Green);
+        }
     }
 
     private void RenderInfoAtCursor(int left, int top)
