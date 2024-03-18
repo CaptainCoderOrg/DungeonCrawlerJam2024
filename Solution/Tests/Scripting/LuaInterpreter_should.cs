@@ -22,7 +22,8 @@ public class LuaInterpreter_should
     [Fact]
     public void set_player_position()
     {
-        IScriptContext context = new TestContext();
+        IScriptContext context = Substitute.For<IScriptContext>();
+        context.View = new PlayerView(0, 0, Facing.North);
         Interpreter.ExecLua("""
         context.SetPlayerPosition(5, 7)
         """, context);
@@ -36,7 +37,8 @@ public class LuaInterpreter_should
     [InlineData(Facing.West)]
     public void set_player_facing(Facing facing)
     {
-        IScriptContext context = new TestContext();
+        IScriptContext context = Substitute.For<IScriptContext>();
+        context.View = new PlayerView(0, 0, Facing.North);
         Interpreter.ExecLua($"""
         context.SetPlayerFacing({facing})
         """, context);
@@ -46,7 +48,7 @@ public class LuaInterpreter_should
     [Fact]
     public void set_player_view()
     {
-        IScriptContext context = new TestContext();
+        IScriptContext context = Substitute.For<IScriptContext>();
         Interpreter.ExecLua("""
         context.SetPlayerView(3, 4, East)
         """, context);
@@ -59,7 +61,7 @@ public class LuaInterpreter_should
     [InlineData("return context.PlayerView.Facing", (int)Facing.East)]
     public void have_access_to_player_view(string script, int expectedResult)
     {
-        IScriptContext context = new TestContext();
+        IScriptContext context = Substitute.For<IScriptContext>();
         context.View = new CaptainCoder.Dungeoneering.Player.PlayerView(new CaptainCoder.Dungeoneering.DungeonMap.Position(5, 7), Facing.East);
 
         int result = Interpreter.EvalLua<int>(script, context);
@@ -237,16 +239,25 @@ public class LuaInterpreter_should
         actual.ShouldBeTrue();
     }
 
+    [Theory]
+    [InlineData("Town", 7, 9, Facing.South)]
+    [InlineData("Forest", 2, 3, Facing.East)]
+    public void change_dungeon(string dungeonName, int x, int y, Facing facing)
+    {
+        Dungeon expectedDungeon = Dungeon_should.SimpleSquareDungeon;
+        IScriptContext context = Substitute.For<IScriptContext>();
+        context.Manifest = new();
+        context.Manifest.AddDungeon(dungeonName, expectedDungeon);
+        string script = $"""
+        context.ChangeDungeon("{dungeonName}", {x}, {y}, {facing})
+        """;
 
-}
+        Interpreter.ExecLua(script, context);
 
-internal class TestContext : IScriptContext
-{
-    public CaptainCoder.Dungeoneering.Player.PlayerView View { get; set; } = new CaptainCoder.Dungeoneering.Player.PlayerView(new CaptainCoder.Dungeoneering.DungeonMap.Position(0, 0), Facing.North);
+        context.CurrentDungeon.ShouldBe(expectedDungeon);
+        PlayerView expectedView = new(x, y, facing);
+        context.View.ShouldBe(expectedView);
+    }
 
-    public Dungeon CurrentDungeon => throw new NotImplementedException();
 
-    public GameState State { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-    public void SendMessage(Message message) => throw new NotImplementedException();
 }

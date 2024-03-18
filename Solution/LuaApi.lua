@@ -54,3 +54,6 @@ function context.SetVariable(name, value) end
 
 --- Retrieves a global variable or nil if no value was previously set
 function context.GetVariable(name) end
+
+--- Teleports the player to a new dungeon and sets their position and facing
+function context.ChangeDungeon(name, x, y, facing) end
