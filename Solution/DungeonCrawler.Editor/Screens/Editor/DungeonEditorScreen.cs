@@ -29,7 +29,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
                     [
                         new DynamicEntry(
                             () => "Save " + (Path.GetFileNameWithoutExtension(_filename) ?? string.Empty),
-                            _filename is null ? SaveAs : Save
+                            Save
                         ),
                         new StaticEntry("Save As", SaveAs),
                         new StaticEntry("New Map", NewMap),
