@@ -12,6 +12,7 @@ public static class Project
     // private readonly IFileSystem _fileSystem = fileSystem;
     public const string ScriptDir = "scripts";
     public const string DungeonDir = "dungeons";
+    public const string TextureDir = "textures";
     // public string RootDirectory { get; set; } = rootDirectory;
     /// <summary>
     /// A dictionary from dungeon names to dungeon file paths
@@ -28,6 +29,12 @@ public static class Project
     public static IEnumerable<string> GetScriptNames(this IFileSystem fileSystem, string root)
     {
         return fileSystem.Directory.EnumerateFiles(Path.Combine(root, ScriptDir)).Select(GetName);
+        static string GetName(string path) => Path.GetFileName(path);
+    }
+
+    public static IEnumerable<string> GetTextureNames(this IFileSystem fileSystem, string root)
+    {
+        return fileSystem.Directory.EnumerateFiles(Path.Combine(root, TextureDir)).Select(GetName);
         static string GetName(string path) => Path.GetFileName(path);
     }
 
@@ -52,13 +59,21 @@ public static class Project
             manifest.AddScript(name, new EventScript(scriptText));
         }
 
+        foreach (string fileName in fileSystem.GetTextureNames(root))
+        {
+            byte[] bytes = fileSystem.File.ReadAllBytes(Path.Combine(root, TextureDir, fileName));
+            string textureName = Path.GetFileName(fileName);
+            manifest.AddTexture(new Texture(textureName, bytes));
+        }
+
         return manifest;
     }
     public static bool IsProjectDirectory(this IFileSystem fileSystem, string rootPath)
     {
         return fileSystem.Directory.Exists(rootPath) &&
                fileSystem.Directory.Exists(Path.Combine(rootPath, DungeonDir)) &&
-               fileSystem.Directory.Exists(Path.Combine(rootPath, ScriptDir));
+               fileSystem.Directory.Exists(Path.Combine(rootPath, ScriptDir)) &&
+               fileSystem.Directory.Exists(Path.Combine(rootPath, TextureDir));
     }
 
     public static void InitializeProjectDirectory(this IFileSystem fileSystem, string rootPath)
@@ -67,5 +82,6 @@ public static class Project
         fileSystem.Directory.CreateDirectory(rootPath);
         fileSystem.Directory.CreateDirectory(Path.Combine(rootPath, DungeonDir));
         fileSystem.Directory.CreateDirectory(Path.Combine(rootPath, ScriptDir));
+        fileSystem.Directory.CreateDirectory(Path.Combine(rootPath, TextureDir));
     }
 }

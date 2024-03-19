@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DungeonCrawler\DungeonCrawler.csproj" />
+    <ProjectReference Include="..\DungeonCrawler.IO\DungeonCrawler.IO.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

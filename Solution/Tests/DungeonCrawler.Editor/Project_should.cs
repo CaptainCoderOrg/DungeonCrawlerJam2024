@@ -2,6 +2,7 @@ namespace Tests;
 
 using System.IO.Abstractions.TestingHelpers;
 
+using CaptainCoder.Dungeoneering;
 using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap.IO;
@@ -14,6 +15,7 @@ public class Project_should
     static readonly string root = Path.Combine("project-root");
     static readonly string dungeonsPath = Path.Combine(root, Project.DungeonDir);
     static readonly string scriptsPath = Path.Combine(root, Project.ScriptDir);
+    static readonly string texturesPath = Path.Combine(root, Project.TextureDir);
     public static MockFileData SimpleDungeonFile = new(JsonExtensions.ToJson(Dungeon_should.SimpleSquareDungeon));
     public static MockFileData TwoByTwoDungeonFile = new(JsonExtensions.ToJson(Dungeon_should.TwoByTwoRoom));
 
@@ -25,6 +27,8 @@ public class Project_should
                 {Path.Combine(scriptsPath, "tavern.lua"), new MockFileData("Tavern")},
                 {Path.Combine(scriptsPath, "second.lua"), new MockFileData("Second")},
                 {Path.Combine(scriptsPath, "third.lua"), new MockFileData("Third")},
+                {Path.Combine(texturesPath, "stone-wall.png"), new MockFileData([0, 1, 2])},
+                {Path.Combine(texturesPath, "wood-door.png"), new MockFileData([2, 7, 8])},
             });
         return mockFileSystem;
     }
@@ -33,13 +37,13 @@ public class Project_should
     public void initialize_project_structure()
     {
         string root = Path.Combine("project-root");
-        string dungeonsPath = Path.Combine(root, Project.DungeonDir);
-        string scriptsPath = Path.Combine(root, Project.ScriptDir);
+
         var mockFileSystem = new MockFileSystem();
         mockFileSystem.InitializeProjectDirectory(root);
 
         mockFileSystem.GetFile(dungeonsPath).IsDirectory.ShouldBeTrue();
         mockFileSystem.GetFile(scriptsPath).IsDirectory.ShouldBeTrue();
+        mockFileSystem.GetFile(texturesPath).IsDirectory.ShouldBeTrue();
     }
 
     [Fact]
@@ -88,7 +92,15 @@ public class Project_should
     }
 
     [Fact]
-    public void build_dungeon_manifest_with_dungeons_and_scripts()
+    public void retrieve_all_texture_names()
+    {
+        string[] textures = [.. MakeProjectFileSystem().GetTextureNames(root)];
+        textures.Count().ShouldBe(2);
+        textures.ShouldBeSubsetOf(["stone-wall.png", "wood-door.png"]);
+    }
+
+    [Fact]
+    public void build_dungeon_manifest()
     {
         DungeonCrawlerManifest actual = MakeProjectFileSystem().Build(root);
 
@@ -99,6 +111,9 @@ public class Project_should
         expected.AddScript("tavern.lua", new EventScript("Tavern"));
         expected.AddScript("second.lua", new EventScript("Second"));
         expected.AddScript("third.lua", new EventScript("Third"));
+
+        expected.AddTexture(new Texture("stone-wall.png", [0, 1, 2]));
+        expected.AddTexture(new Texture("wood-door.png", [2, 7, 8]));
 
         actual.ShouldBe(expected);
     }

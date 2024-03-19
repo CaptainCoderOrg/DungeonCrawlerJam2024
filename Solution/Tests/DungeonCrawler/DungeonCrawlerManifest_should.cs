@@ -1,5 +1,6 @@
 namespace Tests;
 
+using CaptainCoder.Dungeoneering;
 using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
@@ -17,6 +18,7 @@ public class DungeonCrawlerManifest_should
             DungeonCrawlerManifest manifest = new();
             manifest.AddDungeon("simple", Dungeon_should.SimpleSquareDungeon);
             manifest.AddScript("simpleScript", new EventScript("simple"));
+            manifest.AddTexture(new Texture("wall", [0, 2, 5]));
             return manifest;
         }
     }
@@ -47,8 +49,8 @@ public class DungeonCrawlerManifest_should
 
         underTest.AddDungeon(name, toAdd);
 
-        underTest.DungeonManifest.Count.ShouldBe(1);
-        underTest.DungeonManifest[name].ShouldBe(toAdd);
+        underTest.Dungeons.Count.ShouldBe(1);
+        underTest.Dungeons[name].ShouldBe(toAdd);
     }
 
     [Theory]
@@ -77,8 +79,25 @@ public class DungeonCrawlerManifest_should
 
         underTest.AddScript(name, toAdd);
 
-        underTest.ScriptManifest.Count.ShouldBe(1);
-        underTest.ScriptManifest[name].ShouldBe(toAdd);
+        underTest.Scripts.Count.ShouldBe(1);
+        underTest.Scripts[name].ShouldBe(toAdd);
+    }
+
+    public static IEnumerable<object[]> AddTextureData => [
+
+        [new Texture("simple", [])],
+        [new Texture("twobytwo", [])],
+    ];
+    [Theory]
+    [MemberData(nameof(AddTextureData))]
+    public void add_texture(Texture toAdd)
+    {
+        DungeonCrawlerManifest underTest = new();
+
+        underTest.AddTexture(toAdd);
+
+        underTest.Textures.Count.ShouldBe(1);
+        underTest.Textures[toAdd.Name].ShouldBe(toAdd);
     }
 
     [Theory]
@@ -104,6 +123,7 @@ public class DungeonCrawlerManifest_should
             DungeonCrawlerManifest manifest = new();
             manifest.AddDungeon("simple", new Dungeon());
             manifest.AddScript("scriptname", new EventScript("Simple Script"));
+            manifest.AddTexture(new Texture("wall", [1, 2, 3]));
             return manifest;
         }
     }

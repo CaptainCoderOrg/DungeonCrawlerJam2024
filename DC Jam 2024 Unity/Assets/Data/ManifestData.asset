@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: -1666260812, guid: c0469f36b6bc70d43827a537a8f9bf83, type: 3}
   m_Name: ManifestData
   m_EditorClassIdentifier: 
-  <ManifestJson>k__BackingField: {fileID: 4900000, guid: 98bcda4b4fd56b846a2ce182919119b4, type: 3}
+  <ManifestJson>k__BackingField: {fileID: 4900000, guid: 02383cc5a03151049b0ee9868b919226, type: 3}

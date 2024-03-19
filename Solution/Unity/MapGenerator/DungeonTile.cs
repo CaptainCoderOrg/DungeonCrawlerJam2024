@@ -5,18 +5,33 @@ namespace CaptainCoder.Dungeoneering.DungeonMap.Unity;
 public class DungeonTile : MonoBehaviour
 {
     [field: SerializeField]
-    public GameObject NorthWall { get; private set; } = default!;
+    public MeshRenderer NorthWall { get; private set; } = default!;
     [field: SerializeField]
-    public GameObject EastWall { get; private set; } = default!;
+    public MeshRenderer EastWall { get; private set; } = default!;
     [field: SerializeField]
-    public GameObject SouthWall { get; private set; } = default!;
+    public MeshRenderer SouthWall { get; private set; } = default!;
     [field: SerializeField]
-    public GameObject WestWall { get; private set; } = default!;
-    public void UpdateWalls(TileWalls configuration)
+    public MeshRenderer WestWall { get; private set; } = default!;
+    public void UpdateWalls(TileWalls configuration, TileWallMaterials materials)
     {
-        NorthWall.SetActive(configuration.North is not WallType.None);
-        EastWall.SetActive(configuration.East is not WallType.None);
-        WestWall.SetActive(configuration.West is not WallType.None);
-        SouthWall.SetActive(configuration.South is not WallType.None);
+        NorthWall.material = materials.North;
+        NorthWall.gameObject.SetActive(configuration.North is not WallType.None);
+
+        EastWall.material = materials.East;
+        EastWall.gameObject.SetActive(configuration.East is not WallType.None);
+
+        WestWall.material = materials.West;
+        WestWall.gameObject.SetActive(configuration.West is not WallType.None);
+
+        SouthWall.material = materials.South;
+        SouthWall.gameObject.SetActive(configuration.South is not WallType.None);
     }
+}
+
+public class TileWallMaterials
+{
+    public Material North { get; set; } = default!;
+    public Material East { get; set; } = default!;
+    public Material South { get; set; } = default!;
+    public Material West { get; set; } = default!;
 }

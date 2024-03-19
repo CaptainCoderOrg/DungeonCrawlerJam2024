@@ -46,6 +46,9 @@
     <Reference Include="Unity.TextMeshPro">
       <HintPath>$(_UnityManagedPath)\Unity.TextMeshPro.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>$(_UnityManagedPath)\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

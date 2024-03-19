@@ -14,6 +14,7 @@ public static class JsonExtensions
     public static JsonConverter[] Converters { get; } = [
         new DictionaryJsonConverter<TileEdge, WallType>(),
         new DictionaryJsonConverter<Position, List<TileEvent>>(),
+        new DictionaryJsonConverter<(Position, Facing), string>(),
     ];
     public static string ToJson(this WallMap wallMap) => JsonConvert.SerializeObject(wallMap, Converters);
     public static string ToJson(this EventMap eventMap) => JsonConvert.SerializeObject(eventMap, Converters);

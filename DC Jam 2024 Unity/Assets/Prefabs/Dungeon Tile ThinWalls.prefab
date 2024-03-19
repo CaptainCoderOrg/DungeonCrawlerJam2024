@@ -46,10 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 802405295, guid: c0469f36b6bc70d43827a537a8f9bf83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <NorthWall>k__BackingField: {fileID: 8313052977662747712}
-  <EastWall>k__BackingField: {fileID: 365824114621065606}
-  <SouthWall>k__BackingField: {fileID: 8863256566606334825}
-  <WestWall>k__BackingField: {fileID: 986317103848787178}
+  <NorthWall>k__BackingField: {fileID: 5350042286272661225}
+  <EastWall>k__BackingField: {fileID: 2565073221470670182}
+  <SouthWall>k__BackingField: {fileID: 1436500757946345756}
+  <WestWall>k__BackingField: {fileID: 7466211989606388949}
 --- !u!1 &365824114621065606
 GameObject:
   m_ObjectHideFlags: 0

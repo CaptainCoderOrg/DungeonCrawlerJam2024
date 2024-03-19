@@ -36,7 +36,8 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public void Awake()
     {
         DungeonCrawlerManifest manifest = DungeonData.LoadManifest();
-        Dungeon dungeon = manifest.DungeonManifest["Town"];
+        var cache = DungeonBuilder.InitializeMaterialCache(manifest);
+        Dungeon dungeon = manifest.Dungeons["Town"];
         _crawlerMode = new CrawlerMode(manifest, dungeon, new PlayerView(PlayerViewData.X, PlayerViewData.Y, PlayerViewData.Facing));
         DungeonBuilder.Build(dungeon);
         PlayerCamera.InstantTransitionToPlayerView(_crawlerMode.CurrentView);
@@ -82,7 +83,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
                                                          .Where(evt => evt.Trigger is EventTrigger.OnEnter);
         foreach (TileEvent triggered in enterEvents)
         {
-            EventScript script = _crawlerMode.Manifest.ScriptManifest[triggered.ScriptName];
+            EventScript script = _crawlerMode.Manifest.Scripts[triggered.ScriptName];
             Interpreter.ExecLua(script.Script, this);
         }
     }
@@ -94,7 +95,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
                                                          .Where(evt => evt.Trigger is EventTrigger.OnExit);
         foreach (TileEvent triggered in enterEvents)
         {
-            EventScript script = _crawlerMode.Manifest.ScriptManifest[triggered.ScriptName];
+            EventScript script = _crawlerMode.Manifest.Scripts[triggered.ScriptName];
             Interpreter.ExecLua(script.Script, this);
         }
     }
