@@ -2,8 +2,9 @@ namespace CaptainCoder.Dungeoneering.DungeonMap;
 
 public class Dungeon() : IEquatable<Dungeon>
 {
-    public WallMap Walls { get; private set; } = new();
-    public EventMap EventMap { get; private set; } = new();
+    public WallMap Walls { get; init; } = new();
+    public EventMap EventMap { get; init; } = new();
+    public WallTextureMap WallTextures { get; init; } = new();
 
     public Tile GetTile(Position position)
     {

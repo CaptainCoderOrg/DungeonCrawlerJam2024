@@ -72,27 +72,50 @@ public class Dungeon_should
         }
     }
 
-    [Fact]
-    public void get_default_wall_texture()
+    [Theory]
+    [InlineData(WallType.Solid, WallTextureMap.DefaultSolidTexture)]
+    [InlineData(WallType.SecretDoor, WallTextureMap.DefaultSecretDoorTexture)]
+    [InlineData(WallType.Door, WallTextureMap.DefaultDoorTexture)]
+    public void get_default_wall_texture(WallType type, string expected)
     {
-        Assert.Fail("Not Implemented");
+        Dungeon dungeon = new(){
+            Walls = new WallMap([(new TileEdge(new Position(0, 0), Facing.North), type)]),
+        };
+        string actual = dungeon.GetTextureName(new Position(0, 0), Facing.North);
+        actual.ShouldBe(expected);
     }
 
-    [Fact]
-    public void get_wall_texture()
+    [Theory]
+    [InlineData(WallType.Solid, "wall-variant.png")]
+    [InlineData(WallType.SecretDoor, "wall-door-variant.png")]
+    [InlineData(WallType.Door, "door-variant.png")]
+    public void get_wall_texture(WallType type, string expected)
     {
-        Assert.Fail("Not Implemented");
+        Dungeon dungeon = new(){
+            Walls = new WallMap([(new TileEdge(new Position(0, 0), Facing.North), type)]),
+            WallTextures = new WallTextureMap()
+            {
+                Textures = new Dictionary<(Position, Facing), string>()
+                {
+                    {(new Position(0, 0), Facing.North), expected},
+                },
+            }
+        };
+        string actual = dungeon.GetTextureName(new Position(0, 0), Facing.North);
+        actual.ShouldBe(expected);
     }
 
-    [Fact]
-    public void set_wall_texture()
+    [Theory]
+    [InlineData(5, 7, Facing.North, "wood.png")]
+    [InlineData(0, 17, Facing.East, "brick.png")]
+    [InlineData(3, 1, Facing.South, "stone.png")]
+    [InlineData(9, 2, Facing.West, "dirt.png")]
+    public void set_wall_texture(int x, int y, Facing facing, string textureName)
     {
-        Assert.Fail("Not Implemented");
-    }
+        Dungeon dungeon = new();
+        dungeon.SetTexture(new Position(x, y), facing,  textureName);
 
-    [Fact]
-    public void have_texture_on_each_side_of_wall()
-    {
-        Assert.Fail("Not Implemented");
+        string actual = dungeon.WallTextures.Textures[(new Position(x, y), facing)];
+        actual.ShouldBe(textureName);
     }
 }
