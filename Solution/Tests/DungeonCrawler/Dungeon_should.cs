@@ -71,4 +71,28 @@ public class Dungeon_should
             return dungeon;
         }
     }
+
+    [Fact]
+    public void get_default_wall_texture()
+    {
+        Assert.Fail("Not Implemented");
+    }
+
+    [Fact]
+    public void get_wall_texture()
+    {
+        Assert.Fail("Not Implemented");
+    }
+
+    [Fact]
+    public void set_wall_texture()
+    {
+        Assert.Fail("Not Implemented");
+    }
+
+    [Fact]
+    public void have_texture_on_each_side_of_wall()
+    {
+        Assert.Fail("Not Implemented");
+    }
 }
