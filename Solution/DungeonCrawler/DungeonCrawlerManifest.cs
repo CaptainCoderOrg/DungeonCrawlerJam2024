@@ -13,7 +13,9 @@ public class DungeonCrawlerManifest : IEquatable<DungeonCrawlerManifest>
     public bool Equals(DungeonCrawlerManifest other)
     {
         return Dungeons.AllKeyValuesAreEqual(other.Dungeons, DungeonEquality) &&
-               Scripts.AllKeyValuesAreEqual(other.Scripts);
+               Scripts.AllKeyValuesAreEqual(other.Scripts) &&
+               Textures.AllKeyValuesAreEqual(other.Textures, TextureEquality);
+        static bool TextureEquality(Texture t0, Texture t1) => t0.Equals(t1);
         static bool DungeonEquality(Dungeon d0, Dungeon d1) => d0.Equals(d1);
     }
 }

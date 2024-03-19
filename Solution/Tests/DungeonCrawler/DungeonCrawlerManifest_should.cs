@@ -18,6 +18,7 @@ public class DungeonCrawlerManifest_should
             DungeonCrawlerManifest manifest = new();
             manifest.AddDungeon("simple", Dungeon_should.SimpleSquareDungeon);
             manifest.AddScript("simpleScript", new EventScript("simple"));
+            manifest.AddTexture(new Texture("wall", [0, 2, 5]));
             return manifest;
         }
     }
@@ -122,6 +123,7 @@ public class DungeonCrawlerManifest_should
             DungeonCrawlerManifest manifest = new();
             manifest.AddDungeon("simple", new Dungeon());
             manifest.AddScript("scriptname", new EventScript("Simple Script"));
+            manifest.AddTexture(new Texture("wall", [1, 2, 3]));
             return manifest;
         }
     }
