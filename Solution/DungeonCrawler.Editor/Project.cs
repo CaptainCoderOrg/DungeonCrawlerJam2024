@@ -62,7 +62,7 @@ public static class Project
         foreach (string fileName in fileSystem.GetTextureNames(root))
         {
             byte[] bytes = fileSystem.File.ReadAllBytes(Path.Combine(root, TextureDir, fileName));
-            string textureName = Path.GetFileNameWithoutExtension(fileName);
+            string textureName = Path.GetFileName(fileName);
             manifest.AddTexture(new Texture(textureName, bytes));
         }
 

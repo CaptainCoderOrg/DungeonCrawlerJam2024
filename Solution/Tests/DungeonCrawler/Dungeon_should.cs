@@ -78,7 +78,8 @@ public class Dungeon_should
     [InlineData(WallType.Door, WallTextureMap.DefaultDoorTexture)]
     public void get_default_wall_texture(WallType type, string expected)
     {
-        Dungeon dungeon = new(){
+        Dungeon dungeon = new()
+        {
             Walls = new WallMap([(new TileEdge(new Position(0, 0), Facing.North), type)]),
         };
         string actual = dungeon.GetTextureName(new Position(0, 0), Facing.North);
@@ -91,7 +92,8 @@ public class Dungeon_should
     [InlineData(WallType.Door, "door-variant.png")]
     public void get_wall_texture(WallType type, string expected)
     {
-        Dungeon dungeon = new(){
+        Dungeon dungeon = new()
+        {
             Walls = new WallMap([(new TileEdge(new Position(0, 0), Facing.North), type)]),
             WallTextures = new WallTextureMap()
             {
@@ -113,7 +115,7 @@ public class Dungeon_should
     public void set_wall_texture(int x, int y, Facing facing, string textureName)
     {
         Dungeon dungeon = new();
-        dungeon.SetTexture(new Position(x, y), facing,  textureName);
+        dungeon.SetTexture(new Position(x, y), facing, textureName);
 
         string actual = dungeon.WallTextures.Textures[(new Position(x, y), facing)];
         actual.ShouldBe(textureName);

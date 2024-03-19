@@ -36,6 +36,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public void Awake()
     {
         DungeonCrawlerManifest manifest = DungeonData.LoadManifest();
+        var cache = DungeonBuilder.InitializeMaterialCache(manifest);
         Dungeon dungeon = manifest.Dungeons["Town"];
         _crawlerMode = new CrawlerMode(manifest, dungeon, new PlayerView(PlayerViewData.X, PlayerViewData.Y, PlayerViewData.Facing));
         DungeonBuilder.Build(dungeon);

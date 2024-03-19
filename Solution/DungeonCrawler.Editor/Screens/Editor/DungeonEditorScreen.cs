@@ -156,15 +156,18 @@ public class DungeonEditorScreen(string projectName) : IScreen
     {
         if (Raylib.IsKeyPressed(KeyboardKey.T))
         {
-            Program.Screen = new SelectTextureScreen{
+            Program.Screen = new SelectTextureScreen
+            {
                 ProjectName = ProjectName,
                 PreviousScreen = this,
-                OnFinished = (TextureResult result) => 
+                OnFinished = (TextureResult result) =>
                 {
                     Action action = result switch
                     {
-                        DefaultTexture => () => { CurrentDungeon.WallTextures.Textures.Remove((Cursor.Position, Cursor.Facing)); },
-                        TextureReference(string textureName) => () => { CurrentDungeon.WallTextures.Textures[(Cursor.Position, Cursor.Facing)] = textureName; },
+                        DefaultTexture => () => { CurrentDungeon.WallTextures.Textures.Remove((Cursor.Position, Cursor.Facing)); }
+                        ,
+                        TextureReference(string textureName) => () => { CurrentDungeon.WallTextures.Textures[(Cursor.Position, Cursor.Facing)] = textureName; }
+                        ,
                         _ => throw new NotImplementedException($"Unknown TextureResult: {result}"),
                     };
                     action.Invoke();

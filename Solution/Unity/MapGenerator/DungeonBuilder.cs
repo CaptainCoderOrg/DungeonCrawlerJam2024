@@ -8,10 +8,17 @@ using CaptainCoder.Unity;
 
 public class DungeonBuilder : MonoBehaviour
 {
+    private static Dictionary<string, Material>? s_materialCache;
+    public static Dictionary<string, Material> MaterialCache => s_materialCache ?? throw new Exception("Material Cache has not yet been initialized.");
     [field: SerializeField]
     public Transform TileParent { get; private set; } = null!;
     [field: SerializeField]
     public DungeonTile TilePrefab { get; private set; } = null!;
+    public static Dictionary<string, Material> InitializeMaterialCache(DungeonCrawlerManifest manifest)
+    {
+        s_materialCache = manifest.Textures.Values.ToDictionary(t => t.Name, t => t.ToMaterial());
+        return s_materialCache;
+    }
     public void Build(Dungeon dungeon) => BuildDungeon(TileParent, TilePrefab, Destroy, dungeon);
 
     public static void BuildDungeon(Transform parent, DungeonTile tilePrefab, Action<GameObject> destroy, Dungeon dungeon)
@@ -26,7 +33,8 @@ public class DungeonBuilder : MonoBehaviour
                 DungeonTile newTile = Instantiate(tilePrefab, parent);
                 newTile.name = $"({x}, {y})";
                 newTile.transform.position = new Vector3(y, 0, x);
-                newTile.UpdateWalls(dungeon.GetTile(new Position(x, y)).Walls);
+                Position position = new(x, y);
+                newTile.UpdateWalls(dungeon.GetTile(position).Walls, MaterialCache.GetTileWallMaterials(dungeon, position));
                 allTiles[new Position(x, y)] = newTile;
             }
         }
@@ -36,8 +44,22 @@ public class DungeonBuilder : MonoBehaviour
         void UpdateWalls(Position position, Facing facing, WallType wall)
         {
             DungeonTile toUpdate = allTiles[position];
-            toUpdate.UpdateWalls(dungeon.GetTile(position).Walls);
+            toUpdate.UpdateWalls(dungeon.GetTile(position).Walls, MaterialCache.GetTileWallMaterials(dungeon, position));
         }
+    }
+}
+
+public static class DungeonExtensions
+{
+    public static TileWallMaterials GetTileWallMaterials(this Dictionary<string, Material> cache, Dungeon dungeon, Position position)
+    {
+        return new TileWallMaterials()
+        {
+            North = cache.GetValueOrDefault(dungeon.GetTextureName(position, Facing.North)),
+            East = cache.GetValueOrDefault(dungeon.GetTextureName(position, Facing.East)),
+            South = cache.GetValueOrDefault(dungeon.GetTextureName(position, Facing.South)),
+            West = cache.GetValueOrDefault(dungeon.GetTextureName(position, Facing.West)),
+        };
     }
 }
 
@@ -48,4 +70,16 @@ public class DungeonManifestData : ScriptableObject
     public TextAsset? ManifestJson { get; private set; }
 
     public DungeonCrawlerManifest LoadManifest() => JsonExtensions.LoadModel<DungeonCrawlerManifest>(ManifestJson!.text);
+}
+
+public static class TextureExtensions
+{
+    public static Material ToMaterial(this Texture texture)
+    {
+        Texture2D t2d = new(2, 2);
+        ImageConversion.LoadImage(t2d, texture.Data);
+        Material material = new(Shader.Find("Standard"));
+        material.mainTexture = t2d;
+        return material;
+    }
 }

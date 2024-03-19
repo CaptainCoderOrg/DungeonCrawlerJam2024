@@ -112,8 +112,8 @@ public class Project_should
         expected.AddScript("second.lua", new EventScript("Second"));
         expected.AddScript("third.lua", new EventScript("Third"));
 
-        expected.AddTexture(new Texture("stone-wall", [0, 1, 2]));
-        expected.AddTexture(new Texture("wood-door", [2, 7, 8]));
+        expected.AddTexture(new Texture("stone-wall.png", [0, 1, 2]));
+        expected.AddTexture(new Texture("wood-door.png", [2, 7, 8]));
 
         actual.ShouldBe(expected);
     }

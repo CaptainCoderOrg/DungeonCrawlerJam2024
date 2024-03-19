@@ -27,11 +27,11 @@ public class SelectTextureScreen : IScreen
     {
         IEnumerable<MenuEntry> options = [
             new StaticEntry("Default", () => { Finish(DefaultTexture.Shared); }),
-            ..Project.DefaultFileSystem.GetTextureNames(Path.Combine(EditorConstants.SaveDir, ProjectName)).Select(MakeEntry),
+            .. Project.DefaultFileSystem.GetTextureNames(Path.Combine(EditorConstants.SaveDir, ProjectName)).Select(MakeEntry),
         ];
         return new MenuScreen("Select Texture", options);
         MenuEntry MakeEntry(string name) => new StaticEntry(name, () => { Finish(new TextureReference(name)); });
-    }    
+    }
 
     private void Finish(TextureResult? result = null)
     {

@@ -43,6 +43,9 @@
     <Reference Include="NaughtyAttributes.Core">
       <HintPath>$(_UnityManagedPath)\NaughtyAttributes.Core.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>$(_UnityManagedPath)\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
