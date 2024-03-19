@@ -138,6 +138,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
         DrawText($"({pos.X}, {pos.Y}) - {facing}");
         WallType wallType = CurrentDungeon.Walls.GetWall(pos, facing);
         DrawText($"WallType: {wallType}");
+        DrawText($"Wall Texture: {CurrentDungeon.GetTextureName(Cursor.Position, Cursor.Facing)}");
         DrawText("Scripts:");
         foreach (TileEvent evt in CurrentDungeon.EventMap.EventsAt(pos))
         {
@@ -153,6 +154,23 @@ public class DungeonEditorScreen(string projectName) : IScreen
 
     public void HandleUserInput()
     {
+        if (Raylib.IsKeyPressed(KeyboardKey.T))
+        {
+            Program.Screen = new SelectTextureScreen{
+                ProjectName = ProjectName,
+                PreviousScreen = this,
+                OnFinished = (TextureResult result) => 
+                {
+                    Action action = result switch
+                    {
+                        DefaultTexture => () => { CurrentDungeon.WallTextures.Textures.Remove((Cursor.Position, Cursor.Facing)); },
+                        TextureReference(string textureName) => () => { CurrentDungeon.WallTextures.Textures[(Cursor.Position, Cursor.Facing)] = textureName; },
+                        _ => throw new NotImplementedException($"Unknown TextureResult: {result}"),
+                    };
+                    action.Invoke();
+                }
+            };
+        }
         if (Raylib.IsKeyPressed(KeyboardKey.Minus))
         {
             Program.Screen = new ScriptsScreen(this, ProjectName, Cursor.Position, CurrentDungeon.EventMap);
