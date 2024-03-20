@@ -6,12 +6,17 @@ using Raylib_cs;
 
 public static class WallMapRenderer
 {
-    public static void Render(this WallMap map, int left = 0, int top = 0)
+    public static void RenderWalls(this Dungeon dungeon, string projectName, int left = 0, int top = 0)
     {
-        foreach ((TileEdge edge, WallType wall) in map.Map)
+        foreach (TileEdge edge in dungeon.Walls.Map.Keys)
         {
-            Line line = edge.ToScreenCoords(DungeonEditorScreen.CellSize, left, top);
-            line.Render(2, GetWallColor(wall));
+            Texture2D texture = TextureCache.GetTexture(projectName, dungeon.GetTextureName(edge.Position, edge.Facing));
+            RectInfo side0 = edge.ToRectInfo(texture, DungeonEditorScreen.CellSize, left, top);
+            TileEdge opposite = edge with { Position = edge.Position.Step(edge.Facing), Facing = edge.Facing.Opposite() };
+            Texture2D texture2 = TextureCache.GetTexture(projectName, dungeon.GetTextureName(opposite.Position, opposite.Facing));
+            RectInfo side1 = opposite.ToRectInfo(texture2, DungeonEditorScreen.CellSize, left, top);
+            side0.Render();
+            side1.Render();
         }
     }
 
@@ -22,6 +27,28 @@ public static class WallMapRenderer
         WallType.SecretDoor => Color.Blue,
         _ => throw new Exception($"Unknown wall type: {wall}"),
     };
+
+    public static RectInfo ToRectInfo(this TileEdge edge, Texture2D texture, int cellSize, int left = 0, int top = 0)
+    {
+        const int halfWallWidth = 8;
+        float baseX = edge.Position.X * cellSize + left;
+        float baseY = edge.Position.Y * cellSize + top;
+        var (x, y) = edge.Facing switch
+        {
+            Facing.North => (baseX, baseY),
+            Facing.South => (baseX, baseY + cellSize - halfWallWidth),
+            Facing.East => (baseX + cellSize - halfWallWidth, baseY),
+            Facing.West => (baseX, baseY),
+            _ => throw new NotImplementedException($"Unknown facing: {edge.Facing}"),
+        };
+        var (width, height) = edge.Facing switch
+        {
+            Facing.North or Facing.South => (cellSize, halfWallWidth),
+            Facing.East or Facing.West => (halfWallWidth, cellSize),
+            _ => throw new NotImplementedException($"Unknown facing: {edge.Facing}"),
+        };
+        return new RectInfo(texture) { Target = new Rectangle(x, y, width, height) };
+    }
 
     public static Line ToScreenCoords(this TileEdge edge, int cellSize, int left = 0, int top = 0)
     {

@@ -8,7 +8,7 @@ using Raylib_cs;
 public class DungeonEditorScreen(string projectName) : IScreen
 {
     public const int MaxMapSize = 24;
-    public const int CellSize = 16;
+    public const int CellSize = 32;
     private readonly string _dungeonDirectory = Path.Combine(EditorConstants.SaveDir, projectName, Project.DungeonDir);
     public string ProjectName { get; } = projectName;
     public Cursor Cursor { get; private set; } = new(new Position(0, 0), Facing.West);
@@ -113,7 +113,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
         Raylib.ClearBackground(Color.Black);
         int offset = CellSize * 2;
         RenderTiles(offset, offset, CurrentDungeon.TileTextures);
-        CurrentDungeon.Walls.Render(offset, offset);
+        CurrentDungeon.RenderWalls(ProjectName, offset, offset);
         Cursor.Render(CellSize, offset, offset);
         RenderScriptedTiles(offset, CurrentDungeon.EventMap.Events.Keys);
         RenderInfoAtCursor(offset + (MaxMapSize + 1) * CellSize, 2 * CellSize);
@@ -124,9 +124,9 @@ public class DungeonEditorScreen(string projectName) : IScreen
     {
         foreach (Position position in positions)
         {
-            int top = offset + position.Y * CellSize + 3;
-            int left = offset + position.X * CellSize + 3;
-            Raylib.DrawCircle(left, top, 1, Color.Green);
+            int top = offset + position.Y * CellSize + CellSize / 2;
+            int left = offset + position.X * CellSize + CellSize / 2;
+            Raylib.DrawCircle(left, top, 4, Color.DarkPurple);
         }
     }
 
@@ -138,7 +138,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
             {
                 Position position = new(x, y);
                 Texture2D texture = TextureCache.GetTexture(ProjectName, map.GetTileTextureName(position));
-                TileInfo tile = new(texture) { Target = new Rectangle(left + x * CellSize, top + y * CellSize, CellSize, CellSize) };
+                RectInfo tile = new(texture) { Target = new Rectangle(left + x * CellSize, top + y * CellSize, CellSize, CellSize) };
                 tile.Render();
             }
         }
