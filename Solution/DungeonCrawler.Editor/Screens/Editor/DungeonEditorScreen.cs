@@ -111,6 +111,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
     {
         Raylib.ClearBackground(Color.Black);
         int offset = CellSize * 2;
+        RenderTiles(offset, offset, CurrentDungeon.TileTextures);
         CurrentDungeon.Walls.Render(offset, offset);
         Cursor.Render(CellSize, offset, offset);
         RenderScriptedTiles(offset, CurrentDungeon.EventMap.Events.Keys);
@@ -125,6 +126,20 @@ public class DungeonEditorScreen(string projectName) : IScreen
             int top = offset + position.Y * CellSize + 3;
             int left = offset + position.X * CellSize + 3;
             Raylib.DrawCircle(left, top, 1, Color.Green);
+        }
+    }
+
+    private void RenderTiles(int left, int top, TileTextureMap map)
+    {
+        for (int y = 0; y < MaxMapSize; y++)
+        {
+            for (int x = 0; x < MaxMapSize; x++)
+            {
+                Position position = new(x, y);
+                Texture2D texture = TextureCache.GetTexture(ProjectName, map.GetTileTextureName(position));
+                TileInfo tile = new(texture) { Target = new Rectangle(left + x * CellSize, top + y * CellSize, CellSize, CellSize) };
+                tile.Render();
+            }
         }
     }
 
@@ -196,10 +211,8 @@ public class DungeonEditorScreen(string projectName) : IScreen
                 {
                     Action action = result switch
                     {
-                        DefaultTexture => () => { CurrentDungeon.TileTextures.Textures.Remove(Cursor.Position); }
-                        ,
-                        TextureReference(string textureName) => () => { CurrentDungeon.TileTextures.Textures[Cursor.Position] = textureName; }
-                        ,
+                        DefaultTexture => () => CurrentDungeon.TileTextures.Textures.Remove(Cursor.Position),
+                        TextureReference(string textureName) => () => CurrentDungeon.TileTextures.Textures[Cursor.Position] = textureName,
                         _ => throw new NotImplementedException($"Unknown TextureResult: {result}"),
                     };
                     action.Invoke();
@@ -219,10 +232,8 @@ public class DungeonEditorScreen(string projectName) : IScreen
                 {
                     Action action = result switch
                     {
-                        DefaultTexture => () => { CurrentDungeon.WallTextures.Textures.Remove((Cursor.Position, Cursor.Facing)); }
-                        ,
-                        TextureReference(string textureName) => () => { CurrentDungeon.WallTextures.Textures[(Cursor.Position, Cursor.Facing)] = textureName; }
-                        ,
+                        DefaultTexture => () => CurrentDungeon.WallTextures.Textures.Remove((Cursor.Position, Cursor.Facing)),
+                        TextureReference(string textureName) => () => CurrentDungeon.WallTextures.Textures[(Cursor.Position, Cursor.Facing)] = textureName,
                         _ => throw new NotImplementedException($"Unknown TextureResult: {result}"),
                     };
                     action.Invoke();
