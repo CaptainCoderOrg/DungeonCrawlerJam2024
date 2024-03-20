@@ -16,7 +16,7 @@ public static class CursorExtensions
 
     public static Vector2[] CursorPoints(Facing direction, float x, float y, int cellSize = DungeonEditorScreen.CellSize)
     {
-        const int padding = 2;
+        const int padding = 8;
         return direction switch
         {
             Facing.North => [
