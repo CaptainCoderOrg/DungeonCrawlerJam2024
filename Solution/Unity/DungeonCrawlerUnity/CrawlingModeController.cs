@@ -33,6 +33,8 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public GameState State { get; set; } = new();
     public DungeonCrawlerManifest Manifest { get => _crawlerMode.Manifest; set => _crawlerMode.Manifest = value; }
 
+    private Coroutine? _currentTransition;
+
     public void Awake()
     {
         DungeonCrawlerManifest manifest = DungeonData.LoadManifest();
@@ -42,7 +44,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         DungeonBuilder.Build(dungeon);
         PlayerCamera.InstantTransitionToPlayerView(_crawlerMode.CurrentView);
         _crawlerMode.OnViewChange += (viewChangeEvent) => PlayerViewData = new(viewChangeEvent.Entered);
-        _crawlerMode.OnViewChange += viewChangeEvent => PlayerCamera.InstantTransitionToPlayerView(viewChangeEvent.Entered);
+        _crawlerMode.OnViewChange += HandleMoveTransition;
         _crawlerMode.OnPositionChange += HandleOnEnterEvents;
         _crawlerMode.OnPositionChange += HandleOnExitEvents;
         _crawlerMode.OnMessageAdded += message =>
@@ -51,6 +53,13 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
             Debug.Log(message);
         };
         _crawlerMode.OnDungeonChange += ChangeDungeon;
+    }
+
+    private void HandleMoveTransition(ViewChangeEvent evt)
+    {
+        // PlayerCamera.InstantTransitionToPlayerView(viewChangeEvent.Entered);
+        if (_currentTransition != null) { StopCoroutine(_currentTransition); }
+        _currentTransition = StartCoroutine(PlayerCamera.LerpTransitionToPlayerView(evt.Exited, evt.Entered));
     }
 
     public void ChangeDungeon(DungeonChangeEvent evt)
