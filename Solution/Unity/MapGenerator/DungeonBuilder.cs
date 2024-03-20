@@ -34,12 +34,12 @@ public class DungeonBuilder : MonoBehaviour
                 newTile.name = $"({x}, {y})";
                 newTile.transform.position = new Vector3(y, 0, x);
                 Position position = new(x, y);
+                newTile.UpdateFloor(MaterialCache.GetTileMaterial(dungeon, position));
                 newTile.UpdateWalls(dungeon.GetTile(position).Walls, MaterialCache.GetTileWallMaterials(dungeon, position));
                 allTiles[new Position(x, y)] = newTile;
             }
         }
 
-        // TODO: Is there a memory leak here when the dungeon changes?
         dungeon.Walls.OnWallChanged += UpdateWalls;
         void UpdateWalls(Position position, Facing facing, WallType wall)
         {
@@ -51,6 +51,7 @@ public class DungeonBuilder : MonoBehaviour
 
 public static class DungeonExtensions
 {
+    public static Material GetTileMaterial(this Dictionary<string, Material> cache, Dungeon dungeon, Position position) => cache[dungeon.TileTextures.GetTileTextureName(position)];
     public static TileWallMaterials GetTileWallMaterials(this Dictionary<string, Material> cache, Dungeon dungeon, Position position)
     {
         return new TileWallMaterials()

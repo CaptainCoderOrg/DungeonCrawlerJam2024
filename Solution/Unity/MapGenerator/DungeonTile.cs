@@ -12,6 +12,14 @@ public class DungeonTile : MonoBehaviour
     public MeshRenderer SouthWall { get; private set; } = default!;
     [field: SerializeField]
     public MeshRenderer WestWall { get; private set; } = default!;
+    [field: SerializeField]
+    public MeshRenderer FloorTile { get; private set; } = default!;
+
+    public void UpdateFloor(Material material)
+    {
+        FloorTile.material = material;
+    }
+
     public void UpdateWalls(TileWalls configuration, TileWallMaterials materials)
     {
         NorthWall.material = materials.North;

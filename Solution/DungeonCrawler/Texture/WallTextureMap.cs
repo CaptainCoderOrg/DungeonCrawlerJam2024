@@ -2,7 +2,7 @@ using CaptainCoder.Utils.DictionaryExtensions;
 
 namespace CaptainCoder.Dungeoneering.DungeonMap;
 
-public class WallTextureMap() : IEquatable<WallTextureMap>
+public class WallTextureMap : IEquatable<WallTextureMap>
 {
     public const string DefaultSolidTexture = "default-wall.png";
     public const string DefaultDoorTexture = "default-door.png";

@@ -139,6 +139,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
         WallType wallType = CurrentDungeon.Walls.GetWall(pos, facing);
         DrawText($"WallType: {wallType}");
         DrawText($"Wall Texture: {CurrentDungeon.GetTextureName(Cursor.Position, Cursor.Facing)}");
+        DrawText($"Tile Texture: {CurrentDungeon.TileTextures.GetTileTextureName(Cursor.Position)}");
         DrawText("Scripts:");
         foreach (TileEvent evt in CurrentDungeon.EventMap.EventsAt(pos))
         {
@@ -154,26 +155,9 @@ public class DungeonEditorScreen(string projectName) : IScreen
 
     public void HandleUserInput()
     {
-        if (Raylib.IsKeyPressed(KeyboardKey.T))
-        {
-            Program.Screen = new SelectTextureScreen
-            {
-                ProjectName = ProjectName,
-                PreviousScreen = this,
-                OnFinished = (TextureResult result) =>
-                {
-                    Action action = result switch
-                    {
-                        DefaultTexture => () => { CurrentDungeon.WallTextures.Textures.Remove((Cursor.Position, Cursor.Facing)); }
-                        ,
-                        TextureReference(string textureName) => () => { CurrentDungeon.WallTextures.Textures[(Cursor.Position, Cursor.Facing)] = textureName; }
-                        ,
-                        _ => throw new NotImplementedException($"Unknown TextureResult: {result}"),
-                    };
-                    action.Invoke();
-                }
-            };
-        }
+        HandleWallTextures();
+        HandleTileTextures();
+
         if (Raylib.IsKeyPressed(KeyboardKey.Minus))
         {
             Program.Screen = new ScriptsScreen(this, ProjectName, Cursor.Position, CurrentDungeon.EventMap);
@@ -199,6 +183,52 @@ public class DungeonEditorScreen(string projectName) : IScreen
             }
         }
         HandleCursorMovement();
+    }
+    private void HandleTileTextures()
+    {
+        if (Raylib.IsKeyPressed(KeyboardKey.F))
+        {
+            Program.Screen = new SelectTextureScreen
+            {
+                ProjectName = ProjectName,
+                PreviousScreen = this,
+                OnFinished = (TextureResult result) =>
+                {
+                    Action action = result switch
+                    {
+                        DefaultTexture => () => { CurrentDungeon.TileTextures.Textures.Remove(Cursor.Position); }
+                        ,
+                        TextureReference(string textureName) => () => { CurrentDungeon.TileTextures.Textures[Cursor.Position] = textureName; }
+                        ,
+                        _ => throw new NotImplementedException($"Unknown TextureResult: {result}"),
+                    };
+                    action.Invoke();
+                }
+            };
+        }
+    }
+    private void HandleWallTextures()
+    {
+        if (Raylib.IsKeyPressed(KeyboardKey.T))
+        {
+            Program.Screen = new SelectTextureScreen
+            {
+                ProjectName = ProjectName,
+                PreviousScreen = this,
+                OnFinished = (TextureResult result) =>
+                {
+                    Action action = result switch
+                    {
+                        DefaultTexture => () => { CurrentDungeon.WallTextures.Textures.Remove((Cursor.Position, Cursor.Facing)); }
+                        ,
+                        TextureReference(string textureName) => () => { CurrentDungeon.WallTextures.Textures[(Cursor.Position, Cursor.Facing)] = textureName; }
+                        ,
+                        _ => throw new NotImplementedException($"Unknown TextureResult: {result}"),
+                    };
+                    action.Invoke();
+                }
+            };
+        }
     }
 
     private bool IsShiftDown => Raylib.IsKeyDown(KeyboardKey.LeftShift) || Raylib.IsKeyDown(KeyboardKey.RightShift);

@@ -68,6 +68,26 @@ public class Dungeon_should
             dungeon.Walls.SetWall(new Position(3, 7), Facing.North, WallType.Solid);
             dungeon.EventMap.AddEvent(new Position(3, 2), new TileEvent(EventTrigger.OnEnter, "Test script"));
             dungeon.EventMap.AddEvent(new Position(1, 2), new TileEvent(EventTrigger.OnExit, "Another Test script"));
+            dungeon.TileTextures.Textures[new Position(0, 0)] = "dirt";
+            return dungeon;
+        }
+    }
+
+    [Fact]
+    public void not_be_equals_with_different_tile_textures()
+    {
+        Dungeon first = MakeDungeon();
+        Dungeon modified = MakeDungeon();
+        modified.TileTextures.Textures[new Position(0, 0)] = "floor";
+        first.ShouldNotBe(modified);
+        static Dungeon MakeDungeon()
+        {
+            Dungeon dungeon = new();
+            dungeon.Walls.SetWall(new Position(5, 7), Facing.East, WallType.Door);
+            dungeon.Walls.SetWall(new Position(5, 7), Facing.North, WallType.Solid);
+            dungeon.Walls.SetWall(new Position(3, 7), Facing.North, WallType.Solid);
+            dungeon.EventMap.AddEvent(new Position(3, 2), new TileEvent(EventTrigger.OnEnter, "Test script"));
+            dungeon.EventMap.AddEvent(new Position(1, 2), new TileEvent(EventTrigger.OnExit, "Another Test script"));
             return dungeon;
         }
     }

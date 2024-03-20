@@ -5,6 +5,7 @@ public class Dungeon() : IEquatable<Dungeon>
     public WallMap Walls { get; init; } = new();
     public EventMap EventMap { get; init; } = new();
     public WallTextureMap WallTextures { get; init; } = new();
+    public TileTextureMap TileTextures { get; init; } = new();
 
     public Tile GetTile(Position position)
     {
@@ -28,7 +29,7 @@ public class Dungeon() : IEquatable<Dungeon>
 
     public bool Equals(Dungeon other)
     {
-        return Walls.Equals(other.Walls) && EventMap.Equals(other.EventMap);
+        return Walls.Equals(other.Walls) && EventMap.Equals(other.EventMap) && TileTextures.Equals(other.TileTextures);
     }
 }
 
