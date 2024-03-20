@@ -73,7 +73,7 @@ public class Dungeon_should
         }
     }
 
-    [Fact] 
+    [Fact]
     public void not_be_equals_with_different_tile_textures()
     {
         Dungeon first = MakeDungeon();
@@ -89,7 +89,7 @@ public class Dungeon_should
             dungeon.EventMap.AddEvent(new Position(3, 2), new TileEvent(EventTrigger.OnEnter, "Test script"));
             dungeon.EventMap.AddEvent(new Position(1, 2), new TileEvent(EventTrigger.OnExit, "Another Test script"));
             return dungeon;
-        }  
+        }
     }
 
     [Theory]

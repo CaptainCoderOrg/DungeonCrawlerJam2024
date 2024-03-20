@@ -44,7 +44,7 @@ public class TileTextureMap_should
         actual.ShouldBe(underTest);
     }
 
-    
+
     [Theory]
     [InlineData(5, 7, "stone-wall.png")]
     [InlineData(5, 6, "stone-wall-variant.png")]
