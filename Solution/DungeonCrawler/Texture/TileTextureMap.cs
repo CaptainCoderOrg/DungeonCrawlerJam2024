@@ -14,13 +14,5 @@ public class TileTextureMap : IEquatable<TileTextureMap>
 
 public static class TileTextureMapExtensions
 {
-    public static string GetTileTextureName(this Dungeon dungeon, Position position) => throw new NotImplementedException();
-    // dungeon.TileTextures.GetWall(position) switch
-    // {
-    //     _ when dungeon.WallTextures.Textures.TryGetValue((position, facing), out string texture) is true => texture,
-    //     WallType.Solid => dungeon.WallTextures.DefaultSolid,
-    //     WallType.Door => dungeon.WallTextures.DefaultDoor,
-    //     WallType.SecretDoor => dungeon.WallTextures.DefaultSecretDoor,
-    //     _ => "No Texture",
-    // };
+    public static string GetTileTextureName(this TileTextureMap map, Position position) => map.Textures.GetValueOrDefault(position, map.Default);
 }

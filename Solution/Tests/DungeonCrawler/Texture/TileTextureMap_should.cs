@@ -43,4 +43,18 @@ public class TileTextureMap_should
         TileTextureMap actual = JsonExtensions.LoadModel<TileTextureMap>(json);
         actual.ShouldBe(underTest);
     }
+
+    
+    [Theory]
+    [InlineData(5, 7, "stone-wall.png")]
+    [InlineData(5, 6, "stone-wall-variant.png")]
+    [InlineData(3, 3, "tavern-wall.png")]
+    [InlineData(0, 0, "well-wall.png")]
+    [InlineData(4, 9, "Some Default")]
+    [InlineData(1, 1, "Some Default")]
+    public void get_tile_texture(int x, int y, string expected)
+    {
+        TileTextureMap map = MakeWithTextures();
+        map.GetTileTextureName(new Position(x, y)).ShouldBe(expected);
+    }
 }
