@@ -14,6 +14,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
     public Cursor Cursor { get; private set; } = new(new Position(0, 0), Facing.West);
     public WallType Wall { get; private set; } = WallType.Solid;
     public Dungeon CurrentDungeon { get; private set; } = new(WallMapExtensions.CreateEmpty(MaxMapSize, MaxMapSize));
+    public TextureResult SelectedTexture { get; set; } = DefaultTexture.Shared;
     private string? _filename = null;
     private readonly InfoOverLayScreen _overlay = new();
     private IScreen? _editorMenu;
@@ -155,6 +156,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
         DrawText($"WallType: {wallType}");
         DrawText($"Wall Texture: {CurrentDungeon.GetTextureName(Cursor.Position, Cursor.Facing)}");
         DrawText($"Tile Texture: {CurrentDungeon.TileTextures.GetTileTextureName(Cursor.Position)}");
+        DrawText($"Selected Texture: {TextureName(SelectedTexture)}");
         DrawText("Scripts:");
         foreach (TileEvent evt in CurrentDungeon.EventMap.EventsAt(pos))
         {
@@ -166,12 +168,20 @@ public class DungeonEditorScreen(string projectName) : IScreen
             Raylib.DrawText(text, left, top, fontSize, Color.White);
             top += fontSize + padding;
         }
+        static string TextureName(TextureResult texture) => texture switch
+        {
+            DefaultTexture => "Default",
+            TextureReference(string name) => name,
+            _ => throw new NotImplementedException($"Unknown texture result: {texture}."),
+        };
     }
 
     public void HandleUserInput()
     {
-        HandleWallTextures();
-        HandleTileTextures();
+        HandleCursorMovement();
+        SelectTexture();
+        PaintTileTexture();
+        PaintWall();
 
         if (Raylib.IsKeyPressed(KeyboardKey.Minus))
         {
@@ -186,41 +196,56 @@ public class DungeonEditorScreen(string projectName) : IScreen
         {
             Program.Screen = EditorMenu;
         }
+    }
+    private void PaintWall()
+    {
         if (Raylib.IsKeyPressed(KeyboardKey.Space))
         {
-            if (CurrentDungeon.Walls.TryGetWall(Cursor.Position, Cursor.Facing, out WallType wall) && wall == Wall)
+            bool shouldRemoveWall = CurrentDungeon.Walls.TryGetWall(Cursor.Position, Cursor.Facing, out WallType wall) &&
+                                    wall == Wall &&
+                                    SelectedTextureName() == CurrentDungeon.GetTextureName(Cursor.Position, Cursor.Facing);
+            if (shouldRemoveWall)
             {
                 CurrentDungeon.Walls.RemoveWall(Cursor.Position, Cursor.Facing);
+                CurrentDungeon.WallTextures.Textures.Remove((Cursor.Position, Cursor.Facing));
             }
             else
             {
                 CurrentDungeon.Walls.SetWall(Cursor.Position, Cursor.Facing, Wall);
+                Action action = SelectedTexture switch
+                {
+                    DefaultTexture => () => CurrentDungeon.WallTextures.Textures.Remove((Cursor.Position, Cursor.Facing)),
+                    TextureReference(string textureName) => () => CurrentDungeon.SetTexture(Cursor.Position, Cursor.Facing, textureName),
+                    _ => throw new NotImplementedException($"Unknown TextureResult: {SelectedTexture}"),
+                };
+                action.Invoke();
             }
         }
-        HandleCursorMovement();
     }
-    private void HandleTileTextures()
+
+    private string SelectedTextureName() => (SelectedTexture, Wall) switch
     {
-        if (Raylib.IsKeyPressed(KeyboardKey.F))
+        (DefaultTexture, WallType.Solid) => CurrentDungeon.WallTextures.DefaultSolid,
+        (DefaultTexture, WallType.Door) => CurrentDungeon.WallTextures.DefaultDoor,
+        (DefaultTexture, WallType.SecretDoor) => CurrentDungeon.WallTextures.DefaultSecretDoor,
+        (TextureReference(string textureName), _) => textureName,
+        _ => string.Empty,
+    };
+    private void PaintTileTexture()
+    {
+        if (Raylib.IsKeyPressed(KeyboardKey.J))
         {
-            Program.Screen = new SelectTextureScreen
+            Action action = SelectedTexture switch
             {
-                ProjectName = ProjectName,
-                PreviousScreen = this,
-                OnFinished = (TextureResult result) =>
-                {
-                    Action action = result switch
-                    {
-                        DefaultTexture => () => CurrentDungeon.TileTextures.Textures.Remove(Cursor.Position),
-                        TextureReference(string textureName) => () => CurrentDungeon.TileTextures.Textures[Cursor.Position] = textureName,
-                        _ => throw new NotImplementedException($"Unknown TextureResult: {result}"),
-                    };
-                    action.Invoke();
-                }
+                DefaultTexture => () => CurrentDungeon.TileTextures.Textures.Remove(Cursor.Position),
+                TextureReference(string textureName) => () => CurrentDungeon.TileTextures.Textures[Cursor.Position] = textureName,
+                _ => throw new NotImplementedException($"Unknown TextureResult: {SelectedTexture}"),
             };
+            action.Invoke();
         }
     }
-    private void HandleWallTextures()
+
+    private void SelectTexture()
     {
         if (Raylib.IsKeyPressed(KeyboardKey.T))
         {
@@ -228,16 +253,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
             {
                 ProjectName = ProjectName,
                 PreviousScreen = this,
-                OnFinished = (TextureResult result) =>
-                {
-                    Action action = result switch
-                    {
-                        DefaultTexture => () => CurrentDungeon.WallTextures.Textures.Remove((Cursor.Position, Cursor.Facing)),
-                        TextureReference(string textureName) => () => CurrentDungeon.WallTextures.Textures[(Cursor.Position, Cursor.Facing)] = textureName,
-                        _ => throw new NotImplementedException($"Unknown TextureResult: {result}"),
-                    };
-                    action.Invoke();
-                }
+                OnFinished = (TextureResult result) => SelectedTexture = result
             };
         }
     }
