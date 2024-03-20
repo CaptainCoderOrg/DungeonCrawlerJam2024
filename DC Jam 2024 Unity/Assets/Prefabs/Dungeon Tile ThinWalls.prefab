@@ -50,6 +50,7 @@ MonoBehaviour:
   <EastWall>k__BackingField: {fileID: 2565073221470670182}
   <SouthWall>k__BackingField: {fileID: 1436500757946345756}
   <WestWall>k__BackingField: {fileID: 7466211989606388949}
+  <FloorTile>k__BackingField: {fileID: 5110878112998582658}
 --- !u!1 &365824114621065606
 GameObject:
   m_ObjectHideFlags: 0
