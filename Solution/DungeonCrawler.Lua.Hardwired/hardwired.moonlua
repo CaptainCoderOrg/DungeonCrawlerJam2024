@@ -180,8 +180,8 @@ ${
 						params = ${
 							[1] = ${
 								name = "context",
-								type = "CaptainCoder.Dungeoneering.DungeonCrawler.Scripting.IScriptContext",
-								origtype = "CaptainCoder.Dungeoneering.DungeonCrawler.Scripting.IScriptContext",
+								type = "CaptainCoder.Dungeoneering.Lua.IScriptContext",
+								origtype = "CaptainCoder.Dungeoneering.Lua.IScriptContext",
 								default = false,
 								out = false,
 								ref = false,
@@ -938,6 +938,36 @@ ${
 								name = "scriptName",
 								type = "System.String",
 								origtype = "System.String",
+								default = false,
+								out = false,
+								ref = false,
+								varargs = false,
+								restricted = false,
+							},
+						},
+					},
+				},
+			},
+			ShowDialogue = ${
+				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
+				name = "ShowDialogue",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
+				overloads = ${
+					[1] = ${
+						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
+						name = "ShowDialogue",
+						ctor = false,
+						special = false,
+						visibility = "public",
+						ret = "System.Void",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
+						static = false,
+						extension = false,
+						params = ${
+							[1] = ${
+								name = "dialogue",
+								type = "MoonSharp.Interpreter.DynValue",
+								origtype = "MoonSharp.Interpreter.DynValue",
 								default = false,
 								out = false,
 								ref = false,

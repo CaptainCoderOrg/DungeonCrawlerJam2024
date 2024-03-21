@@ -6,6 +6,7 @@ using CaptainCoder.Dungeoneering.DungeonMap.Unity;
 using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Game.Unity;
 using CaptainCoder.Dungeoneering.Lua;
+using CaptainCoder.Dungeoneering.Lua.Dialogue;
 using CaptainCoder.Dungeoneering.Player;
 using CaptainCoder.Dungeoneering.Player.Unity;
 
@@ -32,6 +33,8 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public QueuedMessageRenderer InfoMessageRenderer { get; set; } = default!;
     public GameState State { get; set; } = new();
     public DungeonCrawlerManifest Manifest { get => _crawlerMode.Manifest; set => _crawlerMode.Manifest = value; }
+    [field: SerializeField]
+    public DialogueController DialogueController { get; set; } = default!;
     private Coroutine? _currentTransition;
 
     public void Awake()
@@ -130,6 +133,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         }
     }
 
+    public void ShowDialogue(Dialogue dialogue) => DialogueController.Show(dialogue);
 }
 
 [Serializable]

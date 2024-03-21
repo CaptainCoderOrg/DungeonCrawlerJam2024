@@ -379,4 +379,15 @@ public class LuaInterpreter_should
         Dialogue dialogue = new(nextDialogue, [new CloseDialogueOption(closeLabel)]);
         option.ShouldBe(new ContinueDialogueOption(label, dialogue));
     }
+
+    [Fact]
+    public void show_dialogue()
+    {
+        IScriptContext context = Substitute.For<IScriptContext>();
+        Dialogue simple = new ("Test");
+
+        Interpreter.ExecLua("""context.ShowDialogue(Dialogue("Test"))""", context);
+
+        context.ReceivedWithAnyArgs().ShowDialogue(simple);
+    }
 }
