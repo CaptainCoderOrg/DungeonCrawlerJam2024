@@ -15,7 +15,7 @@ public static class CameraModes
         transform.rotation = view.Facing.ToQuaternion();
     }
 
-    public static IEnumerator LerpTransitionToPlayerView(this Transform transform, PlayerView exit, PlayerView enter, float duration = 0.06f)
+    public static IEnumerator LerpTransitionToPlayerView(this Transform transform, PlayerView exit, PlayerView enter, float duration = 0.1f)
     {
         Quaternion startQ = exit.Facing.ToQuaternion();
         Quaternion endQ = enter.Facing.ToQuaternion();
