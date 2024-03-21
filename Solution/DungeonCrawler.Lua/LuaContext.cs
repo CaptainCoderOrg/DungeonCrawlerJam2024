@@ -59,7 +59,7 @@ public class LuaContext(IScriptContext context)
     public void SetWallTexture(string texture)
     {
         (Position pos, Facing facing) = _target.View;
-        _target.CurrentDungeon.WallTextures.Textures[(pos, facing)] = texture;
+        _target.CurrentDungeon.SetTexture(pos, facing, texture);
     }
     public void SetVariable(string name, DynValue value) => _target.State.GlobalVariables[name] = value.ToObject();
     public object GetVariable(string name) => _target.State.GlobalVariables.GetValueOrDefault(name);

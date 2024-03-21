@@ -50,5 +50,4 @@ public class WallTextureMap_should
     {
         NonDefaults.ShouldNotBe(new WallTextureMap());
     }
-
 }
