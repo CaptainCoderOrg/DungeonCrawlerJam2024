@@ -71,6 +71,7 @@ public class DungeonManifestData : ScriptableObject
     public TextAsset? ManifestJson { get; private set; }
 
     public DungeonCrawlerManifest LoadManifest() => JsonExtensions.LoadModel<DungeonCrawlerManifest>(ManifestJson!.text);
+    public DungeonCrawlerManifest LoadFromFile(string path) => JsonExtensions.LoadModel<DungeonCrawlerManifest>(File.ReadAllText(path));
 }
 
 public static class TextureExtensions
