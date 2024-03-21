@@ -539,6 +539,36 @@ ${
 					},
 				},
 			},
+			SetWallTexture = ${
+				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
+				name = "SetWallTexture",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
+				overloads = ${
+					[1] = ${
+						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
+						name = "SetWallTexture",
+						ctor = false,
+						special = false,
+						visibility = "public",
+						ret = "System.Void",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
+						static = false,
+						extension = false,
+						params = ${
+							[1] = ${
+								name = "texture",
+								type = "System.String",
+								origtype = "System.String",
+								default = false,
+								out = false,
+								ref = false,
+								varargs = false,
+								restricted = false,
+							},
+						},
+					},
+				},
+			},
 			SetVariable = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "SetVariable",

@@ -102,7 +102,7 @@ public class Dungeon_should
         {
             Walls = new WallMap([(new TileEdge(new Position(0, 0), Facing.North), type)]),
         };
-        string actual = dungeon.GetTextureName(new Position(0, 0), Facing.North);
+        string actual = dungeon.GetWallTexture(new Position(0, 0), Facing.North);
         actual.ShouldBe(expected);
     }
 
@@ -123,7 +123,7 @@ public class Dungeon_should
                 },
             }
         };
-        string actual = dungeon.GetTextureName(new Position(0, 0), Facing.North);
+        string actual = dungeon.GetWallTexture(new Position(0, 0), Facing.North);
         actual.ShouldBe(expected);
     }
 

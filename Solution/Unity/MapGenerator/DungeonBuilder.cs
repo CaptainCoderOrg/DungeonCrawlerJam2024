@@ -56,10 +56,10 @@ public static class DungeonExtensions
     {
         return new TileWallMaterials()
         {
-            North = cache.GetValueOrDefault(dungeon.GetTextureName(position, Facing.North)),
-            East = cache.GetValueOrDefault(dungeon.GetTextureName(position, Facing.East)),
-            South = cache.GetValueOrDefault(dungeon.GetTextureName(position, Facing.South)),
-            West = cache.GetValueOrDefault(dungeon.GetTextureName(position, Facing.West)),
+            North = cache.GetValueOrDefault(dungeon.GetWallTexture(position, Facing.North)),
+            East = cache.GetValueOrDefault(dungeon.GetWallTexture(position, Facing.East)),
+            South = cache.GetValueOrDefault(dungeon.GetWallTexture(position, Facing.South)),
+            West = cache.GetValueOrDefault(dungeon.GetWallTexture(position, Facing.West)),
         };
     }
 }

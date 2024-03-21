@@ -20,7 +20,7 @@ public class WallTextureMap : IEquatable<WallTextureMap>
 
 public static class WallTextureMapExtensions
 {
-    public static string GetTextureName(this Dungeon dungeon, Position position, Facing facing) =>
+    public static string GetWallTexture(this Dungeon dungeon, Position position, Facing facing) =>
     dungeon.Walls.GetWall(position, facing) switch
     {
         _ when dungeon.WallTextures.Textures.TryGetValue((position, facing), out string texture) is true => texture,
