@@ -41,7 +41,13 @@ public class DungeonBuilder : MonoBehaviour
         }
 
         dungeon.Walls.OnWallChanged += UpdateWalls;
+        dungeon.WallTextures.OnTextureChange += UpdateTextures;
         void UpdateWalls(Position position, Facing facing, WallType wall)
+        {
+            DungeonTile toUpdate = allTiles[position];
+            toUpdate.UpdateWalls(dungeon.GetTile(position).Walls, MaterialCache.GetTileWallMaterials(dungeon, position));
+        }
+        void UpdateTextures(Position position, Facing facing, string textureName)
         {
             DungeonTile toUpdate = allTiles[position];
             toUpdate.UpdateWalls(dungeon.GetTile(position).Walls, MaterialCache.GetTileWallMaterials(dungeon, position));

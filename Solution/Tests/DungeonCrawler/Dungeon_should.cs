@@ -140,7 +140,7 @@ public class Dungeon_should
         string actual = dungeon.WallTextures.Textures[(new Position(x, y), facing)];
         actual.ShouldBe(textureName);
     }
-    
+
     [Theory]
     [InlineData(5, 7, Facing.North, "wood.png")]
     [InlineData(0, 17, Facing.East, "brick.png")]
@@ -152,7 +152,7 @@ public class Dungeon_should
         Dungeon dungeon = new();
         (Position pos, Facing facing, string texture)? actual = null;
         dungeon.WallTextures.OnTextureChange += (p, f, t) => actual = (p, f, t);
-        
+
         // Act
         dungeon.SetTexture(new Position(x, y), facing, textureName);
 

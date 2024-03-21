@@ -1,7 +1,5 @@
 namespace Tests;
 
-using System.Transactions;
-
 using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
@@ -282,13 +280,16 @@ public class LuaInterpreter_should
     public void set_wall_texture(string textureName, int x, int y, Facing facing)
     {
         IScriptContext context = Substitute.For<IScriptContext>();
-        Position position = new (x, y);
+        Position position = new(x, y);
         context.View = new PlayerView(position, facing);
-        context.CurrentDungeon = new Dungeon() 
-        { 
-            Walls = new WallMap() { Map = new Dictionary<TileEdge, WallType>{
+        context.CurrentDungeon = new Dungeon()
+        {
+            Walls = new WallMap()
+            {
+                Map = new Dictionary<TileEdge, WallType>{
                 { new TileEdge(position, facing), WallType.Solid }
-            }},
+            }
+            },
         };
         string script = $"""context.SetWallTexture("{textureName}")""";
         Interpreter.ExecLua(script, context);

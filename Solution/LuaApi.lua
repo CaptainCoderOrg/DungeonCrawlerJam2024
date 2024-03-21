@@ -60,3 +60,15 @@ function context.ChangeDungeon(name, x, y, facing) end
 
 --- Loads a dungeon crawler from the specified url
 function context.LoadCrawlerFromURL(url) end
+
+--- Sets the texture of the wall the player is currently facing
+function context.SetWallTexture(textureName) end
+
+--- Sets the texture of the wall at the specified position
+function context.SetWallAtTexture(x, y, facing, textureName) end
+
+--- Retrieves the texture of the wall the player is facing
+function context.GetWallTexture() end
+
+--- Retrieves the texture of the wall at the specified position
+function context.GetWallAtTexture(x, y, facing, textureName) end
