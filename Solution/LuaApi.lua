@@ -57,3 +57,6 @@ function context.GetVariable(name) end
 
 --- Teleports the player to a new dungeon and sets their position and facing
 function context.ChangeDungeon(name, x, y, facing) end
+
+--- Loads a dungeon crawler from the specified url
+function context.LoadCrawlerFromURL(url) end
