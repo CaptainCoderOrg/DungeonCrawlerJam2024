@@ -1,13 +1,13 @@
 using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
+using CaptainCoder.Dungeoneering.DungeonMap.IO;
 using CaptainCoder.Dungeoneering.DungeonMap.Unity;
 using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Game.Unity;
 using CaptainCoder.Dungeoneering.Lua;
 using CaptainCoder.Dungeoneering.Player;
 using CaptainCoder.Dungeoneering.Player.Unity;
-
 
 using UnityEngine;
 
@@ -37,9 +37,30 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
 
     public void Awake()
     {
-        // DungeonCrawlerManifest manifest = DungeonData.LoadFromFile("Build.json");
-        DungeonCrawlerManifest manifest = DungeonData.LoadManifest();
-        var cache = DungeonBuilder.InitializeMaterialCache(manifest);
+        LuaContext.LoadFromURL = (string url) => StartCoroutine(WebLoader.GetTextFromURL(url, LoadCrawler, Fail));
+        Init(DungeonData.ManifestJson!.text);
+    }
+
+    public void Fail(string failMessage)
+    {
+        throw new Exception("Failed to load URL");
+    }
+
+    public void LoadCrawler(string projectJson)
+    {
+        Debug.Log("Loading Crawler...");
+        DungeonCrawlerManifest manifest = JsonExtensions.LoadModel<DungeonCrawlerManifest>(projectJson);
+        _ = DungeonBuilder.InitializeMaterialCache(manifest);
+        _crawlerMode.Manifest = manifest;
+        _crawlerMode.CurrentDungeon = manifest.Dungeons["Town"];
+        _crawlerMode.CurrentView = new PlayerView(0, 0, Facing.North);
+        Debug.Log("Done!");
+    }
+
+    public void Init(string projectJson)
+    {
+        DungeonCrawlerManifest manifest = JsonExtensions.LoadModel<DungeonCrawlerManifest>(projectJson);
+        _ = DungeonBuilder.InitializeMaterialCache(manifest);
         Dungeon dungeon = manifest.Dungeons["Town"];
         _crawlerMode = new CrawlerMode(manifest, dungeon, new PlayerView(PlayerViewData.X, PlayerViewData.Y, PlayerViewData.Facing));
         DungeonBuilder.Build(dungeon);

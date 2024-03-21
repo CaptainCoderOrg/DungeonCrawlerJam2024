@@ -10,6 +10,7 @@ namespace CaptainCoder.Dungeoneering.Lua;
 [MoonSharpUserData]
 public class LuaContext(IScriptContext context)
 {
+    public static Action<string>? LoadFromURL { get; set; }
     private readonly IScriptContext _target = context;
     public DynValue PlayerView => UserData.Create(_target.View);
     public void SetPlayerPosition(int x, int y)
@@ -63,5 +64,11 @@ public class LuaContext(IScriptContext context)
     {
         _target.CurrentDungeon = _target.Manifest.Dungeons[dungeonName];
         _target.View = new PlayerView(x, y, facing);
+    }
+
+    public void LoadCrawlerFromURL(string url)
+    {
+        if (LoadFromURL is null) { throw new InvalidOperationException("No URL loader specified."); }
+        LoadFromURL.Invoke(url);
     }
 }

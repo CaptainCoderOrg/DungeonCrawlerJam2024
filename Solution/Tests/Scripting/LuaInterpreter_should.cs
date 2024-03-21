@@ -260,5 +260,15 @@ public class LuaInterpreter_should
         context.View.ShouldBe(expectedView);
     }
 
-
+    [Theory]
+    [InlineData("some-url")]
+    [InlineData("another-url")]
+    public void forward_load_dungeon_request_to_delegate(string expected)
+    {
+        string? actual = default!;
+        LuaContext.LoadFromURL = url => actual = url;
+        string script = $"""context.LoadCrawlerFromURL("{expected}")""";
+        Interpreter.ExecLua(script, Substitute.For<IScriptContext>());
+        actual.ShouldBe(expected);
+    }
 }

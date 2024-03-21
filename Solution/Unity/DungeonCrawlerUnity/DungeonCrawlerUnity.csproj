@@ -49,6 +49,9 @@
     <Reference Include="UnityEngine.ImageConversionModule">
       <HintPath>$(_UnityManagedPath)\UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>$(_UnityManagedPath)\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
