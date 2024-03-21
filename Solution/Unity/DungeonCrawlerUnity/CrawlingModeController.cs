@@ -32,7 +32,6 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public QueuedMessageRenderer InfoMessageRenderer { get; set; } = default!;
     public GameState State { get; set; } = new();
     public DungeonCrawlerManifest Manifest { get => _crawlerMode.Manifest; set => _crawlerMode.Manifest = value; }
-
     private Coroutine? _currentTransition;
 
     public void Awake()

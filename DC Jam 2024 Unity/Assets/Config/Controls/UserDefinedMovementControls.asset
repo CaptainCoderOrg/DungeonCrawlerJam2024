@@ -25,3 +25,14 @@ MonoBehaviour:
     Action: 2
   - Key: 101
     Action: 3
+  <DialogueActions>k__BackingField:
+  - Key: 100
+    Action: 1
+  - Key: 97
+    Action: 0
+  - Key: 32
+    Action: 2
+  - Key: 13
+    Action: 2
+  - Key: 27
+    Action: 3
