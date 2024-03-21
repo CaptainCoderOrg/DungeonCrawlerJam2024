@@ -297,4 +297,19 @@ public class LuaInterpreter_should
         string actual = context.CurrentDungeon.GetWallTexture(context.View.Position, context.View.Facing);
         actual.ShouldBe(textureName);
     }
+
+    [Theory]
+    [InlineData("script.lua", "return 7", 7)]
+    [InlineData("tavern.lua", "return 11 + 4", 15)]
+    public void run_script(string scriptName, string targetScript, int expectedResult)
+    {
+        IScriptContext context = Substitute.For<IScriptContext>();
+        context.Manifest = new();
+        context.Manifest.AddScript(scriptName, new EventScript(targetScript));
+        string script = $"""x = context.RunScript("{scriptName}") return x""";
+
+        int actual = Interpreter.EvalLua<int>(script, context);
+
+        actual.ShouldBe(expectedResult);
+    }
 }

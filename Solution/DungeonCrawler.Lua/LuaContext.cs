@@ -81,4 +81,11 @@ public class LuaContext(IScriptContext context)
         if (LoadFromURL is null) { throw new InvalidOperationException("No URL loader specified."); }
         LoadFromURL.Invoke(url);
     }
+
+    public DynValue RunScript(string scriptName)
+    {
+        string script = _target.Manifest.Scripts[scriptName].Script;
+        DynValue result = Interpreter.EvalLua(script, _target);
+        return result;
+    }
 }
