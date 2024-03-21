@@ -10,10 +10,10 @@ public static class WallMapRenderer
     {
         foreach (TileEdge edge in dungeon.Walls.Map.Keys)
         {
-            Texture2D texture = TextureCache.GetTexture(projectName, dungeon.GetTextureName(edge.Position, edge.Facing));
+            Texture2D texture = TextureCache.GetTexture(projectName, dungeon.GetWallTexture(edge.Position, edge.Facing));
             RectInfo side0 = edge.ToRectInfo(texture, DungeonEditorScreen.CellSize, left, top);
             TileEdge opposite = edge with { Position = edge.Position.Step(edge.Facing), Facing = edge.Facing.Opposite() };
-            Texture2D texture2 = TextureCache.GetTexture(projectName, dungeon.GetTextureName(opposite.Position, opposite.Facing));
+            Texture2D texture2 = TextureCache.GetTexture(projectName, dungeon.GetWallTexture(opposite.Position, opposite.Facing));
             RectInfo side1 = opposite.ToRectInfo(texture2, DungeonEditorScreen.CellSize, left, top);
             side0.Render();
             side1.Render();

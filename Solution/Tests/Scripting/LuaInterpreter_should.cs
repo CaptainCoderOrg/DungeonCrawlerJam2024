@@ -271,4 +271,30 @@ public class LuaInterpreter_should
         Interpreter.ExecLua(script, Substitute.For<IScriptContext>());
         actual.ShouldBe(expected);
     }
+
+    [Theory]
+    [InlineData("wood.png", 5, 7, Facing.North)]
+    [InlineData("stone.png", 3, 5, Facing.East)]
+    [InlineData("water.png", 2, 4, Facing.South)]
+    [InlineData("moss.png", 12, 14, Facing.West)]
+    public void set_wall_texture(string textureName, int x, int y, Facing facing)
+    {
+        IScriptContext context = Substitute.For<IScriptContext>();
+        Position position = new(x, y);
+        context.View = new PlayerView(position, facing);
+        context.CurrentDungeon = new Dungeon()
+        {
+            Walls = new WallMap()
+            {
+                Map = new Dictionary<TileEdge, WallType>{
+                { new TileEdge(position, facing), WallType.Solid }
+            }
+            },
+        };
+        string script = $"""context.SetWallTexture("{textureName}")""";
+        Interpreter.ExecLua(script, context);
+
+        string actual = context.CurrentDungeon.GetWallTexture(context.View.Position, context.View.Facing);
+        actual.ShouldBe(textureName);
+    }
 }

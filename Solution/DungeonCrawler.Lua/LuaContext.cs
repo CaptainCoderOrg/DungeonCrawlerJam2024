@@ -56,6 +56,16 @@ public class LuaContext(IScriptContext context)
         _target.CurrentDungeon.Walls.SetWall(position, facing, wall);
     }
 
+    public void SetWallTexture(string texture)
+    {
+        (Position pos, Facing facing) = _target.View;
+        SetWallTextureAt(pos.X, pos.Y, (int)facing, texture);
+    }
+
+    public void SetWallTextureAt(int x, int y, int f, string texture) => _target.CurrentDungeon.SetTexture(new Position(x, y), (Facing)f, texture);
+    public string GetWallTextureAt(int x, int y, int f) => _target.CurrentDungeon.GetWallTexture(new Position(x, y), (Facing)f);
+    public string GetWallTexture() => GetWallTextureAt(_target.View.Position.X, _target.View.Position.Y, (int)_target.View.Facing);
+
     public void SetVariable(string name, DynValue value) => _target.State.GlobalVariables[name] = value.ToObject();
     public object GetVariable(string name) => _target.State.GlobalVariables.GetValueOrDefault(name);
     public void WriteInfo(string message) => _target.SendMessage(new Message(MessageType.Info, message));

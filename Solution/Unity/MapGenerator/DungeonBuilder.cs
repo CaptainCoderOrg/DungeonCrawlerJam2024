@@ -41,7 +41,13 @@ public class DungeonBuilder : MonoBehaviour
         }
 
         dungeon.Walls.OnWallChanged += UpdateWalls;
+        dungeon.WallTextures.OnTextureChange += UpdateTextures;
         void UpdateWalls(Position position, Facing facing, WallType wall)
+        {
+            DungeonTile toUpdate = allTiles[position];
+            toUpdate.UpdateWalls(dungeon.GetTile(position).Walls, MaterialCache.GetTileWallMaterials(dungeon, position));
+        }
+        void UpdateTextures(Position position, Facing facing, string textureName)
         {
             DungeonTile toUpdate = allTiles[position];
             toUpdate.UpdateWalls(dungeon.GetTile(position).Walls, MaterialCache.GetTileWallMaterials(dungeon, position));
@@ -56,10 +62,10 @@ public static class DungeonExtensions
     {
         return new TileWallMaterials()
         {
-            North = cache.GetValueOrDefault(dungeon.GetTextureName(position, Facing.North)),
-            East = cache.GetValueOrDefault(dungeon.GetTextureName(position, Facing.East)),
-            South = cache.GetValueOrDefault(dungeon.GetTextureName(position, Facing.South)),
-            West = cache.GetValueOrDefault(dungeon.GetTextureName(position, Facing.West)),
+            North = cache.GetValueOrDefault(dungeon.GetWallTexture(position, Facing.North)),
+            East = cache.GetValueOrDefault(dungeon.GetWallTexture(position, Facing.East)),
+            South = cache.GetValueOrDefault(dungeon.GetWallTexture(position, Facing.South)),
+            West = cache.GetValueOrDefault(dungeon.GetWallTexture(position, Facing.West)),
         };
     }
 }

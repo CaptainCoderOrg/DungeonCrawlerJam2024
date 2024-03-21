@@ -102,7 +102,7 @@ public class Dungeon_should
         {
             Walls = new WallMap([(new TileEdge(new Position(0, 0), Facing.North), type)]),
         };
-        string actual = dungeon.GetTextureName(new Position(0, 0), Facing.North);
+        string actual = dungeon.GetWallTexture(new Position(0, 0), Facing.North);
         actual.ShouldBe(expected);
     }
 
@@ -123,7 +123,7 @@ public class Dungeon_should
                 },
             }
         };
-        string actual = dungeon.GetTextureName(new Position(0, 0), Facing.North);
+        string actual = dungeon.GetWallTexture(new Position(0, 0), Facing.North);
         actual.ShouldBe(expected);
     }
 
@@ -139,5 +139,24 @@ public class Dungeon_should
 
         string actual = dungeon.WallTextures.Textures[(new Position(x, y), facing)];
         actual.ShouldBe(textureName);
+    }
+
+    [Theory]
+    [InlineData(5, 7, Facing.North, "wood.png")]
+    [InlineData(0, 17, Facing.East, "brick.png")]
+    [InlineData(3, 1, Facing.South, "stone.png")]
+    [InlineData(9, 2, Facing.West, "dirt.png")]
+    public void notify_observer_on_wall_texture_change(int x, int y, Facing facing, string textureName)
+    {
+        // Arrange
+        Dungeon dungeon = new();
+        (Position pos, Facing facing, string texture)? actual = null;
+        dungeon.WallTextures.OnTextureChange += (p, f, t) => actual = (p, f, t);
+
+        // Act
+        dungeon.SetTexture(new Position(x, y), facing, textureName);
+
+        // Assert
+        actual.ShouldBe((new Position(x, y), facing, textureName));
     }
 }

@@ -154,7 +154,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
         DrawText($"({pos.X}, {pos.Y}) - {facing}");
         WallType wallType = CurrentDungeon.Walls.GetWall(pos, facing);
         DrawText($"WallType: {wallType}");
-        DrawText($"Wall Texture: {CurrentDungeon.GetTextureName(Cursor.Position, Cursor.Facing)}");
+        DrawText($"Wall Texture: {CurrentDungeon.GetWallTexture(Cursor.Position, Cursor.Facing)}");
         DrawText($"Tile Texture: {CurrentDungeon.TileTextures.GetTileTextureName(Cursor.Position)}");
         DrawText($"Selected Texture: {TextureName(SelectedTexture)}");
         DrawText("Scripts:");
@@ -203,7 +203,7 @@ public class DungeonEditorScreen(string projectName) : IScreen
         {
             bool shouldRemoveWall = CurrentDungeon.Walls.TryGetWall(Cursor.Position, Cursor.Facing, out WallType wall) &&
                                     wall == Wall &&
-                                    SelectedTextureName() == CurrentDungeon.GetTextureName(Cursor.Position, Cursor.Facing);
+                                    SelectedTextureName() == CurrentDungeon.GetWallTexture(Cursor.Position, Cursor.Facing);
             if (shouldRemoveWall)
             {
                 CurrentDungeon.Walls.RemoveWall(Cursor.Position, Cursor.Facing);
