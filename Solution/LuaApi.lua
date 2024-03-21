@@ -72,3 +72,6 @@ function context.GetWallTexture() end
 
 --- Retrieves the texture of the wall at the specified position
 function context.GetWallAtTexture(x, y, facing, textureName) end
+
+--- Runs the specified script
+function context.RunScript(scriptName) end

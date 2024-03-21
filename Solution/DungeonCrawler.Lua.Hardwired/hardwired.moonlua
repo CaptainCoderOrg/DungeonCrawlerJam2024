@@ -918,6 +918,36 @@ ${
 					},
 				},
 			},
+			RunScript = ${
+				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
+				name = "RunScript",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
+				overloads = ${
+					[1] = ${
+						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
+						name = "RunScript",
+						ctor = false,
+						special = false,
+						visibility = "public",
+						ret = "System.Object",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
+						static = false,
+						extension = false,
+						params = ${
+							[1] = ${
+								name = "scriptName",
+								type = "System.String",
+								origtype = "System.String",
+								default = false,
+								out = false,
+								ref = false,
+								varargs = false,
+								restricted = false,
+							},
+						},
+					},
+				},
+			},
 			GetType = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "GetType",
