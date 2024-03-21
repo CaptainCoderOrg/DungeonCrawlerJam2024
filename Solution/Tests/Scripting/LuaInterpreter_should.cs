@@ -384,10 +384,24 @@ public class LuaInterpreter_should
     public void show_dialogue()
     {
         IScriptContext context = Substitute.For<IScriptContext>();
-        Dialogue simple = new ("Test");
+        Dialogue simple = new("Test");
 
         Interpreter.ExecLua("""context.ShowDialogue(Dialogue("Test"))""", context);
 
         context.ReceivedWithAnyArgs().ShowDialogue(simple);
+    }
+
+    [Fact]
+    public void allow_nested_dialogue()
+    {
+        string script = """
+        local parent = Dialogue("some dialog")
+
+        local child = Dialogue("More dialogue")
+        parent.AddOption(ContinueDialogueOption("Continue", child));
+
+        return priestDialogue
+        """;
+        Interpreter.EvalLua<Dialogue>(script, Substitute.For<IScriptContext>());
     }
 }

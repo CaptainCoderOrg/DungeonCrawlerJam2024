@@ -8,6 +8,7 @@ public class Dialogue(string text, IEnumerable<DialogueOption>? options = null) 
     public string Text { get; set; } = text;
     public List<DialogueOption> Options { get; set; } = options?.ToList() ?? [];
     public void AddOption(DialogueOption option) => Options.Add(option);
+    public void AddOption(DynValue option) => Options.Add(option.ToObject<DialogueOption>());
 
     public bool Equals(Dialogue other)
     {

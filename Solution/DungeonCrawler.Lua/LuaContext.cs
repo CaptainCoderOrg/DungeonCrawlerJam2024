@@ -1,5 +1,4 @@
 using CaptainCoder.Dungeoneering.DungeonCrawler;
-using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Player;

@@ -28,16 +28,15 @@ public class DialogueController : MonoBehaviour
     public Color NormalColor { get; set; } = Color.black;
     private readonly List<DialogueOptionController> _allOptions = [];
     private int _selectedIx = 0;
-    public void Start() => TestDialogue();
     public void OnEnable()
     {
-        CrawlingController.gameObject.SetActive(false);
         PlayerInputHandler.OnDialogueAction?.AddListener(HandleUserInput);
+        PlayerInputHandler.OnMovementAction?.RemoveListener(CrawlingController.HandleMovement);
     }
     public void OnDisable()
     {
-        CrawlingController.gameObject.SetActive(true);
         PlayerInputHandler.OnDialogueAction?.RemoveListener(HandleUserInput);
+        PlayerInputHandler.OnMovementAction?.AddListener(CrawlingController.HandleMovement);
     }
     private void TestDialogue()
     {
@@ -82,7 +81,6 @@ public class DialogueController : MonoBehaviour
         }
 
         Next(0); // Selects the first option
-        CrawlingController.gameObject.SetActive(false);
         gameObject.SetActive(true);
     }
 
