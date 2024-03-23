@@ -6,8 +6,6 @@ using Shouldly;
 
 public class PlayerCharacter_should
 {
-    public static readonly CharacterCard DefaultCharacter = new("Default", 10, 4, 1, 4);
-    public static readonly PlayerCharacter DefaultPlayerCharacter = new(DefaultCharacter, 0, 0);
 
     [Theory]
     [InlineData(10, 4, 6)]
@@ -15,8 +13,8 @@ public class PlayerCharacter_should
     [InlineData(7, 3, 4)]
     public void add_wounds(int baseHealth, int woundsToAdd, int expectedHealth)
     {
-        CharacterCard card = DefaultCharacter with { BaseHealth = baseHealth };
-        PlayerCharacter playerCharacter = new(card, 0, 0);
+        CharacterCard card = new() { BaseHealth = baseHealth };
+        PlayerCharacter playerCharacter = new() { Card = card };
 
         PlayerCharacter actual = playerCharacter.AddWounds(woundsToAdd);
         actual.Health().ShouldBe(expectedHealth);
@@ -28,8 +26,8 @@ public class PlayerCharacter_should
     [InlineData(7, 5, 2)]
     public void add_exertion(int baseEnergy, int exertionToAdd, int expectedEnergy)
     {
-        CharacterCard card = DefaultCharacter with { BaseEnergy = baseEnergy };
-        PlayerCharacter playerCharacter = new(card, 0, 0);
+        CharacterCard card = new() { BaseEnergy = baseEnergy };
+        PlayerCharacter playerCharacter = new() { Card = card };
 
         PlayerCharacter actual = playerCharacter.AddExertion(exertionToAdd);
         actual.Energy().ShouldBe(expectedEnergy);
@@ -41,8 +39,8 @@ public class PlayerCharacter_should
     [InlineData(9)]
     public void be_dead(int baseHealth)
     {
-        CharacterCard card = DefaultCharacter with { BaseHealth = baseHealth };
-        PlayerCharacter underTest = new(card, 0, 0) { Wounds = baseHealth };
+        CharacterCard card = new() { BaseHealth = baseHealth };
+        PlayerCharacter underTest = new() { Card = card, Wounds = baseHealth };
         underTest.IsDead().ShouldBeTrue();
     }
 
@@ -52,8 +50,8 @@ public class PlayerCharacter_should
     [InlineData(9, 2)]
     public void not_be_dead(int baseHealth, int wounds)
     {
-        CharacterCard card = DefaultCharacter with { BaseHealth = baseHealth };
-        PlayerCharacter underTest = new(card, 0, 0) { Wounds = wounds };
+        CharacterCard card = new() { BaseHealth = baseHealth };
+        PlayerCharacter underTest = new() { Card = card, Wounds = wounds };
         underTest.IsDead().ShouldBeFalse();
     }
 }
