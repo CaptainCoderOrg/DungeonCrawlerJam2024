@@ -1,5 +1,6 @@
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
+using CaptainCoder.Dungeoneering.Lua.Dialogue;
 using CaptainCoder.Dungeoneering.Player;
 
 using MoonSharp.Interpreter;
@@ -23,6 +24,7 @@ public static class Interpreter
             s_initialized = true;
         }
         Script lua = new();
+        lua.RegisterDialogueConstructors();
         if (context is not null)
         {
             lua.Globals.Set("context", UserData.Create(new LuaContext(context)));

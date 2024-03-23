@@ -9,7 +9,7 @@ public static class TransformExtensions
         while (parent.childCount > 0)
         {
             Transform child = parent.GetChild(0);
-            child.parent = null;
+            child.SetParent(null);
             destroy.Invoke(child.gameObject);
         }
     }

@@ -75,3 +75,24 @@ function context.GetWallAtTexture(x, y, facing, textureName) end
 
 --- Runs the specified script
 function context.RunScript(scriptName) end
+
+--- Shows the specified dialogue to the player
+function context.ShowDialogue(dialogue) end
+
+--- Constructs a new dialogue with the specified text
+---@param text any
+function Dialogue(text) 
+    local dialogue = {}
+    --- Add an option to this dialogue
+    function dialogue.AddOption(option) end
+    return dialogue
+end
+
+--- Constructs an option that when selected closes the Dialogue
+function CloseDialogueOption(label) end
+
+--- Construts an option that when selected shows the specified dialogue
+function ContinueDialogueOption(label, dialogue) end
+
+--- Constructs an option that when selected executes the specified script
+function RunScriptDialogueOption(label, scriptName) end

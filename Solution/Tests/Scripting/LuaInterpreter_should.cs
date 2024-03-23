@@ -5,6 +5,7 @@ using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Lua;
+using CaptainCoder.Dungeoneering.Lua.Dialogue;
 using CaptainCoder.Dungeoneering.Player;
 
 using NSubstitute;
@@ -311,5 +312,96 @@ public class LuaInterpreter_should
         int actual = Interpreter.EvalLua<int>(script, context);
 
         actual.ShouldBe(expectedResult);
+    }
+
+    [Theory]
+    [InlineData("Some dialogue.", "Close", "another option", "some.lua")]
+    [InlineData("Goodbye", "...", "second option", "gainxp.lua")]
+    public void construct_dialog(string message, string label, string label2, string scriptName)
+    {
+        IScriptContext context = Substitute.For<IScriptContext>();
+        string script = $"""
+        dialogue = Dialogue("{message}")
+        dialogue.AddOption(CloseDialogueOption("{label}"))
+        dialogue.AddOption(RunScriptDialogueOption("{label2}", "{scriptName}"))
+        return dialogue
+        """;
+        Dialogue dialogue = Interpreter.EvalLua<Dialogue>(script, context);
+
+        Dialogue expected = new(message, [new CloseDialogueOption(label), new RunScriptDialogueOption(label2, scriptName)]);
+        dialogue.ShouldBe(expected);
+    }
+
+    [Theory]
+    [InlineData("some label")]
+    [InlineData("another label")]
+    public void construct_close_dialogue_option(string label)
+    {
+        IScriptContext context = Substitute.For<IScriptContext>();
+        string script = $"""
+        return CloseDialogueOption("{label}")
+        """;
+
+        CloseDialogueOption option = Interpreter.EvalLua<CloseDialogueOption>(script, context);
+
+        option.ShouldBe(new CloseDialogueOption(label));
+    }
+
+    [Theory]
+    [InlineData("some label", "script.lua")]
+    [InlineData("another label", "tavern.lua")]
+    public void construct_run_script_dialogue(string label, string scriptname)
+    {
+        IScriptContext context = Substitute.For<IScriptContext>();
+        string script = $"""
+        return RunScriptDialogueOption("{label}", "{scriptname}")
+        """;
+
+        RunScriptDialogueOption option = Interpreter.EvalLua<RunScriptDialogueOption>(script, context);
+
+        option.ShouldBe(new RunScriptDialogueOption(label, scriptname));
+    }
+
+    [Theory]
+    [InlineData("some label", "some dialogue", "done")]
+    [InlineData("another label", "some other dialogue", "okay")]
+    public void construct_continue_dialogue(string label, string nextDialogue, string closeLabel)
+    {
+        IScriptContext context = Substitute.For<IScriptContext>();
+        string script = $"""
+        dialogue = Dialogue("{nextDialogue}")
+        dialogue.AddOption(CloseDialogueOption("{closeLabel}"))
+        return ContinueDialogueOption("{label}", dialogue)
+        """;
+
+        ContinueDialogueOption option = Interpreter.EvalLua<ContinueDialogueOption>(script, context);
+
+        Dialogue dialogue = new(nextDialogue, [new CloseDialogueOption(closeLabel)]);
+        option.ShouldBe(new ContinueDialogueOption(label, dialogue));
+    }
+
+    [Fact]
+    public void show_dialogue()
+    {
+        IScriptContext context = Substitute.For<IScriptContext>();
+        Dialogue simple = new("Test");
+
+        Interpreter.ExecLua("""context.ShowDialogue(Dialogue("Test"))""", context);
+
+        context.ReceivedWithAnyArgs().ShowDialogue(simple);
+    }
+
+    [Fact]
+    public void allow_nested_dialogue()
+    {
+        string script = """
+        local parent = Dialogue("some dialog")
+
+        local child = Dialogue("More dialogue")
+        parent.AddOption(ContinueDialogueOption("Continue", child));
+
+        return priestDialogue
+        """;
+        Interpreter.EvalLua<Dialogue>(script, Substitute.For<IScriptContext>());
     }
 }

@@ -1,4 +1,4 @@
-using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
+using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Player;
@@ -88,4 +88,20 @@ public class LuaContext(IScriptContext context)
         DynValue result = Interpreter.EvalLua(script, _target);
         return result;
     }
+
+    public void ShowDialogue(DynValue dialogue)
+    {
+        Dialogue.Dialogue value = dialogue.ToObject<Dialogue.Dialogue>();
+        _target.ShowDialogue(value);
+    }
+}
+
+public interface IScriptContext
+{
+    public GameState State { get; set; }
+    public PlayerView View { get; set; }
+    public Dungeon CurrentDungeon { get; set; }
+    public DungeonCrawlerManifest Manifest { get; set; }
+    public void SendMessage(Message message);
+    public void ShowDialogue(Dialogue.Dialogue dialogue);
 }
