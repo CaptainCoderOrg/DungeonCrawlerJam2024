@@ -54,4 +54,52 @@ public class PlayerCharacter_should
         PlayerCharacter underTest = new() { Card = card, Wounds = wounds };
         underTest.IsDead().ShouldBeFalse();
     }
+
+    [Theory]
+    [InlineData(4, 0, 2, 4, 1)]
+    [InlineData(3, 2, 1, 5, 0)]
+    [InlineData(6, 0, 0, 0, 0)]
+    [InlineData(4, 3, 0, 3, 0)]
+    public void spend_point_on_move(int speed, int movementPoints, int actionPoints, int expectedMovementPoints, int expectedActionPoints)
+    {
+        PlayerCharacter underTest = new()
+        {
+            Card = new CharacterCard() { BaseSpeed = speed },
+            ActionPoints = actionPoints,
+            MovementPoints = movementPoints,
+        };
+        PlayerCharacter actual = underTest.SpendActionPoint(SpendAction.BuyMovement);
+
+        actual.ActionPoints.ShouldBe(expectedActionPoints);
+        actual.MovementPoints.ShouldBe(expectedMovementPoints);
+    }
+
+    [Theory]
+    [InlineData(0, 2, 1, 1)]
+    [InlineData(1, 1, 2, 0)]
+    [InlineData(2, 0, 2, 0)]
+    [InlineData(1, 0, 1, 0)]
+    public void spend_point_on_attack(int attackPoints, int actionPoints, int expectedAttackPoints, int expectedActionPoints)
+    {
+        PlayerCharacter underTest = new()
+        {
+            Card = new CharacterCard(),
+            ActionPoints = actionPoints,
+            AttackPoints = attackPoints,
+        };
+        PlayerCharacter actual = underTest.SpendActionPoint(SpendAction.BuyAttack);
+
+        actual.ActionPoints.ShouldBe(expectedActionPoints);
+        actual.AttackPoints.ShouldBe(expectedAttackPoints);
+    }
+
+    // public void spend_point_on_rest()
+    // {
+
+    // }
+
+    // public void spend_point_on_guard()
+    // {
+
+    // }
 }
