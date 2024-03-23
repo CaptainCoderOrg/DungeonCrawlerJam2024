@@ -21,4 +21,26 @@ public class PlayerCharacter_should
         PlayerCharacter actual = playerCharacter.AddWounds(woundsToAdd);
         actual.Health().ShouldBe(expectedHealth);
     }
+
+    [Theory]
+    [InlineData(5)]
+    [InlineData(8)]
+    [InlineData(9)]
+    public void be_dead(int baseHealth)
+    {
+        CharacterCard card = DefaultCharacter with { BaseHealth = baseHealth };
+        PlayerCharacter underTest = new(card, 0, 0) { Wounds = baseHealth };
+        underTest.IsDead().ShouldBeTrue();
+    }
+
+    [Theory]
+    [InlineData(5, 4)]
+    [InlineData(8, 0)]
+    [InlineData(9, 2)]
+    public void not_be_dead(int baseHealth, int wounds)
+    {
+        CharacterCard card = DefaultCharacter with { BaseHealth = baseHealth };
+        PlayerCharacter underTest = new(card, 0, 0) { Wounds = wounds };
+        underTest.IsDead().ShouldBeFalse();
+    }
 }
