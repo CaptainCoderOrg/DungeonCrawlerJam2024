@@ -36,6 +36,7 @@
     <ProjectReference Include="..\DungeonCrawler\DungeonCrawler.csproj" />
     <ProjectReference Include="..\DungeonCrawler.Lua\DungeonCrawler.Lua.csproj" />
     <ProjectReference Include="..\DungeonCrawler.Editor\DungeonCrawler.Editor.csproj" />
+    <ProjectReference Include="..\DungeonCrawler.Combat\DungeonCrawler.Combat.csproj" />
   </ItemGroup>
 
 </Project>
