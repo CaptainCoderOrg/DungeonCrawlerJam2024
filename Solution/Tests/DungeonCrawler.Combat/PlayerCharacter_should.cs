@@ -113,8 +113,23 @@ public class PlayerCharacter_should
         actual.State.ShouldBe(expectedState);
     }
 
-    // public void spend_point_on_guard()
-    // {
+    [Theory]
+    [InlineData(CharacterState.Normal, 2, CharacterState.Guard, 1)]
+    [InlineData(CharacterState.Normal, 0, CharacterState.Normal, 0)]
+    [InlineData(CharacterState.Normal, 1, CharacterState.Guard, 0)]
+    [InlineData(CharacterState.Rest, 1, CharacterState.Guard, 0)]
+    [InlineData(CharacterState.Guard, 1, CharacterState.Guard, 1)]
+    public void spend_point_on_guard(CharacterState state, int actionPoints, CharacterState expectedState, int expectedActionPoints)
+    {
+        PlayerCharacter underTest = new()
+        {
+            Card = new CharacterCard(),
+            ActionPoints = actionPoints,
+            State = state,
+        };
+        PlayerCharacter actual = underTest.SpendActionPoint(SpendAction.BuyGuard);
 
-    // }
+        actual.ActionPoints.ShouldBe(expectedActionPoints);
+        actual.State.ShouldBe(expectedState);
+    }
 }

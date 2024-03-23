@@ -32,9 +32,15 @@ public static class CharacterExtensions
         {
             _ when pc.ActionPoints == 0 => pc,
             SpendAction.BuyMovement => pc with { ActionPoints = pc.ActionPoints - 1, MovementPoints = pc.MovementPoints + pc.Card.BaseSpeed },
+
             SpendAction.BuyAttack => pc with { ActionPoints = pc.ActionPoints - 1, AttackPoints = pc.AttackPoints + 1 },
+
             SpendAction.BuyRest when pc.State is CharacterState.Rest => pc,
             SpendAction.BuyRest => pc with { ActionPoints = pc.ActionPoints - 1, State = CharacterState.Rest },
+
+            SpendAction.BuyGuard when pc.State is CharacterState.Guard => pc,
+            SpendAction.BuyGuard => pc with { ActionPoints = pc.ActionPoints - 1, State = CharacterState.Guard },
+
             _ => throw new NotImplementedException($"Not Implemented for {action.GetType()}: {action}"),
         };
     }
