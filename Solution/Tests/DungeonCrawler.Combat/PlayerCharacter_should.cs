@@ -23,6 +23,19 @@ public class PlayerCharacter_should
     }
 
     [Theory]
+    [InlineData(4, 1, 3)]
+    [InlineData(3, 3, 0)]
+    [InlineData(7, 5, 2)]
+    public void add_exertion(int baseEnergy, int exertionToAdd, int expectedEnergy)
+    {
+        CharacterCard card = DefaultCharacter with { BaseEnergy = baseEnergy };
+        PlayerCharacter playerCharacter = new(card, 0, 0);
+
+        PlayerCharacter actual = playerCharacter.AddExertion(exertionToAdd);
+        actual.Energy().ShouldBe(expectedEnergy);
+    }
+
+    [Theory]
     [InlineData(5)]
     [InlineData(8)]
     [InlineData(9)]
