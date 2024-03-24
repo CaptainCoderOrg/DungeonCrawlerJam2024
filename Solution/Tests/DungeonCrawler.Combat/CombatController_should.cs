@@ -280,12 +280,205 @@ public class CombatController_should
         actual.ShouldBeSubsetOf(expectedValidMoves);
     }
 
-    // TODO: Move action is not valid if there is no player in the starting position
+    // A - Player that is moving
+    // T - Target position to move to
+    // C, B - PlayerCharacters
+    // 1, 2 - Enemies
+    public static IEnumerable<object[]> ApplyMoveActionData => [
+        [
+            """
+            ####
+            ####
+            ####
+            ####
+            """,
+            """
+            A###
+            #T##
+            ##CB
+            ##12
+            """,
+            4,
+            3
+        ],
+        [
+            """
+             ##    ###
+            ###########
+            ###########
+             ##    ###
+            """,
+            """
+             BC    ###
+            1#####T####
+            2##########
+             ##    ##A
+            """,
+            4,
+            1
+        ],
 
-    // public void apply_move_action()
-    // {
+        [ // Enemies block movement, so the player must go AROUND the enemies
+            """
+             ##    ###
+            ###########
+            ###########
+             ##    ###
+            """,
+            """
+             ##    ###
+            B#####T####
+            C######21##
+             ##    ##A
+            """,
+            4,
+            0
+        ],
+        [ // PlayerCharacters do not block movement
+            """
+             ##    ###
+            ###########
+            ###########
+             ##    ###
+            """,
+            """
+             ##    ###
+            1#####T####
+            2######BC##
+             ##    ##A
+            """,
+            4,
+            1
+        ],
 
-    // }
+    ];
+
+    // [Theory]
+    // [MemberData(nameof(ApplyMoveActionData))]
+    [Theory]
+    public void apply_move_action(string map, string setup, int movementPoints, int expectedMovementPoints)
+    {
+        // Arrange
+        HashSet<Position> tiles = CombatMapExtensions.ParseTiles(map);
+        Dictionary<char, HashSet<Position>> setupMap = CombatMapExtensions.ParseCharPositions(setup);
+        Position start = setupMap['A'].First();
+        Position target = setupMap['T'].First();
+        Position pcB = setupMap['B'].First();
+        Position pcC = setupMap['C'].First();
+        Position enemy1 = setupMap['1'].First();
+        Position enemy2 = setupMap['2'].First();
+        CombatMap underTest = new()
+        {
+            Tiles = tiles,
+            PlayerCharacters = new Dictionary<Position, PlayerCharacter>()
+            {
+                { start, new PlayerCharacter(){ MovementPoints = movementPoints } },
+                { pcB, new PlayerCharacter() },
+                { pcC, new PlayerCharacter() },
+            },
+            Enemies = new Dictionary<Position, Enemy>()
+            {
+                { enemy1, new Enemy() },
+                { enemy2, new Enemy() },
+            }
+        };
+
+        MoveAction moveAction = new(start, target);
+
+        // Act
+        underTest.ApplyMoveAction(moveAction);
+
+        underTest.PlayerCharacters.ShouldNotContainKey(start);
+        underTest.PlayerCharacters[target].ShouldBe(new PlayerCharacter() { MovementPoints = expectedMovementPoints });
+    }
+
+    // A is the PlayerCharacter moving
+    // T is the target position
+    // 1, 2 - Enemies
+    // B, C - PlayerCharacters
+    public static IEnumerable<object[]> FindShortestPathData => [
+        [
+            """
+            ####
+            ####
+            ####
+            ####
+            """,
+            """
+            A##B
+            ###C
+            ##T1
+            ###2
+            """,
+            (Position[])[new Position(1, 1), new Position(2, 2)]
+        ],
+        [ // PlayerCharacters do not block movement
+            """
+             ##    ###
+            ###########
+            ###########
+             ##    ###
+            """,
+            """
+             ##    ### 
+            1######T###
+            2######BC##
+             ##    ##A 
+            """,
+            (Position[])[new Position(8, 2), new Position(7, 1)]
+        ],
+        [ // Must move around enemies
+            """
+             ##    ###
+            ###########
+            ###########
+             ##    ###
+            """,
+            """
+             ##    ### 
+            B######T###
+            C#######1##
+             ##    #2A 
+            """,
+            (Position[])[new Position(9, 2), new Position(8, 1), new Position(7, 1)]
+        ],
+
+    ];
+
+    [Theory]
+    [MemberData(nameof(FindShortestPathData))]
+    public void find_shortest_path(string map, string setup, Position[] expectedPath)
+    {
+        // Arrange
+        HashSet<Position> tiles = CombatMapExtensions.ParseTiles(map);
+        Dictionary<char, HashSet<Position>> setupMap = CombatMapExtensions.ParseCharPositions(setup);
+        Position start = setupMap['A'].First();
+        Position target = setupMap['T'].First();
+        Position pcB = setupMap['B'].First();
+        Position pcC = setupMap['C'].First();
+        Position enemy1 = setupMap['1'].First();
+        Position enemy2 = setupMap['2'].First();
+        CombatMap underTest = new()
+        {
+            Tiles = tiles,
+            PlayerCharacters = new Dictionary<Position, PlayerCharacter>()
+            {
+                { start, new PlayerCharacter(){ MovementPoints = 4 } },
+                { pcB, new PlayerCharacter() },
+                { pcC, new PlayerCharacter() },
+            },
+            Enemies = new Dictionary<Position, Enemy>()
+            {
+                { enemy1, new Enemy() },
+                { enemy2, new Enemy() },
+            }
+        };
+
+        // Act
+        Position[] actual = [.. underTest.FindShortestPath(start, target)];
+
+        actual.SequenceEqual(expectedPath).ShouldBeTrue();
+    }
 
     // public void throw_exception_on_invalid_move_action()
     // {

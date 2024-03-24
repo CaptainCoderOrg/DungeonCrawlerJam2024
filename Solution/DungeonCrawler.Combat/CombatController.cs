@@ -11,7 +11,35 @@ public static class CombatController
         return validMoves.Contains(moveAction.End);
     }
     public static void ApplyAction(this CombatMap map, CombatAction toApply) => throw new NotImplementedException();
-    public static void ApplyMoveAction(this CombatMap map, MoveAction moveAction) => throw new NotImplementedException();
+    public static void ApplyMoveAction(this CombatMap map, MoveAction moveAction)
+    {
+        PlayerCharacter character = map.PlayerCharacters[moveAction.Start];
+        map.PlayerCharacters.Remove(moveAction.Start);
+        int distance = 0;
+        map.PlayerCharacters[moveAction.End] = character with { MovementPoints = character.MovementPoints - distance };
+    }
+
+    public static IEnumerable<Position> FindShortestPath(this CombatMap map, Position start, Position end)
+    {
+        HashSet<Position> visited = new() { start };
+        Queue<(Position, List<Position>)> queue = new();
+        queue.Enqueue((start, new()));
+
+        while (queue.TryDequeue(out var next))
+        {
+            (Position currentPosition, List<Position> currentPath) = next;
+
+            if (currentPosition == end) { return currentPath; }
+
+            foreach (Position neighbor in map.Neighbors(visited, currentPosition))
+            {
+                visited.Add(neighbor);
+                List<Position> newPath = [.. currentPath, neighbor];
+                queue.Enqueue((neighbor, newPath));
+            }
+        }
+        throw new Exception("No valid path");
+    }
 
     public static HashSet<Position> FindValidMoves(this CombatMap map, Position start, int maxDistance)
     {
@@ -25,32 +53,32 @@ public static class CombatController
             var (nextPosition, movesRemaining) = next;
             if (movesRemaining == 0) { continue; }
 
-            foreach (Position neighbor in Neighbors(nextPosition))
+            foreach (Position neighbor in map.Neighbors(visited, nextPosition))
             {
-                if (visited.Contains(neighbor)) { continue; } // Don't repeat position
-                if (!map.Tiles.Contains(neighbor)) { continue; } // Don't move out of map
-                if (map.Enemies.ContainsKey(neighbor)) { continue; } // Cannot move through enemies
                 if (!map.PlayerCharacters.ContainsKey(neighbor)) // Cannot move on other player
                 {
                     validMoves.Add(neighbor);
                 }
                 visited.Add(neighbor);
                 queue.Enqueue((neighbor, movesRemaining - 1));
-
             }
         }
 
         return validMoves;
+    }
 
-        static IEnumerable<Position> Neighbors(Position position)
-        {
-            var (x, y) = position;
+    static IEnumerable<Position> Neighbors(this CombatMap map, HashSet<Position> visited, Position position)
+    {
+        var (x, y) = position;
 #pragma warning disable format // Format for clarity
-            return [ new Position(x - 1, y - 1), new Position(x, y - 1), new Position(x + 1, y - 1),
+        IEnumerable<Position> neighbors =
+                   [ new Position(x - 1, y - 1), new Position(x, y - 1), new Position(x + 1, y - 1),
                      new Position(x - 1, y    ),                         new Position(x + 1, y    ),
                      new Position(x - 1, y + 1), new Position(x, y + 1), new Position(x + 1, y + 1),];
 #pragma warning restore format
-        }
+        return neighbors.Where(n => !visited.Contains(n))
+                        .Where(map.Tiles.Contains)
+                        .Where(n => !map.Enemies.ContainsKey(n));
     }
 }
 
