@@ -29,6 +29,7 @@ public static class CombatController
             {
                 if (visited.Contains(neighbor)) { continue; } // Don't repeat position
                 if (!map.Tiles.Contains(neighbor)) { continue; } // Don't move out of map
+                if (map.Enemies.ContainsKey(neighbor)) { continue; } // Cannot move through enemies
                 if (!map.PlayerCharacters.ContainsKey(neighbor)) // Cannot move on other player
                 {
                     validMoves.Add(neighbor);
@@ -44,9 +45,11 @@ public static class CombatController
         static IEnumerable<Position> Neighbors(Position position)
         {
             var (x, y) = position;
+#pragma warning disable format // Format for clarity
             return [ new Position(x - 1, y - 1), new Position(x, y - 1), new Position(x + 1, y - 1),
                      new Position(x - 1, y    ),                         new Position(x + 1, y    ),
                      new Position(x - 1, y + 1), new Position(x, y + 1), new Position(x + 1, y + 1),];
+#pragma warning restore format
         }
     }
 }

@@ -5,7 +5,7 @@ using Shouldly;
 namespace Tests;
 public class CombatController_should
 {
-    public string TestMap = 
+    public string TestMap =
     """
      ##    ## 0
     ##########1
@@ -20,10 +20,10 @@ public class CombatController_should
     public void validate_move_action(int x, int y, int movementPoints, int targetX, int targetY)
     {
         // Arrange
-        Position start = new (x, y);
-        Position end = new (targetX, targetY);
+        Position start = new(x, y);
+        Position end = new(targetX, targetY);
         CombatMap map = new()
-        {   
+        {
             Tiles = CombatMapExtensions.ParseTiles(TestMap),
             PlayerCharacters = new()
             {
@@ -33,7 +33,7 @@ public class CombatController_should
             }
         };
 
-        MoveAction action = new (start, end);
+        MoveAction action = new(start, end);
 
         // Act
         bool actual = map.IsValidMoveAction(action);
@@ -64,10 +64,10 @@ public class CombatController_should
         // """;
 
         // Arrange
-        Position start = new (x, y);
-        Position end = new (targetX, targetY);
+        Position start = new(x, y);
+        Position end = new(targetX, targetY);
         CombatMap map = new()
-        {   
+        {
             Tiles = CombatMapExtensions.ParseTiles(TestMap),
             PlayerCharacters = new()
             {
@@ -77,7 +77,7 @@ public class CombatController_should
             }
         };
 
-        MoveAction action = new (start, end);
+        MoveAction action = new(start, end);
 
         // Act
         bool actual = map.IsValidMoveAction(action);
@@ -88,7 +88,7 @@ public class CombatController_should
 
     public static IEnumerable<object[]> FindValidMovesData => [
         [
-            1, 
+            1,
             """
             ####
             ####
@@ -103,7 +103,7 @@ public class CombatController_should
             """,
         ],
         [
-            4, 
+            4,
             """
              ##    ###
             ###########
@@ -119,7 +119,7 @@ public class CombatController_should
         ],
 
         [
-            3, 
+            3,
             """
              ##    ###
             ###########
@@ -134,7 +134,7 @@ public class CombatController_should
             """,
         ],
         [
-            2, 
+            2,
             """
              ##    ###
             ###########
@@ -148,9 +148,10 @@ public class CombatController_should
              ##    *D#
             """,
         ],
-        
-    ];
 
+    ];
+    // Each letter represents a PlayerCharacter
+    // Each * represents where the PlayerCharacter marked as A can move
     [Theory]
     [MemberData(nameof(FindValidMovesData))]
     public void find_valid_moves(int movementPoints, string map, string expectedMap)
@@ -162,15 +163,15 @@ public class CombatController_should
         Position char3 = setupMap['C'].First();
         Position char4 = setupMap['D'].First();
         HashSet<Position> expectedValidMoves = setupMap['*'];
-        CombatMap underTest = new ()
+        CombatMap underTest = new()
         {
             Tiles = tiles,
             PlayerCharacters = new Dictionary<Position, PlayerCharacter>()
-            { 
+            {
                 { start, new PlayerCharacter(){ MovementPoints = movementPoints } },
                 { char2, new PlayerCharacter(){ } },
                 { char3, new PlayerCharacter(){ } },
-                { char4, new PlayerCharacter(){ } } 
+                { char4, new PlayerCharacter(){ } }
             },
         };
 
@@ -178,7 +179,105 @@ public class CombatController_should
 
         actual.Count.ShouldBe(expectedValidMoves.Count);
         actual.ShouldBeSubsetOf(expectedValidMoves);
-        
+    }
+
+    public static IEnumerable<object[]> PlayerCannotMoveThroughEnemiesData => [
+        [
+            1,
+            """
+            ####
+            ####
+            ####
+            ####
+            """,
+            """
+            #**D
+            #*A*
+            #B**
+            ##C#
+            """,
+        ],
+        [
+            4,
+            """
+             ##    ###
+            ###########
+            ###########
+             ##    ###
+            """,
+            """
+             ##    ***
+            ####B*A****
+            ####C******
+             ##    *D*
+            """,
+        ],
+
+        [
+            3,
+            """
+             ##    ###
+            ###########
+            ###########
+             ##    ###
+            """,
+            """
+             ##    ***
+            ####B*A***#
+            ####C*****#
+             ##    *D*
+            """,
+        ],
+        [
+            2,
+            """
+             ##    ###
+            ###########
+            ###########
+             ##    ###
+            """,
+            """
+             #*    ###
+            ##**B**####
+            ##*CAD*####
+             ##    ###
+            """,
+        ],
+
+    ];
+    // The letter 'A' represents the PlayerCharacter moving
+    // Each * represents where the PlayerCharacter marked as A can move
+    // B, C, and D represents enemies
+    [Theory]
+    [MemberData(nameof(PlayerCannotMoveThroughEnemiesData))]
+    public void prevent_player_from_moving_through_enemy(int movementPoints, string map, string expectedMap)
+    {
+        HashSet<Position> tiles = CombatMapExtensions.ParseTiles(map);
+        Dictionary<char, HashSet<Position>> setupMap = CombatMapExtensions.ParseCharPositions(expectedMap);
+        Position start = setupMap['A'].First();
+        Position enemyB = setupMap['B'].First();
+        Position enemyC = setupMap['C'].First();
+        Position enemyD = setupMap['D'].First();
+        HashSet<Position> expectedValidMoves = setupMap['*'];
+        CombatMap underTest = new()
+        {
+            Tiles = tiles,
+            PlayerCharacters = new Dictionary<Position, PlayerCharacter>()
+            {
+                { start, new PlayerCharacter(){ MovementPoints = movementPoints } },
+            },
+            Enemies = new Dictionary<Position, Enemy>()
+            {
+                { enemyB, new Enemy() },
+                { enemyC, new Enemy() },
+                { enemyD, new Enemy() },
+            }
+        };
+
+        HashSet<Position> actual = underTest.FindValidMoves(start, movementPoints);
+
+        actual.Count.ShouldBe(expectedValidMoves.Count);
+        actual.ShouldBeSubsetOf(expectedValidMoves);
     }
 
     // TODO: Move action is not valid if there is no player in the starting position

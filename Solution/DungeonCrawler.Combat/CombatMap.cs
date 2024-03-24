@@ -4,6 +4,7 @@ public class CombatMap
 {
     public HashSet<Position> Tiles { get; init; } = new();
     public Dictionary<Position, PlayerCharacter> PlayerCharacters { get; init; } = [];
+    public Dictionary<Position, Enemy> Enemies { get; init; } = [];
 }
 
 public static class CombatMapExtensions
