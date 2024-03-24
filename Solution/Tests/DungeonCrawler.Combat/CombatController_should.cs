@@ -353,9 +353,8 @@ public class CombatController_should
 
     ];
 
-    // [Theory]
-    // [MemberData(nameof(ApplyMoveActionData))]
     [Theory]
+    [MemberData(nameof(ApplyMoveActionData))]
     public void apply_move_action(string map, string setup, int movementPoints, int expectedMovementPoints)
     {
         // Arrange

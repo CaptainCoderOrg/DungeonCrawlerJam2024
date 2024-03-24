@@ -15,7 +15,7 @@ public static class CombatController
     {
         PlayerCharacter character = map.PlayerCharacters[moveAction.Start];
         map.PlayerCharacters.Remove(moveAction.Start);
-        int distance = 0;
+        int distance = map.FindShortestPath(moveAction.Start, moveAction.End).Count();
         map.PlayerCharacters[moveAction.End] = character with { MovementPoints = character.MovementPoints - distance };
     }
 
