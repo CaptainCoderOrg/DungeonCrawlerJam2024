@@ -16,7 +16,22 @@ namespace CaptainCoder.Dungeoneering.Unity;
 
 public class CrawlingModeController : MonoBehaviour, IScriptContext
 {
-    private CrawlerMode _crawlerMode = default!;
+    // public static CrawlerMode? CrawlerMode { get; private set; }
+    public static event Action<CrawlerMode>? OnCrawlerModeChange;
+    private static CrawlerMode? s_crawlerMode;
+    public static CrawlerMode CrawlerMode
+    {
+        get
+        {
+            Debug.Assert(s_crawlerMode != null, "CrawlerMode has not been initialized.");
+            return s_crawlerMode!;
+        }
+        private set
+        {
+            s_crawlerMode = value;
+            OnCrawlerModeChange?.Invoke(s_crawlerMode);
+        }
+    }
     [field: SerializeField]
     public PlayerViewData PlayerViewData { get; private set; } = new(new PlayerView(0, 0, Facing.North));
     [field: SerializeField]
@@ -27,12 +42,11 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public Transform PlayerCamera { get; set; } = default!;
     [field: SerializeField]
     public PlayerInputHandler PlayerInputHandler { get; set; } = default!;
-    public PlayerView View { get => _crawlerMode.CurrentView; set => _crawlerMode.CurrentView = value; }
-    public Dungeon CurrentDungeon { get => _crawlerMode.CurrentDungeon; set => _crawlerMode.CurrentDungeon = value; }
+    public PlayerView View { get => CrawlerMode.CurrentView; set => CrawlerMode.CurrentView = value; }
+    public Dungeon CurrentDungeon { get => CrawlerMode.CurrentDungeon; set => CrawlerMode.CurrentDungeon = value; }
     [field: SerializeField]
-    public QueuedMessageRenderer InfoMessageRenderer { get; set; } = default!;
     public GameState State { get; set; } = new();
-    public DungeonCrawlerManifest Manifest { get => _crawlerMode.Manifest; set => _crawlerMode.Manifest = value; }
+    public DungeonCrawlerManifest Manifest { get => CrawlerMode.Manifest; set => CrawlerMode.Manifest = value; }
     [field: SerializeField]
     public DialogueController DialogueController { get; set; } = default!;
     private Coroutine? _currentTransition;
@@ -53,9 +67,9 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         Debug.Log("Loading Crawler...");
         DungeonCrawlerManifest manifest = JsonExtensions.LoadModel<DungeonCrawlerManifest>(projectJson);
         _ = DungeonBuilder.InitializeMaterialCache(manifest);
-        _crawlerMode.Manifest = manifest;
-        _crawlerMode.CurrentDungeon = manifest.Dungeons["Town"];
-        _crawlerMode.CurrentView = new PlayerView(0, 0, Facing.North);
+        CrawlerMode.Manifest = manifest;
+        CrawlerMode.CurrentDungeon = manifest.Dungeons["Town"];
+        CrawlerMode.CurrentView = new PlayerView(0, 0, Facing.North);
         Debug.Log("Done!");
     }
 
@@ -64,19 +78,15 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         DungeonCrawlerManifest manifest = JsonExtensions.LoadModel<DungeonCrawlerManifest>(projectJson);
         _ = DungeonBuilder.InitializeMaterialCache(manifest);
         Dungeon dungeon = manifest.Dungeons["Town"];
-        _crawlerMode = new CrawlerMode(manifest, dungeon, new PlayerView(PlayerViewData.X, PlayerViewData.Y, PlayerViewData.Facing));
+        CrawlerMode = new CrawlerMode(manifest, dungeon, new PlayerView(PlayerViewData.X, PlayerViewData.Y, PlayerViewData.Facing));
         DungeonBuilder.Build(dungeon);
-        PlayerCamera.InstantTransitionToPlayerView(_crawlerMode.CurrentView);
-        _crawlerMode.OnViewChange += (viewChangeEvent) => PlayerViewData = new(viewChangeEvent.Entered);
-        _crawlerMode.OnViewChange += HandleMoveTransition;
-        _crawlerMode.OnPositionChange += HandleOnEnterEvents;
-        _crawlerMode.OnPositionChange += HandleOnExitEvents;
-        _crawlerMode.OnMessageAdded += message =>
-        {
-            InfoMessageRenderer.EnqueueMessage(message, 5f);
-            Debug.Log(message);
-        };
-        _crawlerMode.OnDungeonChange += ChangeDungeon;
+        PlayerCamera.InstantTransitionToPlayerView(CrawlerMode.CurrentView);
+        CrawlerMode.OnViewChange += (viewChangeEvent) => PlayerViewData = new(viewChangeEvent.Entered);
+        CrawlerMode.OnViewChange += HandleMoveTransition;
+        CrawlerMode.OnPositionChange += HandleOnEnterEvents;
+        CrawlerMode.OnPositionChange += HandleOnExitEvents;
+        CrawlerMode.OnDungeonChange += ChangeDungeon;
+        
     }
 
     private void HandleMoveTransition(ViewChangeEvent evt)
@@ -92,7 +102,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         DungeonBuilder.Build(evt.Entered);
     }
 
-    public void SendMessage(Message message) => _crawlerMode.AddMessage(message);
+    public void SendMessage(Message message) => CrawlerMode.AddMessage(message);
 
     public void OnEnable()
     {
@@ -106,29 +116,29 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
 
     public void HandleMovement(MovementAction action)
     {
-        _crawlerMode.CurrentView = _crawlerMode.CurrentDungeon.Move(_crawlerMode.CurrentView, action);
+        CrawlerMode.CurrentView = CrawlerMode.CurrentDungeon.Move(CrawlerMode.CurrentView, action);
     }
 
     public void HandleOnEnterEvents(PositionChangeEvent change)
     {
-        IEnumerable<TileEvent> enterEvents = _crawlerMode.CurrentDungeon.EventMap
+        IEnumerable<TileEvent> enterEvents = CrawlerMode.CurrentDungeon.EventMap
                                                          .EventsAt(change.Entered)
                                                          .Where(evt => evt.Trigger is EventTrigger.OnEnter);
         foreach (TileEvent triggered in enterEvents)
         {
-            EventScript script = _crawlerMode.Manifest.Scripts[triggered.ScriptName];
+            EventScript script = CrawlerMode.Manifest.Scripts[triggered.ScriptName];
             Interpreter.ExecLua(script.Script, this);
         }
     }
 
     public void HandleOnExitEvents(PositionChangeEvent change)
     {
-        IEnumerable<TileEvent> enterEvents = _crawlerMode.CurrentDungeon.EventMap
+        IEnumerable<TileEvent> enterEvents = CrawlerMode.CurrentDungeon.EventMap
                                                          .EventsAt(change.Exited)
                                                          .Where(evt => evt.Trigger is EventTrigger.OnExit);
         foreach (TileEvent triggered in enterEvents)
         {
-            EventScript script = _crawlerMode.Manifest.Scripts[triggered.ScriptName];
+            EventScript script = CrawlerMode.Manifest.Scripts[triggered.ScriptName];
             Interpreter.ExecLua(script.Script, this);
         }
     }
