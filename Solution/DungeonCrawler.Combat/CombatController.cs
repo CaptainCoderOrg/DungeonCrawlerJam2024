@@ -16,6 +16,7 @@ public static class CombatController
         PlayerCharacter character = map.PlayerCharacters[moveAction.Start];
         map.PlayerCharacters.Remove(moveAction.Start);
         int distance = map.FindShortestPath(moveAction.Start, moveAction.End).Count();
+        if (distance > character.MovementPoints) { throw new ArgumentException("Invalid Move. No path found."); }
         map.PlayerCharacters[moveAction.End] = character with { MovementPoints = character.MovementPoints - distance };
     }
 
@@ -38,7 +39,7 @@ public static class CombatController
                 queue.Enqueue((neighbor, newPath));
             }
         }
-        throw new Exception("No valid path");
+        throw new ArgumentException($"No valid path for specified start and end: {start}, {end}");
     }
 
     public static HashSet<Position> FindValidMoves(this CombatMap map, Position start, int maxDistance)

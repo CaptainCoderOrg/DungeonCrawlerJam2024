@@ -479,8 +479,74 @@ public class CombatController_should
         actual.SequenceEqual(expectedPath).ShouldBeTrue();
     }
 
-    // public void throw_exception_on_invalid_move_action()
-    // {
+    // A is the PlayerCharacter moving
+    // T is the target position
+    // 1, 2 - Enemies
+    // B, C - PlayerCharacters
+    public static IEnumerable<object[]> ThrowExceptionOnInvalidMoveActionData => [
 
-    // }
+        [ // PlayerCharacters do not block movement
+            """
+             ##    ###
+            ###########
+            ###########
+             ##    ###
+            """,
+            """
+             ##    ### 
+            1##T#######
+            2######BC##
+             ##    ##A 
+            """
+        ],
+        [ // Must move around enemies
+            """
+             ##    ###
+            ###########
+            ###########
+             ##    ###
+            """,
+            """
+             ##    ### 
+            B####T#####
+            C#######1##
+             ##    #2A 
+            """
+        ],
+
+    ];
+
+    [Theory]
+    [MemberData(nameof(ThrowExceptionOnInvalidMoveActionData))]
+    public void throw_exception_on_invalid_move_action(string map, string setup)
+    {
+        // Arrange
+        HashSet<Position> tiles = CombatMapExtensions.ParseTiles(map);
+        Dictionary<char, HashSet<Position>> setupMap = CombatMapExtensions.ParseCharPositions(setup);
+        Position start = setupMap['A'].First();
+        Position target = setupMap['T'].First();
+        Position pcB = setupMap['B'].First();
+        Position pcC = setupMap['C'].First();
+        Position enemy1 = setupMap['1'].First();
+        Position enemy2 = setupMap['2'].First();
+        CombatMap underTest = new()
+        {
+            Tiles = tiles,
+            PlayerCharacters = new Dictionary<Position, PlayerCharacter>()
+            {
+                { start, new PlayerCharacter(){ MovementPoints = 4 } },
+                { pcB, new PlayerCharacter() },
+                { pcC, new PlayerCharacter() },
+            },
+            Enemies = new Dictionary<Position, Enemy>()
+            {
+                { enemy1, new Enemy() },
+                { enemy2, new Enemy() },
+            }
+        };
+
+        // Act
+        Should.Throw<ArgumentException>(() => underTest.ApplyMoveAction(new MoveAction(start, target)));
+
+    }
 }
