@@ -8,18 +8,32 @@ public class CombatMap
 
 public static class CombatMapExtensions
 {
-    public static HashSet<Position> ParseTiles(string toParse)
+    public static HashSet<Position> ParseTiles(string toParse) => ParseCharPositions(toParse).GetValueOrDefault('#', new HashSet<Position>());
+
+    public static Dictionary<char, HashSet<Position>> ParseCharPositions(string toParse)
     {
         string[] rows = toParse.Replace(@"\r\n?|\n", Environment.NewLine).Split(Environment.NewLine);
-        HashSet<Position> tiles = new();
+        Dictionary<char, HashSet<Position>> tiles = new();
         for (int y = 0; y < rows.Length; y++)
         {
             for (int x = 0; x < rows[y].Length; x++)
             {
-                if (rows[y][x] != '#') { continue; }
-                tiles.Add(new Position(x, y));
+                char ch = rows[y][x];
+                if (ch == ' ') { continue; }
+                HashSet<Position> set = GetOrInit(ch);
+                set.Add(new Position(x, y));
             }
         }
         return tiles;
+
+        HashSet<Position> GetOrInit(char ch)
+        {
+            if (!tiles.TryGetValue(ch, out HashSet<Position> set))
+            {
+                set = new HashSet<Position>();
+                tiles[ch] = set;
+            }
+            return set;
+        }
     }
 }
