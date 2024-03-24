@@ -15,7 +15,13 @@ public static class CombatController
         if (!map.PlayerCharacters.TryGetValue(action.Target, out PlayerCharacter pc)) { return false; }
         return pc.Energy() > 0;
     }
-    public static void ApplyExertAction(this CombatMap map, ExertAction action) => throw new NotImplementedException();
+
+    public static void ApplyExertAction(this CombatMap map, ExertAction action)
+    {
+        if (!map.IsValidExertAction(action)) { throw new ArgumentException($"Invalid ExertAction: {action}"); }
+        PlayerCharacter pc = map.PlayerCharacters[action.Target];
+        map.PlayerCharacters[action.Target] = pc with { Exertion = pc.Exertion + 1, MovementPoints = pc.MovementPoints + 1 };
+    }
 
     public static bool IsValidMoveAction(this CombatMap map, MoveAction moveAction)
     {

@@ -607,4 +607,61 @@ public class CombatController_should
 
         actual.ShouldBeFalse();
     }
+
+    [Theory]
+    [InlineData(2, 2, 4, 0, 3, 0, 1)]
+    [InlineData(1, 2, 3, 2, 0, 2, 3)]
+    [InlineData(3, 2, 3, 0, 2, 1, 2)]
+    [InlineData(2, 3, 4, 2, 1, 3, 4)]
+    public void apply_exert_action(int x, int y, int energy, int exertion, int expectedExertion, int movementPoints, int expectedMovement)
+    {
+        Position position = new(x, y);
+        CombatMap underTest = new()
+        {
+            Tiles = CombatMapExtensions.ParseTiles(TestMap),
+            PlayerCharacters = new Dictionary<Position, PlayerCharacter>()
+            {
+                {
+                    position,
+                    new PlayerCharacter() {
+                        Card = new CharacterCard() { BaseEnergy = energy},
+                        MovementPoints = movementPoints,
+                        Exertion = exertion
+                    }
+                }
+            }
+        };
+        ExertAction action = new(position);
+        underTest.ApplyExertAction(action);
+
+        underTest.PlayerCharacters[position].Energy().ShouldBe(expectedExertion);
+        underTest.PlayerCharacters[position].MovementPoints.ShouldBe(expectedMovement);
+    }
+
+    [Theory]
+    [InlineData(2, 2, 2, 2, 4, 4)] // Not valid when character has no energy remaining
+    [InlineData(1, 2, 1, 2, 3, 3)] // Not valid when character has no energy remaining
+    [InlineData(3, 2, 2, 2, 4, 0)] // Not valid when position doesn't contain character
+    [InlineData(3, 2, 1, 2, 3, 0)] // Not valid when position doesn't contain character
+    public void throw_exception_on_invalid_exert_action(int playerX, int playerY, int targetX, int targetY, int energy, int exertion)
+    {
+        Position position = new(playerX, playerY);
+        CombatMap underTest = new()
+        {
+            Tiles = CombatMapExtensions.ParseTiles(TestMap),
+            PlayerCharacters = new Dictionary<Position, PlayerCharacter>()
+            {
+                {
+                    position,
+                    new PlayerCharacter() {
+                        Card = new CharacterCard() { BaseEnergy = energy},
+                        Exertion = exertion
+                    }
+                }
+            }
+        };
+
+        ExertAction action = new(new Position(targetX, targetY));
+        Should.Throw<ArgumentException>(() => { underTest.ApplyExertAction(action); });
+    }
 }

@@ -26,24 +26,21 @@ public static class CharacterExtensions
     public static bool IsDead(this PlayerCharacter pc) => pc.Health() <= 0;
     public static PlayerCharacter AddExertion(this PlayerCharacter pc, int exertion) => pc with { Exertion = pc.Exertion + exertion };
     public static int Energy(this PlayerCharacter pc) => pc.Card.BaseEnergy - pc.Exertion;
-    public static PlayerCharacter SpendActionPoint(this PlayerCharacter pc, SpendAction action)
+    public static PlayerCharacter SpendActionPoint(this PlayerCharacter pc, SpendAction action) => action switch
     {
-        return action switch
-        {
-            _ when pc.ActionPoints == 0 => pc,
-            SpendAction.BuyMovement => pc with { ActionPoints = pc.ActionPoints - 1, MovementPoints = pc.MovementPoints + pc.Card.BaseSpeed },
+        _ when pc.ActionPoints == 0 => pc,
+        SpendAction.BuyMovement => pc with { ActionPoints = pc.ActionPoints - 1, MovementPoints = pc.MovementPoints + pc.Card.BaseSpeed },
 
-            SpendAction.BuyAttack => pc with { ActionPoints = pc.ActionPoints - 1, AttackPoints = pc.AttackPoints + 1 },
+        SpendAction.BuyAttack => pc with { ActionPoints = pc.ActionPoints - 1, AttackPoints = pc.AttackPoints + 1 },
 
-            SpendAction.BuyRest when pc.State is CharacterState.Rest => pc,
-            SpendAction.BuyRest => pc with { ActionPoints = pc.ActionPoints - 1, State = CharacterState.Rest },
+        SpendAction.BuyRest when pc.State is CharacterState.Rest => pc,
+        SpendAction.BuyRest => pc with { ActionPoints = pc.ActionPoints - 1, State = CharacterState.Rest },
 
-            SpendAction.BuyGuard when pc.State is CharacterState.Guard => pc,
-            SpendAction.BuyGuard => pc with { ActionPoints = pc.ActionPoints - 1, State = CharacterState.Guard },
+        SpendAction.BuyGuard when pc.State is CharacterState.Guard => pc,
+        SpendAction.BuyGuard => pc with { ActionPoints = pc.ActionPoints - 1, State = CharacterState.Guard },
 
-            _ => throw new NotImplementedException($"Not Implemented for {action.GetType()}: {action}"),
-        };
-    }
+        _ => throw new NotImplementedException($"Not Implemented for {action.GetType()}: {action}"),
+    };
 }
 
 public enum CharacterState
