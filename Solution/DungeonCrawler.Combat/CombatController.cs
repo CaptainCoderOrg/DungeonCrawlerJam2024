@@ -3,6 +3,20 @@ namespace CaptainCoder.DungeonCrawler.Combat;
 public static class CombatController
 {
     public static bool IsValidAction(this CombatMap map, CombatAction toValidate) => throw new NotImplementedException();
+    public static void ApplyAction(this CombatMap map, CombatAction toApply) => throw new NotImplementedException();
+
+    /// <summary>
+    /// A valid ExertAction is one that targets a tile with a PlayerCharacter
+    /// and that PlayerCharacter has energy remaining.
+    /// </summary>
+    /// <exception cref="NotImplementedException"></exception>
+    public static bool IsValidExertAction(this CombatMap map, ExertAction action)
+    {
+        if (!map.PlayerCharacters.TryGetValue(action.Target, out PlayerCharacter pc)) { return false; }
+        return pc.Energy() > 0;
+    }
+    public static void ApplyExertAction(this CombatMap map, ExertAction action) => throw new NotImplementedException();
+
     public static bool IsValidMoveAction(this CombatMap map, MoveAction moveAction)
     {
         // Start position must contain a player
@@ -10,7 +24,6 @@ public static class CombatController
         HashSet<Position> validMoves = map.FindValidMoves(moveAction.Start, pc.MovementPoints);
         return validMoves.Contains(moveAction.End);
     }
-    public static void ApplyAction(this CombatMap map, CombatAction toApply) => throw new NotImplementedException();
     public static void ApplyMoveAction(this CombatMap map, MoveAction moveAction)
     {
         PlayerCharacter character = map.PlayerCharacters[moveAction.Start];
@@ -85,7 +98,13 @@ public static class CombatController
 
 public record struct Position(int X, int Y);
 public abstract record CombatAction;
+/// <summary>
+/// Represents a move from the start and end position
+/// </summary>
 public record MoveAction(Position Start, Position End) : CombatAction;
-public record Exert : CombatAction;
+/// <summary>
+/// Represents an exert action on a character at the specified position
+/// </summary>
+public record ExertAction(Position Target) : CombatAction;
 public record Attack : CombatAction;
 public record EndCharacterTurn : CombatAction;

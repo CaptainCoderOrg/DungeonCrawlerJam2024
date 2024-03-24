@@ -549,4 +549,62 @@ public class CombatController_should
         Should.Throw<ArgumentException>(() => underTest.ApplyMoveAction(new MoveAction(start, target)));
 
     }
+
+    [Theory]
+    [InlineData(2, 2, 4, 0)]
+    [InlineData(1, 2, 3, 2)]
+    [InlineData(3, 2, 1, 0)]
+    [InlineData(2, 3, 4, 3)]
+    public void validate_exert_action(int x, int y, int energy, int exertion)
+    {
+        Position position = new(x, y);
+        CombatMap underTest = new()
+        {
+            Tiles = CombatMapExtensions.ParseTiles(TestMap),
+            PlayerCharacters = new Dictionary<Position, PlayerCharacter>()
+            {
+                {
+                    position,
+                    new PlayerCharacter() {
+                        Card = new CharacterCard() { BaseEnergy = energy},
+                        Exertion = exertion
+                    }
+                }
+            }
+        };
+        ExertAction action = new(position);
+        bool actual = underTest.IsValidExertAction(action);
+
+        actual.ShouldBeTrue();
+    }
+
+
+
+    [Theory]
+    [InlineData(2, 2, 2, 2, 4, 4)] // Not valid when character has no energy remaining
+    [InlineData(1, 2, 1, 2, 3, 3)] // Not valid when character has no energy remaining
+    [InlineData(3, 2, 2, 2, 4, 0)] // Not valid when position doesn't contain character
+    [InlineData(3, 2, 1, 2, 3, 0)] // Not valid when position doesn't contain character
+    public void invalidate_exert_action(int playerX, int playerY, int targetX, int targetY, int energy, int exertion)
+    {
+        Position position = new(playerX, playerY);
+        CombatMap underTest = new()
+        {
+            Tiles = CombatMapExtensions.ParseTiles(TestMap),
+            PlayerCharacters = new Dictionary<Position, PlayerCharacter>()
+            {
+                {
+                    position,
+                    new PlayerCharacter() {
+                        Card = new CharacterCard() { BaseEnergy = energy},
+                        Exertion = exertion
+                    }
+                }
+            }
+        };
+        ExertAction action = new(new Position(targetX, targetY));
+        bool actual = underTest.IsValidExertAction(action);
+
+        actual.ShouldBeFalse();
+    }
 }
