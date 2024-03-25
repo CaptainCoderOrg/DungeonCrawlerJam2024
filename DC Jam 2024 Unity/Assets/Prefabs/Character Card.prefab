@@ -131,7 +131,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c17f1f980eccc464f8c1a7db7b4c28f5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 06adc28cf5ca7954ebc104c6290dbcee, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -638,7 +638,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7574177879402276236, guid: e34bf287c3c230e41afabbbee6683fd3, type: 3}
       propertyPath: m_text
-      value: Zooperdan
+      value: Character
       objectReference: {fileID: 0}
     - target: {fileID: 7574177879402276236, guid: e34bf287c3c230e41afabbbee6683fd3, type: 3}
       propertyPath: m_fontSize
