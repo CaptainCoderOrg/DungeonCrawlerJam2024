@@ -33,7 +33,7 @@ public class SpendActionPointsMode(PlayerCharacter character)
 
         if (Character.ActionPoints <= 0)
         {
-            OnSelected?.Invoke(new SpendPointResult("Not enough points", Character));
+            OnSelected?.Invoke(new SpendPointResult("Not enough points", menuItem, Character));
             return;
         }
 
@@ -55,7 +55,7 @@ public class SpendActionPointsMode(PlayerCharacter character)
             SpendAction.BuyRest => $"{Character.Card.Name} prepares to Rest",
             _ => throw new NotImplementedException($"Unknown action {spendAction}"),
         };
-        OnSelected?.Invoke(new SpendPointResult(message, Character));
+        OnSelected?.Invoke(new SpendPointResult(message, menuItem, Character));
     }
 
     private void Next(int delta)
@@ -67,7 +67,7 @@ public class SpendActionPointsMode(PlayerCharacter character)
     }
 }
 
-public record SpendPointResult(string Message, PlayerCharacter Character);
+public record SpendPointResult(string Message, SpendActionMenuItem SelectedAction, PlayerCharacter Character);
 
 public enum SpendActionMenuItem
 {

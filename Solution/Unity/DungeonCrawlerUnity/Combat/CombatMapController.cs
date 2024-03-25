@@ -23,7 +23,7 @@ public class CombatMapController : MonoBehaviour
     public SpendActionPointsModeController SpendActionPointsModeController = default!;
     private readonly PlayerCharacter[] _characters = [
         new PlayerCharacter() { Card = Characters.CharacterA, ActionPoints = 1 },
-        new PlayerCharacter() { Card = Characters.CharacterB, ActionPoints = 2},
+        new PlayerCharacter() { Card = Characters.CharacterB, ActionPoints = 2 },
         new PlayerCharacter() { Card = Characters.CharacterC, ActionPoints = 3 },
         new PlayerCharacter() { Card = Characters.CharacterD, ActionPoints = 4 },
     ];

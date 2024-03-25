@@ -2,7 +2,6 @@ using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Player.Unity;
 using CaptainCoder.Dungeoneering.Unity;
 
-using TMPro;
 
 using UnityEngine;
 
@@ -20,6 +19,8 @@ public class SpendActionPointsModeController : MonoBehaviour
     public CombatMapController CombatMapController { get; private set; } = default!;
     [field: SerializeField]
     public GameObject Menu { get; private set; } = default!;
+    public ConfirmDialogue ConfirmDialogue = default!;
+    private readonly List<SpendActionMenuItem> _actionsSelected = [];
     public void Update()
     {
         foreach (var mapping in PlayerInputMapping.MenuActionMappings)
@@ -45,8 +46,8 @@ public class SpendActionPointsModeController : MonoBehaviour
     {
         Action toPerform = action switch
         {
-            MenuControl.Down => () => _spendActionPointsMode.HandleInput(SpendActionPointsControls.Next),
-            MenuControl.Up => () => _spendActionPointsMode.HandleInput(SpendActionPointsControls.Previous),
+            MenuControl.Down or MenuControl.Right => () => _spendActionPointsMode.HandleInput(SpendActionPointsControls.Next),
+            MenuControl.Up or MenuControl.Left => () => _spendActionPointsMode.HandleInput(SpendActionPointsControls.Previous),
             MenuControl.Select => () => _spendActionPointsMode.HandleInput(SpendActionPointsControls.Select),
             MenuControl.Cancel => () => _spendActionPointsMode.HandleInput(SpendActionPointsControls.Cancel),
             _ => () => { }
@@ -57,6 +58,7 @@ public class SpendActionPointsModeController : MonoBehaviour
 
     public void Initialize(CharacterCardRenderer renderer, PlayerCharacter playerCharacter)
     {
+        _actionsSelected.Clear();
         CrawlingModeController.CrawlerMode.AddMessage(new Message($"{playerCharacter.Card.Name} prepares for battle. Select {playerCharacter.ActionPoints} actions."));
         _spendActionPointsMode = new SpendActionPointsMode(playerCharacter);
         _characterCardRenderer = renderer;
@@ -84,6 +86,7 @@ public class SpendActionPointsModeController : MonoBehaviour
     {
         CrawlingModeController.CrawlerMode.AddMessage(new Message(result.Message));
         _characterCardRenderer.Render(result.Character);
+        _actionsSelected.Add(result.SelectedAction);
         int count = result.Character.ActionPoints;
         if (count > 0)
         {
@@ -93,25 +96,10 @@ public class SpendActionPointsModeController : MonoBehaviour
         else
         {
             CrawlingModeController.CrawlerMode.AddMessage($"{result.Character.Card.Name} is ready for battle.");
+            string message = string.Join("/", _actionsSelected);
+            ConfirmDialogue.Initialize(message, () => { Debug.Log("Not implemented. Show character perform action mode."); }, () => CombatMapController.StartCharacterSelect());
+            gameObject.SetActive(false);
+
         }
-    }
-}
-
-[Serializable]
-public class MenuItemMapping<T>
-{
-    public T Item = default!;
-    public MenuItem MenuItem = default!;
-}
-
-public class MenuItem : MonoBehaviour
-{
-    [field: SerializeField]
-    public TextMeshProUGUI Text { get; private set; } = default!;
-    public Color SelectedColor = Color.yellow;
-    public Color NormalColor = Color.black;
-    public bool IsSelected
-    {
-        set => Text.color = value ? SelectedColor : NormalColor;
     }
 }
