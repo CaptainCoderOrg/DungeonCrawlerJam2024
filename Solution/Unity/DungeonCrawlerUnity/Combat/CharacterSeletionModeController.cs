@@ -13,6 +13,57 @@ public class CharacterSelectionModeController : MonoBehaviour
     private CharacterSelectionMode _characterSelectionMode = default!;
     public PlayerInputMapping PlayerControls = default!;
 
+    public void Awake()
+    {
+        PlayerCharacter[] pcs = [
+            new PlayerCharacter()
+            {
+                Card = new CharacterCard()
+                {
+                    Name = "Bob",
+                    BaseHealth = 12,
+                    BaseArmor = 2,
+                    BaseEnergy = 3,
+                    BaseSpeed = 3,
+                },
+            },
+            new PlayerCharacter()
+            {
+                Card = new CharacterCard()
+                {
+                    Name = "Alice",
+                    BaseHealth = 8,
+                    BaseArmor = 0,
+                    BaseEnergy = 6,
+                    BaseSpeed = 3,
+                },
+            },
+            new PlayerCharacter()
+            {
+                Card = new CharacterCard()
+                {
+                    Name = "Sally",
+                    BaseHealth = 10,
+                    BaseArmor = 1,
+                    BaseEnergy = 4,
+                    BaseSpeed = 4,
+                },
+            },
+            new PlayerCharacter()
+            {
+                Card = new CharacterCard()
+                {
+                    Name = "Greg",
+                    BaseHealth = 14,
+                    BaseArmor = 1,
+                    BaseEnergy = 4,
+                    BaseSpeed = 3,
+                },
+            }
+        ];
+        Initialize(pcs);
+    }
+
     public void Update()
     {
         foreach (MenuActionMapping mapping in PlayerControls.MenuActionMappings)
@@ -32,7 +83,7 @@ public class CharacterSelectionModeController : MonoBehaviour
         {
             Cards[ix].Character = characters[ix];
         }
-
+        Cards[0].IsSelected = true;
         _characterSelectionMode.OnSelectionChange += SelectCard;
         _characterSelectionMode.OnSelected += _ => Debug.Assert(false, "Not implemented: Go to Character Spend Points");
     }
@@ -69,14 +120,30 @@ public class ValueRenderer : MonoBehaviour
 public class TwoValueRenderer : MonoBehaviour
 {
     public TextMeshProUGUI Text = default!;
-    public TextMeshProUGUI BaseText = default!;
-    public int Value { set => Text.text = value.ToString(); }
-    public int BaseValue { set => Text.text = value.ToString(); }
+    private int _value = 10;
+    private int _baseValue = 10;
+    public int Value
+    {
+        set
+        {
+            _value = value;
+            Text.text = $"{_value}/{_baseValue}";
+        }
+    }
+    public int BaseValue
+    {
+        set
+        {
+            _baseValue = value;
+            Text.text = $"{_value}/{_baseValue}";
+        }
+    }
 }
 
 public class CharacterCardRenderer : MonoBehaviour
 {
     public GameObject Selected = default!;
+    public TextMeshProUGUI Name = default!;
     public TwoValueRenderer Health = default!;
     public TwoValueRenderer Energy = default!;
     public ValueRenderer Armor = default!;
@@ -101,6 +168,7 @@ public class CharacterCardRenderer : MonoBehaviour
 
     public void Render(PlayerCharacter character)
     {
+        Name.text = character.Card.Name;
         Health.Value = character.Health();
         Health.BaseValue = character.Card.BaseHealth;
 

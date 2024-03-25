@@ -4,7 +4,6 @@ using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.DungeonMap.IO;
 using CaptainCoder.Dungeoneering.DungeonMap.Unity;
 using CaptainCoder.Dungeoneering.Game;
-using CaptainCoder.Dungeoneering.Game.Unity;
 using CaptainCoder.Dungeoneering.Lua;
 using CaptainCoder.Dungeoneering.Lua.Dialogue;
 using CaptainCoder.Dungeoneering.Player;

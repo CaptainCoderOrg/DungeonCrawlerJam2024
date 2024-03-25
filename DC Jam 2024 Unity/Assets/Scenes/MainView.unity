@@ -246,6 +246,7 @@ Transform:
   m_Children:
   - {fileID: 248502692}
   - {fileID: 1518285192}
+  - {fileID: 1678755346}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &232848524
@@ -1367,7 +1368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8609784111048940637, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_Name
-      value: Kordanor
+      value: Character 2
       objectReference: {fileID: 0}
     - target: {fileID: 8973834169732491635, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1571,6 +1572,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TileParent>k__BackingField: {fileID: 1821339698}
   <TilePrefab>k__BackingField: {fileID: 982018494941467045, guid: ace6c32cc6fba9f4a8eebe0337edf891, type: 3}
+--- !u!114 &645483753 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4148814985551011038, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
+  m_PrefabInstance: {fileID: 430911641}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -193490113, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &709198248
 GameObject:
   m_ObjectHideFlags: 0
@@ -1750,6 +1762,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1816301529847661274, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
   m_PrefabInstance: {fileID: 4412930156342878784}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &956003213 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4148814985551011038, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
+  m_PrefabInstance: {fileID: 4412930156342878784}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -193490113, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -3476,7 +3499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8609784111048940637, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_Name
-      value: Kordanor
+      value: Character 4
       objectReference: {fileID: 0}
     - target: {fileID: 8973834169732491635, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3528,6 +3551,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1816301529847661274, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
   m_PrefabInstance: {fileID: 1641706184}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1641706186 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4148814985551011038, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
+  m_PrefabInstance: {fileID: 1641706184}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -193490113, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1654892549
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3634,6 +3668,56 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
   m_PrefabInstance: {fileID: 1654892549}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1678755345
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1678755346}
+  - component: {fileID: 1678755347}
+  m_Layer: 0
+  m_Name: CharacterSelectionModeController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1678755346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678755345}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 47336251}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1678755347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678755345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1981828289, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Cards>k__BackingField:
+  - {fileID: 956003213}
+  - {fileID: 645483753}
+  - {fileID: 1980197630}
+  - {fileID: 1641706186}
+  PlayerControls: {fileID: 11400000, guid: 00204f15829d2e44b9f218ced26cdc53, type: 2}
 --- !u!114 &1764189302 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3641853074488794628, guid: 1062e53fa4baf5d43b4ec199a272ddad, type: 3}
@@ -5741,7 +5825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8609784111048940637, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_Name
-      value: Zooperdan
+      value: Character 3
       objectReference: {fileID: 0}
     - target: {fileID: 8973834169732491635, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5793,6 +5877,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1816301529847661274, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
   m_PrefabInstance: {fileID: 1980197628}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1980197630 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4148814985551011038, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
+  m_PrefabInstance: {fileID: 1980197628}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -193490113, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2055710767
 GameObject:
   m_ObjectHideFlags: 0
@@ -7084,7 +7179,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8609784111048940637, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_Name
-      value: Zooperdan
+      value: Character 1
       objectReference: {fileID: 0}
     - target: {fileID: 8973834169732491635, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_AnchorMax.y
