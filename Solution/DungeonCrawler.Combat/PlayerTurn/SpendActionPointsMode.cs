@@ -45,14 +45,14 @@ public class SpendActionPointsMode(PlayerCharacter character)
             SpendActionMenuItem.Rest => SpendAction.BuyRest,
             _ => throw new NotImplementedException($"Unexpected MenuItem {menuItem}"),
         };
-
+        var orig = Character;
         Character = Character.SpendActionPoint(spendAction);
         string message = spendAction switch
         {
-            SpendAction.BuyMovement => $"Movement Points: {Character.MovementPoints}",
-            SpendAction.BuyAttack => $"Attack Points: {Character.AttackPoints}",
-            SpendAction.BuyGuard => $"{Character.Card.Name} switched to Guard",
-            SpendAction.BuyRest => $"{Character.Card.Name} switched to Rest",
+            SpendAction.BuyMovement => $"{Character.Card.Name} prepares to move. Total moves: {Character.MovementPoints}.",
+            SpendAction.BuyAttack => $"{Character.Card.Name} prepares to attack. Total attacks: {Character.AttackPoints}",
+            SpendAction.BuyGuard => $"{Character.Card.Name} prepares to Guard",
+            SpendAction.BuyRest => $"{Character.Card.Name} prepares to Rest",
             _ => throw new NotImplementedException($"Unknown action {spendAction}"),
         };
         OnSelected?.Invoke(new SpendPointResult(message, Character));

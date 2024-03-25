@@ -20,7 +20,6 @@ public class SpendActionPointsModeController : MonoBehaviour
     public CombatMapController CombatMapController { get; private set; } = default!;
     [field: SerializeField]
     public GameObject Menu { get; private set; } = default!;
-
     public void Update()
     {
         foreach (var mapping in PlayerInputMapping.MenuActionMappings)
@@ -58,6 +57,7 @@ public class SpendActionPointsModeController : MonoBehaviour
 
     public void Initialize(CharacterCardRenderer renderer, PlayerCharacter playerCharacter)
     {
+        CrawlingModeController.CrawlerMode.AddMessage(new Message($"{playerCharacter.Card.Name} prepares for battle. Select {playerCharacter.ActionPoints} actions."));
         _spendActionPointsMode = new SpendActionPointsMode(playerCharacter);
         _characterCardRenderer = renderer;
         _spendActionPointsMode.OnSelected += HandleSpendPoint;
@@ -84,6 +84,16 @@ public class SpendActionPointsModeController : MonoBehaviour
     {
         CrawlingModeController.CrawlerMode.AddMessage(new Message(result.Message));
         _characterCardRenderer.Render(result.Character);
+        int count = result.Character.ActionPoints;
+        if (count > 0)
+        {
+            string actions = result.Character.ActionPoints == 1 ? "action" : "actions";
+            CrawlingModeController.CrawlerMode.AddMessage($"Select {count} more {actions}.");
+        }
+        else
+        {
+            CrawlingModeController.CrawlerMode.AddMessage($"{result.Character.Card.Name} is ready for battle.");
+        }
     }
 }
 
