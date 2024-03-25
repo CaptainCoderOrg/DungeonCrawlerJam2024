@@ -9,6 +9,14 @@ public class CombatMap
 
 public static class CombatMapExtensions
 {
+    public static Position GetPosition(this CombatMap map, PlayerCharacter character)
+    {
+        foreach ((Position p, PlayerCharacter pc) in map.PlayerCharacters)
+        {
+            if (pc == character) { return p; }
+        }
+        throw new ArgumentOutOfRangeException($"No character found: {character}");
+    }
     public static HashSet<Position> ParseTiles(string toParse) => ParseCharPositions(toParse).GetValueOrDefault('#', new HashSet<Position>());
 
     public static Dictionary<char, HashSet<Position>> ParseCharPositions(string toParse)

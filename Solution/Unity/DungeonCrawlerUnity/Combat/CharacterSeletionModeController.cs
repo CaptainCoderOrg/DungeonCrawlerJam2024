@@ -10,56 +10,18 @@ public class CharacterSelectionModeController : MonoBehaviour
 {
     [field: SerializeField]
     public CharacterCardRenderer[] Cards { get; private set; } = [];
+    [field: SerializeField]
+    public CombatMapController CombatMapController { get; private set; } = default!;
     private CharacterSelectionMode _characterSelectionMode = default!;
     public PlayerInputMapping PlayerControls = default!;
 
     public void Awake()
     {
         PlayerCharacter[] pcs = [
-            new PlayerCharacter()
-            {
-                Card = new CharacterCard()
-                {
-                    Name = "Bob",
-                    BaseHealth = 12,
-                    BaseArmor = 2,
-                    BaseEnergy = 3,
-                    BaseSpeed = 3,
-                },
-            },
-            new PlayerCharacter()
-            {
-                Card = new CharacterCard()
-                {
-                    Name = "Alice",
-                    BaseHealth = 8,
-                    BaseArmor = 0,
-                    BaseEnergy = 6,
-                    BaseSpeed = 3,
-                },
-            },
-            new PlayerCharacter()
-            {
-                Card = new CharacterCard()
-                {
-                    Name = "Sally",
-                    BaseHealth = 10,
-                    BaseArmor = 1,
-                    BaseEnergy = 4,
-                    BaseSpeed = 4,
-                },
-            },
-            new PlayerCharacter()
-            {
-                Card = new CharacterCard()
-                {
-                    Name = "Greg",
-                    BaseHealth = 14,
-                    BaseArmor = 1,
-                    BaseEnergy = 4,
-                    BaseSpeed = 3,
-                },
-            }
+            new PlayerCharacter() { Card = Characters.CharacterA },
+            new PlayerCharacter() { Card = Characters.CharacterB },
+            new PlayerCharacter() { Card = Characters.CharacterC },
+            new PlayerCharacter() { Card = Characters.CharacterD },
         ];
         Initialize(pcs);
     }
@@ -85,15 +47,16 @@ public class CharacterSelectionModeController : MonoBehaviour
         }
         Cards[0].IsSelected = true;
         _characterSelectionMode.OnSelectionChange += SelectCard;
-        _characterSelectionMode.OnSelected += _ => Debug.Assert(false, "Not implemented: Go to Character Spend Points");
+        _characterSelectionMode.OnSelected += (_, _) => Debug.Assert(false, "Not implemented: Go to Character Spend Points");
     }
-    private void SelectCard(int ix)
+    private void SelectCard(int ix, PlayerCharacter character)
     {
         foreach (CharacterCardRenderer card in Cards)
         {
             card.IsSelected = false;
         }
         Cards[ix].IsSelected = true;
+        CombatMapController.PanTo(character);
     }
     public void HandleUserInput(MenuControl input)
     {
