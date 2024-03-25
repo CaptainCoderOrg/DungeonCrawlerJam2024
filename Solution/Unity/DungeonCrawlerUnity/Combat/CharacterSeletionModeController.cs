@@ -15,17 +15,6 @@ public class CharacterSelectionModeController : MonoBehaviour
     private CharacterSelectionMode _characterSelectionMode = default!;
     public PlayerInputMapping PlayerControls = default!;
 
-    public void Awake()
-    {
-        PlayerCharacter[] pcs = [
-            new PlayerCharacter() { Card = Characters.CharacterA },
-            new PlayerCharacter() { Card = Characters.CharacterB },
-            new PlayerCharacter() { Card = Characters.CharacterC },
-            new PlayerCharacter() { Card = Characters.CharacterD },
-        ];
-        Initialize(pcs);
-    }
-
     public void Update()
     {
         foreach (MenuActionMapping mapping in PlayerControls.MenuActionMappings)
@@ -45,9 +34,9 @@ public class CharacterSelectionModeController : MonoBehaviour
         {
             Cards[ix].Character = characters[ix];
         }
-        Cards[0].IsSelected = true;
+        SelectCard(0, characters[0]);
         _characterSelectionMode.OnSelectionChange += SelectCard;
-        _characterSelectionMode.OnSelected += (_, _) => Debug.Assert(false, "Not implemented: Go to Character Spend Points");
+        _characterSelectionMode.OnSelected += (ix, selected) => CombatMapController.StartSpendActionPoints(Cards[ix], selected);
     }
     private void SelectCard(int ix, PlayerCharacter character)
     {

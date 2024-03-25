@@ -1,3 +1,5 @@
+using System.Collections;
+
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -17,28 +19,58 @@ public class CombatMapController : MonoBehaviour
     [field: SerializeField]
     public Camera CombatCamera { get; private set; } = default!;
     private CombatMap _combatMap = default!;
+    public CharacterSelectionModeController CharacterSelectionModeController = default!;
+    public SpendActionPointsModeController SpendActionPointsModeController = default!;
+    private readonly PlayerCharacter[] _characters = [
+        new PlayerCharacter() { Card = Characters.CharacterA, ActionPoints = 1 },
+        new PlayerCharacter() { Card = Characters.CharacterB, ActionPoints = 2},
+        new PlayerCharacter() { Card = Characters.CharacterC, ActionPoints = 3 },
+        new PlayerCharacter() { Card = Characters.CharacterD, ActionPoints = 4 },
+    ];
 
     public void Awake()
     {
         CombatMap map = new()
         {
             Tiles = CombatMapExtensions.ParseTiles(
-                """
-                 ####    ##
-                ############
-                ############
-                 ####   ##
+                """       
+                 ###
+                #########
+                #########
+                 ###   ##
+                       ##
+                      ####
+                     ######
+                     ######
+                      ####
                 """
             ),
-            PlayerCharacters = new Dictionary<Position, PlayerCharacter>()
-            {
-                { new Position(2, 2), new PlayerCharacter(){ Card = Characters.CharacterA } },
-                { new Position(4, 2), new PlayerCharacter(){ Card = Characters.CharacterB } },
-                { new Position(4, 0), new PlayerCharacter(){ Card = Characters.CharacterC } },
-                { new Position(9, 2), new PlayerCharacter(){ Card = Characters.CharacterD } },
-            },
         };
+        map.PlayerCharacters[new Position(2, 2)] = _characters[0];
+        map.PlayerCharacters[new Position(9, 6)] = _characters[1];
+        map.PlayerCharacters[new Position(0, 2)] = _characters[2];
+        map.PlayerCharacters[new Position(8, 5)] = _characters[3];
+        Initialize(map);
+    }
+
+    public void Initialize(CombatMap map)
+    {
         BuildMap(map);
+        StartCharacterSelect();
+    }
+
+    public void StartCharacterSelect()
+    {
+        CharacterSelectionModeController.Initialize(_characters);
+        CharacterSelectionModeController.gameObject.SetActive(true);
+        SpendActionPointsModeController.gameObject.SetActive(false);
+    }
+
+    public void StartSpendActionPoints(CharacterCardRenderer renderer, PlayerCharacter selected)
+    {
+        SpendActionPointsModeController.Initialize(renderer, selected);
+        CharacterSelectionModeController.gameObject.SetActive(false);
+        SpendActionPointsModeController.gameObject.SetActive(true);
     }
 
     public void BuildMap(CombatMap toBuild)
@@ -78,17 +110,33 @@ public class CombatMapController : MonoBehaviour
         ];
     }
 
+    private Coroutine? _cameraCoroutine;
     public void PanTo(PlayerCharacter character)
     {
         Position position = _combatMap.GetPosition(character);
-        Vector3 camPosition = CombatCamera.transform.localPosition;
-        camPosition.x = position.ToVector3Int().x;
-        camPosition.y = position.ToVector3Int().y;
-        CombatCamera.transform.localPosition = camPosition;
+        Vector3 end = CombatCamera.transform.localPosition;
+        end.x = position.ToVector3Int().x;
+        end.y = position.ToVector3Int().y;
+        if (_cameraCoroutine is not null) { StopCoroutine(_cameraCoroutine); };
+        _cameraCoroutine = StartCoroutine(CombatCamera.transform.PanTo(end));
     }
 }
 
 public static class PositionExtensions
 {
+    public static readonly YieldInstruction WaitForEndOfFrame = new WaitForEndOfFrame();
     public static Vector3Int ToVector3Int(this Position position) => new(position.X, -position.Y, 0);
+    public static IEnumerator PanTo(this Transform transform, Vector3 end, float duration = 0.3f)
+    {
+        Vector3 start = transform.localPosition;
+        float elapsedTime = 0;
+        while (Percent() < 1)
+        {
+            transform.localPosition = Vector3.Lerp(start, end, Percent());
+            elapsedTime += Time.deltaTime;
+            yield return WaitForEndOfFrame;
+        }
+        transform.localPosition = Vector3.Lerp(start, end, 1);
+        float Percent() => elapsedTime / duration;
+    }
 }

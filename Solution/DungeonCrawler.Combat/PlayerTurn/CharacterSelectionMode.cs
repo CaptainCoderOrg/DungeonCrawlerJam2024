@@ -1,10 +1,9 @@
 namespace CaptainCoder.DungeonCrawler.Combat;
 
-
 public class CharacterSelectionMode(IEnumerable<PlayerCharacter> characters)
 {
     private readonly PlayerCharacter[] _characters = [.. characters];
-    private int _selectedIx = 0;
+    public int SelectedIx { get; private set; } = 0;
     public event Action<int, PlayerCharacter>? OnSelectionChange;
     public event Action<int, PlayerCharacter>? OnSelected;
     public void HandleInput(CharacterSelectionControl input)
@@ -13,7 +12,7 @@ public class CharacterSelectionMode(IEnumerable<PlayerCharacter> characters)
         {
             CharacterSelectionControl.Next => () => Next(1),
             CharacterSelectionControl.Previous => () => Next(-1),
-            CharacterSelectionControl.Select => () => OnSelected?.Invoke(_selectedIx, _characters[_selectedIx]),
+            CharacterSelectionControl.Select => () => OnSelected?.Invoke(SelectedIx, _characters[SelectedIx]),
             _ => throw new NotImplementedException($"Unknown input {input}"),
         };
         action.Invoke();
@@ -21,10 +20,10 @@ public class CharacterSelectionMode(IEnumerable<PlayerCharacter> characters)
 
     private void Next(int delta)
     {
-        _selectedIx += delta;
-        if (_selectedIx < 0) { _selectedIx = _characters.Length - 1; }
-        else if (_selectedIx >= _characters.Length) { _selectedIx = 0; }
-        OnSelectionChange?.Invoke(_selectedIx, _characters[_selectedIx]);
+        SelectedIx += delta;
+        if (SelectedIx < 0) { SelectedIx = _characters.Length - 1; }
+        else if (SelectedIx >= _characters.Length) { SelectedIx = 0; }
+        OnSelectionChange?.Invoke(SelectedIx, _characters[SelectedIx]);
     }
 
 }
