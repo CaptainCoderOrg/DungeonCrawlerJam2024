@@ -123,10 +123,10 @@ public class CombatMapController : MonoBehaviour
         CursorMap.SetTiles(position, IconDatabase.Selected);
     }
 
-    public void HighlightTiles(IEnumerable<Position> positions, TileBase? tile = null)
+    public void HighlightTiles(IEnumerable<Position> positions, TileBase? tile = null, bool clear = true)
     {
         if (tile == null) { tile = IconDatabase.Green; }
-        MapInfo.ClearAllTiles();
+        if (clear) { MapInfo.ClearAllTiles(); }
         MapInfo.SetTiles(positions, tile);
     }
 

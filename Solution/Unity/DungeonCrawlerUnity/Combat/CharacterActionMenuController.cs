@@ -53,7 +53,6 @@ public class CharacterActionMenuController : MonoBehaviour
 
     public void Initialize(PlayerCharacter character)
     {
-        Debug.Log($"Initialize {character}");
         _card = character.Card;
         CombatMapController.Shared.CombatMap.UpdateCharacter(character);
         gameObject.SetActive(true);

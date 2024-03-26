@@ -62,7 +62,7 @@ public static class CombatController
                 queue.Enqueue((neighbor, newPath));
             }
         }
-        throw new ArgumentException($"No valid path for specified start and end: {start}, {end}");
+        return [];
     }
 
     public static HashSet<Position> FindValidMoves(this CombatMap map, Position start, int maxDistance)
@@ -94,12 +94,17 @@ public static class CombatController
     static IEnumerable<Position> Neighbors(this CombatMap map, HashSet<Position> visited, Position position)
     {
         var (x, y) = position;
-#pragma warning disable format // Format for clarity
         IEnumerable<Position> neighbors =
-                   [ new Position(x - 1, y - 1), new Position(x, y - 1), new Position(x + 1, y - 1),
-                     new Position(x - 1, y    ),                         new Position(x + 1, y    ),
-                     new Position(x - 1, y + 1), new Position(x, y + 1), new Position(x + 1, y + 1),];
-#pragma warning restore format
+                    [
+                        new Position(x - 1, y),
+                        new Position(x + 1, y),
+                        new Position(x, y + 1),
+                        new Position(x, y - 1),
+                        new Position(x - 1, y - 1),
+                        new Position(x + 1, y - 1),
+                        new Position(x - 1, y + 1),
+                        new Position(x + 1, y + 1),
+                    ];
         return neighbors.Where(n => !visited.Contains(n))
                         .Where(map.Tiles.Contains)
                         .Where(n => !map.Enemies.ContainsKey(n));

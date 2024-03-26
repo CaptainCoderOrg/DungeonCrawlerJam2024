@@ -33,11 +33,23 @@ public class CharacterMoveController : MonoBehaviour
             MenuControl.Down => () => MoveCursor(_cursorPosition with { Y = _cursorPosition.Y + 1 }),
             MenuControl.Left => () => MoveCursor(_cursorPosition with { X = _cursorPosition.X - 1 }),
             MenuControl.Right => () => MoveCursor(_cursorPosition with { X = _cursorPosition.X + 1 }),
+            MenuControl.Select => () => TryMove(_cursorPosition),
             MenuControl.Cancel => Cancel,
             _ => () => { }
             ,
         };
         toPerform.Invoke();
+    }
+
+    public void TryMove(Position target)
+    {
+        MoveAction action = new(_startPosition, target);
+        if (!CombatMap.IsValidMoveAction(action))
+        {
+            MessageRenderer.Shared.AddMessage(new Message($"{Card.Name} cannot move here."));
+            return;
+        }
+        // TODO: Show confirm
     }
 
     public void Cancel()
@@ -52,11 +64,19 @@ public class CharacterMoveController : MonoBehaviour
         CharacterActionMenuController.Shared.Initialize(character);
     }
 
+    private IEnumerable<Position> _previousPath = [];
     public void MoveCursor(Position newPosition)
     {
         _cursorPosition = newPosition;
         CombatMapController.Shared.SelectTiles(_cursorPosition);
         CombatMapController.Shared.PanToward(_cursorPosition);
+        CombatMapController.Shared.HighlightTiles(_previousPath, CombatMapController.Shared.IconDatabase.Green, false);
+        if (CombatMap.IsValidMoveAction(new MoveAction(_startPosition, newPosition)))
+        {
+            IEnumerable<Position> shortestPath = CombatMap.FindShortestPath(_startPosition, _cursorPosition);
+            CombatMapController.Shared.HighlightTiles(shortestPath, CombatMapController.Shared.IconDatabase.Yellow, false);
+            _previousPath = shortestPath;
+        }
     }
 
     public void Initialize(CharacterCard card)
