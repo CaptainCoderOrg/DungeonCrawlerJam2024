@@ -1,3 +1,5 @@
+using CaptainCoder.Dungeoneering.Game;
+using CaptainCoder.Dungeoneering.Game.Unity;
 using CaptainCoder.Dungeoneering.Player.Unity;
 
 using UnityEngine;
@@ -7,12 +9,29 @@ namespace CaptainCoder.DungeonCrawler.Combat.Unity;
 public class CharacterActionMenuController : MonoBehaviour
 {
     public static CharacterActionMenuController Shared { get; private set; } = default!;
+    [SerializeField]
     public MenuItemMapping<CharacterAction>[] MenuItems = [];
+    [SerializeField]
     public PlayerInputMapping PlayerInputMapping = default!;
+    [SerializeField]
     public GameObject Menu = default!;
+
     private int _selectedIx = 0;
     private CharacterCard _card = default!;
     public CharacterActionMenuController() { Shared = this; }
+
+    public void OnEnable()
+    {
+        SpendActionPointsModeController.Shared.gameObject.SetActive(false);
+        CharacterMoveController.Shared.gameObject.SetActive(false);
+        Menu.SetActive(true);
+    }
+
+    public void OnDisable()
+    {
+        Menu.SetActive(false);
+        CombatHelpPanel.Shared.gameObject.SetActive(false);
+    }
 
     public void Update()
     {
@@ -34,10 +53,11 @@ public class CharacterActionMenuController : MonoBehaviour
 
     public void Initialize(PlayerCharacter character)
     {
+        Debug.Log($"Initialize {character}");
         _card = character.Card;
         CombatMapController.Shared.CombatMap.UpdateCharacter(character);
+        gameObject.SetActive(true);
         Select(0);
-        Menu.SetActive(true);
     }
 
     private void Next(int delta)
@@ -53,10 +73,25 @@ public class CharacterActionMenuController : MonoBehaviour
         Action toPerform = action switch
         {
             CharacterAction.ToggleHelp => CombatHelpPanel.Shared.Toggle,
-            CharacterAction.Exert => () => CombatMapController.Shared.TryExert(_card),
+            CharacterAction.Exert => () => TryExert(_card),
+            CharacterAction.Move => () => CharacterMoveController.Shared.Initialize(_card),
             _ => () => Debug.Log($"Not implemented: {action}"),
         };
         toPerform.Invoke();
+    }
+
+    private void TryExert(CharacterCard card)
+    {
+        Position position = CombatMapController.Shared.CombatMap.GetPosition(card);
+        PlayerCharacter character = CombatMapController.Shared.CombatMap.PlayerCharacters[position];
+        if (character.Energy() <= 0)
+        {
+            MessageRenderer.Shared.AddMessage(new Message("Not enough energy!"));
+            return;
+        }
+        ExertAction action = new(position);
+        CombatMapController.Shared.CombatMap.ApplyExertAction(action);
+        MessageRenderer.Shared.AddMessage(new Message($"{card.Name} exerts 1 energy and gains 1 movement point."));
     }
 
     public void Select(int ix)

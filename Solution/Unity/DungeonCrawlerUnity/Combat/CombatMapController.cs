@@ -1,8 +1,6 @@
 using System.Collections;
 
 using CaptainCoder.DungeonCrawler.Unity;
-using CaptainCoder.Dungeoneering.Game;
-using CaptainCoder.Dungeoneering.Game.Unity;
 
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -16,6 +14,8 @@ public class CombatMapController : MonoBehaviour
     public Tilemap Grid = default!;
     [field: SerializeField]
     public Tilemap TileMap { get; set; } = default!;
+    [field: SerializeField]
+    public Tilemap CursorMap { get; set; } = default!;
     [field: SerializeField]
     public TileBase DungeonTileBase { get; set; } = default!;
     [field: SerializeField]
@@ -65,6 +65,7 @@ public class CombatMapController : MonoBehaviour
         map.OnCharacterChange += HandleCharacterChange;
         CharacterActionMenuController.Shared.gameObject.SetActive(false);
         SpendActionPointsModeController.Shared.gameObject.SetActive(false);
+        CharacterMoveController.Shared.gameObject.SetActive(false);
         StartCharacterSelect();
     }
 
@@ -116,12 +117,17 @@ public class CombatMapController : MonoBehaviour
             new Position(p.X + 1, p.Y + 1),
         ];
     }
-    private Position? _selectedTile = null;
-    public void SelectTile(Position position)
+    public void SelectTiles(params Position[] position)
     {
-        if (_selectedTile.HasValue) { MapInfo.SetTile(_selectedTile.Value.ToVector3Int(), null); }
-        _selectedTile = position;
-        MapInfo.SetTile(position.ToVector3Int(), IconDatabase.Selected);
+        CursorMap.ClearAllTiles();
+        CursorMap.SetTiles(position, IconDatabase.Selected);
+    }
+
+    public void HighlightTiles(IEnumerable<Position> positions, TileBase? tile = null)
+    {
+        if (tile == null) { tile = IconDatabase.Green; }
+        MapInfo.ClearAllTiles();
+        MapInfo.SetTiles(positions, tile);
     }
 
     private Coroutine? _cameraCoroutine;
@@ -134,10 +140,22 @@ public class CombatMapController : MonoBehaviour
         _cameraCoroutine = StartCoroutine(CombatCamera.transform.PanTo(end));
     }
 
+    internal void PanToward(Position cursorPosition, float distance = 2)
+    {
+        Vector2 target = cursorPosition.ToVector2();
+        Vector2 current = CombatCamera.transform.localPosition;
+        // Do not pan if we are close enough
+        if (Vector2.Distance(target, current) < distance) { return; }
+        Vector3 end = Vector2.Lerp(current, target, 0.5f);
+        end.z = CombatCamera.transform.localPosition.z;
+        if (_cameraCoroutine is not null) { StopCoroutine(_cameraCoroutine); };
+        _cameraCoroutine = StartCoroutine(CombatCamera.transform.PanTo(end));
+    }
+
     internal void SelectCharacter(PlayerCharacter character)
     {
         Position position = CombatMap.GetPosition(character.Card);
-        SelectTile(position);
+        SelectTiles(position);
         PanTo(position);
     }
 
@@ -154,27 +172,6 @@ public class CombatMapController : MonoBehaviour
         CharacterSelectionModeController.Shared.gameObject.SetActive(false);
         SpendActionPointsModeController.Shared.gameObject.SetActive(true);
     }
-
-    internal void StartCharacterCombat(PlayerCharacter character)
-    {
-        CharacterActionMenuController.Shared.Initialize(character);
-        SpendActionPointsModeController.Shared.gameObject.SetActive(false);
-        CharacterActionMenuController.Shared.gameObject.SetActive(true);
-    }
-
-    internal void TryExert(CharacterCard card)
-    {
-        Position position = CombatMap.GetPosition(card);
-        PlayerCharacter character = CombatMap.PlayerCharacters[position];
-        if (character.Energy() <= 0)
-        {
-            MessageRenderer.Shared.AddMessage(new Message("Not enough energy!"));
-            return;
-        }
-        ExertAction action = new(position);
-        CombatMap.ApplyExertAction(action);
-        MessageRenderer.Shared.AddMessage(new Message($"{card.Name} exerts 1 energy and gains 1 movement point."));
-    }
 }
 
 public static class PositionExtensions
@@ -184,6 +181,7 @@ public static class PositionExtensions
     public static void SetTiles(this Tilemap map, IEnumerable<Position> positions, Func<Position, TileBase> lookup) => map.SetTiles([.. positions.Select(p => p.ToVector3Int())], [.. positions.Select(lookup)]);
     public static void SetTiles(this Tilemap map, IEnumerable<TileData> data) => map.SetTiles([.. data.Select(t => t.Position.ToVector3Int())], [.. data.Select(t => t.Tile)]);
     public static Vector3Int ToVector3Int(this Position position) => new(position.X, -position.Y, 0);
+    public static Vector2 ToVector2(this Position position) => new(position.X, -position.Y);
     public static IEnumerator PanTo(this Transform transform, Vector3 end, float duration = 0.3f)
     {
         Vector3 start = transform.localPosition;

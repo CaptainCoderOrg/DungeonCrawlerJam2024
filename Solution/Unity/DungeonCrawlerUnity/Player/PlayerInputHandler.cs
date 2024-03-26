@@ -6,6 +6,8 @@ namespace CaptainCoder.Dungeoneering.Player.Unity;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+    public static PlayerInputHandler Shared { get; private set; } = default!;
+    public PlayerInputHandler() { Shared = this; }
     [field: SerializeField]
     public PlayerInputMapping InputMapping { get; set; } = default!;
     public UnityEvent<MovementAction>? OnMovementAction;

@@ -116,7 +116,7 @@ public class SpendActionPointsModeController : MonoBehaviour
     {
         string message = string.Join("/", _actionsSelected);
         ConfirmDialogue.Shared.Initialize(message, OnConfirm, OnCancel);
-        void OnConfirm() => CombatMapController.Shared.StartCharacterCombat(character);
+        void OnConfirm() => CharacterActionMenuController.Shared.Initialize(character);
         void OnCancel() => CombatMapController.Shared.StartCharacterSelect();
     }
 }

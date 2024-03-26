@@ -13,6 +13,15 @@ public record ExertEvent(PlayerCharacter Original, PlayerCharacter New, Position
 
 public static class CombatMapExtensions
 {
+
+    public static PlayerCharacter GetCharacter(this CombatMap map, CharacterCard card)
+    {
+        foreach (PlayerCharacter pc in map.PlayerCharacters.Values)
+        {
+            if (pc.Card == card) { return pc; }
+        }
+        throw new ArgumentOutOfRangeException($"No character found: {card}");
+    }
     public static void UpdateCharacter(this CombatMap map, PlayerCharacter character)
     {
         Position position = map.GetPosition(character.Card);
