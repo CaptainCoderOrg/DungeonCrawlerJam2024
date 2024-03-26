@@ -9,18 +9,18 @@ namespace CaptainCoder.DungeonCrawler.Combat.Unity;
 
 public class SpendActionPointsModeController : MonoBehaviour
 {
-    private SpendActionPointsMode _spendActionPointsMode = default!;
-    private CharacterCardRenderer _characterCardRenderer = default!;
     [field: SerializeField]
     public PlayerInputMapping PlayerInputMapping { get; private set; } = default!;
     [field: SerializeField]
     public MenuItemMapping<SpendActionMenuItem>[] MenuItems = [];
     [field: SerializeField]
-    public CombatMapController CombatMapController { get; private set; } = default!;
-    [field: SerializeField]
     public GameObject Menu { get; private set; } = default!;
-    public ConfirmDialogue ConfirmDialogue = default!;
+
+    public static SpendActionPointsModeController Shared { get; private set; } = default!;
+    private SpendActionPointsMode _spendActionPointsMode = default!;
+    private CharacterCardRenderer _characterCardRenderer = default!;
     private readonly List<SpendActionMenuItem> _actionsSelected = [];
+    public SpendActionPointsModeController() { Shared = this; }
     public void Update()
     {
         foreach (var mapping in PlayerInputMapping.MenuActionMappings)
@@ -74,7 +74,7 @@ public class SpendActionPointsModeController : MonoBehaviour
     {
         CombatHelpPanel.Shared.gameObject.SetActive(false);
         _characterCardRenderer.Render(character);
-        CombatMapController.StartCharacterSelect();
+        CombatMapController.Shared.StartCharacterSelect();
     }
 
     private void HandleSelectionChange(SpendActionMenuItem item)
@@ -109,10 +109,17 @@ public class SpendActionPointsModeController : MonoBehaviour
         else
         {
             CrawlingModeController.CrawlerMode.AddMessage($"{result.Character.Card.Name} is ready for battle.");
-            string message = string.Join("/", _actionsSelected);
-            ConfirmDialogue.Initialize(message, () => { Debug.Log("Not implemented. Show character perform action mode."); }, () => CombatMapController.StartCharacterSelect());
+            ShowConfirm(result.Character);
             gameObject.SetActive(false);
             CombatHelpPanel.Shared.gameObject.SetActive(false);
         }
+    }
+
+    private void ShowConfirm(PlayerCharacter selected)
+    {
+        string message = string.Join("/", _actionsSelected);
+        ConfirmDialogue.Shared.Initialize(message, OnConfirm, OnCancel);
+        void OnConfirm() => CombatMapController.Shared.StartCharacterCombat(selected);
+        void OnCancel() => CombatMapController.Shared.StartCharacterSelect();
     }
 }

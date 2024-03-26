@@ -8,12 +8,12 @@ namespace CaptainCoder.DungeonCrawler.Combat.Unity;
 
 public class CharacterSelectionModeController : MonoBehaviour
 {
+    public static CharacterSelectionModeController Shared { get; private set; } = default!;
     [field: SerializeField]
     public CharacterCardRenderer[] Cards { get; private set; } = [];
-    [field: SerializeField]
-    public CombatMapController CombatMapController { get; private set; } = default!;
     private CharacterSelectionMode _characterSelectionMode = default!;
     public PlayerInputMapping PlayerControls = default!;
+    public CharacterSelectionModeController() { Shared = this; }
 
     public void Update()
     {
@@ -36,7 +36,7 @@ public class CharacterSelectionModeController : MonoBehaviour
         }
         SelectCard(0, characters[0]);
         _characterSelectionMode.OnSelectionChange += SelectCard;
-        _characterSelectionMode.OnSelected += (ix, selected) => CombatMapController.StartSpendActionPoints(Cards[ix], selected);
+        _characterSelectionMode.OnSelected += (ix, selected) => CombatMapController.Shared.StartSpendActionPoints(Cards[ix], selected);
     }
     private void SelectCard(int ix, PlayerCharacter character)
     {
@@ -45,7 +45,7 @@ public class CharacterSelectionModeController : MonoBehaviour
             card.IsSelected = false;
         }
         Cards[ix].IsSelected = true;
-        CombatMapController.SelectCharacter(character);
+        CombatMapController.Shared.SelectCharacter(character);
     }
     public void HandleUserInput(MenuControl input)
     {

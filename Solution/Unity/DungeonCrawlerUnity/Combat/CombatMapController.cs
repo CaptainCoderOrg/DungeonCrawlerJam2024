@@ -7,6 +7,7 @@ namespace CaptainCoder.DungeonCrawler.Combat.Unity;
 
 public class CombatMapController : MonoBehaviour
 {
+    public static CombatMapController Shared { get; private set; } = default!;
     public Tilemap MapInfo = default!;
     public Tilemap Grid = default!;
     [field: SerializeField]
@@ -20,14 +21,14 @@ public class CombatMapController : MonoBehaviour
     [field: SerializeField]
     public Camera CombatCamera { get; private set; } = default!;
     private CombatMap _combatMap = default!;
-    public CharacterSelectionModeController CharacterSelectionModeController = default!;
-    public SpendActionPointsModeController SpendActionPointsModeController = default!;
     private readonly PlayerCharacter[] _characters = [
         new PlayerCharacter() { Card = Characters.CharacterA, ActionPoints = 1 },
         new PlayerCharacter() { Card = Characters.CharacterB, ActionPoints = 2 },
         new PlayerCharacter() { Card = Characters.CharacterC, ActionPoints = 3 },
         new PlayerCharacter() { Card = Characters.CharacterD, ActionPoints = 4 },
     ];
+
+    public CombatMapController() { Shared = this; }
 
     public void Awake()
     {
@@ -57,21 +58,9 @@ public class CombatMapController : MonoBehaviour
     public void Initialize(CombatMap map)
     {
         BuildMap(map);
+        CharacterActionMenuController.Shared.gameObject.SetActive(false);
+        SpendActionPointsModeController.Shared.gameObject.SetActive(false);
         StartCharacterSelect();
-    }
-
-    public void StartCharacterSelect()
-    {
-        CharacterSelectionModeController.Initialize(_characters);
-        CharacterSelectionModeController.gameObject.SetActive(true);
-        SpendActionPointsModeController.gameObject.SetActive(false);
-    }
-
-    public void StartSpendActionPoints(CharacterCardRenderer renderer, PlayerCharacter selected)
-    {
-        SpendActionPointsModeController.Initialize(renderer, selected);
-        CharacterSelectionModeController.gameObject.SetActive(false);
-        SpendActionPointsModeController.gameObject.SetActive(true);
     }
 
     public void BuildMap(CombatMap toBuild)
@@ -132,6 +121,27 @@ public class CombatMapController : MonoBehaviour
         Position position = _combatMap.GetPosition(character);
         SelectTile(position);
         PanTo(position);
+    }
+
+    public void StartCharacterSelect()
+    {
+        CharacterSelectionModeController.Shared.Initialize(_characters);
+        CharacterSelectionModeController.Shared.gameObject.SetActive(true);
+        SpendActionPointsModeController.Shared.gameObject.SetActive(false);
+    }
+
+    public void StartSpendActionPoints(CharacterCardRenderer renderer, PlayerCharacter selected)
+    {
+        SpendActionPointsModeController.Shared.Initialize(renderer, selected);
+        CharacterSelectionModeController.Shared.gameObject.SetActive(false);
+        SpendActionPointsModeController.Shared.gameObject.SetActive(true);
+    }
+
+    internal void StartCharacterCombat(PlayerCharacter selected)
+    {
+        CharacterActionMenuController.Shared.Initialize(selected);
+        SpendActionPointsModeController.Shared.gameObject.SetActive(false);
+        CharacterActionMenuController.Shared.gameObject.SetActive(true);
     }
 }
 

@@ -39,6 +39,11 @@ public static class HelpDialogue
 {
     public static string ToggleHelpInfo = "Toggles help information on and off";
     public static string CancelActionSpending = "Cancels the current actions and returns to character selection.";
+    public static string CombatMove { get; } = "Spend movement points";
+    public static string MoveExert { get; } = "Spend 1 energy to gain 1 movement point";
+    public static string CombatAttack { get; } = "Spend an attack point to perform an attack";
+    public static string CombatEndTurn { get; } = "End this character's turn. Any unused movement or attack points are lost.";
+
     public static string Rest { get; } = """
     Change to the <color=#006600>Rest</color> state.
 

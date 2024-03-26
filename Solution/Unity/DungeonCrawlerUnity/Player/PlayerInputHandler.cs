@@ -48,6 +48,17 @@ public class PlayerInputMapping : ScriptableObject
     public DialogueActionMapping[] DialogueActions { get; set; } = default!;
     [field: SerializeField]
     public MenuActionMapping[] MenuActionMappings { get; set; } = default!;
+
+    public void OnMenuAction(Action<MenuControl> handler)
+    {
+        foreach (var mapping in MenuActionMappings)
+        {
+            if (Input.GetKeyDown(mapping.Key))
+            {
+                handler.Invoke(mapping.Action);
+            }
+        }
+    }
 }
 
 [Serializable]
