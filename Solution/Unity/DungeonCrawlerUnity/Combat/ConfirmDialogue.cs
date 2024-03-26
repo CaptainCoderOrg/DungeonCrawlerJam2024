@@ -19,7 +19,6 @@ public class ConfirmDialogue : MonoBehaviour
     public ConfirmDialogue()
     {
         Shared = this;
-        Debug.Log("Confirm Dialogue initialized");
     }
 
     public void Update()

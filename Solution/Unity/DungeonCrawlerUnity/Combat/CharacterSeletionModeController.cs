@@ -45,7 +45,7 @@ public class CharacterSelectionModeController : MonoBehaviour
             card.IsSelected = false;
         }
         Cards[ix].IsSelected = true;
-        CombatMapController.PanTo(character);
+        CombatMapController.SelectCharacter(character);
     }
     public void HandleUserInput(MenuControl input)
     {

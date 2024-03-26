@@ -9,8 +9,12 @@ public class CombatIconDatabase : ScriptableObject
     [field: SerializeField]
     public IconEntry[] Entries { get; set; } = [];
     public TileBase DefaultIcon = default!;
+    public TileBase Selected = default!;
+    public TileBase Green = default!;
+    public TileBase Outline = default!;
+    public TileBase Yellow = default!;
 
-    public TileBase GetTileBase(PlayerCharacter playerCharacter) =>
+    public TileBase GetTile(PlayerCharacter playerCharacter) =>
         Entries.FirstOrDefault(e => e.Name == playerCharacter.Card.Name)?.Icon ?? DefaultIcon;
 }
 

@@ -3188,8 +3188,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1879215583
-  m_SortingLayer: 3
+  m_SortingLayerID: -1365154919
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -3975,6 +3975,8 @@ MonoBehaviour:
   m_Script: {fileID: -1994401045, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MapInfo: {fileID: 2057128553}
+  Grid: {fileID: 1357650353}
   <TileMap>k__BackingField: {fileID: 1945932284}
   <DungeonTileBase>k__BackingField: {fileID: 11400000, guid: 2d0adc0ecee9f7f449910c6ae1a247fe, type: 2}
   <CharacterMap>k__BackingField: {fileID: 843659132}

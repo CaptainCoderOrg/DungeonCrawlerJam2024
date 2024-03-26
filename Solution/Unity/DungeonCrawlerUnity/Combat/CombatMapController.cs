@@ -1,5 +1,7 @@
 using System.Collections;
 
+using CaptainCoder.Dungeoneering.DungeonMap.Unity;
+
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -7,11 +9,12 @@ namespace CaptainCoder.DungeonCrawler.Combat.Unity;
 
 public class CombatMapController : MonoBehaviour
 {
+    public Tilemap MapInfo = default!;
+    public Tilemap Grid = default!;
     [field: SerializeField]
     public Tilemap TileMap { get; set; } = default!;
     [field: SerializeField]
     public TileBase DungeonTileBase { get; set; } = default!;
-
     [field: SerializeField]
     public Tilemap CharacterMap { get; set; } = default!;
     [field: SerializeField]
@@ -76,16 +79,15 @@ public class CombatMapController : MonoBehaviour
     public void BuildMap(CombatMap toBuild)
     {
         _combatMap = toBuild;
+        Grid.ClearAllTiles();
         TileMap.ClearAllTiles();
-        foreach (Position tile in Grow(toBuild.Tiles))
-        {
-            TileMap.SetTile(tile.ToVector3Int(), DungeonTileBase);
-        }
+        MapInfo.ClearAllTiles();
         CharacterMap.ClearAllTiles();
-        foreach ((Position position, PlayerCharacter character) in toBuild.PlayerCharacters)
-        {
-            CharacterMap.SetTile(position.ToVector3Int(), IconDatabase.GetTileBase(character));
-        }
+
+        IEnumerable<Position> tiles = Grow(toBuild.Tiles);
+        TileMap.SetTiles(tiles, DungeonTileBase);
+        Grid.SetTiles(tiles, IconDatabase.Outline);
+        CharacterMap.SetTiles(toBuild.PlayerCharacters.Keys, p => IconDatabase.GetTile(toBuild.PlayerCharacters[p]));
     }
 
     private static HashSet<Position> Grow(HashSet<Position> toGrow)
@@ -109,22 +111,38 @@ public class CombatMapController : MonoBehaviour
             new Position(p.X + 1, p.Y + 1),
         ];
     }
+    private Position? _selectedTile = null;
+    public void SelectTile(Position position)
+    {
+        if (_selectedTile.HasValue) { MapInfo.SetTile(_selectedTile.Value.ToVector3Int(), null); }
+        _selectedTile = position;
+        MapInfo.SetTile(position.ToVector3Int(), IconDatabase.Selected);
+    }
 
     private Coroutine? _cameraCoroutine;
-    public void PanTo(PlayerCharacter character)
+    public void PanTo(Position position)
     {
-        Position position = _combatMap.GetPosition(character);
         Vector3 end = CombatCamera.transform.localPosition;
         end.x = position.ToVector3Int().x;
         end.y = position.ToVector3Int().y;
         if (_cameraCoroutine is not null) { StopCoroutine(_cameraCoroutine); };
         _cameraCoroutine = StartCoroutine(CombatCamera.transform.PanTo(end));
     }
+
+    internal void SelectCharacter(PlayerCharacter character)
+    {
+        Position position = _combatMap.GetPosition(character);
+        SelectTile(position);
+        PanTo(position);
+    }
 }
 
 public static class PositionExtensions
 {
     public static readonly YieldInstruction WaitForEndOfFrame = new WaitForEndOfFrame();
+    public static void SetTiles(this Tilemap map, IEnumerable<Position> positions, TileBase tile) => map.SetTiles([.. positions.Select(p => p.ToVector3Int())], [.. positions.Select(_ => tile)]);
+    public static void SetTiles(this Tilemap map, IEnumerable<Position> positions, Func<Position, TileBase> lookup) => map.SetTiles([.. positions.Select(p => p.ToVector3Int())], [.. positions.Select(lookup)]);
+    public static void SetTiles(this Tilemap map, IEnumerable<TileData> data) => map.SetTiles([.. data.Select(t => t.Position.ToVector3Int())], [.. data.Select(t => t.Tile)]);
     public static Vector3Int ToVector3Int(this Position position) => new(position.X, -position.Y, 0);
     public static IEnumerator PanTo(this Transform transform, Vector3 end, float duration = 0.3f)
     {
@@ -140,3 +158,5 @@ public static class PositionExtensions
         float Percent() => elapsedTime / duration;
     }
 }
+
+public record class TileData(Position Position, TileBase Tile);

@@ -22,3 +22,7 @@ MonoBehaviour:
   - Name: Greg
     Icon: {fileID: 11400000, guid: 57106953e36e9a643a536aee1b0b6d64, type: 2}
   DefaultIcon: {fileID: 11400000, guid: d7d8b9203bbac674b9acb81b2bcbdc83, type: 2}
+  Selected: {fileID: 11400000, guid: 46c09af8b1c205f418db3809318c515f, type: 2}
+  Green: {fileID: 11400000, guid: 59c87c162fcdd8c45b6478e37b444219, type: 2}
+  Outline: {fileID: 11400000, guid: f0175f7e2e02cf943862a2ca87190a75, type: 2}
+  Yellow: {fileID: 11400000, guid: 28360800cf50af64b98ae1dade9f2c61, type: 2}

@@ -50,3 +50,6 @@ TagManager:
   - name: MapInfo
     uniqueID: 1879215583
     locked: 0
+  - name: Grid
+    uniqueID: 2929812377
+    locked: 0
