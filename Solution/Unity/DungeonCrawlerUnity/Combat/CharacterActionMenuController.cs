@@ -11,8 +11,7 @@ public class CharacterActionMenuController : MonoBehaviour
     public PlayerInputMapping PlayerInputMapping = default!;
     public GameObject Menu = default!;
     private int _selectedIx = 0;
-    private PlayerCharacter _selectedCharacter = default!;
-
+    private CharacterCard _card = default!;
     public CharacterActionMenuController() { Shared = this; }
 
     public void Update()
@@ -33,9 +32,10 @@ public class CharacterActionMenuController : MonoBehaviour
         action.Invoke();
     }
 
-    public void Initialize(PlayerCharacter selected)
+    public void Initialize(PlayerCharacter character)
     {
-        _selectedCharacter = selected;
+        _card = character.Card;
+        CombatMapController.Shared.CombatMap.UpdateCharacter(character);
         Select(0);
         Menu.SetActive(true);
     }
@@ -50,7 +50,13 @@ public class CharacterActionMenuController : MonoBehaviour
 
     private void SelectOption(CharacterAction action)
     {
-        Debug.Log($"Not implemented: {action}");
+        Action toPerform = action switch
+        {
+            CharacterAction.ToggleHelp => CombatHelpPanel.Shared.Toggle,
+            CharacterAction.Exert => () => CombatMapController.Shared.TryExert(_card),
+            _ => () => Debug.Log($"Not implemented: {action}"),
+        };
+        toPerform.Invoke();
     }
 
     public void Select(int ix)

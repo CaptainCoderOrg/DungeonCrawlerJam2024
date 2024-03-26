@@ -29,6 +29,7 @@ public class CombatHelpPanel : MonoBehaviour
             gameObject.SetActive(_isOn);
         }
     }
+    public void Toggle() => IsOn = !IsOn;
     public CombatHelpPanel()
     {
         Shared = this;

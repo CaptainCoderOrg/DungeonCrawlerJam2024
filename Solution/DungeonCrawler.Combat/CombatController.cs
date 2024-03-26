@@ -20,7 +20,9 @@ public static class CombatController
     {
         if (!map.IsValidExertAction(action)) { throw new ArgumentException($"Invalid ExertAction: {action}"); }
         PlayerCharacter pc = map.PlayerCharacters[action.Target];
-        map.PlayerCharacters[action.Target] = pc with { Exertion = pc.Exertion + 1, MovementPoints = pc.MovementPoints + 1 };
+        PlayerCharacter updated = pc with { Exertion = pc.Exertion + 1, MovementPoints = pc.MovementPoints + 1 };
+        map.PlayerCharacters[action.Target] = updated;
+        map.OnCharacterChange?.Invoke(updated);
     }
 
     public static bool IsValidMoveAction(this CombatMap map, MoveAction moveAction)
@@ -36,7 +38,9 @@ public static class CombatController
         map.PlayerCharacters.Remove(moveAction.Start);
         int distance = map.FindShortestPath(moveAction.Start, moveAction.End).Count();
         if (distance > character.MovementPoints) { throw new ArgumentException("Invalid Move. No path found."); }
-        map.PlayerCharacters[moveAction.End] = character with { MovementPoints = character.MovementPoints - distance };
+        PlayerCharacter updated = character with { MovementPoints = character.MovementPoints - distance };
+        map.PlayerCharacters[moveAction.End] = updated;
+        map.OnCharacterChange?.Invoke(updated);
     }
 
     public static IEnumerable<Position> FindShortestPath(this CombatMap map, Position start, Position end)

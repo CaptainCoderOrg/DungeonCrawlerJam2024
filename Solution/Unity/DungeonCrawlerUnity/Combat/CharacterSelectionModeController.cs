@@ -1,6 +1,5 @@
+using CaptainCoder.DungeonCrawler.Unity;
 using CaptainCoder.Dungeoneering.Player.Unity;
-
-using TMPro;
 
 using UnityEngine;
 
@@ -9,8 +8,6 @@ namespace CaptainCoder.DungeonCrawler.Combat.Unity;
 public class CharacterSelectionModeController : MonoBehaviour
 {
     public static CharacterSelectionModeController Shared { get; private set; } = default!;
-    [field: SerializeField]
-    public CharacterCardRenderer[] Cards { get; private set; } = [];
     private CharacterSelectionMode _characterSelectionMode = default!;
     public PlayerInputMapping PlayerControls = default!;
     public CharacterSelectionModeController() { Shared = this; }
@@ -30,21 +27,21 @@ public class CharacterSelectionModeController : MonoBehaviour
     {
         _characterSelectionMode = new(characters);
 
-        for (int ix = 0; ix < Cards.Length; ix++)
+        for (int ix = 0; ix < Overlay.Shared.Cards.Length; ix++)
         {
-            Cards[ix].Character = characters[ix];
+            Overlay.Shared.Cards[ix].Character = characters[ix];
         }
         SelectCard(0, characters[0]);
         _characterSelectionMode.OnSelectionChange += SelectCard;
-        _characterSelectionMode.OnSelected += (ix, selected) => CombatMapController.Shared.StartSpendActionPoints(Cards[ix], selected);
+        _characterSelectionMode.OnSelected += (ix, selected) => CombatMapController.Shared.StartSpendActionPoints(selected);
     }
     private void SelectCard(int ix, PlayerCharacter character)
     {
-        foreach (CharacterCardRenderer card in Cards)
+        foreach (CharacterCardRenderer card in Overlay.Shared.Cards)
         {
             card.IsSelected = false;
         }
-        Cards[ix].IsSelected = true;
+        Overlay.Shared.Cards[ix].IsSelected = true;
         CombatMapController.Shared.SelectCharacter(character);
     }
     public void HandleUserInput(MenuControl input)
@@ -57,37 +54,5 @@ public class CharacterSelectionModeController : MonoBehaviour
             _ => () => { }
         };
         action.Invoke();
-    }
-}
-
-public class ValueRenderer : MonoBehaviour
-{
-    public TextMeshProUGUI Text = default!;
-    public int Value
-    {
-        set => Text.text = value.ToString();
-    }
-}
-
-public class TwoValueRenderer : MonoBehaviour
-{
-    public TextMeshProUGUI Text = default!;
-    private int _value = 10;
-    private int _baseValue = 10;
-    public int Value
-    {
-        set
-        {
-            _value = value;
-            Text.text = $"{_value}/{_baseValue}";
-        }
-    }
-    public int BaseValue
-    {
-        set
-        {
-            _baseValue = value;
-            Text.text = $"{_value}/{_baseValue}";
-        }
     }
 }

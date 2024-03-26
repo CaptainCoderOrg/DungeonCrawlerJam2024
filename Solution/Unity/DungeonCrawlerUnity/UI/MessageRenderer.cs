@@ -12,6 +12,7 @@ namespace CaptainCoder.Dungeoneering.Game.Unity;
 
 public class MessageRenderer : MonoBehaviour
 {
+    public static MessageRenderer Shared { get; private set; } = default!;
     private WaitUntil WaitUntilQueueHasItem => new(() => _renderQueue.Count > 0);
     [field: SerializeField]
     public Transform TextOutput { get; private set; } = default!;
@@ -21,6 +22,8 @@ public class MessageRenderer : MonoBehaviour
     public ScrollRect Scroll { get; private set; } = default!;
 
     private readonly Queue<Message> _renderQueue = new();
+
+    public MessageRenderer() { Shared = this; }
 
     public void Awake()
     {
@@ -34,7 +37,7 @@ public class MessageRenderer : MonoBehaviour
         StartCoroutine(RenderText());
     }
 
-    private void AddMessage(Message message) => _renderQueue.Enqueue(message);
+    public void AddMessage(Message message) => _renderQueue.Enqueue(message);
     private IEnumerator RenderText()
     {
         while (true)

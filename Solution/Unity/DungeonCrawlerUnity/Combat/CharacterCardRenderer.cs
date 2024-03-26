@@ -49,3 +49,36 @@ public class CharacterCardRenderer : MonoBehaviour
         Debug.Assert(false, "RenderNoCharacter() is not implemented");
     }
 }
+
+
+public class ValueRenderer : MonoBehaviour
+{
+    public TextMeshProUGUI Text = default!;
+    public int Value
+    {
+        set => Text.text = value.ToString();
+    }
+}
+
+public class TwoValueRenderer : MonoBehaviour
+{
+    public TextMeshProUGUI Text = default!;
+    private int _value = 10;
+    private int _baseValue = 10;
+    public int Value
+    {
+        set
+        {
+            _value = value;
+            Text.text = $"{_value}/{_baseValue}";
+        }
+    }
+    public int BaseValue
+    {
+        set
+        {
+            _baseValue = value;
+            Text.text = $"{_value}/{_baseValue}";
+        }
+    }
+}

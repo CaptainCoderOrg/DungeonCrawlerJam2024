@@ -5,17 +5,27 @@ public class CombatMap
     public HashSet<Position> Tiles { get; init; } = new();
     public Dictionary<Position, PlayerCharacter> PlayerCharacters { get; init; } = [];
     public Dictionary<Position, Enemy> Enemies { get; init; } = [];
+    public Action<PlayerCharacter>? OnCharacterChange;
 }
+
+public abstract record CombatMapEvent;
+public record ExertEvent(PlayerCharacter Original, PlayerCharacter New, Position Position);
 
 public static class CombatMapExtensions
 {
-    public static Position GetPosition(this CombatMap map, PlayerCharacter character)
+    public static void UpdateCharacter(this CombatMap map, PlayerCharacter character)
+    {
+        Position position = map.GetPosition(character.Card);
+        map.PlayerCharacters[position] = character;
+        map.OnCharacterChange?.Invoke(character);
+    }
+    public static Position GetPosition(this CombatMap map, CharacterCard card)
     {
         foreach ((Position p, PlayerCharacter pc) in map.PlayerCharacters)
         {
-            if (pc == character) { return p; }
+            if (pc.Card == card) { return p; }
         }
-        throw new ArgumentOutOfRangeException($"No character found: {character}");
+        throw new ArgumentOutOfRangeException($"No character found: {card}");
     }
     public static HashSet<Position> ParseTiles(string toParse) => ParseCharPositions(toParse).GetValueOrDefault('#', new HashSet<Position>());
 

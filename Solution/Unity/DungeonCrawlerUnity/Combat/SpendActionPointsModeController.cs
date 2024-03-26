@@ -15,10 +15,8 @@ public class SpendActionPointsModeController : MonoBehaviour
     public MenuItemMapping<SpendActionMenuItem>[] MenuItems = [];
     [field: SerializeField]
     public GameObject Menu { get; private set; } = default!;
-
     public static SpendActionPointsModeController Shared { get; private set; } = default!;
     private SpendActionPointsMode _spendActionPointsMode = default!;
-    private CharacterCardRenderer _characterCardRenderer = default!;
     private readonly List<SpendActionMenuItem> _actionsSelected = [];
     public SpendActionPointsModeController() { Shared = this; }
     public void Update()
@@ -56,13 +54,12 @@ public class SpendActionPointsModeController : MonoBehaviour
         toPerform.Invoke();
     }
 
-    public void Initialize(CharacterCardRenderer renderer, PlayerCharacter playerCharacter)
+    public void Initialize(PlayerCharacter character) //CharacterCardRenderer renderer, PlayerCharacter playerCharacter)
     {
         if (CombatHelpPanel.Shared.IsOn) { CombatHelpPanel.Shared.gameObject.SetActive(true); }
         _actionsSelected.Clear();
-        CrawlingModeController.CrawlerMode.AddMessage(new Message($"{playerCharacter.Card.Name} prepares for battle. Select {playerCharacter.ActionPoints} actions."));
-        _spendActionPointsMode = new SpendActionPointsMode(playerCharacter);
-        _characterCardRenderer = renderer;
+        CrawlingModeController.CrawlerMode.AddMessage(new Message($"{character.Card.Name} prepares for battle. Select {character.ActionPoints} actions."));
+        _spendActionPointsMode = new SpendActionPointsMode(character);
         _spendActionPointsMode.OnSelected += HandleSpendPoint;
         _spendActionPointsMode.OnSelectionChange += HandleSelectionChange;
         _spendActionPointsMode.OnCancel += Cancel;
@@ -72,8 +69,8 @@ public class SpendActionPointsModeController : MonoBehaviour
 
     private void Cancel(PlayerCharacter character)
     {
+        CombatMapController.Shared.CombatMap.UpdateCharacter(character);
         CombatHelpPanel.Shared.gameObject.SetActive(false);
-        _characterCardRenderer.Render(character);
         CombatMapController.Shared.StartCharacterSelect();
     }
 
@@ -98,9 +95,9 @@ public class SpendActionPointsModeController : MonoBehaviour
     private void HandleSpendPoint(SpendPointResult result)
     {
         CrawlingModeController.CrawlerMode.AddMessage(new Message(result.Message));
-        _characterCardRenderer.Render(result.Character);
         _actionsSelected.Add(result.SelectedAction);
         int count = result.Character.ActionPoints;
+        CombatMapController.Shared.CombatMap.UpdateCharacter(result.Character);
         if (count > 0)
         {
             string actions = result.Character.ActionPoints == 1 ? "action" : "actions";
@@ -115,11 +112,11 @@ public class SpendActionPointsModeController : MonoBehaviour
         }
     }
 
-    private void ShowConfirm(PlayerCharacter selected)
+    private void ShowConfirm(PlayerCharacter character)
     {
         string message = string.Join("/", _actionsSelected);
         ConfirmDialogue.Shared.Initialize(message, OnConfirm, OnCancel);
-        void OnConfirm() => CombatMapController.Shared.StartCharacterCombat(selected);
+        void OnConfirm() => CombatMapController.Shared.StartCharacterCombat(character);
         void OnCancel() => CombatMapController.Shared.StartCharacterSelect();
     }
 }

@@ -1,5 +1,9 @@
 using System.Collections;
 
+using CaptainCoder.DungeonCrawler.Unity;
+using CaptainCoder.Dungeoneering.Game;
+using CaptainCoder.Dungeoneering.Game.Unity;
+
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -20,7 +24,7 @@ public class CombatMapController : MonoBehaviour
     public CombatIconDatabase IconDatabase { get; set; } = default!;
     [field: SerializeField]
     public Camera CombatCamera { get; private set; } = default!;
-    private CombatMap _combatMap = default!;
+    public CombatMap CombatMap { get; private set; } = default!;
     private readonly PlayerCharacter[] _characters = [
         new PlayerCharacter() { Card = Characters.CharacterA, ActionPoints = 1 },
         new PlayerCharacter() { Card = Characters.CharacterB, ActionPoints = 2 },
@@ -58,14 +62,28 @@ public class CombatMapController : MonoBehaviour
     public void Initialize(CombatMap map)
     {
         BuildMap(map);
+        map.OnCharacterChange += HandleCharacterChange;
         CharacterActionMenuController.Shared.gameObject.SetActive(false);
         SpendActionPointsModeController.Shared.gameObject.SetActive(false);
         StartCharacterSelect();
     }
 
+    private void HandleCharacterChange(PlayerCharacter character)
+    {
+        for (int ix = 0; ix < _characters.Length; ix++)
+        {
+            CharacterCard card = _characters[ix].Card;
+            if (character.Card == card)
+            {
+                Overlay.Shared.Cards[ix].Render(character);
+                break;
+            }
+        }
+    }
+
     public void BuildMap(CombatMap toBuild)
     {
-        _combatMap = toBuild;
+        CombatMap = toBuild;
         Grid.ClearAllTiles();
         TileMap.ClearAllTiles();
         MapInfo.ClearAllTiles();
@@ -118,7 +136,7 @@ public class CombatMapController : MonoBehaviour
 
     internal void SelectCharacter(PlayerCharacter character)
     {
-        Position position = _combatMap.GetPosition(character);
+        Position position = CombatMap.GetPosition(character.Card);
         SelectTile(position);
         PanTo(position);
     }
@@ -130,18 +148,32 @@ public class CombatMapController : MonoBehaviour
         SpendActionPointsModeController.Shared.gameObject.SetActive(false);
     }
 
-    public void StartSpendActionPoints(CharacterCardRenderer renderer, PlayerCharacter selected)
+    public void StartSpendActionPoints(PlayerCharacter selected)
     {
-        SpendActionPointsModeController.Shared.Initialize(renderer, selected);
+        SpendActionPointsModeController.Shared.Initialize(selected);
         CharacterSelectionModeController.Shared.gameObject.SetActive(false);
         SpendActionPointsModeController.Shared.gameObject.SetActive(true);
     }
 
-    internal void StartCharacterCombat(PlayerCharacter selected)
+    internal void StartCharacterCombat(PlayerCharacter character)
     {
-        CharacterActionMenuController.Shared.Initialize(selected);
+        CharacterActionMenuController.Shared.Initialize(character);
         SpendActionPointsModeController.Shared.gameObject.SetActive(false);
         CharacterActionMenuController.Shared.gameObject.SetActive(true);
+    }
+
+    internal void TryExert(CharacterCard card)
+    {
+        Position position = CombatMap.GetPosition(card);
+        PlayerCharacter character = CombatMap.PlayerCharacters[position];
+        if (character.Energy() <= 0)
+        {
+            MessageRenderer.Shared.AddMessage(new Message("Not enough energy!"));
+            return;
+        }
+        ExertAction action = new(position);
+        CombatMap.ApplyExertAction(action);
+        MessageRenderer.Shared.AddMessage(new Message($"{card.Name} exerts 1 energy and gains 1 movement point."));
     }
 }
 

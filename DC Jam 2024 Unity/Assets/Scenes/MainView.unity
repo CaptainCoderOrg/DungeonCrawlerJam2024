@@ -304,8 +304,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 232848525}
+  - component: {fileID: 232848526}
   m_Layer: 5
-  m_Name: Inner
+  m_Name: Overlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -334,6 +335,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &232848526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232848524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1268833786, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Cards>k__BackingField:
+  - {fileID: 956003213}
+  - {fileID: 645483753}
+  - {fileID: 1980197630}
+  - {fileID: 1641706186}
 --- !u!1 &248502690
 GameObject:
   m_ObjectHideFlags: 0
@@ -4722,8 +4740,6 @@ MonoBehaviour:
   <CharacterMap>k__BackingField: {fileID: 843659132}
   <IconDatabase>k__BackingField: {fileID: 11400000, guid: a600c20027c7e1f4a9d9358ab8236d9a, type: 2}
   <CombatCamera>k__BackingField: {fileID: 1899134652}
-  CharacterSelectionModeController: {fileID: 1678755347}
-  SpendActionPointsModeController: {fileID: 1523945540}
 --- !u!4 &1518285192
 Transform:
   m_ObjectHideFlags: 0
@@ -5672,12 +5688,6 @@ MonoBehaviour:
   m_Script: {fileID: 1981828289, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Cards>k__BackingField:
-  - {fileID: 956003213}
-  - {fileID: 645483753}
-  - {fileID: 1980197630}
-  - {fileID: 1641706186}
-  <CombatMapController>k__BackingField: {fileID: 1518285191}
   PlayerControls: {fileID: 11400000, guid: 00204f15829d2e44b9f218ced26cdc53, type: 2}
 --- !u!114 &1764189302 stripped
 MonoBehaviour:
