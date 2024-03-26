@@ -13,6 +13,7 @@ public class CharacterMoveController : MonoBehaviour
     private CharacterCard Card => _card ?? throw new Exception($"Card was not initialized");
     private Position _cursorPosition = default;
     private Position _startPosition = default!;
+    private IEnumerable<Position> _previousPath = [];
     private CombatMap CombatMap => CombatMapController.Shared.CombatMap;
 
     public void OnEnable()
@@ -34,7 +35,7 @@ public class CharacterMoveController : MonoBehaviour
             MenuControl.Left => () => MoveCursor(_cursorPosition with { X = _cursorPosition.X - 1 }),
             MenuControl.Right => () => MoveCursor(_cursorPosition with { X = _cursorPosition.X + 1 }),
             MenuControl.Select => () => TryMove(_cursorPosition),
-            MenuControl.Cancel => Cancel,
+            MenuControl.Cancel => ReturnToActionMenu,
             _ => () => { }
             ,
         };
@@ -49,22 +50,23 @@ public class CharacterMoveController : MonoBehaviour
             MessageRenderer.Shared.AddMessage(new Message($"{Card.Name} cannot move here."));
             return;
         }
-        // TODO: Show confirm
+        gameObject.SetActive(false);
+        ConfirmDialogue.Shared.Initialize("Perform Move?", OnConfirm, OnCancel);
+        void OnConfirm()
+        {
+            CombatMap.ApplyMoveAction(action);
+            ReturnToActionMenu();
+        }
+        void OnCancel() { gameObject.SetActive(true); }
     }
 
-    public void Cancel()
+    public void ReturnToActionMenu()
     {
-        var map = CombatMapController.Shared.CombatMap;
-        PlayerCharacter character = map.PlayerCharacters[map.GetPosition(Card)];
-        _card = null;
-
         CombatMapController.Shared.HighlightTiles([]);
-        CombatMapController.Shared.SelectCharacter(character);
-
-        CharacterActionMenuController.Shared.Initialize(character);
+        CharacterActionMenuController.Shared.Initialize(Card);
+        _card = null;
     }
 
-    private IEnumerable<Position> _previousPath = [];
     public void MoveCursor(Position newPosition)
     {
         _cursorPosition = newPosition;
@@ -82,6 +84,7 @@ public class CharacterMoveController : MonoBehaviour
     public void Initialize(CharacterCard card)
     {
         _card = card;
+        _previousPath = [];
         PlayerCharacter character = CombatMap.GetCharacter(card);
         MessageRenderer.Shared.AddMessage(new Message($"{card.Name} has {character.MovementPoints} movement points."));
         string keys = string.Join(" or ", PlayerInputHandler.Shared.InputMapping.MenuActionMappings.Where(mapping => mapping.Action is MenuControl.Cancel).Select(m => m.Key.ToString()));

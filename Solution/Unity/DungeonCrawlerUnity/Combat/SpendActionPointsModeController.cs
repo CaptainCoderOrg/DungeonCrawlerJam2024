@@ -19,6 +19,7 @@ public class SpendActionPointsModeController : MonoBehaviour
     private SpendActionPointsMode _spendActionPointsMode = default!;
     private readonly List<SpendActionMenuItem> _actionsSelected = [];
     public SpendActionPointsModeController() { Shared = this; }
+    private CombatMap CombatMap => CombatMapController.Shared.CombatMap;
     public void Update()
     {
         foreach (var mapping in PlayerInputMapping.MenuActionMappings)
@@ -116,7 +117,11 @@ public class SpendActionPointsModeController : MonoBehaviour
     {
         string message = string.Join("/", _actionsSelected);
         ConfirmDialogue.Shared.Initialize(message, OnConfirm, OnCancel);
-        void OnConfirm() => CharacterActionMenuController.Shared.Initialize(character);
+        void OnConfirm()
+        {
+            CombatMap.UpdateCharacter(character);
+            CharacterActionMenuController.Shared.Initialize(character.Card);
+        }
         void OnCancel() => CombatMapController.Shared.StartCharacterSelect();
     }
 }

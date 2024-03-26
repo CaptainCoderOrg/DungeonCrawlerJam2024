@@ -41,6 +41,7 @@ public static class CombatController
         PlayerCharacter updated = character with { MovementPoints = character.MovementPoints - distance };
         map.PlayerCharacters[moveAction.End] = updated;
         map.OnCharacterChange?.Invoke(updated);
+        map.OnMoveAction?.Invoke(new MoveActionEvent(updated, moveAction, map.FindShortestPath(moveAction.Start, moveAction.End)));
     }
 
     public static IEnumerable<Position> FindShortestPath(this CombatMap map, Position start, Position end)

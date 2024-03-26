@@ -6,10 +6,12 @@ public class CombatMap
     public Dictionary<Position, PlayerCharacter> PlayerCharacters { get; init; } = [];
     public Dictionary<Position, Enemy> Enemies { get; init; } = [];
     public Action<PlayerCharacter>? OnCharacterChange;
+    public Action<MoveActionEvent>? OnMoveAction;
 }
 
 public abstract record CombatMapEvent;
 public record ExertEvent(PlayerCharacter Original, PlayerCharacter New, Position Position);
+public record MoveActionEvent(PlayerCharacter Moving, MoveAction Move, IEnumerable<Position> Path);
 
 public static class CombatMapExtensions
 {

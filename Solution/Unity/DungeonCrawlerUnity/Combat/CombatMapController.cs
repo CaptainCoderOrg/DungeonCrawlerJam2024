@@ -1,6 +1,8 @@
 using System.Collections;
 
 using CaptainCoder.DungeonCrawler.Unity;
+using CaptainCoder.Dungeoneering.Game;
+using CaptainCoder.Dungeoneering.Game.Unity;
 
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -10,6 +12,7 @@ namespace CaptainCoder.DungeonCrawler.Combat.Unity;
 public class CombatMapController : MonoBehaviour
 {
     public static CombatMapController Shared { get; private set; } = default!;
+    public float MoveAnimationSpeed = 0.1f;
     public Tilemap MapInfo = default!;
     public Tilemap Grid = default!;
     [field: SerializeField]
@@ -63,10 +66,32 @@ public class CombatMapController : MonoBehaviour
     {
         BuildMap(map);
         map.OnCharacterChange += HandleCharacterChange;
+        map.OnMoveAction += HandleMove;
         CharacterActionMenuController.Shared.gameObject.SetActive(false);
         SpendActionPointsModeController.Shared.gameObject.SetActive(false);
         CharacterMoveController.Shared.gameObject.SetActive(false);
         StartCharacterSelect();
+    }
+
+    private void HandleMove(MoveActionEvent @event)
+    {
+        MessageRenderer.Shared.AddMessage(new Message($"{@event.Moving.Card.Name} moves {@event.Path.Count()} spaces."));
+        StartCoroutine(AnimateMove(@event.Move.Start, @event.Path));
+    }
+
+    private IEnumerator AnimateMove(Position start, IEnumerable<Position> positions)
+    {
+        TileBase tile = CharacterMap.GetTile(start.ToVector3Int());
+        TileBase? toSet = null;
+        Position last = start;
+        foreach (var position in positions)
+        {
+            CharacterMap.SetTile(last.ToVector3Int(), toSet);
+            toSet = CharacterMap.GetTile(position.ToVector3Int());
+            CharacterMap.SetTile(position.ToVector3Int(), tile);
+            yield return new WaitForSeconds(MoveAnimationSpeed);
+            last = position;
+        }
     }
 
     private void HandleCharacterChange(PlayerCharacter character)

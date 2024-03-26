@@ -18,6 +18,7 @@ public class CharacterActionMenuController : MonoBehaviour
 
     private int _selectedIx = 0;
     private CharacterCard _card = default!;
+    private CombatMap CombatMap => CombatMapController.Shared.CombatMap;
     public CharacterActionMenuController() { Shared = this; }
 
     public void OnEnable()
@@ -51,10 +52,11 @@ public class CharacterActionMenuController : MonoBehaviour
         action.Invoke();
     }
 
-    public void Initialize(PlayerCharacter character)
+    public void Initialize(CharacterCard card)
     {
-        _card = character.Card;
-        CombatMapController.Shared.CombatMap.UpdateCharacter(character);
+        PlayerCharacter character = CombatMap.PlayerCharacters[CombatMap.GetPosition(card)];
+        CombatMapController.Shared.SelectCharacter(character);
+        _card = card;
         gameObject.SetActive(true);
         Select(0);
     }
