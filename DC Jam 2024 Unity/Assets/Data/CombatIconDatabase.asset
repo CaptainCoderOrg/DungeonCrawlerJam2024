@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 10254205, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
+  m_Name: CombatIconDatabase
+  m_EditorClassIdentifier: 
+  <Entries>k__BackingField:
+  - Name: Bob
+    Icon: {fileID: 11400000, guid: d8f70bad0011ad645a155e9f0335ab1e, type: 2}
+  - Name: Alice
+    Icon: {fileID: 11400000, guid: 9cb50f4c0d1753c4ba11ed0a9aacca88, type: 2}
+  - Name: Sally
+    Icon: {fileID: 11400000, guid: f5dacbbbf591f6c47b003edadb64244e, type: 2}
+  - Name: Greg
+    Icon: {fileID: 11400000, guid: 57106953e36e9a643a536aee1b0b6d64, type: 2}
+  DefaultIcon: {fileID: 11400000, guid: d7d8b9203bbac674b9acb81b2bcbdc83, type: 2}
+  Selected: {fileID: 11400000, guid: 46c09af8b1c205f418db3809318c515f, type: 2}
+  Green: {fileID: 11400000, guid: 59c87c162fcdd8c45b6478e37b444219, type: 2}
+  Outline: {fileID: 11400000, guid: f0175f7e2e02cf943862a2ca87190a75, type: 2}
+  Yellow: {fileID: 11400000, guid: 28360800cf50af64b98ae1dade9f2c61, type: 2}

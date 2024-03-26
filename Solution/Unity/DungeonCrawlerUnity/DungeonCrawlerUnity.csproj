@@ -28,6 +28,7 @@
     <ProjectReference Include="..\..\DungeonCrawler\DungeonCrawler.csproj" />
     <ProjectReference Include="..\MapGenerator\MapGenerator.csproj" />
     <ProjectReference Include="..\..\DungeonCrawler.Lua\DungeonCrawler.Lua.csproj" />
+    <ProjectReference Include="..\..\DungeonCrawler.Combat\DungeonCrawler.Combat.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +52,12 @@
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule">
       <HintPath>$(_UnityManagedPath)\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>$(_UnityManagedPath)\UnityEngine.TilemapModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GridModule">
+      <HintPath>$(_UnityManagedPath)\UnityEngine.GridModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 

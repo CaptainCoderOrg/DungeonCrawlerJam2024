@@ -41,13 +41,18 @@ public class CrawlerMode(DungeonCrawlerManifest manifest, Dungeon currentDungeon
     public event Action<PositionChangeEvent>? OnPositionChange;
     public event Action<Message>? OnMessageAdded;
     public void AddMessage(Message message) => OnMessageAdded?.Invoke(message);
+    public void AddMessage(string message) => OnMessageAdded?.Invoke(new Message(message));
+
 }
 
 public record DungeonChangeEvent(Dungeon Exited, Dungeon Entered);
 public record PositionChangeEvent(Position Exited, Position Entered);
 public record ViewChangeEvent(PlayerView Exited, PlayerView Entered);
 
-public record Message(MessageType MessageType, string Text);
+public record Message(MessageType MessageType, string Text)
+{
+    public Message(string text) : this(MessageType.Info, text) { }
+}
 
 public enum MessageType
 {

@@ -36,3 +36,16 @@ MonoBehaviour:
     Action: 2
   - Key: 27
     Action: 3
+  <MenuActionMappings>k__BackingField:
+  - Key: 119
+    Action: 0
+  - Key: 115
+    Action: 1
+  - Key: 97
+    Action: 2
+  - Key: 100
+    Action: 3
+  - Key: 32
+    Action: 4
+  - Key: 8
+    Action: 5

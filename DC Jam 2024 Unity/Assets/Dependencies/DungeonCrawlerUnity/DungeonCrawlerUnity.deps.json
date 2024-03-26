@@ -10,14 +10,17 @@
       "DungeonCrawlerUnity/1.0.0": {
         "dependencies": {
           "DungeonCrawler": "1.0.0",
+          "DungeonCrawler.Combat": "1.0.0",
           "DungeonCrawler.IO": "1.0.0",
           "DungeonCrawler.Lua": "1.0.0",
           "MapGenerator": "1.0.0",
           "Unity.TextMeshPro": "0.0.0.0",
           "UnityEngine.CoreModule": "0.0.0.0",
+          "UnityEngine.GridModule": "0.0.0.0",
           "UnityEngine.ImageConversionModule": "0.0.0.0",
           "UnityEngine.InputLegacyModule": "0.0.0.0",
           "UnityEngine.InputModule": "0.0.0.0",
+          "UnityEngine.TilemapModule": "0.0.0.0",
           "UnityEngine.UI": "1.0.0.0",
           "UnityEngine.UnityWebRequestModule": "0.0.0.0"
         },
@@ -44,6 +47,11 @@
       "DungeonCrawler/1.0.0": {
         "runtime": {
           "DungeonCrawler.dll": {}
+        }
+      },
+      "DungeonCrawler.Combat/1.0.0": {
+        "runtime": {
+          "DungeonCrawler.Combat.dll": {}
         }
       },
       "DungeonCrawler.IO/1.0.0": {
@@ -89,6 +97,14 @@
           }
         }
       },
+      "UnityEngine.GridModule/0.0.0.0": {
+        "runtime": {
+          "UnityEngine.GridModule.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
       "UnityEngine.ImageConversionModule/0.0.0.0": {
         "runtime": {
           "UnityEngine.ImageConversionModule.dll": {
@@ -108,6 +124,14 @@
       "UnityEngine.InputModule/0.0.0.0": {
         "runtime": {
           "UnityEngine.InputModule.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "UnityEngine.TilemapModule/0.0.0.0": {
+        "runtime": {
+          "UnityEngine.TilemapModule.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
           }
@@ -156,6 +180,11 @@
       "serviceable": false,
       "sha512": ""
     },
+    "DungeonCrawler.Combat/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "DungeonCrawler.IO/1.0.0": {
       "type": "project",
       "serviceable": false,
@@ -181,6 +210,11 @@
       "serviceable": false,
       "sha512": ""
     },
+    "UnityEngine.GridModule/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
     "UnityEngine.ImageConversionModule/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
@@ -192,6 +226,11 @@
       "sha512": ""
     },
     "UnityEngine.InputModule/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UnityEngine.TilemapModule/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
