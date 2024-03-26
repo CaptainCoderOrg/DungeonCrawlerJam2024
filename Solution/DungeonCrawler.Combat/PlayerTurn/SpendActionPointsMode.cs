@@ -9,6 +9,7 @@ public class SpendActionPointsMode(PlayerCharacter character)
     public event Action<SpendActionMenuItem>? OnSelectionChange;
     public event Action<PlayerCharacter>? OnCancel;
     public event Action<SpendPointResult>? OnSelected;
+    public event Action? OnToggleHelp;
 
     public void HandleInput(SpendActionPointsControls input)
     {
@@ -28,6 +29,12 @@ public class SpendActionPointsMode(PlayerCharacter character)
         if (menuItem is SpendActionMenuItem.Cancel)
         {
             OnCancel?.Invoke(_originalCharacter);
+            return;
+        }
+
+        if (menuItem is SpendActionMenuItem.ToggleHelp)
+        {
+            OnToggleHelp?.Invoke();
             return;
         }
 
@@ -75,7 +82,8 @@ public enum SpendActionMenuItem
     Attack,
     Guard,
     Rest,
-    Cancel
+    Cancel,
+    ToggleHelp,
 }
 
 public enum SpendActionPointsControls

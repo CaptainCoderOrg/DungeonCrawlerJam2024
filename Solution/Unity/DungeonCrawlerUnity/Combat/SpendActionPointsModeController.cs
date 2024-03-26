@@ -58,6 +58,7 @@ public class SpendActionPointsModeController : MonoBehaviour
 
     public void Initialize(CharacterCardRenderer renderer, PlayerCharacter playerCharacter)
     {
+        if (CombatHelpPanel.Shared.IsOn) { CombatHelpPanel.Shared.gameObject.SetActive(true); }
         _actionsSelected.Clear();
         CrawlingModeController.CrawlerMode.AddMessage(new Message($"{playerCharacter.Card.Name} prepares for battle. Select {playerCharacter.ActionPoints} actions."));
         _spendActionPointsMode = new SpendActionPointsMode(playerCharacter);
@@ -65,11 +66,13 @@ public class SpendActionPointsModeController : MonoBehaviour
         _spendActionPointsMode.OnSelected += HandleSpendPoint;
         _spendActionPointsMode.OnSelectionChange += HandleSelectionChange;
         _spendActionPointsMode.OnCancel += Cancel;
+        _spendActionPointsMode.OnToggleHelp += () => CombatHelpPanel.Shared.IsOn = !CombatHelpPanel.Shared.IsOn;
         HandleSelectionChange(SpendActionMenuItem.Move);
     }
 
     private void Cancel(PlayerCharacter character)
     {
+        CombatHelpPanel.Shared.gameObject.SetActive(false);
         _characterCardRenderer.Render(character);
         CombatMapController.StartCharacterSelect();
     }
@@ -80,6 +83,16 @@ public class SpendActionPointsModeController : MonoBehaviour
         {
             menuItem.MenuItem.IsSelected = menuItem.Item == item;
         }
+        CombatHelpPanel.Shared.Text = item switch
+        {
+            SpendActionMenuItem.Move => HelpDialogue.Move,
+            SpendActionMenuItem.Rest => HelpDialogue.Rest,
+            SpendActionMenuItem.Attack => HelpDialogue.Attack,
+            SpendActionMenuItem.Guard => HelpDialogue.GuardState,
+            SpendActionMenuItem.Cancel => HelpDialogue.CancelActionSpending,
+            SpendActionMenuItem.ToggleHelp => HelpDialogue.ToggleHelpInfo,
+            _ => throw new NotImplementedException($"Unknown action: {item}"),
+        };
     }
 
     private void HandleSpendPoint(SpendPointResult result)
@@ -99,7 +112,7 @@ public class SpendActionPointsModeController : MonoBehaviour
             string message = string.Join("/", _actionsSelected);
             ConfirmDialogue.Initialize(message, () => { Debug.Log("Not implemented. Show character perform action mode."); }, () => CombatMapController.StartCharacterSelect());
             gameObject.SetActive(false);
-
+            CombatHelpPanel.Shared.gameObject.SetActive(false);
         }
     }
 }
