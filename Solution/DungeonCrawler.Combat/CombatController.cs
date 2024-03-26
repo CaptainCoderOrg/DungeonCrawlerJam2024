@@ -2,7 +2,12 @@ namespace CaptainCoder.DungeonCrawler.Combat;
 
 public static class CombatController
 {
-    public static void ApplyEndCharacterTurn() { }
+    public static void ApplyEndCharacterTurn(this CombatMap map, EndTurnAction endTurn)
+    {
+        PlayerCharacter updated = map.PlayerCharacters[endTurn.Target] with { ActionPoints = 0, AttackPoints = 0, MovementPoints = 0 };
+        map.PlayerCharacters[endTurn.Target] = updated;
+        map.OnCharacterChange?.Invoke(updated);
+    }
 
     /// <summary>
     /// A valid ExertAction is one that targets a tile with a PlayerCharacter
@@ -125,4 +130,4 @@ public record Attack : CombatAction;
 /// <summary>
 /// Ends the turn of the character at the specified position. This sets the characters MovementPoints, ActionPoints, and AttackPoints to 0.
 /// </summary>
-public record EndCharacterTurn(Position Target) : CombatAction;
+public record EndTurnAction(Position Target) : CombatAction;

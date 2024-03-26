@@ -641,7 +641,7 @@ public class CombatController_should
                 }
             }
         };
-        
+
         PlayerCharacter? actualChangedData = null;
         underTest.OnCharacterChange += changeData => actualChangedData = changeData;
         ExertAction action = new(position);
@@ -651,11 +651,12 @@ public class CombatController_should
         underTest.PlayerCharacters[position].MovementPoints.ShouldBe(expectedMovement);
 
         // Test notifications
-        actualChangedData.ShouldBe(new PlayerCharacter() {
-                        Card = new CharacterCard() { BaseEnergy = energy},
-                        MovementPoints = expectedMovement,
-                        Exertion = exertion + 1,
-                    });
+        actualChangedData.ShouldBe(new PlayerCharacter()
+        {
+            Card = new CharacterCard() { BaseEnergy = energy },
+            MovementPoints = expectedMovement,
+            Exertion = exertion + 1,
+        });
     }
 
     [Theory]
@@ -683,5 +684,36 @@ public class CombatController_should
 
         ExertAction action = new(new Position(targetX, targetY));
         Should.Throw<ArgumentException>(() => { underTest.ApplyExertAction(action); });
+    }
+
+    [Theory]
+    [InlineData(1, 1, 3, 2, 1)]
+    [InlineData(3, 2, 2, 1, 3)]
+    [InlineData(2, 3, 1, 2, 3)]
+    public void end_character_turn(int x, int y, int movementPoints, int actionPoints, int attackPoints)
+    {
+        Position pos = new(x, y);
+        PlayerCharacter character = new() { MovementPoints = movementPoints, ActionPoints = actionPoints, AttackPoints = attackPoints };
+        CombatMap underTest = new()
+        {
+            Tiles = CombatMapExtensions.ParseTiles(TestMap),
+            PlayerCharacters = new Dictionary<Position, PlayerCharacter>()
+            {
+                { pos, character }
+            }
+        };
+
+        PlayerCharacter? actualChangedData = null;
+        underTest.OnCharacterChange += changed => actualChangedData = changed;
+        EndTurnAction action = new(pos);
+
+
+        underTest.ApplyEndCharacterTurn(action);
+
+        PlayerCharacter expected = character with { MovementPoints = 0, ActionPoints = 0, AttackPoints = 0 };
+        underTest.PlayerCharacters[pos].ShouldBe(expected);
+
+        // Test notification
+        actualChangedData.ShouldBe(expected);
     }
 }
