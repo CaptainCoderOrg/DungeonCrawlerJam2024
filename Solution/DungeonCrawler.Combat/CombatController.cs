@@ -2,8 +2,7 @@ namespace CaptainCoder.DungeonCrawler.Combat;
 
 public static class CombatController
 {
-    public static bool IsValidAction(this CombatMap map, CombatAction toValidate) => throw new NotImplementedException();
-    public static void ApplyAction(this CombatMap map, CombatAction toApply) => throw new NotImplementedException();
+    public static void ApplyEndCharacterTurn() { }
 
     /// <summary>
     /// A valid ExertAction is one that targets a tile with a PlayerCharacter
@@ -123,4 +122,7 @@ public record MoveAction(Position Start, Position End) : CombatAction;
 /// </summary>
 public record ExertAction(Position Target) : CombatAction;
 public record Attack : CombatAction;
-public record EndCharacterTurn : CombatAction;
+/// <summary>
+/// Ends the turn of the character at the specified position. This sets the characters MovementPoints, ActionPoints, and AttackPoints to 0.
+/// </summary>
+public record EndCharacterTurn(Position Target) : CombatAction;

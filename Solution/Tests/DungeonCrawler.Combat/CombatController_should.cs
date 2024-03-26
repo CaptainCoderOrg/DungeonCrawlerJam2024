@@ -383,12 +383,22 @@ public class CombatController_should
         };
 
         MoveAction moveAction = new(start, target);
-
+        PlayerCharacter? actualChangedData = null;
+        MoveActionEvent? actualMoveActionEvent = null;
+        underTest.OnCharacterChange += changeData => actualChangedData = changeData;
+        underTest.OnMoveAction += @event => actualMoveActionEvent = @event;
         // Act
         underTest.ApplyMoveAction(moveAction);
 
         underTest.PlayerCharacters.ShouldNotContainKey(start);
         underTest.PlayerCharacters[target].ShouldBe(new PlayerCharacter() { MovementPoints = expectedMovementPoints });
+
+        // Testing notifications
+        actualChangedData.ShouldBe(new PlayerCharacter() { MovementPoints = expectedMovementPoints });
+        actualMoveActionEvent.ShouldNotBeNull();
+        actualMoveActionEvent.Moving.ShouldBe(new PlayerCharacter() { MovementPoints = expectedMovementPoints });
+        actualMoveActionEvent.Move.ShouldBe(moveAction);
+        actualMoveActionEvent.Path.SequenceEqual(underTest.FindShortestPath(moveAction.Start, moveAction.End)).ShouldBeTrue();
     }
 
     // A is the PlayerCharacter moving
@@ -631,11 +641,21 @@ public class CombatController_should
                 }
             }
         };
+        
+        PlayerCharacter? actualChangedData = null;
+        underTest.OnCharacterChange += changeData => actualChangedData = changeData;
         ExertAction action = new(position);
         underTest.ApplyExertAction(action);
 
         underTest.PlayerCharacters[position].Energy().ShouldBe(expectedExertion);
         underTest.PlayerCharacters[position].MovementPoints.ShouldBe(expectedMovement);
+
+        // Test notifications
+        actualChangedData.ShouldBe(new PlayerCharacter() {
+                        Card = new CharacterCard() { BaseEnergy = energy},
+                        MovementPoints = expectedMovement,
+                        Exertion = exertion + 1,
+                    });
     }
 
     [Theory]
