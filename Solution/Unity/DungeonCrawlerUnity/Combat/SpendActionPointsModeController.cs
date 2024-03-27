@@ -72,7 +72,7 @@ public class SpendActionPointsModeController : MonoBehaviour
     {
         CombatMapController.Shared.CombatMap.UpdateCharacter(character);
         CombatHelpPanel.Shared.gameObject.SetActive(false);
-        CombatMapController.Shared.StartCharacterSelect();
+        CharacterSelectionModeController.Shared.Initialize();
     }
 
     private void HandleSelectionChange(SpendActionMenuItem item)
@@ -122,6 +122,6 @@ public class SpendActionPointsModeController : MonoBehaviour
             CombatMap.UpdateCharacter(character);
             CharacterActionMenuController.Shared.Initialize(character.Card);
         }
-        void OnCancel() => CombatMapController.Shared.StartCharacterSelect();
+        void OnCancel() => CharacterSelectionModeController.Shared.Initialize();
     }
 }

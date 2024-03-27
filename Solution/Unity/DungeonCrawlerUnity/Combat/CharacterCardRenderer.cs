@@ -1,3 +1,5 @@
+using CaptainCoder.Dungeoneering.Unity;
+
 using TMPro;
 
 using UnityEngine;
@@ -5,6 +7,7 @@ using UnityEngine;
 namespace CaptainCoder.DungeonCrawler.Combat.Unity;
 public class CharacterCardRenderer : MonoBehaviour
 {
+    public int CharacterIx;
     public GameObject Selected = default!;
     public TextMeshProUGUI Name = default!;
     public TwoValueRenderer Health = default!;
@@ -47,6 +50,16 @@ public class CharacterCardRenderer : MonoBehaviour
     public void RenderNoCharacter()
     {
         Debug.Assert(false, "RenderNoCharacter() is not implemented");
+    }
+
+    public void Start()
+    {
+        if (CharacterIx == 0) { CrawlingModeController.Shared.Party.OnTopLeftChange += Render; }
+        else if (CharacterIx == 1) { CrawlingModeController.Shared.Party.OnTopRightChange += Render; }
+        else if (CharacterIx == 2) { CrawlingModeController.Shared.Party.OnBottomLeftChange += Render; }
+        else if (CharacterIx == 3) { CrawlingModeController.Shared.Party.OnBottomRightChange += Render; }
+        else { throw new Exception($"Invalid Character IX"); }
+        Render(CrawlingModeController.Shared.Party[CharacterIx]);
     }
 }
 

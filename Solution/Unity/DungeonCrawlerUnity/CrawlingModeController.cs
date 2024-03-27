@@ -1,3 +1,4 @@
+using CaptainCoder.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
@@ -15,6 +16,9 @@ namespace CaptainCoder.Dungeoneering.Unity;
 
 public class CrawlingModeController : MonoBehaviour, IScriptContext
 {
+    public static CrawlingModeController Shared { get; private set; } = default!;
+    public CrawlingModeController() { Shared = this; }
+    public Party Party { get; private set; } = new();
     // public static CrawlerMode? CrawlerMode { get; private set; }
     public static event Action<CrawlerMode>? OnCrawlerModeChange;
     private static CrawlerMode? s_crawlerMode;

@@ -76,12 +76,28 @@ public class CharacterActionMenuController : MonoBehaviour
             CharacterAction.ToggleHelp => CombatHelpPanel.Shared.Toggle,
             CharacterAction.Exert => () => TryExert(_card),
             CharacterAction.Move => () => CharacterMoveController.Shared.Initialize(_card),
+            CharacterAction.EndTurn => () => EndTurn(_card),
             _ => () => Debug.Log($"Not implemented: {action}"),
         };
         toPerform.Invoke();
     }
 
-    private void TryExert(CharacterCard card)
+    private void EndTurn(CharacterCard card)
+    {
+        gameObject.SetActive(false);
+        ConfirmDialogue.Shared.Initialize("End Turn", OnConfirm, OnCancel);
+        void OnConfirm()
+        {
+            Position position = CombatMapController.Shared.CombatMap.GetPosition(card);
+            EndTurnAction action = new(position);
+            CombatMap.ApplyEndCharacterTurn(action);
+            MessageRenderer.Shared.AddMessage(new Message($"{card.Name} ends their turn."));
+            CharacterSelectionModeController.Shared.Initialize();
+        }
+        void OnCancel() { gameObject.SetActive(true); }
+    }
+
+    private static void TryExert(CharacterCard card)
     {
         Position position = CombatMapController.Shared.CombatMap.GetPosition(card);
         PlayerCharacter character = CombatMapController.Shared.CombatMap.PlayerCharacters[position];

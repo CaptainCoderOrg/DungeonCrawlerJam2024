@@ -1,5 +1,6 @@
 using CaptainCoder.DungeonCrawler.Unity;
 using CaptainCoder.Dungeoneering.Player.Unity;
+using CaptainCoder.Dungeoneering.Unity;
 
 using UnityEngine;
 
@@ -12,6 +13,11 @@ public class CharacterSelectionModeController : MonoBehaviour
     public PlayerInputMapping PlayerControls = default!;
     public CharacterSelectionModeController() { Shared = this; }
 
+    public void OnEnable()
+    {
+        SpendActionPointsModeController.Shared.gameObject.SetActive(false);
+    }
+
     public void Update()
     {
         foreach (MenuActionMapping mapping in PlayerControls.MenuActionMappings)
@@ -23,17 +29,13 @@ public class CharacterSelectionModeController : MonoBehaviour
         }
     }
 
-    public void Initialize(PlayerCharacter[] characters)
+    public void Initialize()
     {
-        _characterSelectionMode = new(characters);
-
-        for (int ix = 0; ix < Overlay.Shared.Cards.Length; ix++)
-        {
-            Overlay.Shared.Cards[ix].Character = characters[ix];
-        }
-        SelectCard(0, characters[0]);
+        _characterSelectionMode = new(CrawlingModeController.Shared.Party);
+        SelectCard(0, CrawlingModeController.Shared.Party[0]);
         _characterSelectionMode.OnSelectionChange += SelectCard;
         _characterSelectionMode.OnSelected += (ix, selected) => CombatMapController.Shared.StartSpendActionPoints(selected);
+        gameObject.SetActive(true);
     }
     private void SelectCard(int ix, PlayerCharacter character)
     {
@@ -48,8 +50,8 @@ public class CharacterSelectionModeController : MonoBehaviour
     {
         Action action = input switch
         {
-            MenuControl.Right => () => _characterSelectionMode.HandleInput(CharacterSelectionControl.Next),
-            MenuControl.Left => () => _characterSelectionMode.HandleInput(CharacterSelectionControl.Previous),
+            MenuControl.Right or MenuControl.Down => () => _characterSelectionMode.HandleInput(CharacterSelectionControl.Next),
+            MenuControl.Left or MenuControl.Up => () => _characterSelectionMode.HandleInput(CharacterSelectionControl.Previous),
             MenuControl.Select => () => _characterSelectionMode.HandleInput(CharacterSelectionControl.Select),
             _ => () => { }
         };
