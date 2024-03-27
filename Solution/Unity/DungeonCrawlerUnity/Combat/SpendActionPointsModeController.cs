@@ -20,6 +20,8 @@ public class SpendActionPointsModeController : MonoBehaviour
     private readonly List<SpendActionMenuItem> _actionsSelected = [];
     public SpendActionPointsModeController() { Shared = this; }
     private CombatMap CombatMap => CombatMapController.Shared.CombatMap;
+    private PlayerCharacter? _originalCharacter;
+    private PlayerCharacter OriginalCharacter => _originalCharacter ?? throw new Exception($"Character not initialized");
     public void Update()
     {
         foreach (var mapping in PlayerInputMapping.MenuActionMappings)
@@ -58,6 +60,7 @@ public class SpendActionPointsModeController : MonoBehaviour
     public void Initialize(PlayerCharacter character) //CharacterCardRenderer renderer, PlayerCharacter playerCharacter)
     {
         if (CombatHelpPanel.Shared.IsOn) { CombatHelpPanel.Shared.gameObject.SetActive(true); }
+        _originalCharacter = character;
         _actionsSelected.Clear();
         CrawlingModeController.CrawlerMode.AddMessage(new Message($"{character.Card.Name} prepares for battle. Select {character.ActionPoints} actions."));
         _spendActionPointsMode = new SpendActionPointsMode(character);
@@ -72,7 +75,7 @@ public class SpendActionPointsModeController : MonoBehaviour
     {
         CombatMapController.Shared.CombatMap.UpdateCharacter(character);
         CombatHelpPanel.Shared.gameObject.SetActive(false);
-        CharacterSelectionModeController.Shared.Initialize();
+        CharacterSelectionModeController.Shared.Initialize(character);
     }
 
     private void HandleSelectionChange(SpendActionMenuItem item)
@@ -122,6 +125,6 @@ public class SpendActionPointsModeController : MonoBehaviour
             CombatMap.UpdateCharacter(character);
             CharacterActionMenuController.Shared.Initialize(character.Card);
         }
-        void OnCancel() => CharacterSelectionModeController.Shared.Initialize();
+        void OnCancel() => Cancel(OriginalCharacter);
     }
 }

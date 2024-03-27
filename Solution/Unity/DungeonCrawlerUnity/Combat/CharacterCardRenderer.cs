@@ -9,6 +9,7 @@ public class CharacterCardRenderer : MonoBehaviour
 {
     public int CharacterIx;
     public GameObject Selected = default!;
+    public GameObject Finished = default!;
     public TextMeshProUGUI Name = default!;
     public TwoValueRenderer Health = default!;
     public TwoValueRenderer Energy = default!;
@@ -17,6 +18,7 @@ public class CharacterCardRenderer : MonoBehaviour
     public ValueRenderer MovementPoints = default!;
     public ValueRenderer AttackPoints = default!;
     public bool IsSelected { set => Selected.SetActive(value); }
+    public bool IsFinished { set => Finished.SetActive(value); }
     public PlayerCharacter? Character
     {
         set

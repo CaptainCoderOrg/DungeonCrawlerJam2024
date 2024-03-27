@@ -29,21 +29,33 @@ public class CharacterSelectionModeController : MonoBehaviour
         }
     }
 
-    public void Initialize()
+    public void Initialize(PlayerCharacter? selected = null)
     {
-        _characterSelectionMode = new(CrawlingModeController.Shared.Party);
-        SelectCard(0, CrawlingModeController.Shared.Party[0]);
+        _characterSelectionMode = new(CrawlingModeController.Shared.Party, selected);
+        if (!_characterSelectionMode.HasSelection)
+        {
+            foreach (var card in Overlay.Shared.Cards)
+            {
+                card.IsSelected = false;
+                card.IsFinished = true;
+            }
+            Debug.Log($"Not Implemented: Continue to Enemy Turn");
+            return;
+        }
+        (int charIx, PlayerCharacter character) = _characterSelectionMode.FirstSelected(selected);
+        SelectCard(charIx, character);
         _characterSelectionMode.OnSelectionChange += SelectCard;
         _characterSelectionMode.OnSelected += (ix, selected) => CombatMapController.Shared.StartSpendActionPoints(selected);
         gameObject.SetActive(true);
     }
-    private void SelectCard(int ix, PlayerCharacter character)
+    private void SelectCard(int _, PlayerCharacter character)
     {
-        foreach (CharacterCardRenderer card in Overlay.Shared.Cards)
+        for (int jx = 0; jx < Overlay.Shared.Cards.Length; jx++)
         {
-            card.IsSelected = false;
+            var card = Overlay.Shared.Cards[jx];
+            card.IsSelected = _characterSelectionMode.IsSelected(jx);
+            card.IsFinished = _characterSelectionMode.IsFinished(jx);
         }
-        Overlay.Shared.Cards[ix].IsSelected = true;
         CombatMapController.Shared.SelectCharacter(character);
     }
     public void HandleUserInput(MenuControl input)
