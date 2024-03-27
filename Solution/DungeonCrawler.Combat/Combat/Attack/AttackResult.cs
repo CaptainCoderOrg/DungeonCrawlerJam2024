@@ -5,7 +5,7 @@ public record AttackResult
 }
 
 public abstract record AttackResultEvent;
-public record AttackHitEvent(string TargetName, int Damage) : AttackResultEvent;
+public record AttackHitEvent(string TargetName, int Damage, int Blocked) : AttackResultEvent;
 public record TargetKilledEvent(string TargetName) : AttackResultEvent;
 public record ArmorAbsorbedHitEvent(string TargetName) : AttackResultEvent;
 public record EmptyTarget : AttackResultEvent;

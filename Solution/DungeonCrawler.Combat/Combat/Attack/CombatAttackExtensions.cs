@@ -21,7 +21,7 @@ public static class CombatAttackExtensions
             return new TargetKilledEvent(updated.Card.Name);
         }
         map.PlayerCharacters[target] = updated;
-        return new AttackHitEvent(updated.Card.Name, damage);
+        return new AttackHitEvent(updated.Card.Name, damage, character.Card.BaseArmor);
     }
 
     private static AttackResultEvent ApplyAttackOnEnemy(this CombatMap map, Position target, AttackResult attack)
@@ -36,6 +36,6 @@ public static class CombatAttackExtensions
             return new TargetKilledEvent(updated.Card.Name);
         }
         map.Enemies[target] = updated;
-        return new AttackHitEvent(updated.Card.Name, damage);
+        return new AttackHitEvent(updated.Card.Name, damage, enemy.Card.Armor);
     }
 }

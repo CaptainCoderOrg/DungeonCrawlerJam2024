@@ -29,7 +29,7 @@ public class CombatAttackExtensions_should
         AttackResultEvent actual = map.ApplyAttack(position, attackResult);
 
         // Test result
-        actual.ShouldBe(new AttackHitEvent("Skeleton", expectedDamage));
+        actual.ShouldBe(new AttackHitEvent("Skeleton", expectedDamage, targetArmor));
         // Test map state changed
         map.Enemies[position].Wounds.ShouldBe(expectedDamage);
     }
@@ -131,7 +131,7 @@ public class CombatAttackExtensions_should
         AttackResultEvent actual = map.ApplyAttack(position, attackResult);
 
         // Test result
-        actual.ShouldBe(new AttackHitEvent("Bob", expectedDamage));
+        actual.ShouldBe(new AttackHitEvent("Bob", expectedDamage, targetArmor));
         // Test map state changed
         map.PlayerCharacters[position].Wounds.ShouldBe(expectedDamage);
     }
