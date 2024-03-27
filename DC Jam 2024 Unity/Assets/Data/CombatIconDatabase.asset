@@ -16,9 +16,9 @@ MonoBehaviour:
   - Name: Bob
     Icon: {fileID: 11400000, guid: d8f70bad0011ad645a155e9f0335ab1e, type: 2}
   - Name: Alice
-    Icon: {fileID: 11400000, guid: 9cb50f4c0d1753c4ba11ed0a9aacca88, type: 2}
-  - Name: Sally
     Icon: {fileID: 11400000, guid: f5dacbbbf591f6c47b003edadb64244e, type: 2}
+  - Name: Sally
+    Icon: {fileID: 11400000, guid: 9cb50f4c0d1753c4ba11ed0a9aacca88, type: 2}
   - Name: Greg
     Icon: {fileID: 11400000, guid: 57106953e36e9a643a536aee1b0b6d64, type: 2}
   DefaultIcon: {fileID: 11400000, guid: d7d8b9203bbac674b9acb81b2bcbdc83, type: 2}
