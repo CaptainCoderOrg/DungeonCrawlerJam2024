@@ -3,6 +3,7 @@ using CaptainCoder.Dungeoneering.Unity;
 using TMPro;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CaptainCoder.DungeonCrawler.Combat.Unity;
 public class CharacterCardRenderer : MonoBehaviour
@@ -10,6 +11,9 @@ public class CharacterCardRenderer : MonoBehaviour
     public int CharacterIx;
     public GameObject Selected = default!;
     public GameObject Finished = default!;
+    public CharacterCardIconDatabase Icons = default!;
+
+    public Image StateIcon = default!;
     public TextMeshProUGUI Name = default!;
     public TwoValueRenderer Health = default!;
     public TwoValueRenderer Energy = default!;
@@ -19,6 +23,7 @@ public class CharacterCardRenderer : MonoBehaviour
     public ValueRenderer AttackPoints = default!;
     public bool IsSelected { set => Selected.SetActive(value); }
     public bool IsFinished { set => Finished.SetActive(value); }
+
     public PlayerCharacter? Character
     {
         set
@@ -47,6 +52,15 @@ public class CharacterCardRenderer : MonoBehaviour
         Speed.Value = character.Card.BaseSpeed;
         MovementPoints.Value = character.MovementPoints;
         AttackPoints.Value = character.AttackPoints;
+
+        StateIcon.sprite = character.State switch
+        {
+            CharacterState.Normal => null,
+            CharacterState.Guard => Icons.GuardState,
+            CharacterState.Rest => Icons.RestState,
+            var state => throw new NotImplementedException($"Unknown state: {state}"),
+        };
+        StateIcon.gameObject.SetActive(StateIcon.sprite is not null);
     }
 
     public void RenderNoCharacter()
@@ -63,6 +77,13 @@ public class CharacterCardRenderer : MonoBehaviour
         else { throw new Exception($"Invalid Character IX"); }
         Render(CrawlingModeController.Shared.Party[CharacterIx]);
     }
+}
+
+[CreateAssetMenu(fileName = "CharacterCardIconDatabase", menuName = "Data/Character Card Icons")]
+public class CharacterCardIconDatabase : ScriptableObject
+{
+    public Sprite GuardState = default!;
+    public Sprite RestState = default!;
 }
 
 
