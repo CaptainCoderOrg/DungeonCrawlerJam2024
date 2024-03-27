@@ -21,6 +21,8 @@ MonoBehaviour:
     Icon: {fileID: 11400000, guid: 9cb50f4c0d1753c4ba11ed0a9aacca88, type: 2}
   - Name: Greg
     Icon: {fileID: 11400000, guid: 57106953e36e9a643a536aee1b0b6d64, type: 2}
+  Wall: {fileID: 11400000, guid: c9ccdba3fbf9ac540ac306b5be67df73, type: 2}
+  Floor: {fileID: 11400000, guid: de613daeecc1c054b96dbad8679e9ee5, type: 2}
   DefaultIcon: {fileID: 11400000, guid: d7d8b9203bbac674b9acb81b2bcbdc83, type: 2}
   Selected: {fileID: 11400000, guid: 46c09af8b1c205f418db3809318c515f, type: 2}
   Green: {fileID: 11400000, guid: 59c87c162fcdd8c45b6478e37b444219, type: 2}

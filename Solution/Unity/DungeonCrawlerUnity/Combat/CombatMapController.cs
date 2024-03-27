@@ -18,9 +18,9 @@ public class CombatMapController : MonoBehaviour
     [field: SerializeField]
     public Tilemap TileMap { get; set; } = default!;
     [field: SerializeField]
-    public Tilemap CursorMap { get; set; } = default!;
+    public Tilemap WallMap { get; set; } = default!;
     [field: SerializeField]
-    public TileBase DungeonTileBase { get; set; } = default!;
+    public Tilemap CursorMap { get; set; } = default!;
     [field: SerializeField]
     public Tilemap CharacterMap { get; set; } = default!;
     [field: SerializeField]
@@ -92,13 +92,14 @@ public class CombatMapController : MonoBehaviour
     {
         CombatMap = toBuild;
         Grid.ClearAllTiles();
+        WallMap.ClearAllTiles();
         TileMap.ClearAllTiles();
         MapInfo.ClearAllTiles();
         CharacterMap.ClearAllTiles();
 
-        IEnumerable<Position> tiles = Grow(toBuild.Tiles);
-        TileMap.SetTiles(tiles, DungeonTileBase);
-        Grid.SetTiles(tiles, IconDatabase.Outline);
+        TileMap.SetTiles(toBuild.Tiles, IconDatabase.Floor);
+        WallMap.SetTiles(Grow(toBuild.Tiles), IconDatabase.Wall);
+        Grid.SetTiles(toBuild.Tiles, IconDatabase.Outline);
         CharacterMap.SetTiles(toBuild.PlayerCharacters.Keys, p => IconDatabase.GetTile(toBuild.PlayerCharacters[p]));
     }
 
@@ -112,14 +113,13 @@ public class CombatMapController : MonoBehaviour
     private static IEnumerable<Position> Grow(Position p)
     {
         return [
-            new Position(p.X - 1, p.Y - 1),
             new Position(p.X, p.Y - 1),
-            new Position(p.X + 1, p.Y - 1),
-            new Position(p.X - 1, p.Y - 0),
-            new Position(p.X, p.Y - 0),
-            new Position(p.X + 1, p.Y - 0),
-            new Position(p.X - 1, p.Y + 1),
             new Position(p.X, p.Y + 1),
+            new Position(p.X - 1, p.Y),
+            new Position(p.X + 1, p.Y),
+            new Position(p.X - 1, p.Y - 1),
+            new Position(p.X - 1, p.Y + 1),
+            new Position(p.X + 1, p.Y - 1),
             new Position(p.X + 1, p.Y + 1),
         ];
     }

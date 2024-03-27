@@ -8,6 +8,8 @@ public class CombatIconDatabase : ScriptableObject
 {
     [field: SerializeField]
     public IconEntry[] Entries { get; set; } = [];
+    public TileBase Wall = default!;
+    public TileBase Floor = default!;
     public TileBase DefaultIcon = default!;
     public TileBase Selected = default!;
     public TileBase Green = default!;
