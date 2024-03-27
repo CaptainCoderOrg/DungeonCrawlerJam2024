@@ -259,4 +259,84 @@ public class CombatAttackExtensions_should
         result.ShouldBeTrue($"Expected targets to be\n\n{string.Join(", ", expectedPositions)}\n\nbut was\n\n {string.Join(", ", actualTargets)}");
     }
 
+    [Theory]
+    [InlineData(
+        """
+        ####
+        ####
+        ####
+        """,
+        """
+        ###2
+        #1##
+        A#B#
+        """,
+        (char[])['A', 'B'])
+    ]
+    [InlineData(
+        """
+        ####
+        ####
+        ####
+        """,
+        """
+        ####
+        B1##
+        A2##
+        """,
+        (char[])['A', 'B'])
+    ]
+    [InlineData(
+        """
+        ####
+        ####
+        ####
+        """,
+        """
+        ###2
+        ##1#
+        AB##
+        """,
+        (char[])['B'])
+    ]
+    [InlineData(
+        """
+        ####
+        ####
+        ####
+        """,
+        """
+        ###2
+        ###1
+        AB##
+        """,
+        (char[])[])
+    ]
+    public void get_valid_enemy_attack_targets(string map, string setup, char[] expectedTargets)
+    {
+        Dictionary<char, HashSet<Position>> entityLookup = CombatMapExtensions.ParseCharPositions(setup);
+        Position enemyPosition = entityLookup['1'].First();
+        CombatMap combatMap = new()
+        {
+            Tiles = CombatMapExtensions.ParseTiles(map),
+            PlayerCharacters = new Dictionary<Position, PlayerCharacter>()
+            {
+                { entityLookup['A'].First(), new PlayerCharacter() },
+                { entityLookup['B'].First(), new PlayerCharacter() }
+            },
+            Enemies = new Dictionary<Position, Enemy>()
+            {
+                { enemyPosition, new Enemy() },
+                { entityLookup['2'].First(), new Enemy() },
+            }
+        };
+
+        HashSet<Position> actualTargets = [.. combatMap.GetValidAttackTargets(enemyPosition)];
+
+        HashSet<Position> expectedPositions = [.. expectedTargets.Select(ch => entityLookup[ch].First())];
+
+        bool result = actualTargets.SetEquals(expectedPositions);
+        result.ShouldBeTrue($"Expected targets to be\n\n{string.Join(", ", expectedPositions)}\n\nbut was\n\n {string.Join(", ", actualTargets)}");
+    }
+
 }
