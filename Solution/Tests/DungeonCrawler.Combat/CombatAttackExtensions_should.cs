@@ -61,4 +61,50 @@ public class CombatAttackExtensions_should
         map.Enemies.ShouldNotContainKey(position);
     }
 
+    [Theory]
+    [InlineData(1, 1)]
+    [InlineData(4, 2)]
+    [InlineData(4, 3)]
+    [InlineData(6, 6)]
+    public void report_armor_absorbed_attack(int targetArmor, int damage)
+    {
+        Position position = new(Random.Shared.Next(10), Random.Shared.Next(10));
+        Enemy enemy = new() { Card = new() { Name = "Skeleton", Armor = targetArmor, MaxHealth = 4 } };
+        CombatMap map = new()
+        {
+            Enemies = new Dictionary<Position, Enemy>()
+            {
+                { position, enemy }
+            }
+        };
+
+        AttackResult attackResult = new() { Damage = damage };
+
+        // Apply the attack
+        AttackResultEvent actual = map.ApplyCharacterAttack(position, attackResult);
+
+        // Test result
+        actual.ShouldBe(new ArmorAbsorbedHitEvent("Skeleton"));
+        // Test no damage was taken
+        map.Enemies[position].Wounds.ShouldBe(0);
+    }
+
+    [Fact]
+    public void report_empty_target()
+    {
+        Position position = new(Random.Shared.Next(10), Random.Shared.Next(10));
+        CombatMap map = new()
+        {
+            Enemies = new Dictionary<Position, Enemy>() { },
+        };
+
+        AttackResult attackResult = new() { Damage = Random.Shared.Next(5) };
+
+        // Apply the attack
+        AttackResultEvent actual = map.ApplyCharacterAttack(position, attackResult);
+
+        // Test result
+        actual.ShouldBe(new EmptyTarget());
+    }
+
 }

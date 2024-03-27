@@ -4,7 +4,7 @@ public static class CombatAttackExtensions
 {
     public static AttackResultEvent ApplyCharacterAttack(this CombatMap map, Position target, AttackResult attack)
     {
-        if (!map.Enemies.TryGetValue(target, out Enemy enemy)) { return new NoEnemy(); }
+        if (!map.Enemies.TryGetValue(target, out Enemy enemy)) { return new EmptyTarget(); }
         int damage = Math.Max(0, attack.Damage - enemy.Card.Armor);
         if (damage == 0) { return new ArmorAbsorbedHitEvent(enemy.Card.Name); }
         Enemy updated = enemy with { Wounds = enemy.Wounds + damage };
@@ -29,4 +29,4 @@ public abstract record AttackResultEvent;
 public record AttackHitEvent(string TargetName, int Damage) : AttackResultEvent;
 public record TargetKilledEvent(string TargetName) : AttackResultEvent;
 public record ArmorAbsorbedHitEvent(string TargetName) : AttackResultEvent;
-public record NoEnemy : AttackResultEvent;
+public record EmptyTarget : AttackResultEvent;
