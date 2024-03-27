@@ -8,6 +8,11 @@ public static class CombatAttackExtensions
         int damage = Math.Max(0, attack.Damage - enemy.Card.Armor);
         if (damage == 0) { return new ArmorAbsorbedHitEvent(enemy.Card.Name); }
         Enemy updated = enemy with { Wounds = enemy.Wounds + damage };
+        if (updated.IsDead)
+        {
+            map.Enemies.Remove(target);
+            return new TargetKilledEvent(updated.Card.Name);
+        }
         map.Enemies[target] = updated;
         return new AttackHitEvent(updated.Card.Name, damage);
     }
