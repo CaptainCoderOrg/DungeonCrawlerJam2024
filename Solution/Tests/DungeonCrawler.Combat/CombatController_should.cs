@@ -399,7 +399,7 @@ public class CombatController_should
         actualMoveActionEvent.ShouldNotBeNull();
         actualMoveActionEvent.Moving.ShouldBe(new PlayerCharacter() { MovementPoints = expectedMovementPoints });
         actualMoveActionEvent.Move.ShouldBe(moveAction);
-        actualMoveActionEvent.Path.SequenceEqual(underTest.FindShortestPath(moveAction.Start, moveAction.End)).ShouldBeTrue();
+        actualMoveActionEvent.Path.SequenceEqual(underTest.FindShortestPath(moveAction.Start, [moveAction.End])).ShouldBeTrue();
     }
 
     // A is the PlayerCharacter moving
@@ -485,7 +485,7 @@ public class CombatController_should
         };
 
         // Act
-        Position[] actual = [.. underTest.FindShortestPath(start, target)];
+        Position[] actual = [.. underTest.FindShortestPath(start, [target])];
 
         actual.SequenceEqual(expectedPath).ShouldBeTrue();
     }
