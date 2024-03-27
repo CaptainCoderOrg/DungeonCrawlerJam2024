@@ -75,7 +75,7 @@ public class CharacterMoveController : MonoBehaviour
         CombatMapController.Shared.HighlightTiles(_previousPath, CombatMapController.Shared.IconDatabase.Green, false);
         if (CombatMap.IsValidMoveAction(new MoveAction(_startPosition, newPosition)))
         {
-            IEnumerable<Position> shortestPath = CombatMap.FindShortestPath(_startPosition, _cursorPosition);
+            IEnumerable<Position> shortestPath = CombatMap.FindShortestPath(_startPosition, [_cursorPosition]);
             CombatMapController.Shared.HighlightTiles(shortestPath, CombatMapController.Shared.IconDatabase.Yellow, false);
             _previousPath = shortestPath;
         }

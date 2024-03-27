@@ -18,6 +18,8 @@ public class CombatIconDatabase : ScriptableObject
 
     public TileBase GetTile(PlayerCharacter playerCharacter) =>
         Entries.FirstOrDefault(e => e.Name == playerCharacter.Card.Name)?.Icon ?? DefaultIcon;
+    public TileBase GetTile(Enemy enemy) =>
+        Entries.FirstOrDefault(e => e.Name == enemy.Card.Name)?.Icon ?? DefaultIcon;
 }
 
 [Serializable]

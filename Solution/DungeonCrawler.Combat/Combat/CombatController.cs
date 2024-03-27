@@ -40,16 +40,18 @@ public static class CombatController
     {
         PlayerCharacter character = map.PlayerCharacters[moveAction.Start];
         map.PlayerCharacters.Remove(moveAction.Start);
-        int distance = map.FindShortestPath(moveAction.Start, moveAction.End).Count();
+        Position[] shortestPath = [.. map.FindShortestPath(moveAction.Start, [moveAction.End])];
+        int distance = shortestPath.Length;
         if (distance > character.MovementPoints) { throw new ArgumentException("Invalid Move. No path found."); }
         PlayerCharacter updated = character with { MovementPoints = character.MovementPoints - distance };
         map.PlayerCharacters[moveAction.End] = updated;
         map.OnCharacterChange?.Invoke(updated);
-        map.OnMoveAction?.Invoke(new MoveActionEvent(updated, moveAction, map.FindShortestPath(moveAction.Start, moveAction.End)));
+        map.OnMoveAction?.Invoke(new MoveActionEvent(updated, moveAction, shortestPath));
     }
 
-    public static IEnumerable<Position> FindShortestPath(this CombatMap map, Position start, Position end)
+    public static IEnumerable<Position> FindShortestPath(this CombatMap map, Position start, IEnumerable<Position> targets)
     {
+        HashSet<Position> ends = [.. targets];
         HashSet<Position> visited = new() { start };
         Queue<(Position, List<Position>)> queue = new();
         queue.Enqueue((start, new()));
@@ -58,7 +60,7 @@ public static class CombatController
         {
             (Position currentPosition, List<Position> currentPath) = next;
 
-            if (currentPosition == end) { return currentPath; }
+            if (ends.Contains(currentPosition)) { return currentPath; }
 
             foreach (Position neighbor in map.Neighbors(visited, currentPosition))
             {

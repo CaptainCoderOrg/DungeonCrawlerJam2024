@@ -48,6 +48,25 @@ public class CombatMapController : MonoBehaviour
                       ####
                 """
             ),
+            /*
+                 01234567890
+                0 ###
+                1#########
+                2#########
+                3 ###   ##
+                4       ##
+                5      ####
+                6     ######
+                7     ######
+                8      ####
+            */
+            Enemies = new Dictionary<Position, Enemy>()
+            {
+                { new Position(5,1), new Enemy() { Card = Enemies.SkeletonCard } },
+                { new Position(7,1), new Enemy() { Card = Enemies.SkeletonCard } },
+                { new Position(8,6), new Enemy() { Card = Enemies.BeastCard } },
+                { new Position(7,5), new Enemy() { Card = Enemies.BeastCard } },
+            },
         };
         map.PlayerCharacters[new Position(2, 2)] = CrawlingModeController.Shared.Party[0];
         map.PlayerCharacters[new Position(9, 6)] = CrawlingModeController.Shared.Party[1];
@@ -101,6 +120,7 @@ public class CombatMapController : MonoBehaviour
         WallMap.SetTiles(Grow(toBuild.Tiles), IconDatabase.Wall);
         Grid.SetTiles(toBuild.Tiles, IconDatabase.Outline);
         CharacterMap.SetTiles(toBuild.PlayerCharacters.Keys, p => IconDatabase.GetTile(toBuild.PlayerCharacters[p]));
+        CharacterMap.SetTiles(toBuild.Enemies.Keys, p => IconDatabase.GetTile(toBuild.Enemies[p]));
     }
 
     private static HashSet<Position> Grow(HashSet<Position> toGrow)
