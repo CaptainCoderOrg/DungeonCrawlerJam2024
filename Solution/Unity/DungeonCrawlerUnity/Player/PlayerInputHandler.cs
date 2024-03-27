@@ -39,7 +39,9 @@ public class PlayerInputHandler : MonoBehaviour
             }
         }
     }
+    internal string GetKeys(MenuControl control) => string.Join(" or ", InputMapping.MenuActionMappings.Where(mapping => mapping.Action == control).Select(m => m.Key.ToString()));
 }
+
 
 [CreateAssetMenu(fileName = "PlayerInputMapping", menuName = "Config/PlayerInputMapping")]
 public class PlayerInputMapping : ScriptableObject
