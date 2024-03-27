@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311924, g: 0.38073963, b: 0.3587269, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -350,8 +350,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Cards>k__BackingField:
   - {fileID: 956003213}
-  - {fileID: 645483753}
   - {fileID: 1980197630}
+  - {fileID: 645483753}
   - {fileID: 1641706186}
 --- !u!1 &248502690
 GameObject:
@@ -1622,6 +1622,10 @@ PrefabInstance:
     - target: {fileID: 3891882139272653213, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4148814985551011038, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
+      propertyPath: CharacterIx
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4818250693822182227, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4801,7 +4805,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1368379542
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5643,6 +5647,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4148814985551011038, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
+      propertyPath: CharacterIx
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4818250693822182227, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5797,7 +5805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8609784111048940637, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_Name
-      value: Character 4
+      value: Character 3
       objectReference: {fileID: 0}
     - target: {fileID: 8973834169732491635, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_AnchorMax.y
@@ -8043,6 +8051,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4148814985551011038, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
+      propertyPath: CharacterIx
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4818250693822182227, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -8197,7 +8209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8609784111048940637, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_Name
-      value: Character 3
+      value: Character 1
       objectReference: {fileID: 0}
     - target: {fileID: 8973834169732491635, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_AnchorMax.y
@@ -8277,7 +8289,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2035805561
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10520,7 +10532,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8609784111048940637, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_Name
-      value: Character 1
+      value: Character 0
       objectReference: {fileID: 0}
     - target: {fileID: 8973834169732491635, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_AnchorMax.y
