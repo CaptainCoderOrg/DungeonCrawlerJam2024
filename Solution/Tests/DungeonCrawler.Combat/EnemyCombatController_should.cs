@@ -123,4 +123,14 @@ public class EnemyCombatController_should
         1########
         */
     }
+
+    public void not_allow_enemies_to_move_through_players()
+    {
+
+    }
+
+    public void allow_enemies_to_move_through_enemies()
+    {
+        
+    }
 }
