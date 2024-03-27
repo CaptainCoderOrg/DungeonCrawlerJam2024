@@ -7,6 +7,7 @@ public class CombatMap
     public Dictionary<Position, Enemy> Enemies { get; init; } = [];
     public Action<PlayerCharacter>? OnCharacterChange;
     public Action<MoveActionEvent>? OnMoveAction;
+    public Action<Position>? OnEnemyRemoved;
 }
 
 public abstract record CombatMapEvent;
@@ -15,6 +16,14 @@ public record MoveActionEvent(PlayerCharacter Moving, MoveAction Move, IEnumerab
 
 public static class CombatMapExtensions
 {
+
+    public static void RemoveEnemy(this CombatMap map, Position target)
+    {
+        if (map.Enemies.Remove(target))
+        {
+            map.OnEnemyRemoved?.Invoke(target);
+        }
+    }
 
     public static PlayerCharacter GetCharacter(this CombatMap map, CharacterCard card)
     {

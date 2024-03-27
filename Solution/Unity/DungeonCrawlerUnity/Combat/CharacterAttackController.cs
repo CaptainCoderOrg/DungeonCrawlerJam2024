@@ -28,7 +28,8 @@ public class CharacterAttackController : MonoBehaviour
         {
             MenuControl.Down or MenuControl.Right => () => Next(1),
             MenuControl.Up or MenuControl.Left => () => Next(-1),
-            MenuControl.Cancel => CancelAttack,
+            MenuControl.Cancel => ReturnToMenuSelect,
+            MenuControl.Select => () => PerformAttack(_validPositions[_selectedIx]),
             _ => () => Debug.Log($"Not implemented: {control}"),
         };
         action.Invoke();
@@ -42,16 +43,44 @@ public class CharacterAttackController : MonoBehaviour
         Select();
     }
 
+    private void PerformAttack(Position target)
+    {
+        PlayerCharacter character = Map.GetCharacter(Card);
+        AttackResult result = character.Weapon.AttackRoll.GetRoll(IRandom.Default);
+        AttackResultEvent eventResult = Map.ApplyAttack(target, result);
+
+        string message = eventResult switch
+        {
+            AttackHitEvent hit => $"{hit.TargetName} takes {hit.Damage} damage.",
+            TargetKilledEvent killed => $"{killed.TargetName} was slain!",
+            ArmorAbsorbedHitEvent hit => $"{hit.TargetName}'s armor absorbs the blow.",
+            EmptyTarget => $"{Card.Name} attacks but nothing is there.",
+            _ => throw new NotImplementedException($"Unknown event: {eventResult}"),
+        };
+
+        MessageRenderer.Shared.AddMessage(message);
+
+        PlayerCharacter updated = character with { AttackPoints = character.AttackPoints - 1 };
+        Map.UpdateCharacter(updated);
+        ReturnToMenuSelect();
+    }
+
     public void Initialize(CharacterCard card)
     {
         _card = card;
+        if (Map.GetCharacter(card).AttackPoints <= 0)
+        {
+            MessageRenderer.Shared.AddMessage(new Message($"{card.Name} has no attack points."));
+            ReturnToMenuSelect();
+            return;
+        }
         Position attackerPosition = Map.GetPosition(card);
 
         _validPositions = [.. Map.GetValidAttackTargets(attackerPosition)];
         if (_validPositions.Length == 0)
         {
             MessageRenderer.Shared.AddMessage(new Message("No valid targets"));
-            CancelAttack();
+            ReturnToMenuSelect();
             return;
         }
 
@@ -72,11 +101,12 @@ public class CharacterAttackController : MonoBehaviour
         MessageRenderer.Shared.AddMessage($"{e.Card.Name}: Health: {e.Health} | Armor: {e.Card.Armor}");
     }
 
-    private void CancelAttack()
+    private void ReturnToMenuSelect()
     {
         gameObject.SetActive(false);
         CharacterActionMenuController.Shared.Initialize(Card);
         CombatMapController.Shared.SelectTiles([]);
+        CombatMapController.Shared.HighlightTiles([]);
         _card = null;
         _validPositions = [];
     }
