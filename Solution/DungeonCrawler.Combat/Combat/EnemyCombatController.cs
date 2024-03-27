@@ -2,6 +2,12 @@ namespace CaptainCoder.DungeonCrawler.Combat;
 
 public static class EnemyCombatController
 {
+    public static void MoveEnemy(this CombatMap map, Position start, Position end)
+    {
+        Enemy toMove = map.Enemies[start];
+        map.Enemies[end] = toMove;
+        map.Enemies.Remove(start);
+    }
     /// <summary>
     /// Retrieves the moves an enemy plans to take. An enemy moves toward the nearest PlayerCharacter.
     /// If there is a tie, moves toward the PlayerCharacter with the least HP. If there is a further
