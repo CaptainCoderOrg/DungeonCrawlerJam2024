@@ -1,4 +1,6 @@
-﻿namespace CaptainCoder.DungeonCrawler;
+﻿using CaptainCoder.DungeonCrawler.Combat;
+
+namespace CaptainCoder.DungeonCrawler;
 
 public record CharacterCard(string Name)
 {
@@ -10,6 +12,7 @@ public record CharacterCard(string Name)
 }
 public record PlayerCharacter(CharacterCard Card)
 {
+    public Weapon Weapon { get; init; } = Weapons.Hands;
     public int Wounds { get; init; } = 0;
     public int Exertion { get; init; } = 0;
     public int ActionPoints { get; init; } = 0;
