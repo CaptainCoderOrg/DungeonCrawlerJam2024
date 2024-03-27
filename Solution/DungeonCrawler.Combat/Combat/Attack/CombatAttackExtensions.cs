@@ -2,6 +2,13 @@ namespace CaptainCoder.DungeonCrawler.Combat;
 
 public static class CombatAttackExtensions
 {
+    public static IEnumerable<Position> GetValidAttackTargets(this CombatMap map, Position target)
+    {
+        if (map.PlayerCharacters.ContainsKey(target)) { return target.Neighbors().Where(map.Enemies.ContainsKey); }
+        if (map.Enemies.ContainsKey(target)) { return target.Neighbors().Where(map.PlayerCharacters.ContainsKey); }
+        throw new Exception($"No attacker in position {target}.");
+    }
+
     public static AttackResultEvent ApplyAttack(this CombatMap map, Position target, AttackResult attack)
     {
         if (map.Enemies.ContainsKey(target)) { return map.ApplyAttackOnEnemy(target, attack); }
