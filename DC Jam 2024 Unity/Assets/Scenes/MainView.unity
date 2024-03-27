@@ -236,7 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 47336251}
   m_Layer: 0
-  m_Name: CombatView
+  m_Name: CombatMode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -295,6 +295,7 @@ Transform:
   - {fileID: 1192032053}
   - {fileID: 1708544521}
   - {fileID: 1784356111}
+  - {fileID: 1837934575}
   m_Father: {fileID: 47336251}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &232848524
@@ -3157,7 +3158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 992127574}
   m_Layer: 0
-  m_Name: CrawlingView
+  m_Name: CrawlingMode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7036,6 +7037,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1448528938}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1837934574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1837934575}
+  - component: {fileID: 1837934576}
+  m_Layer: 0
+  m_Name: EnemyTurnController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1837934575
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837934574}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 219362674}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1837934576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837934574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1743759164, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1839908119 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5990035650292355915, guid: 00edd5858438746339579743ccf7bcd2, type: 3}

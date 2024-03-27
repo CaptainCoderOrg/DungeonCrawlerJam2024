@@ -27,7 +27,7 @@ public static class CombatAttackExtensions
             map.PlayerCharacters.Remove(target);
             return new TargetKilledEvent(updated.Card.Name);
         }
-        map.PlayerCharacters[target] = updated;
+        map.UpdateCharacter(updated);
         return new AttackHitEvent(updated.Card.Name, damage, character.Card.BaseArmor);
     }
 

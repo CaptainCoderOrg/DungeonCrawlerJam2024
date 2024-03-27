@@ -160,13 +160,13 @@ public class CombatMapController : MonoBehaviour
     }
 
     private Coroutine? _cameraCoroutine;
-    public void PanTo(Position position)
+    public void PanTo(Position position, float duration = 0.3f)
     {
         Vector3 end = CombatCamera.transform.localPosition;
         end.x = position.ToVector3Int().x;
         end.y = position.ToVector3Int().y;
         if (_cameraCoroutine is not null) { StopCoroutine(_cameraCoroutine); };
-        _cameraCoroutine = StartCoroutine(CombatCamera.transform.PanTo(end));
+        _cameraCoroutine = StartCoroutine(CombatCamera.transform.PanTo(end, duration));
     }
 
     internal void PanToward(Position cursorPosition, float distance = 2)
