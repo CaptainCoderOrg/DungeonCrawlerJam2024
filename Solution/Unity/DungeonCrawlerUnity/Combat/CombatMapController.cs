@@ -1,8 +1,8 @@
 using System.Collections;
 
-using CaptainCoder.DungeonCrawler.Unity;
 using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Game.Unity;
+using CaptainCoder.Dungeoneering.Unity;
 
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -28,12 +28,6 @@ public class CombatMapController : MonoBehaviour
     [field: SerializeField]
     public Camera CombatCamera { get; private set; } = default!;
     public CombatMap CombatMap { get; private set; } = default!;
-    private readonly PlayerCharacter[] _characters = [
-        new PlayerCharacter() { Card = Characters.CharacterA, ActionPoints = 1 },
-        new PlayerCharacter() { Card = Characters.CharacterB, ActionPoints = 2 },
-        new PlayerCharacter() { Card = Characters.CharacterC, ActionPoints = 3 },
-        new PlayerCharacter() { Card = Characters.CharacterD, ActionPoints = 4 },
-    ];
 
     public CombatMapController() { Shared = this; }
 
@@ -55,22 +49,22 @@ public class CombatMapController : MonoBehaviour
                 """
             ),
         };
-        map.PlayerCharacters[new Position(2, 2)] = _characters[0];
-        map.PlayerCharacters[new Position(9, 6)] = _characters[1];
-        map.PlayerCharacters[new Position(0, 2)] = _characters[2];
-        map.PlayerCharacters[new Position(8, 5)] = _characters[3];
+        map.PlayerCharacters[new Position(2, 2)] = CrawlingModeController.Shared.Party[0];
+        map.PlayerCharacters[new Position(9, 6)] = CrawlingModeController.Shared.Party[1];
+        map.PlayerCharacters[new Position(0, 2)] = CrawlingModeController.Shared.Party[2];
+        map.PlayerCharacters[new Position(8, 5)] = CrawlingModeController.Shared.Party[3];
         Initialize(map);
     }
 
     public void Initialize(CombatMap map)
     {
         BuildMap(map);
-        map.OnCharacterChange += HandleCharacterChange;
+        map.OnCharacterChange += CrawlingModeController.Shared.Party.UpdateCharacter;
         map.OnMoveAction += HandleMove;
         CharacterActionMenuController.Shared.gameObject.SetActive(false);
         SpendActionPointsModeController.Shared.gameObject.SetActive(false);
         CharacterMoveController.Shared.gameObject.SetActive(false);
-        StartCharacterSelect();
+        CharacterSelectionModeController.Shared.Initialize();
     }
 
     private void HandleMove(MoveActionEvent @event)
@@ -91,19 +85,6 @@ public class CombatMapController : MonoBehaviour
             CharacterMap.SetTile(position.ToVector3Int(), tile);
             yield return new WaitForSeconds(MoveAnimationSpeed);
             last = position;
-        }
-    }
-
-    private void HandleCharacterChange(PlayerCharacter character)
-    {
-        for (int ix = 0; ix < _characters.Length; ix++)
-        {
-            CharacterCard card = _characters[ix].Card;
-            if (character.Card == card)
-            {
-                Overlay.Shared.Cards[ix].Render(character);
-                break;
-            }
         }
     }
 
@@ -182,13 +163,6 @@ public class CombatMapController : MonoBehaviour
         Position position = CombatMap.GetPosition(character.Card);
         SelectTiles(position);
         PanTo(position);
-    }
-
-    public void StartCharacterSelect()
-    {
-        CharacterSelectionModeController.Shared.Initialize(_characters);
-        CharacterSelectionModeController.Shared.gameObject.SetActive(true);
-        SpendActionPointsModeController.Shared.gameObject.SetActive(false);
     }
 
     public void StartSpendActionPoints(PlayerCharacter selected)

@@ -1,3 +1,4 @@
+using CaptainCoder.DungeonCrawler;
 using CaptainCoder.DungeonCrawler.Combat;
 
 using Shouldly;

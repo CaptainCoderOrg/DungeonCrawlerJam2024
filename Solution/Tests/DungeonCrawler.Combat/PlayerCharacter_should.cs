@@ -1,6 +1,6 @@
 namespace Tests;
 
-using CaptainCoder.DungeonCrawler.Combat;
+using CaptainCoder.DungeonCrawler;
 
 using Shouldly;
 
