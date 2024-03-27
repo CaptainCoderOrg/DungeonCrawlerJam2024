@@ -1,5 +1,7 @@
 using System.Collections;
 
+using CaptainCoder.DungeonCrawler.Combat;
+
 namespace CaptainCoder.DungeonCrawler;
 
 public class Party : IEnumerable<PlayerCharacter>
@@ -8,10 +10,10 @@ public class Party : IEnumerable<PlayerCharacter>
     {
         get => ToArray[ix];
     }
-    private PlayerCharacter _topLeft = new() { Card = Characters.CharacterA, ActionPoints = 2 };
-    private PlayerCharacter _topRight = new() { Card = Characters.CharacterB, ActionPoints = 2 };
-    private PlayerCharacter _bottomLeft = new() { Card = Characters.CharacterC, ActionPoints = 2 };
-    private PlayerCharacter _bottomRight = new() { Card = Characters.CharacterD, ActionPoints = 2 };
+    private PlayerCharacter _topLeft = new() { Card = Characters.CharacterA, ActionPoints = 2, Weapon = Weapons.Sword };
+    private PlayerCharacter _topRight = new() { Card = Characters.CharacterB, ActionPoints = 2, Weapon = Weapons.Sword };
+    private PlayerCharacter _bottomLeft = new() { Card = Characters.CharacterC, ActionPoints = 2, Weapon = Weapons.Sword };
+    private PlayerCharacter _bottomRight = new() { Card = Characters.CharacterD, ActionPoints = 2, Weapon = Weapons.Sword };
     private PlayerCharacter[] ToArray => [_topLeft, _topRight, _bottomLeft, _bottomRight];
 
     public PlayerCharacter TopLeft

@@ -37,6 +37,8 @@ public class MessageRenderer : MonoBehaviour
         StartCoroutine(RenderText());
     }
 
+    public void AddMessage(string message) => AddMessage(new Message(message));
+
     public void AddMessage(Message message) => _renderQueue.Enqueue(message);
     private IEnumerator RenderText()
     {

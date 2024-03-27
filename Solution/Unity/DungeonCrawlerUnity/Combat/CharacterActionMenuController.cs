@@ -77,6 +77,7 @@ public class CharacterActionMenuController : MonoBehaviour
             CharacterAction.Exert => () => TryExert(_card),
             CharacterAction.Move => () => CharacterMoveController.Shared.Initialize(_card),
             CharacterAction.EndTurn => () => EndTurn(_card),
+            CharacterAction.Attack => () => CharacterAttackController.Shared.Initialize(_card),
             _ => () => Debug.Log($"Not implemented: {action}"),
         };
         toPerform.Invoke();

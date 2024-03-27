@@ -39,7 +39,7 @@ public static class CombatAttackExtensions
         Enemy updated = enemy with { Wounds = enemy.Wounds + damage };
         if (updated.IsDead)
         {
-            map.Enemies.Remove(target);
+            map.RemoveEnemy(target);
             return new TargetKilledEvent(updated.Card.Name);
         }
         map.Enemies[target] = updated;
