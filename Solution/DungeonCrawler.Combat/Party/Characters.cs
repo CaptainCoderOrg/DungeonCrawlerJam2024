@@ -4,7 +4,7 @@ public static class Characters
     public static CharacterCard CharacterA { get; } = new()
     {
         Name = "Bob",
-        BaseHealth = 12,
+        BaseHealth = 5,
         BaseArmor = 2,
         BaseEnergy = 3,
         BaseSpeed = 3,
@@ -13,7 +13,7 @@ public static class Characters
     public static CharacterCard CharacterB { get; } = new()
     {
         Name = "Alice",
-        BaseHealth = 8,
+        BaseHealth = 4,
         BaseArmor = 0,
         BaseEnergy = 6,
         BaseSpeed = 3,
@@ -22,7 +22,7 @@ public static class Characters
     public static CharacterCard CharacterC { get; } = new()
     {
         Name = "Sally",
-        BaseHealth = 10,
+        BaseHealth = 3,
         BaseArmor = 1,
         BaseEnergy = 4,
         BaseSpeed = 4,
@@ -31,7 +31,7 @@ public static class Characters
     public static CharacterCard CharacterD { get; } = new()
     {
         Name = "Greg",
-        BaseHealth = 14,
+        BaseHealth = 2,
         BaseArmor = 1,
         BaseEnergy = 4,
         BaseSpeed = 3,
