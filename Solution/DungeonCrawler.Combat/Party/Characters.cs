@@ -12,7 +12,7 @@ public static class Characters
 
     public static CharacterCard CharacterB { get; } = new()
     {
-        Name = "Alice",
+        Name = "Kordanor",
         BaseHealth = 8,
         BaseArmor = 0,
         BaseEnergy = 6,

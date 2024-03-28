@@ -55,4 +55,11 @@ public static class CombatAttackExtensions
         map.Enemies[target] = updated;
         return new AttackHitEvent(updated.Card.Name, damage, enemy.Card.Armor);
     }
+
+    public static CanGuardResult CanGuard(this CombatMap map, IEnumerable<Position> path)
+    {
+        throw new NotImplementedException();
+    }
 }
+
+public abstract record CanGuardResult;
