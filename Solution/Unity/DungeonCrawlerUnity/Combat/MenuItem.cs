@@ -9,6 +9,7 @@ public class MenuItemMapping<T>
 {
     public T Item = default!;
     public MenuItem MenuItem = default!;
+    public string HelpMenuText = default!;
 }
 
 public class MenuItem : MonoBehaviour

@@ -6,14 +6,23 @@ namespace CaptainCoder.DungeonCrawler;
 
 public class Party : IEnumerable<PlayerCharacter>
 {
+    public Party Copy()
+    {
+        Party newParty = new();
+        newParty._topLeft = _topLeft;
+        newParty._topRight = _topRight;
+        newParty._bottomLeft = _bottomLeft;
+        newParty._bottomRight = _bottomRight;
+        return newParty;
+    }
     public PlayerCharacter this[int ix]
     {
         get => ToArray[ix];
     }
-    private PlayerCharacter _topLeft = new() { Card = Characters.CharacterA, ActionPoints = 2, Weapon = Weapons.Sword };
-    private PlayerCharacter _topRight = new() { Card = Characters.CharacterB, ActionPoints = 2, Weapon = Weapons.Sword };
-    private PlayerCharacter _bottomLeft = new() { Card = Characters.CharacterC, ActionPoints = 2, Weapon = Weapons.Sword };
-    private PlayerCharacter _bottomRight = new() { Card = Characters.CharacterD, ActionPoints = 2, Weapon = Weapons.Sword };
+    private PlayerCharacter _topLeft = new() { Card = Characters.CharacterA, Weapon = Weapons.Sword };
+    private PlayerCharacter _topRight = new() { Card = Characters.CharacterB, Weapon = Weapons.Sword };
+    private PlayerCharacter _bottomLeft = new() { Card = Characters.CharacterC, Weapon = Weapons.Sword };
+    private PlayerCharacter _bottomRight = new() { Card = Characters.CharacterD, Weapon = Weapons.Sword };
     private PlayerCharacter[] ToArray => [_topLeft, _topRight, _bottomLeft, _bottomRight];
 
     public PlayerCharacter TopLeft
@@ -59,6 +68,8 @@ public class Party : IEnumerable<PlayerCharacter>
     public event Action<PlayerCharacter>? OnBottomLeftChange;
     public event Action<PlayerCharacter>? OnBottomRightChange;
 
+    public bool IsDead => ToArray.All(pc => pc.IsDead());
+
     public void UpdateCharacter(PlayerCharacter toUpdate)
     {
         if (TopLeft.Card == toUpdate.Card) { TopLeft = toUpdate; }
@@ -69,4 +80,12 @@ public class Party : IEnumerable<PlayerCharacter>
 
     public IEnumerator<PlayerCharacter> GetEnumerator() => ToArray.AsEnumerable().GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    public void ApplyValues(Party party)
+    {
+        foreach (PlayerCharacter character in party)
+        {
+            UpdateCharacter(character);
+        }
+    }
 }

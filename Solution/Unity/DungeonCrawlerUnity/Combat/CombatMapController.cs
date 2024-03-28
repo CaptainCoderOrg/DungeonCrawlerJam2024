@@ -31,12 +31,17 @@ public class CombatMapController : MonoBehaviour
 
     public CombatMapController() { Shared = this; }
 
+    private Party? _originalParty;
+    private Party OriginalParty => _originalParty ?? throw new Exception($"Party was not initialized");
+    private string? _originalSetup;
+    private string OriginalSetup => _originalSetup ?? throw new Exception("Setup was not initialized");
+
     public void Awake()
     {
         string mapSetup = """
          #1#
-        #2##B####
-        #3##B####
+        #2##M#M##
+        #3##M#M##
          #4#   ##
                ##
               ####
@@ -44,38 +49,26 @@ public class CombatMapController : MonoBehaviour
              ##EM##
               ####
         """;
-        static PlayerCharacter? PCMapping(char ch) => ch switch
-        {
-            '1' => CrawlingModeController.Shared.Party[0],
-            '2' => CrawlingModeController.Shared.Party[1],
-            '3' => CrawlingModeController.Shared.Party[2],
-            '4' => CrawlingModeController.Shared.Party[3],
-            _ => null,
-        };
-        static Enemy? EnemyMapping(char ch) => ch switch
-        {
-            'B' => new Enemy() { Card = Enemies.BeastCard },
-            'S' => new Enemy() { Card = Enemies.SkeletonCard },
-            'E' => new Enemy() { Card = Enemies.EyeKeyUh },
-            'M' => new Enemy() { Card = Enemies.Meatball },
-            _ => null,
-        };
-        CombatMap map = CombatMapExtensions.ParseMap(mapSetup, PCMapping, EnemyMapping);
-        Initialize(map);
+
+        Initialize(mapSetup);
     }
 
-    public void Initialize(CombatMap map)
+    public void Initialize(string setup)
     {
+        _originalSetup = setup;
+        _originalParty = CrawlingModeController.Shared.Party.Copy();
+        StartCombat(_originalParty, _originalSetup);
+    }
+    public void TryAgain() => StartCombat(OriginalParty, OriginalSetup);
+    public void StartCombat(Party party, string setup)
+    {
+        CrawlingModeController.Shared.Party.ApplyValues(party);
+        CombatMap map = CombatMapExtensions.ParseMap(setup, PCMapping, EnemyMapping);
         BuildMap(map);
         map.OnCharacterChange += CrawlingModeController.Shared.Party.UpdateCharacter;
         map.OnMoveAction += HandleMove;
         map.OnEnemyRemoved += RemoveEnemy;
-        SpendActionPointsModeController.Shared.gameObject.SetActive(false);
-        CharacterSelectionModeController.Shared.gameObject.SetActive(false);
-        CharacterActionMenuController.Shared.gameObject.SetActive(false);
-        CharacterMoveController.Shared.gameObject.SetActive(false);
-        CharacterAttackController.Shared.gameObject.SetActive(false);
-        EnemyTurnController.Shared.gameObject.SetActive(false);
+        DisableAllCombatControllers([]);
         StartPhaseController.Shared.Initialize();
     }
 
@@ -186,6 +179,44 @@ public class CombatMapController : MonoBehaviour
         CharacterSelectionModeController.Shared.gameObject.SetActive(false);
         SpendActionPointsModeController.Shared.gameObject.SetActive(true);
     }
+
+    internal static PlayerCharacter? PCMapping(char ch) => ch switch
+    {
+        '1' => CrawlingModeController.Shared.Party[0],
+        '2' => CrawlingModeController.Shared.Party[1],
+        '3' => CrawlingModeController.Shared.Party[2],
+        '4' => CrawlingModeController.Shared.Party[3],
+        _ => null,
+    };
+    internal static Enemy? EnemyMapping(char ch) => ch switch
+    {
+        'B' => new Enemy() { Card = Enemies.BeastCard },
+        'S' => new Enemy() { Card = Enemies.SkeletonCard },
+        'E' => new Enemy() { Card = Enemies.EyeKeyUh },
+        'M' => new Enemy() { Card = Enemies.Meatball },
+        _ => null,
+    };
+
+    internal void DisableAllCombatControllers(IEnumerable<MonoBehaviour> skip)
+    {
+        HashSet<MonoBehaviour> keepActive = [.. skip];
+        IEnumerable<MonoBehaviour> objects =
+        [
+            SpendActionPointsModeController.Shared,
+            CharacterSelectionModeController.Shared,
+            CharacterActionMenuController.Shared,
+            CharacterMoveController.Shared,
+            CharacterAttackController.Shared,
+            EnemyTurnController.Shared,
+            StartPhaseController.Shared,
+            PartySlainController.Shared,
+        ];
+        foreach (MonoBehaviour obj in objects)
+        {
+            if (keepActive.Contains(obj)) { continue; }
+            obj.gameObject.SetActive(false);
+        }
+    }
 }
 
 public static class PositionExtensions
@@ -209,6 +240,8 @@ public static class PositionExtensions
         transform.localPosition = Vector3.Lerp(start, end, 1);
         float Percent() => elapsedTime / duration;
     }
+
+
 }
 
 public record class TileData(Position Position, TileBase Tile);

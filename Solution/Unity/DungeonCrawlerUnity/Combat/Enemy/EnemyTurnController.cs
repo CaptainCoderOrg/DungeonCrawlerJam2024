@@ -2,6 +2,7 @@ using System.Collections;
 
 using CaptainCoder.Dungeoneering.Game.Unity;
 using CaptainCoder.Dungeoneering.Player.Unity;
+using CaptainCoder.Dungeoneering.Unity;
 
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -15,7 +16,7 @@ public class EnemyTurnController : MonoBehaviour
     private CombatMap Map => CombatMapController.Shared.CombatMap;
     private Queue<Position>? _enemyPositions;
     private Queue<Position> EnemyPositions => _enemyPositions ?? throw new Exception("Enemy positions is not initialized");
-
+    private Coroutine? _enemyCoroutine;
     public void Update()
     {
         PlayerInputHandler.Shared.InputMapping.OnMenuAction(HandleInput);
@@ -48,7 +49,10 @@ public class EnemyTurnController : MonoBehaviour
             EndEnemyTurn();
             return;
         }
-        StartCoroutine(PerformMove(position));
+        if (gameObject.activeInHierarchy)
+        {
+            _enemyCoroutine = StartCoroutine(PerformMove(position));
+        }
     }
 
     public IEnumerator PerformMove(Position position)
@@ -88,11 +92,18 @@ public class EnemyTurnController : MonoBehaviour
         yield return new WaitForSeconds(CombatConstants.ShowEnemyInfoDuration);
         AttackResult result = e.Card.AttackRoll.GetRoll(IRandom.Default);
         AttackResultEvent attackEvent = Map.ApplyAttack(target, result);
+        MessageRenderer.Shared.AddMessage(EventMessage(e, attackEvent));
         if (attackEvent.IsTargetKilledEvent())
         {
             CombatMapController.Shared.CharacterMap.SetTile(target.ToVector3Int(), CombatMapController.Shared.IconDatabase.Dead);
+            if (CrawlingModeController.Shared.Party.IsDead)
+            {
+                MessageRenderer.Shared.AddMessage($"The party has fallen...");
+                if (_enemyCoroutine is not null) { StopCoroutine(_enemyCoroutine); }
+                Shared.gameObject.SetActive(false);
+                PartySlainController.Shared.Initialize();
+            }
         }
-        MessageRenderer.Shared.AddMessage(EventMessage(e, attackEvent));
     }
 
     private string EventMessage(Enemy e, AttackResultEvent attackEvent) => attackEvent switch
