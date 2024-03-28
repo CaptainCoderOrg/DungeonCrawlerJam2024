@@ -70,10 +70,13 @@ public class CombatMapController : MonoBehaviour
         map.OnCharacterChange += CrawlingModeController.Shared.Party.UpdateCharacter;
         map.OnMoveAction += HandleMove;
         map.OnEnemyRemoved += RemoveEnemy;
-        CharacterActionMenuController.Shared.gameObject.SetActive(false);
         SpendActionPointsModeController.Shared.gameObject.SetActive(false);
+        CharacterSelectionModeController.Shared.gameObject.SetActive(false);
+        CharacterActionMenuController.Shared.gameObject.SetActive(false);
         CharacterMoveController.Shared.gameObject.SetActive(false);
-        CharacterSelectionModeController.Shared.Initialize();
+        CharacterAttackController.Shared.gameObject.SetActive(false);
+        EnemyTurnController.Shared.gameObject.SetActive(false);
+        StartPhaseController.Shared.Initialize();
     }
 
     private void RemoveEnemy(Position position) => CharacterMap.SetTile(position.ToVector3Int(), null);
