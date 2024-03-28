@@ -62,7 +62,7 @@ public class SpendActionPointsMode(PlayerCharacter character)
             SpendAction.BuyRest => $"{Character.Card.Name} prepares to Rest",
             _ => throw new NotImplementedException($"Unknown action {spendAction}"),
         };
-        OnSelected?.Invoke(new SpendPointResult(message, menuItem, Character));
+        OnSelected?.Invoke(new SpendPointResult(message, menuItem, Character) { IsCharacterChanged = Character != orig });
     }
 
     private void Next(int delta)
@@ -74,7 +74,10 @@ public class SpendActionPointsMode(PlayerCharacter character)
     }
 }
 
-public record SpendPointResult(string Message, SpendActionMenuItem SelectedAction, PlayerCharacter Character);
+public record SpendPointResult(string Message, SpendActionMenuItem SelectedAction, PlayerCharacter Character)
+{
+    public bool IsCharacterChanged { get; init; } = true;
+}
 
 public enum SpendActionMenuItem
 {

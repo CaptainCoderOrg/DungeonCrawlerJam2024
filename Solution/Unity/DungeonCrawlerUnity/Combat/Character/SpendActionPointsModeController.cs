@@ -99,7 +99,7 @@ public class SpendActionPointsModeController : MonoBehaviour
     private void HandleSpendPoint(SpendPointResult result)
     {
         CrawlingModeController.CrawlerMode.AddMessage(new Message(result.Message));
-        _actionsSelected.Add(result.SelectedAction);
+        if (result.IsCharacterChanged) { _actionsSelected.Add(result.SelectedAction); };
         int count = result.Character.ActionPoints;
         CombatMapController.Shared.CombatMap.UpdateCharacter(result.Character);
         if (count > 0)
