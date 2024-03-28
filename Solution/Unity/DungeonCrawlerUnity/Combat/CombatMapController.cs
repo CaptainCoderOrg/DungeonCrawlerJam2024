@@ -39,10 +39,10 @@ public class CombatMapController : MonoBehaviour
     public void Awake()
     {
         string mapSetup = """
-         #1#
-        #2##M#M##
-        #3##M#M##
-         #4#   ##
+         1##        ##
+        ######M#S####2#
+        ####B#####B##3#
+         4##   ##   ##
                ##
               ####
              #S##S#

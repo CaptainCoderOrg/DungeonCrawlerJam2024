@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace CaptainCoder.DungeonCrawler.Combat;
 
 public class CombatMap
@@ -19,24 +21,32 @@ public static class CombatMapExtensions
     public static CombatMap ParseMap(string setup, Func<char, PlayerCharacter?> characterLookup, Func<char, Enemy?> enemyLookup)
     {
         Dictionary<char, HashSet<Position>> allData = ParseCharPositions(setup);
-        HashSet<Position> tiles = allData.Values.Aggregate((acc, next) => { acc.UnionWith(next); return acc; });
-        CombatMap map = new() { Tiles = tiles };
-        foreach (char ch in allData.Keys)
+        HashSet<Position> tiles = new();
+        Dictionary<Position, PlayerCharacter> pcs = new();
+        Dictionary<Position, Enemy> enemies = new();
+        foreach ((char ch, HashSet<Position> positions) in allData)
         {
-            if (ch == '#') { continue; }
-            PlayerCharacter? pc = characterLookup.Invoke(ch);
-            if (pc is not null)
+            if (ch == '#')
             {
-                map.PlayerCharacters[allData[ch].First()] = pc;
+                tiles.UnionWith(positions);
                 continue;
             }
-            Enemy? enemy = enemyLookup.Invoke(ch);
-            if (enemy is null) { throw new Exception($"Character '{ch}' did not parse to player or enemy."); }
-            foreach (Position pos in allData[ch])
+            if (characterLookup(ch) is PlayerCharacter pc)
             {
-                map.Enemies[pos] = enemy;
+                tiles.UnionWith(positions);
+                pcs.Add(positions.First(), pc);
+                continue;
             }
+            if (enemyLookup(ch) is Enemy e)
+            {
+                tiles.UnionWith(positions);
+                foreach (Position position in positions) { enemies.Add(position, e); }
+                continue;
+            }
+            Console.WriteLine($"Unknown character found while building CombatMap '{ch}'({(int)ch}) at {string.Join(",", positions)}");
         }
+
+        CombatMap map = new() { Tiles = tiles, PlayerCharacters = pcs, Enemies = enemies };
         return map;
     }
 
