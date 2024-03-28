@@ -28,12 +28,17 @@ public static class CombatAttackExtensions
             map.PlayerCharacters.Remove(target);
             return new TargetKilledEvent(updated.Card.Name);
         }
-        List<AttackResultEvent> events = [];
-        if (character.State is CharacterState.Guard) { events.Add(new LostGuardEvent(character.Card.Name)); }
-        if (character.State is CharacterState.Rest) { events.Add(new LostRestEvent(character.Card.Name)); }
+        AttackResultEvent evt = new AttackHitEvent(updated.Card.Name, damage, character.Card.BaseArmor);
         map.UpdateCharacter(updated);
-        events.Add(new AttackHitEvent(updated.Card.Name, damage, character.Card.BaseArmor));
-        return new AttackResultEvents(events);
+        if (character.State is CharacterState.Guard)
+        {
+            evt = new AttackResultEvents([evt, new LostGuardEvent(character.Card.Name)]);
+        }
+        if (character.State is CharacterState.Rest)
+        {
+            evt = new AttackResultEvents([evt, new LostRestEvent(character.Card.Name)]);
+        }
+        return evt;
     }
 
     private static AttackResultEvent ApplyAttackOnEnemy(this CombatMap map, Position target, AttackResult attack)
