@@ -3,7 +3,7 @@ public static class Characters
 {
     public static CharacterCard CharacterA { get; } = new()
     {
-        Name = "Bob",
+        Name = "Zooperdan",
         BaseHealth = 12,
         BaseArmor = 2,
         BaseEnergy = 3,
