@@ -47,6 +47,7 @@ public class MessageRenderer : MonoBehaviour
             yield return WaitUntilQueueHasItem;
             Message message = _renderQueue.Dequeue();
             TextMeshProUGUI newText = Instantiate(TextTemplate, TextOutput);
+            Debug.Log($"Info: {message}");
             if (TextOutput.childCount > 10)
             {
                 Destroy(TextOutput.GetChild(0).gameObject);

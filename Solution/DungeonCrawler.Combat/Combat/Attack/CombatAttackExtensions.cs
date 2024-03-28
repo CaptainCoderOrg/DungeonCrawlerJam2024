@@ -21,14 +21,19 @@ public static class CombatAttackExtensions
         PlayerCharacter character = map.PlayerCharacters[target];
         int damage = Math.Max(0, attack.Damage - character.Card.BaseArmor);
         if (damage == 0) { return new ArmorAbsorbedHitEvent(character.Card.Name); }
-        PlayerCharacter updated = character with { Wounds = character.Wounds + damage };
+        PlayerCharacter updated = character with { Wounds = character.Wounds + damage, State = CharacterState.Normal };
         if (updated.IsDead())
         {
+            map.UpdateCharacter(updated);
             map.PlayerCharacters.Remove(target);
             return new TargetKilledEvent(updated.Card.Name);
         }
+        List<AttackResultEvent> events = [];
+        if (character.State is CharacterState.Guard) { events.Add(new LostGuardEvent(character.Card.Name)); }
+        if (character.State is CharacterState.Rest) { events.Add(new LostRestEvent(character.Card.Name)); }
         map.UpdateCharacter(updated);
-        return new AttackHitEvent(updated.Card.Name, damage, character.Card.BaseArmor);
+        events.Add(new AttackHitEvent(updated.Card.Name, damage, character.Card.BaseArmor));
+        return new AttackResultEvents(events);
     }
 
     private static AttackResultEvent ApplyAttackOnEnemy(this CombatMap map, Position target, AttackResult attack)

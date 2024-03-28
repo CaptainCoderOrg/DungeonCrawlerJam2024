@@ -12,6 +12,7 @@ public class CombatIconDatabase : ScriptableObject
     public TileBase Floor = default!;
     public TileBase DefaultIcon = default!;
     public TileBase Selected = default!;
+    public TileBase Dead = default!;
     public TileBase Green = default!;
     public TileBase Outline = default!;
     public TileBase Yellow = default!;
