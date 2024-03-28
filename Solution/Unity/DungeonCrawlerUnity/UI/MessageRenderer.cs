@@ -47,6 +47,7 @@ public class MessageRenderer : MonoBehaviour
             yield return WaitUntilQueueHasItem;
             Message message = _renderQueue.Dequeue();
             TextMeshProUGUI newText = Instantiate(TextTemplate, TextOutput);
+            Debug.Log($"Info: {message}");
             if (TextOutput.childCount > 10)
             {
                 Destroy(TextOutput.GetChild(0).gameObject);
@@ -59,7 +60,7 @@ public class MessageRenderer : MonoBehaviour
                 yield return new WaitForEndOfFrame();
                 Scroll.normalizedPosition = new Vector2(0, 0); // Scrolls to bottom
             }
-            yield return new WaitForSeconds(.05f);
+            yield return new WaitForSeconds(.01f);
         }
     }
 }

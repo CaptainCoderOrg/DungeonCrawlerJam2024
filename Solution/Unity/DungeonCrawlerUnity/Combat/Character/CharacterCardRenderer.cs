@@ -11,6 +11,7 @@ public class CharacterCardRenderer : MonoBehaviour
     public int CharacterIx;
     public GameObject Selected = default!;
     public GameObject Finished = default!;
+    public GameObject Dead = default!;
     public CharacterCardIconDatabase Icons = default!;
 
     public Image StateIcon = default!;
@@ -61,6 +62,7 @@ public class CharacterCardRenderer : MonoBehaviour
             var state => throw new NotImplementedException($"Unknown state: {state}"),
         };
         StateIcon.gameObject.SetActive(StateIcon.sprite is not null);
+        Dead.SetActive(character.IsDead());
     }
 
     public void RenderNoCharacter()

@@ -1,4 +1,5 @@
 using CaptainCoder.DungeonCrawler.Unity;
+using CaptainCoder.Dungeoneering.Game.Unity;
 using CaptainCoder.Dungeoneering.Player.Unity;
 using CaptainCoder.Dungeoneering.Unity;
 
@@ -15,6 +16,7 @@ public class CharacterSelectionModeController : MonoBehaviour
 
     public void OnEnable()
     {
+        StartPhaseController.Shared.gameObject.SetActive(false);
         SpendActionPointsModeController.Shared.gameObject.SetActive(false);
     }
 
@@ -46,6 +48,7 @@ public class CharacterSelectionModeController : MonoBehaviour
         SelectCard(charIx, character);
         _characterSelectionMode.OnSelectionChange += SelectCard;
         _characterSelectionMode.OnSelected += (ix, selected) => CombatMapController.Shared.StartSpendActionPoints(selected);
+        MessageRenderer.Shared.AddMessage($"Select a Character");
         gameObject.SetActive(true);
     }
     private void SelectCard(int _, PlayerCharacter character)

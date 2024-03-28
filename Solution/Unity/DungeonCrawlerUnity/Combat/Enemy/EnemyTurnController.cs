@@ -2,6 +2,7 @@ using System.Collections;
 
 using CaptainCoder.Dungeoneering.Game.Unity;
 using CaptainCoder.Dungeoneering.Player.Unity;
+using CaptainCoder.Dungeoneering.Unity;
 
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -15,7 +16,7 @@ public class EnemyTurnController : MonoBehaviour
     private CombatMap Map => CombatMapController.Shared.CombatMap;
     private Queue<Position>? _enemyPositions;
     private Queue<Position> EnemyPositions => _enemyPositions ?? throw new Exception("Enemy positions is not initialized");
-
+    private Coroutine? _enemyCoroutine;
     public void Update()
     {
         PlayerInputHandler.Shared.InputMapping.OnMenuAction(HandleInput);
@@ -48,7 +49,10 @@ public class EnemyTurnController : MonoBehaviour
             EndEnemyTurn();
             return;
         }
-        StartCoroutine(PerformMove(position));
+        if (gameObject.activeInHierarchy)
+        {
+            _enemyCoroutine = StartCoroutine(PerformMove(position));
+        }
     }
 
     public IEnumerator PerformMove(Position position)
@@ -88,16 +92,31 @@ public class EnemyTurnController : MonoBehaviour
         yield return new WaitForSeconds(CombatConstants.ShowEnemyInfoDuration);
         AttackResult result = e.Card.AttackRoll.GetRoll(IRandom.Default);
         AttackResultEvent attackEvent = Map.ApplyAttack(target, result);
-        string message = attackEvent switch
+        MessageRenderer.Shared.AddMessage(EventMessage(e, attackEvent));
+        if (attackEvent.IsTargetKilledEvent())
         {
-            AttackHitEvent hit => $"{hit.TargetName} takes {hit.Damage} damage.",
-            ArmorAbsorbedHitEvent hit => $"{hit.TargetName}'s armor absorbs the blow.",
-            TargetKilledEvent hit => $"{hit.TargetName} falls to the ground.",
-            EmptyTarget => $"{e.Card.Name} misses!",
-            _ => throw new NotImplementedException($"Unknown attackEvent {attackEvent}"),
-        };
-        MessageRenderer.Shared.AddMessage(message);
+            CombatMapController.Shared.CharacterMap.SetTile(target.ToVector3Int(), CombatMapController.Shared.IconDatabase.Dead);
+            if (CrawlingModeController.Shared.Party.IsDead)
+            {
+                MessageRenderer.Shared.AddMessage($"The party has fallen...");
+                if (_enemyCoroutine is not null) { StopCoroutine(_enemyCoroutine); }
+                Shared.gameObject.SetActive(false);
+                PartySlainController.Shared.Initialize();
+            }
+        }
     }
+
+    private string EventMessage(Enemy e, AttackResultEvent attackEvent) => attackEvent switch
+    {
+        AttackHitEvent hit => $"{hit.TargetName} takes {hit.Damage} damage.",
+        ArmorAbsorbedHitEvent hit => $"{hit.TargetName}'s armor absorbs the blow.",
+        TargetKilledEvent hit => $"{hit.TargetName} falls to the ground.",
+        EmptyTarget => $"{e.Card.Name} misses!",
+        LostGuardEvent hit => $"{hit.TargetName}'s guard was interrupted!",
+        LostRestEvent hit => $"{hit.TargetName}'s rest was interrupted!",
+        AttackResultEvents(var events) => string.Join("\n", events.Select(evt => EventMessage(e, evt))),
+        _ => throw new NotImplementedException($"Unknown attackEvent {attackEvent}"),
+    };
 
     public IEnumerable ShowMove(Enemy e, Position start, Position[] path)
     {
@@ -123,6 +142,6 @@ public class EnemyTurnController : MonoBehaviour
 
     private void EndEnemyTurn()
     {
-        Debug.Log("Not implemented: EndEnemyTurn");
+        StartPhaseController.Shared.Initialize();
     }
 }
