@@ -42,11 +42,11 @@ public class StartPhaseController : MonoBehaviour
         CombatMapController.Shared.SelectTiles([position]);
         CombatMapController.Shared.PanToward(position);
         MessageRenderer.Shared.AddMessage($"{character.Card.Name} gains 2 action points.");
-        character = Map.UpdateCharacter(character with { ActionPoints = 2 });
+        character = character with { ActionPoints = 2 };
         if (character.State is CharacterState.Rest)
         {
             MessageRenderer.Shared.AddMessage($"{character.Card.Name} rests. Energy restored!");
-            character = Map.UpdateCharacter(character with { Exertion = 0 });
+            character = character with { Exertion = 0 };
         }
         if (character.State is CharacterState.Guard)
         {

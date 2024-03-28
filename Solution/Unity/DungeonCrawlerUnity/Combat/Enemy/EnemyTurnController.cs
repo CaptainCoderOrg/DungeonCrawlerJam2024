@@ -88,16 +88,24 @@ public class EnemyTurnController : MonoBehaviour
         yield return new WaitForSeconds(CombatConstants.ShowEnemyInfoDuration);
         AttackResult result = e.Card.AttackRoll.GetRoll(IRandom.Default);
         AttackResultEvent attackEvent = Map.ApplyAttack(target, result);
-        string message = attackEvent switch
+        if (attackEvent.IsTargetKilledEvent())
         {
-            AttackHitEvent hit => $"{hit.TargetName} takes {hit.Damage} damage.",
-            ArmorAbsorbedHitEvent hit => $"{hit.TargetName}'s armor absorbs the blow.",
-            TargetKilledEvent hit => $"{hit.TargetName} falls to the ground.",
-            EmptyTarget => $"{e.Card.Name} misses!",
-            _ => throw new NotImplementedException($"Unknown attackEvent {attackEvent}"),
-        };
-        MessageRenderer.Shared.AddMessage(message);
+            CombatMapController.Shared.CharacterMap.SetTile(target.ToVector3Int(), CombatMapController.Shared.IconDatabase.Dead);
+        }
+        MessageRenderer.Shared.AddMessage(EventMessage(e, attackEvent));
     }
+
+    private string EventMessage(Enemy e, AttackResultEvent attackEvent) => attackEvent switch
+    {
+        AttackHitEvent hit => $"{hit.TargetName} takes {hit.Damage} damage.",
+        ArmorAbsorbedHitEvent hit => $"{hit.TargetName}'s armor absorbs the blow.",
+        TargetKilledEvent hit => $"{hit.TargetName} falls to the ground.",
+        EmptyTarget => $"{e.Card.Name} misses!",
+        LostGuardEvent hit => $"{hit.TargetName}'s guard was interrupted!",
+        LostRestEvent hit => $"{hit.TargetName}'s rest was interrupted!",
+        AttackResultEvents(var events) => string.Join("\n", events.Select(evt => EventMessage(e, evt))),
+        _ => throw new NotImplementedException($"Unknown attackEvent {attackEvent}"),
+    };
 
     public IEnumerable ShowMove(Enemy e, Position start, Position[] path)
     {
