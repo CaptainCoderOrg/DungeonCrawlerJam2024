@@ -123,6 +123,6 @@ public class EnemyTurnController : MonoBehaviour
 
     private void EndEnemyTurn()
     {
-        Debug.Log("Not implemented: EndEnemyTurn");
+        StartPhaseController.Shared.Initialize();
     }
 }

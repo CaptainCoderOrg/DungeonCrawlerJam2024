@@ -56,11 +56,12 @@ public static class CombatMapExtensions
         }
         throw new ArgumentOutOfRangeException($"No character found: {card}");
     }
-    public static void UpdateCharacter(this CombatMap map, PlayerCharacter character)
+    public static PlayerCharacter UpdateCharacter(this CombatMap map, PlayerCharacter character)
     {
         Position position = map.GetPosition(character.Card);
         map.PlayerCharacters[position] = character;
         map.OnCharacterChange?.Invoke(character);
+        return character;
     }
     public static Position GetPosition(this CombatMap map, CharacterCard card)
     {

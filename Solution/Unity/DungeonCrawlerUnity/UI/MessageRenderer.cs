@@ -59,7 +59,7 @@ public class MessageRenderer : MonoBehaviour
                 yield return new WaitForEndOfFrame();
                 Scroll.normalizedPosition = new Vector2(0, 0); // Scrolls to bottom
             }
-            yield return new WaitForSeconds(.05f);
+            yield return new WaitForSeconds(.01f);
         }
     }
 }
