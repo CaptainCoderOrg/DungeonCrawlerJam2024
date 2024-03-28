@@ -35,4 +35,22 @@ public static class Enemies
         MaxHealth = 4,
         AttackRoll = new SimpleAttack(2, 4),
     };
+
+    public static EnemyCard EyeKeyUh { get; } = new()
+    {
+        Name = "Eye Key Uh",
+        Speed = 4,
+        Armor = 4,
+        MaxHealth = 16,
+        AttackRoll = new SimpleAttack(3, 6),
+    };
+
+    public static EnemyCard Meatball { get; } = new()
+    {
+        Name = "Meatball",
+        Speed = 6,
+        Armor = 0,
+        MaxHealth = 1,
+        AttackRoll = new SimpleAttack(1, 10),
+    };
 }

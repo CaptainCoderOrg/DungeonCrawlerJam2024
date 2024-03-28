@@ -16,6 +16,29 @@ public record MoveActionEvent(PlayerCharacter Moving, MoveAction Move, IEnumerab
 
 public static class CombatMapExtensions
 {
+    public static CombatMap ParseMap(string setup, Func<char, PlayerCharacter?> characterLookup, Func<char, Enemy?> enemyLookup)
+    {
+        Dictionary<char, HashSet<Position>> allData = ParseCharPositions(setup);
+        HashSet<Position> tiles = allData.Values.Aggregate((acc, next) => { acc.UnionWith(next); return acc; });
+        CombatMap map = new() { Tiles = tiles };
+        foreach (char ch in allData.Keys)
+        {
+            if (ch == '#') { continue; }
+            PlayerCharacter? pc = characterLookup.Invoke(ch);
+            if (pc is not null)
+            {
+                map.PlayerCharacters[allData[ch].First()] = pc;
+                continue;
+            }
+            Enemy? enemy = enemyLookup.Invoke(ch);
+            if (enemy is null) { throw new Exception($"Character '{ch}' did not parse to player or enemy."); }
+            foreach (Position pos in allData[ch])
+            {
+                map.Enemies[pos] = enemy;
+            }
+        }
+        return map;
+    }
 
     public static void RemoveEnemy(this CombatMap map, Position target)
     {

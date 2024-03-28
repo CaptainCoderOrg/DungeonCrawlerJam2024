@@ -33,45 +33,34 @@ public class CombatMapController : MonoBehaviour
 
     public void Awake()
     {
-        CombatMap map = new()
+        string mapSetup = """
+         #1#
+        #2##B####
+        #3##B####
+         #4#   ##
+               ##
+              ####
+             #S##S#
+             ##EM##
+              ####
+        """;
+        static PlayerCharacter? PCMapping(char ch) => ch switch
         {
-            Tiles = CombatMapExtensions.ParseTiles(
-                """       
-                 ###
-                #########
-                #########
-                 ###   ##
-                       ##
-                      ####
-                     ######
-                     ######
-                      ####
-                """
-            ),
-            /*
-                 01234567890
-                0 ###
-                1#########
-                2#########
-                3 ###   ##
-                4       ##
-                5      ####
-                6     ######
-                7     ######
-                8      ####
-            */
-            Enemies = new Dictionary<Position, Enemy>()
-            {
-                { new Position(5,1), new Enemy() { Card = Enemies.SkeletonCard } },
-                { new Position(7,1), new Enemy() { Card = Enemies.SkeletonCard } },
-                { new Position(8,6), new Enemy() { Card = Enemies.BeastCard } },
-                { new Position(7,5), new Enemy() { Card = Enemies.BeastCard } },
-            },
+            '1' => CrawlingModeController.Shared.Party[0],
+            '2' => CrawlingModeController.Shared.Party[1],
+            '3' => CrawlingModeController.Shared.Party[2],
+            '4' => CrawlingModeController.Shared.Party[3],
+            _ => null,
         };
-        map.PlayerCharacters[new Position(2, 2)] = CrawlingModeController.Shared.Party[0];
-        map.PlayerCharacters[new Position(9, 6)] = CrawlingModeController.Shared.Party[1];
-        map.PlayerCharacters[new Position(0, 2)] = CrawlingModeController.Shared.Party[2];
-        map.PlayerCharacters[new Position(8, 5)] = CrawlingModeController.Shared.Party[3];
+        static Enemy? EnemyMapping(char ch) => ch switch
+        {
+            'B' => new Enemy() { Card = Enemies.BeastCard },
+            'S' => new Enemy() { Card = Enemies.SkeletonCard },
+            'E' => new Enemy() { Card = Enemies.EyeKeyUh },
+            'M' => new Enemy() { Card = Enemies.Meatball },
+            _ => null,
+        };
+        CombatMap map = CombatMapExtensions.ParseMap(mapSetup, PCMapping, EnemyMapping);
         Initialize(map);
     }
 
