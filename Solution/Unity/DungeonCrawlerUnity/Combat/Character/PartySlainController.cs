@@ -27,6 +27,7 @@ public class PartySlainController : AbstractMenuController<PartySlainAction>
         Action invoke = action switch
         {
             PartySlainAction.TryAgain => () => CombatMapController.Shared.TryAgain(),
+            PartySlainAction.GiveUp => () => CombatMapController.Shared.GiveUpCombat(),
             _ => throw new NotImplementedException($"Action not implemented {action}"),
         };
         invoke.Invoke();
