@@ -47,6 +47,8 @@ public abstract class AbstractMenuController<TEnum> : MonoBehaviour
         Select(_selectedIx);
     }
 
+    protected virtual void OnSelectionChange(TEnum selected) { }
+
     public void Select(int ix)
     {
         foreach (var item in MenuItems)
@@ -59,5 +61,6 @@ public abstract class AbstractMenuController<TEnum> : MonoBehaviour
         {
             CombatHelpPanel.Shared.Text = MenuItems[ix].HelpMenuText;
         }
+        OnSelectionChange(MenuItems[ix].Item);
     }
 }

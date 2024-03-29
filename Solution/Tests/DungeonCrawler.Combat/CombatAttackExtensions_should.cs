@@ -339,4 +339,106 @@ public class CombatAttackExtensions_should
         result.ShouldBeTrue($"Expected targets to be\n\n{string.Join(", ", expectedPositions)}\n\nbut was\n\n {string.Join(", ", actualTargets)}");
     }
 
+    [Fact]
+    public void detect_guard_when_enemy_passes()
+    {
+        string setup =
+        """
+        ###2
+        #1#E
+        #B#D
+        A#C#
+        """;
+        var positions = CombatMapExtensions.ParseCharPositions(setup);
+        Position char1Position = positions['1'].First();
+        Position char2Position = positions['2'].First();
+        Position enemyStartPosition = positions['A'].First();
+        CombatMap map = CombatMapExtensions.ParseMap(setup, CharParse, EnemyParse);
+
+        Position[] enemyPath = [positions['A'].First(), positions['B'].First(), positions['C'].First(), positions['D'].First(), positions['E'].First(),];
+
+        CanGuardResult char1Actual = map.CanGuardFrom(char1Position, enemyStartPosition, enemyPath);
+        char1Actual.ShouldBe(new CanGuard(char1Position, CharParse('1')!, positions['B'].First()));
+
+        CanGuardResult char2Actual = map.CanGuardFrom(char2Position, enemyStartPosition, enemyPath);
+        char2Actual.ShouldBe(new CanGuard(char2Position, CharParse('2')!, positions['E'].First()));
+
+        PlayerCharacter? CharParse(char ch)
+        {
+            if (ch == '1') { return new PlayerCharacter() { Card = new() { Name = "Character 1" }, State = CharacterState.Guard }; }
+            if (ch == '2') { return new PlayerCharacter() { Card = new() { Name = "Character 2", }, State = CharacterState.Guard }; }
+            return null;
+        }
+
+        Enemy? EnemyParse(char ch) => null;
+    }
+
+    [Fact]
+    public void do_not_detect_guard_when_enemy_does_not_pass()
+    {
+        string setup =
+        """
+        ###2
+        #1##
+        ###E
+        ABCD
+        """;
+        var positions = CombatMapExtensions.ParseCharPositions(setup);
+        Position char1Position = positions['1'].First();
+        Position char2Position = positions['2'].First();
+        Position enemyStartPosition = positions['A'].First();
+        CombatMap map = CombatMapExtensions.ParseMap(setup, CharParse, EnemyParse);
+
+        Position[] enemyPath = [positions['A'].First(), positions['B'].First(), positions['C'].First(), positions['D'].First(), positions['E'].First(),];
+
+        CanGuardResult char1Actual = map.CanGuardFrom(char1Position, enemyStartPosition, enemyPath);
+        char1Actual.ShouldBe(new NoGuard());
+
+        CanGuardResult char2Actual = map.CanGuardFrom(char2Position, enemyStartPosition, enemyPath);
+        char2Actual.ShouldBe(new NoGuard());
+
+        PlayerCharacter? CharParse(char ch)
+        {
+            if (ch == '1') { return new PlayerCharacter() { Card = new() { Name = "Character 1", }, State = CharacterState.Guard }; }
+            if (ch == '2') { return new PlayerCharacter() { Card = new() { Name = "Character 2" }, State = CharacterState.Guard }; }
+            return null;
+        }
+
+        Enemy? EnemyParse(char ch) => null;
+    }
+
+    [Fact]
+    public void do_not_detect_guard_when_not_guarding()
+    {
+        string setup =
+        """
+        ##E2
+        #1CD
+        #B##
+        A###
+        """;
+        var positions = CombatMapExtensions.ParseCharPositions(setup);
+        Position char1Position = positions['1'].First();
+        Position char2Position = positions['2'].First();
+        Position enemyStartPosition = positions['A'].First();
+        CombatMap map = CombatMapExtensions.ParseMap(setup, CharParse, EnemyParse);
+
+        Position[] enemyPath = [positions['A'].First(), positions['B'].First(), positions['C'].First(), positions['D'].First(), positions['E'].First(),];
+
+        CanGuardResult char1Actual = map.CanGuardFrom(char1Position, enemyStartPosition, enemyPath);
+        char1Actual.ShouldBe(new NoGuard());
+
+        CanGuardResult char2Actual = map.CanGuardFrom(char2Position, enemyStartPosition, enemyPath);
+        char2Actual.ShouldBe(new NoGuard());
+
+        PlayerCharacter? CharParse(char ch)
+        {
+            if (ch == '1') { return new PlayerCharacter() { Card = new() { Name = "Character 1" }, State = CharacterState.Normal }; }
+            if (ch == '2') { return new PlayerCharacter() { Card = new() { Name = "Character 2", }, State = CharacterState.Rest }; }
+            return null;
+        }
+
+        Enemy? EnemyParse(char ch) => null;
+    }
+
 }

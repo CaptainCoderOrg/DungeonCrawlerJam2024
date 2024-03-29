@@ -39,10 +39,10 @@ public class CombatMapController : MonoBehaviour
     public void Awake()
     {
         string mapSetup = """
-         #1#
-        #2##M#M##
-        #3##M#M##
-         #4#   ##
+         1##        ##
+        ##M###S#S##M#2#
+        ####B#####B##3#
+         4##   ##   ##
                ##
               ####
              #S##S#
@@ -145,6 +145,7 @@ public class CombatMapController : MonoBehaviour
     }
 
     private Coroutine? _cameraCoroutine;
+    internal void PanTo(PlayerCharacter character, float duration = 0.3f) => PanTo(CombatMap.GetPosition(character.Card), duration);
     public void PanTo(Position position, float duration = 0.3f)
     {
         Vector3 end = CombatCamera.transform.localPosition;
@@ -153,6 +154,8 @@ public class CombatMapController : MonoBehaviour
         if (_cameraCoroutine is not null) { StopCoroutine(_cameraCoroutine); };
         _cameraCoroutine = StartCoroutine(CombatCamera.transform.PanTo(end, duration));
     }
+
+    internal void PanToward(PlayerCharacter character, float distance = 2) => PanToward(CombatMap.GetPosition(character.Card), distance);
 
     internal void PanToward(Position cursorPosition, float distance = 2)
     {

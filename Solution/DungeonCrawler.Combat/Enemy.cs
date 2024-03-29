@@ -40,7 +40,7 @@ public static class Enemies
     {
         Name = "Eye Key Uh",
         Speed = 4,
-        Armor = 4,
+        Armor = 2,
         MaxHealth = 16,
         AttackRoll = new SimpleAttack(3, 6),
     };
