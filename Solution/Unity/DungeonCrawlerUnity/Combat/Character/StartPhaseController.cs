@@ -18,10 +18,17 @@ public class StartPhaseController : MonoBehaviour
 
     public void Initialize()
     {
-        gameObject.SetActive(true);
-        MessageRenderer.Shared.AddMessage($"The party prepares for battle.");
-        Queue<Position> pcs = new(Map.PlayerCharacters.Keys);
-        DequeueEvent(pcs);
+        if (Map.Enemies.Count == 0)
+        {
+            WinCombatMenuController.Shared.Initialize();
+        }
+        else
+        {
+            gameObject.SetActive(true);
+            MessageRenderer.Shared.AddMessage($"The party prepares for battle.");
+            Queue<Position> pcs = new(Map.PlayerCharacters.Keys);
+            DequeueEvent(pcs);
+        }
     }
 
     private void DequeueEvent(Queue<Position> events)

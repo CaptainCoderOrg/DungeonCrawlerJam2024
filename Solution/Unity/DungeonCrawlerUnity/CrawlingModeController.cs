@@ -1,4 +1,5 @@
 using CaptainCoder.DungeonCrawler;
+using CaptainCoder.DungeonCrawler.Combat.Unity;
 using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
@@ -147,6 +148,12 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     }
 
     public void ShowDialogue(Dialogue dialogue) => DialogueController.Show(dialogue);
+
+    internal void Initialize()
+    {
+        CrawlingViewPortController.Shared.gameObject.SetActive(true);
+        gameObject.SetActive(true);
+    }
 }
 
 [Serializable]

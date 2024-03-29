@@ -46,7 +46,14 @@ public class CharacterAttackController : MonoBehaviour
     private void PerformAttack(Position target)
     {
         Map.DoAttack(Card, target);
-        ReturnToMenuSelect();
+        if (Map.Enemies.Count == 0)
+        {
+            WinCombatMenuController.Shared.Initialize();
+        }
+        else
+        {
+            ReturnToMenuSelect();
+        }
     }
 
     public void Initialize(CharacterCard card)
