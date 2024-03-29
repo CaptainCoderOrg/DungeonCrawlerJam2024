@@ -1838,7 +1838,7 @@ PrefabInstance:
     - target: {fileID: 5932379999751757186, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 8974e79efc7d0f4439c1973c880ce9bc, type: 3}
+      objectReference: {fileID: 21300000, guid: 29af16f510ccd9346bee26b327df9df6, type: 3}
     - target: {fileID: 6611759848391043130, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -7553,7 +7553,7 @@ PrefabInstance:
     - target: {fileID: 5932379999751757186, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 177d67f695825974ebef1efb3bbcc454, type: 3}
+      objectReference: {fileID: 21300000, guid: c869d996a120734409b330978875c7b7, type: 3}
     - target: {fileID: 6611759848391043130, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -8172,7 +8172,6 @@ MonoBehaviour:
   m_Script: {fileID: -1743759164, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isPaused: 0
 --- !u!1 &1839908119 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5990035650292355915, guid: 00edd5858438746339579743ccf7bcd2, type: 3}

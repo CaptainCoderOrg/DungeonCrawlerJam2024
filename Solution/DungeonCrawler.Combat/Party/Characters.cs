@@ -21,7 +21,7 @@ public static class Characters
 
     public static CharacterCard CharacterC { get; } = new()
     {
-        Name = "Sally",
+        Name = "Ronadrok",
         BaseHealth = 10,
         BaseArmor = 1,
         BaseEnergy = 4,
@@ -30,7 +30,7 @@ public static class Characters
 
     public static CharacterCard CharacterD { get; } = new()
     {
-        Name = "Greg",
+        Name = "Nadrepooz",
         BaseHealth = 16,
         BaseArmor = 1,
         BaseEnergy = 4,

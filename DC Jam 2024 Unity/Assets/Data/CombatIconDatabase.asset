@@ -33,6 +33,10 @@ MonoBehaviour:
     Icon: {fileID: 11400000, guid: 4126299e69183a547b8c0ef9b7256371, type: 2}
   - Name: Kordanor
     Icon: {fileID: 11400000, guid: b9379dc84623dc1408d5197ea671692f, type: 2}
+  - Name: Ronadrok
+    Icon: {fileID: 11400000, guid: 4cb96582a70a19b4c86bfd4be503b198, type: 2}
+  - Name: Nadrepooz
+    Icon: {fileID: 11400000, guid: 6631bbcf989b46d4eb411a123263cc1d, type: 2}
   Wall: {fileID: 11400000, guid: fd464c01779b2a44599737f243886ef9, type: 2}
   Floor: {fileID: 11400000, guid: 9bc79a6599fa11541bc1ec08d090feb8, type: 2}
   DefaultIcon: {fileID: 11400000, guid: d7d8b9203bbac674b9acb81b2bcbdc83, type: 2}

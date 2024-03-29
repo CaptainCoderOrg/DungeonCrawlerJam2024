@@ -22,6 +22,7 @@ public class GuardMenuController : AbstractMenuController<GuardActions>
         _guards = guards;
         _enemyPosition = enemyPosition;
         gameObject.SetActive(true);
+        Select(0);
     }
 
     protected override void SelectOption(GuardActions action)
@@ -29,9 +30,18 @@ public class GuardMenuController : AbstractMenuController<GuardActions>
         Action toInvoke = action switch
         {
             GuardActions.Cancel => () => EnemyTurnController.Shared.Resume(new Continue()),
-            var member => () => CheckMember(member.ToCard()),
+            var member => () => CheckMember(member.ToCharacter()),
         };
         toInvoke.Invoke();
+    }
+
+    protected override void OnSelectionChange(GuardActions selected)
+    {
+        base.OnSelectionChange(selected);
+        if (selected is GuardActions.Cancel) { return; }
+        PlayerCharacter character = selected.ToCharacter();
+        CombatMapController.Shared.SelectCharacter(character);
+        CombatMapController.Shared.PanTo(character);
     }
 
     private void PerformGuard(CanGuard guard)
@@ -56,7 +66,7 @@ public class GuardMenuController : AbstractMenuController<GuardActions>
         _guards = [.. _guards.Where(g => g != guard)];
 
         // If there are no more possible guards, resume
-        if (_guards.Length > 0)
+        if (_guards.Length == 0)
         {
             EnemyTurnController.Shared.Resume(new Continue());
             return;
@@ -71,6 +81,11 @@ public class GuardMenuController : AbstractMenuController<GuardActions>
 
     private void CheckMember(PlayerCharacter character)
     {
+        if (character.State is not CharacterState.Guard)
+        {
+            MessageRenderer.Shared.AddMessage($"{character.Card.Name} is not guarding.");
+            return;
+        }
         foreach (CanGuard guard in _guards.Where(g => g.Character.Card == character.Card))
         {
             PerformGuard(guard);
@@ -92,7 +107,7 @@ public class GuardMenuController : AbstractMenuController<GuardActions>
 public static class GuardActionsExtensions
 {
     // This is a horrible piece of code... my goodness why am I here?
-    public static PlayerCharacter ToCard(this GuardActions action) => action switch
+    public static PlayerCharacter ToCharacter(this GuardActions action) => action switch
     {
         GuardActions.Zooperdan => CrawlingModeController.Shared.Party.TopLeft,
         GuardActions.Kordanor => CrawlingModeController.Shared.Party.TopRight,
