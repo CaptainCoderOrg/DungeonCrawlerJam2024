@@ -45,23 +45,7 @@ public class CharacterAttackController : MonoBehaviour
 
     private void PerformAttack(Position target)
     {
-        PlayerCharacter character = Map.GetCharacter(Card);
-        AttackResult result = character.Weapon.AttackRoll.GetRoll(IRandom.Default);
-        AttackResultEvent eventResult = Map.ApplyAttack(target, result);
-
-        string message = eventResult switch
-        {
-            AttackHitEvent hit => $"{hit.TargetName} takes {hit.Damage} damage.",
-            TargetKilledEvent killed => $"{killed.TargetName} was slain!",
-            ArmorAbsorbedHitEvent hit => $"{hit.TargetName}'s armor absorbs the blow.",
-            EmptyTarget => $"{Card.Name} attacks but nothing is there.",
-            _ => throw new NotImplementedException($"Unknown event: {eventResult}"),
-        };
-
-        MessageRenderer.Shared.AddMessage(message);
-
-        PlayerCharacter updated = character with { AttackPoints = character.AttackPoints - 1 };
-        Map.UpdateCharacter(updated);
+        Map.DoAttack(Card, target);
         ReturnToMenuSelect();
     }
 

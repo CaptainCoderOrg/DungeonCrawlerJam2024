@@ -17,6 +17,9 @@ public class EnemyTurnController : MonoBehaviour
     private Queue<Position>? _enemyPositions;
     private Queue<Position> EnemyPositions => _enemyPositions ?? throw new Exception("Enemy positions is not initialized");
     private Coroutine? _enemyCoroutine;
+    private Optional<(CanGuard[] options, Position enemyPosition)> _possibleGuards = new None<(CanGuard[], Position)>();
+    private bool _isPaused = false;
+    private ResumeInfo _resumeInfo = new Continue();
     public void Update()
     {
         PlayerInputHandler.Shared.InputMapping.OnMenuAction(HandleInput);
@@ -24,9 +27,10 @@ public class EnemyTurnController : MonoBehaviour
 
     private void HandleInput(MenuControl control)
     {
-        if (control is MenuControl.Select or MenuControl.Cancel)
+        if (!_isPaused && _possibleGuards is Some<(CanGuard[] options, Position enemyPosition)> guards && control is MenuControl.Select or MenuControl.Cancel)
         {
-            Debug.Log("Not implement: Pause Enemy Turn / Guard");
+            _isPaused = true;
+            GuardMenuController.Shared.Initialize(guards.Value.options, guards.Value.enemyPosition);
         }
     }
 
@@ -57,6 +61,7 @@ public class EnemyTurnController : MonoBehaviour
 
     public IEnumerator PerformMove(Position position)
     {
+        _resumeInfo = new Continue();
         Enemy e = Map.Enemies[position];
         MessageRenderer.Shared.AddMessage($"{e.Card.Name} prepares for battle.");
         CombatMapController.Shared.SelectTiles(position);
@@ -65,12 +70,12 @@ public class EnemyTurnController : MonoBehaviour
         Position[] path = [.. Map.GetEnemyMove(position)];
         if (path.Count() > 0)
         {
-            foreach (var pause in ShowMove(e, position, path))
-            {
-                yield return pause;
-            }
+            foreach (var pause in ShowMove(e, position, path)) { yield return pause; }
             position = path.Last();
         }
+        // The enemy is dead
+        if (_resumeInfo is EnemyIsDead) { goto cleanUp; }
+
         Position[] attacks = [.. Map.GetValidAttackTargets(position)];
         if (attacks.Count() > 0)
         {
@@ -79,7 +84,10 @@ public class EnemyTurnController : MonoBehaviour
                 yield return pause;
             }
         }
+
+    cleanUp:
         CombatMapController.Shared.HighlightTiles([]);
+        CombatMapController.Shared.SelectTiles([]);
         DoNextMove();
     }
 
@@ -123,7 +131,24 @@ public class EnemyTurnController : MonoBehaviour
         Tilemap characterMap = CombatMapController.Shared.CharacterMap;
         MessageRenderer.Shared.AddMessage($"{e.Card.Name} moves {path.Count()} spaces.");
         CombatMapController.Shared.HighlightTiles(path, CombatMapController.Shared.IconDatabase.Yellow);
-        yield return new WaitForSeconds(CombatConstants.ShowEnemyInfoDuration);
+        CanGuard[] guards = [.. Map.CanGuard(start, path)];
+        if (guards.Length > 0)
+        {
+            string keys = PlayerInputHandler.Shared.GetKeys(MenuControl.Select);
+            foreach (CanGuard guard in guards)
+            {
+                MessageRenderer.Shared.AddMessage($"{guard.Character.Card.Name} can <color=red>Guard</color> the enemy. Press {keys} to interrupt.");
+            }
+            _possibleGuards = new Some<(CanGuard[], Position)>((guards, start));
+            yield return new WaitForSeconds(CombatConstants.GuardWaitDuration);
+            yield return new WaitUntil(() => !_isPaused);
+
+
+        }
+        else
+        {
+            yield return new WaitForSeconds(CombatConstants.ShowEnemyInfoDuration);
+        }
 
         TileBase tile = characterMap.GetTile(start.ToVector3Int());
         TileBase? toSet = null;
@@ -135,13 +160,37 @@ public class EnemyTurnController : MonoBehaviour
             toSet = characterMap.GetTile(position.ToVector3Int());
             characterMap.SetTile(position.ToVector3Int(), tile);
             yield return new WaitForSeconds(CombatConstants.EnemyMoveDelay);
+            yield return new WaitUntil(() => !_isPaused);
             last = position;
+            if (_resumeInfo is EnemyIsDead)
+            {
+                _possibleGuards = new None<(CanGuard[], Position)>();
+                characterMap.SetTile(last.ToVector3Int(), null);
+                // The enemy is dead, end the turn
+                yield break;
+            }
         }
         Map.MoveEnemy(start, path.Last());
+        _possibleGuards = new None<(CanGuard[], Position)>();
     }
 
     private void EndEnemyTurn()
     {
         StartPhaseController.Shared.Initialize();
     }
+
+    public void Resume(ResumeInfo info)
+    {
+        _resumeInfo = info;
+        _isPaused = false;
+        GuardMenuController.Shared.gameObject.SetActive(false);
+    }
 }
+
+public abstract record ResumeInfo;
+public record Continue : ResumeInfo;
+public record EnemyIsDead : ResumeInfo;
+
+public abstract record Optional<T>;
+public record Some<T>(T Value) : Optional<T>;
+public record None<T> : Optional<T>;
