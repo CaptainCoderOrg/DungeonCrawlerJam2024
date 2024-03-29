@@ -36,17 +36,17 @@ public class CombatMapController : MonoBehaviour
     private string? _originalSetup;
     private string OriginalSetup => _originalSetup ?? throw new Exception("Setup was not initialized");
 
-    public void Awake()
+    public void Start()
     {
         string mapSetup = """
          1##        ##
-        ##M###S#S##M#2#
-        ####B#####B##3#
+        ##M##########2#
+        #############3#
          4##   ##   ##
                ##
               ####
-             #S##S#
-             ##EM##
+             ######
+             ######
               ####
         """;
 
@@ -55,6 +55,8 @@ public class CombatMapController : MonoBehaviour
 
     public void Initialize(string setup)
     {
+        CrawlingModeController.Shared.gameObject.SetActive(false);
+        CrawlingViewPortController.Shared.gameObject.SetActive(false);
         _originalSetup = setup;
         _originalParty = CrawlingModeController.Shared.Party.Copy();
         StartCombat(_originalParty, _originalSetup);
@@ -68,6 +70,7 @@ public class CombatMapController : MonoBehaviour
         map.OnCharacterChange += CrawlingModeController.Shared.Party.UpdateCharacter;
         map.OnMoveAction += HandleMove;
         map.OnEnemyRemoved += RemoveEnemy;
+        gameObject.SetActive(true);
         DisableAllCombatControllers([]);
         StartPhaseController.Shared.Initialize();
     }
@@ -213,12 +216,21 @@ public class CombatMapController : MonoBehaviour
             EnemyTurnController.Shared,
             StartPhaseController.Shared,
             PartySlainController.Shared,
+            WinCombatMenuController.Shared,
         ];
         foreach (MonoBehaviour obj in objects)
         {
             if (keepActive.Contains(obj)) { continue; }
             obj.gameObject.SetActive(false);
         }
+    }
+
+    internal void EndCombat()
+    {
+        DisableAllCombatControllers([]);
+        gameObject.SetActive(false);
+        CombatViewPortController.Shared.gameObject.SetActive(false);
+        CrawlingModeController.Shared.Initialize();
     }
 }
 
