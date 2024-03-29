@@ -62,6 +62,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public void Awake()
     {
         LuaContext.LoadFromURL = (string url) => StartCoroutine(WebLoader.GetTextFromURL(url, Init, Fail));
+        LuaContext.RebuildFromURL = (string url) => StartCoroutine(WebLoader.GetTextFromURL(url, Rebuild, Fail));
     }
 
     public void Start()
@@ -75,8 +76,18 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     }
     private static readonly Dungeon EmptyDungeon = new();
 
+    public void Rebuild(string projectJson)
+    {
+        DungeonCrawlerManifest manifest = JsonExtensions.LoadModel<DungeonCrawlerManifest>(projectJson);
+        _ = DungeonBuilder.InitializeMaterialCache(manifest);
+        PlayerView previousView = CrawlerMode.CurrentView;
+        CrawlerMode.CurrentDungeon = manifest.Dungeons[CrawlerMode.CurrentDungeon.Name];
+        CrawlerMode.CurrentView = previousView;
+    }
+
     public void Init(string projectJson)
     {
+        State = new GameState();
         DungeonCrawlerManifest manifest = JsonExtensions.LoadModel<DungeonCrawlerManifest>(projectJson);
         _ = DungeonBuilder.InitializeMaterialCache(manifest);
         CrawlerMode = new CrawlerMode(manifest, EmptyDungeon, new PlayerView(PlayerViewData.X, PlayerViewData.Y, PlayerViewData.Facing));

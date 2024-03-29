@@ -1,4 +1,4 @@
-context.WriteInfo("Test")
 if context.IsFirstVisit() then
-    context.WriteInfo("You awaken in a poorly lit room... where am I?")
+    context.WriteInfo([[Zooper awaken in a poorly lit room filled with cleaning supplies... "Where am I?"]])
 end
+

@@ -11,6 +11,7 @@ namespace CaptainCoder.Dungeoneering.Lua;
 public class LuaContext(IScriptContext context)
 {
     public static Action<string>? LoadFromURL { get; set; }
+    public static Action<string>? RebuildFromURL { get; set; }
     private readonly IScriptContext _target = context;
     public DynValue PlayerView => UserData.Create(_target.View);
     public void SetPlayerPosition(int x, int y)
@@ -82,6 +83,12 @@ public class LuaContext(IScriptContext context)
         LoadFromURL.Invoke(url);
     }
 
+    public void RebuildCrawlerFromURL(string url)
+    {
+        if (RebuildFromURL is null) { throw new InvalidOperationException("No URL loader specified."); }
+        RebuildFromURL.Invoke(url);
+    }
+
     public DynValue RunScript(string scriptName)
     {
         string script = _target.Manifest.Scripts[scriptName].Script;
@@ -102,6 +109,7 @@ public class LuaContext(IScriptContext context)
 
     public void Reload() => LoadCrawlerFromURL("./project.json");
     public void ReloadFile() => LoadCrawlerFromURL("file:///D:/tmp/project.json");
+    public void RebuildFile() => RebuildCrawlerFromURL("file:///D:/tmp/project.json");
 
     public int VisitedLocationCount()
     {
