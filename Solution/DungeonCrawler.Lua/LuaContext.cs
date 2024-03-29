@@ -94,6 +94,11 @@ public class LuaContext(IScriptContext context)
         Dialogue.Dialogue value = dialogue.ToObject<Dialogue.Dialogue>();
         _target.ShowDialogue(value);
     }
+
+    public void StartCombat(string mapSetup, string onWinScript, string onGiveUpScript)
+    {
+        _target.StartCombat(mapSetup.ReplaceNewLines().TrimEnd(), onWinScript.Trim(), onGiveUpScript.Trim());
+    }
 }
 
 public interface IScriptContext
@@ -104,4 +109,5 @@ public interface IScriptContext
     public DungeonCrawlerManifest Manifest { get; set; }
     public void SendMessage(Message message);
     public void ShowDialogue(Dialogue.Dialogue dialogue);
+    public void StartCombat(string mapSetup, string onWinScript, string onGiveUpScript);
 }

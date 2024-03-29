@@ -65,8 +65,20 @@ public class CharacterSelectionModeController : MonoBehaviour
     {
         Action action = input switch
         {
-            MenuControl.Right or MenuControl.Down => () => _characterSelectionMode.HandleInput(CharacterSelectionControl.Next),
-            MenuControl.Left or MenuControl.Up => () => _characterSelectionMode.HandleInput(CharacterSelectionControl.Previous),
+            MenuControl.Right => () => _characterSelectionMode.HandleInput(CharacterSelectionControl.Next),
+            MenuControl.Down => () =>
+            {
+                _characterSelectionMode.HandleInput(CharacterSelectionControl.Next);
+                _characterSelectionMode.HandleInput(CharacterSelectionControl.Next);
+            }
+            ,
+            MenuControl.Up => () =>
+            {
+                _characterSelectionMode.HandleInput(CharacterSelectionControl.Previous);
+                _characterSelectionMode.HandleInput(CharacterSelectionControl.Previous);
+            }
+            ,
+            MenuControl.Left => () => _characterSelectionMode.HandleInput(CharacterSelectionControl.Previous),
             MenuControl.Select => () => _characterSelectionMode.HandleInput(CharacterSelectionControl.Select),
             _ => () => { }
         };

@@ -35,26 +35,14 @@ public class CombatMapController : MonoBehaviour
     private Party OriginalParty => _originalParty ?? throw new Exception($"Party was not initialized");
     private string? _originalSetup;
     private string OriginalSetup => _originalSetup ?? throw new Exception("Setup was not initialized");
+    private string _onWinScript = string.Empty;
+    private string _onGiveUpScript = string.Empty;
 
-    public void Start()
+    public void Initialize(string setup, string onWinScript, string onGiveUpScript)
     {
-        string mapSetup = """
-         1##        ##
-        ##M##########2#
-        #############3#
-         4##   ##   ##
-               ##
-              ####
-             ######
-             ######
-              ####
-        """;
-
-        Initialize(mapSetup);
-    }
-
-    public void Initialize(string setup)
-    {
+        CombatModeController.Shared.Initialize();
+        _onGiveUpScript = onGiveUpScript;
+        _onWinScript = onWinScript;
         CrawlingModeController.Shared.gameObject.SetActive(false);
         CrawlingViewPortController.Shared.gameObject.SetActive(false);
         _originalSetup = setup;
@@ -71,7 +59,7 @@ public class CombatMapController : MonoBehaviour
         map.OnMoveAction += HandleMove;
         map.OnEnemyRemoved += RemoveEnemy;
         gameObject.SetActive(true);
-        DisableAllCombatControllers([]);
+        DisableAllCombatControllers([StartPhaseController.Shared]);
         StartPhaseController.Shared.Initialize();
     }
 
@@ -229,7 +217,7 @@ public class CombatMapController : MonoBehaviour
     {
         DisableAllCombatControllers([]);
         gameObject.SetActive(false);
-        CombatViewPortController.Shared.gameObject.SetActive(false);
+        CombatModeController.Shared.gameObject.SetActive(false);
         CrawlingModeController.Shared.Initialize();
     }
 }

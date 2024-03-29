@@ -154,6 +154,8 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         CrawlingViewPortController.Shared.gameObject.SetActive(true);
         gameObject.SetActive(true);
     }
+
+    public void StartCombat(string mapSetup, string onWinScript, string onGiveUpScript) => CombatMapController.Shared.Initialize(mapSetup, onWinScript, onGiveUpScript);
 }
 
 [Serializable]

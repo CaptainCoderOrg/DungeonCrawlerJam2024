@@ -380,13 +380,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 47336251}
+  - component: {fileID: 47336252}
   m_Layer: 0
   m_Name: CombatMode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &47336251
 Transform:
   m_ObjectHideFlags: 0
@@ -405,6 +406,18 @@ Transform:
   - {fileID: 447387838}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &47336252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47336250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 613402690, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &123120204
 GameObject:
   m_ObjectHideFlags: 0
@@ -6413,7 +6426,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1369291399
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6831,7 +6844,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1533998381
 RectTransform:
   m_ObjectHideFlags: 0
