@@ -77,20 +77,20 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         Debug.Log("Done!");
     }
 
+    private static readonly Dungeon EmptyDungeon = new();
+
     public void Init(string projectJson)
     {
         DungeonCrawlerManifest manifest = JsonExtensions.LoadModel<DungeonCrawlerManifest>(projectJson);
         _ = DungeonBuilder.InitializeMaterialCache(manifest);
-        Dungeon dungeon = manifest.Dungeons["Town"];
-        CrawlerMode = new CrawlerMode(manifest, dungeon, new PlayerView(PlayerViewData.X, PlayerViewData.Y, PlayerViewData.Facing));
-        DungeonBuilder.Build(dungeon);
+        CrawlerMode = new CrawlerMode(manifest, EmptyDungeon, new PlayerView(PlayerViewData.X, PlayerViewData.Y, PlayerViewData.Facing));
         PlayerCamera.InstantTransitionToPlayerView(CrawlerMode.CurrentView);
         CrawlerMode.OnViewChange += (viewChangeEvent) => PlayerViewData = new(viewChangeEvent.Entered);
         CrawlerMode.OnViewChange += HandleMoveTransition;
         CrawlerMode.OnPositionChange += HandleOnEnterEvents;
         CrawlerMode.OnPositionChange += HandleOnExitEvents;
         CrawlerMode.OnDungeonChange += ChangeDungeon;
-
+        Initialize("start.lua");
     }
 
     private void HandleMoveTransition(ViewChangeEvent evt)
