@@ -99,6 +99,9 @@ public class LuaContext(IScriptContext context)
     {
         _target.StartCombat(mapSetup.ReplaceNewLines().TrimEnd(), onWinScript.Trim(), onGiveUpScript.Trim());
     }
+
+    public void Reload() => LoadCrawlerFromURL("./project.json");
+    public void ReloadFile() => LoadCrawlerFromURL("file:///D:/tmp/project.json");
 }
 
 public interface IScriptContext
