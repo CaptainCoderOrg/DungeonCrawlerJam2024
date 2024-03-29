@@ -56,10 +56,21 @@ public static class CombatAttackExtensions
         return new AttackHitEvent(updated.Card.Name, damage, enemy.Card.Armor);
     }
 
-    public static CanGuardResult CanGuard(this CombatMap map, IEnumerable<Position> path)
+    public static CanGuardResult CanGuardFrom(this CombatMap map, Position characterPosition, Position enemyStartPosition, IEnumerable<Position> path)
     {
-        throw new NotImplementedException();
+        PlayerCharacter character = map.PlayerCharacters[characterPosition];
+        if (character.State is not CharacterState.Guard) { return new NoGuard(); }
+        HashSet<Position> possiblePositions = [enemyStartPosition, .. path];
+        foreach (Position neighbor in characterPosition.Neighbors())
+        {
+            if (possiblePositions.Contains(neighbor)) { return new CanGuard(characterPosition, character, neighbor); }
+        }
+        return new NoGuard();
     }
+
+    public static IEnumerable<CanGuard> CanGuard(this CombatMap map, Position enemyStartPosition, IEnumerable<Position> path) => map.PlayerCharacters.Select(kvp => map.CanGuardFrom(kvp.Key, enemyStartPosition, path)).Where(result => result is CanGuard).Cast<CanGuard>();
 }
 
 public abstract record CanGuardResult;
+public record NoGuard : CanGuardResult;
+public record CanGuard(Position CharacterPosition, PlayerCharacter Character, Position AttackPosition) : CanGuardResult;
