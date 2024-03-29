@@ -83,7 +83,7 @@ public static class CombatMapExtensions
 
     public static Dictionary<char, HashSet<Position>> ParseCharPositions(string toParse)
     {
-        string[] rows = toParse.Replace(@"\r\n?|\n", Environment.NewLine).Split(Environment.NewLine);
+        string[] rows = toParse.ReplaceNewLines().Split(Environment.NewLine);
         Dictionary<char, HashSet<Position>> tiles = new();
         for (int y = 0; y < rows.Length; y++)
         {

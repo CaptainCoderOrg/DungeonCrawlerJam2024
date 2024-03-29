@@ -404,4 +404,21 @@ public class LuaInterpreter_should
         """;
         Interpreter.EvalLua<Dialogue>(script, Substitute.For<IScriptContext>());
     }
+
+    [Fact]
+    public void start_combat()
+    {
+        string script = """
+        map = [[
+        ####
+        ####
+        ####
+        ]]
+        context.StartCombat(map, "onfinish.lua", "onfail.lua")
+        """;
+        IScriptContext context = Substitute.For<IScriptContext>();
+        Interpreter.ExecLua(script, context);
+        string expectedString = $"####{Environment.NewLine}####{Environment.NewLine}####";
+        context.Received().StartCombat(expectedString, "onfinish.lua", "onfail.lua");
+    }
 }

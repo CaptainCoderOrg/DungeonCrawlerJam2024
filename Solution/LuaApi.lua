@@ -79,6 +79,9 @@ function context.RunScript(scriptName) end
 --- Shows the specified dialogue to the player
 function context.ShowDialogue(dialogue) end
 
+-- Initializes combat
+function context.StartCombat(mapSetup, onWin, onGiveUp) end
+
 --- Constructs a new dialogue with the specified text
 ---@param text any
 function Dialogue(text) 
