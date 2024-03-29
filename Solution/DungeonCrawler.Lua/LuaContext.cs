@@ -102,12 +102,24 @@ public class LuaContext(IScriptContext context)
 
     public void Reload() => LoadCrawlerFromURL("./project.json");
     public void ReloadFile() => LoadCrawlerFromURL("file:///D:/tmp/project.json");
+
+    public int VisitedLocationCount()
+    {
+        Location current = new(_target.CurrentDungeon.Name, _target.View.Position);
+        return _target.Crawler.VisitedCount(current);
+    }
+
+    public bool IsFirstVisit()
+    {
+        return VisitedLocationCount() == 0;
+    }
 }
 
 public interface IScriptContext
 {
     public GameState State { get; set; }
     public PlayerView View { get; set; }
+    public CrawlerMode Crawler { get; }
     public Dungeon CurrentDungeon { get; set; }
     public DungeonCrawlerManifest Manifest { get; set; }
     public void SendMessage(Message message);

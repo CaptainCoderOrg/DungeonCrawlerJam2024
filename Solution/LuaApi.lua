@@ -82,6 +82,12 @@ function context.ShowDialogue(dialogue) end
 -- Initializes combat
 function context.StartCombat(mapSetup, onWin, onGiveUp) end
 
+-- returns the number of times the player has visted this location
+function context.VisitedLocationCount() end
+
+-- returns true if this is the first time the player has enterd this position
+function context.IsFirstVisit() end
+
 --- Constructs a new dialogue with the specified text
 ---@param text any
 function Dialogue(text) 

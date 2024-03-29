@@ -1,1 +1,2 @@
-context.ChangeDungeon("Town", 0, 0, South)
+context.ChangeDungeon("Ikea", 11, 11, West)
+context.WriteInfo("Dungeon Initialized")

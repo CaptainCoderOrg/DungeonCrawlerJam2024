@@ -1,6 +1,7 @@
 namespace Tests;
 
 using CaptainCoder.Dungeoneering.DungeonMap;
+using CaptainCoder.Dungeoneering.DungeonMap.IO;
 
 using Shouldly;
 
@@ -10,7 +11,7 @@ public class Dungeon_should
     {
         get
         {
-            Dungeon dungeon = new();
+            Dungeon dungeon = new() { Name = "Simple" };
             dungeon.Walls.SetWall(new Position(0, 0), Facing.North, WallType.Solid);
             dungeon.Walls.SetWall(new Position(0, 0), Facing.South, WallType.Solid);
             dungeon.Walls.SetWall(new Position(0, 0), Facing.East, WallType.Solid);
@@ -158,5 +159,13 @@ public class Dungeon_should
 
         // Assert
         actual.ShouldBe((new Position(x, y), facing, textureName));
+    }
+
+    [Fact]
+    public void be_jsonable()
+    {
+        string json = JsonExtensions.ToJson(SimpleSquareDungeon);
+        Dungeon loaded = JsonExtensions.LoadModel<Dungeon>(json);
+        loaded.ShouldBe(SimpleSquareDungeon);
     }
 }

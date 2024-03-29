@@ -2,6 +2,7 @@ namespace CaptainCoder.Dungeoneering.DungeonMap;
 
 public class Dungeon() : IEquatable<Dungeon>
 {
+    public string Name { get; set; } = $"Untitled";
     public WallMap Walls { get; init; } = new();
     public EventMap EventMap { get; init; } = new();
     public WallTextureMap WallTextures { get; init; } = new();
@@ -29,7 +30,7 @@ public class Dungeon() : IEquatable<Dungeon>
 
     public bool Equals(Dungeon other)
     {
-        return Walls.Equals(other.Walls) && EventMap.Equals(other.EventMap) && TileTextures.Equals(other.TileTextures);
+        return Name == other.Name && Walls.Equals(other.Walls) && EventMap.Equals(other.EventMap) && TileTextures.Equals(other.TileTextures);
     }
 }
 
