@@ -149,10 +149,15 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
 
     public void ShowDialogue(Dialogue dialogue) => DialogueController.Show(dialogue);
 
-    internal void Initialize()
+    internal void Initialize(string? nameOfScript = null)
     {
         CrawlingViewPortController.Shared.gameObject.SetActive(true);
         gameObject.SetActive(true);
+        if (nameOfScript is not null)
+        {
+            EventScript script = CrawlerMode.Manifest.Scripts[nameOfScript];
+            Interpreter.ExecLua(script.Script, this);
+        }
     }
 
     public void StartCombat(string mapSetup, string onWinScript, string onGiveUpScript) => CombatMapController.Shared.Initialize(mapSetup, onWinScript, onGiveUpScript);

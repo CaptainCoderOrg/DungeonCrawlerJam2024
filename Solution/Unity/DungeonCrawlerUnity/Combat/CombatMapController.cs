@@ -218,7 +218,15 @@ public class CombatMapController : MonoBehaviour
         DisableAllCombatControllers([]);
         gameObject.SetActive(false);
         CombatModeController.Shared.gameObject.SetActive(false);
-        CrawlingModeController.Shared.Initialize();
+        CrawlingModeController.Shared.Initialize(_onWinScript);
+    }
+
+    internal void GiveUpCombat()
+    {
+        DisableAllCombatControllers([]);
+        gameObject.SetActive(false);
+        CombatModeController.Shared.gameObject.SetActive(false);
+        CrawlingModeController.Shared.Initialize(_onGiveUpScript);
     }
 }
 
