@@ -81,4 +81,40 @@ public static class Enemies
         MaxHealth = 4,
         AttackRoll = new SimpleAttack(6, 6),
     };
+
+    public static EnemyCard CosmicBed { get; } = new()
+    {
+        Name = "Cosmic Bed",
+        Speed = 1,
+        Armor = 5,
+        MaxHealth = 5,
+        AttackRoll = new SimpleAttack(6, 6),
+    };
+
+    public static EnemyCard Karen { get; } = new()
+    {
+        Name = "Karen",
+        Speed = 4,
+        Armor = 0,
+        MaxHealth = 16,
+        AttackRoll = new SimpleAttack(1, 6),
+    };
+
+    public static EnemyCard Chad { get; } = new()
+    {
+        Name = "Chad",
+        Speed = 8,
+        Armor = 6,
+        MaxHealth = 1,
+        AttackRoll = new SimpleAttack(3, 6),
+    };
+
+    public static EnemyCard BloodShot { get; } = new()
+    {
+        Name = "Bloodshot Meatball",
+        Speed = 2,
+        Armor = 0,
+        MaxHealth = 10,
+        AttackRoll = new SimpleAttack(10, 10),
+    };
 }

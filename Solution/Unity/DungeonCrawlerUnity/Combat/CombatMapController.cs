@@ -205,6 +205,10 @@ public class CombatMapController : MonoBehaviour
         'E' => new Enemy() { Card = Enemies.EyeKeyUh },
         'M' => new Enemy() { Card = Enemies.Meatball },
         'W' => new Enemy() { Card = Enemies.Wardrobe },
+        'Y' => new Enemy() { Card = Enemies.CosmicBed },
+        'K' => new Enemy() { Card = Enemies.Karen },
+        'C' => new Enemy() { Card = Enemies.Chad },
+        'F' => new Enemy() { Card = Enemies.BloodShot },
         _ => null,
     };
 

@@ -35,6 +35,14 @@ MonoBehaviour:
     Icon: {fileID: 11400000, guid: 4cb96582a70a19b4c86bfd4be503b198, type: 2}
   - Name: Nadrepooz
     Icon: {fileID: 11400000, guid: 6631bbcf989b46d4eb411a123263cc1d, type: 2}
+  - Name: CosmicBed
+    Icon: {fileID: 11400000, guid: 4da10e55b8ce31148b6bc5ce30f1d036, type: 2}
+  - Name: Karen
+    Icon: {fileID: 11400000, guid: c53acb96e2a5e614ebe57d0f552e6960, type: 2}
+  - Name: Chad
+    Icon: {fileID: 11400000, guid: f48792345b87d7b4c8bb46f89555a0d4, type: 2}
+  - Name: Bloodshot Meatball
+    Icon: {fileID: 11400000, guid: 9554aa35076b3f74f95b444b94dcb132, type: 2}
   Wall: {fileID: 11400000, guid: 1ddb33af246e1aa41ac889936475d7ba, type: 2}
   Floor: {fileID: 11400000, guid: 9bc79a6599fa11541bc1ec08d090feb8, type: 2}
   DefaultIcon: {fileID: 11400000, guid: d7d8b9203bbac674b9acb81b2bcbdc83, type: 2}
