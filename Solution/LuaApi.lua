@@ -115,6 +115,9 @@ function context.GiveWeapon(name, min, max) end
 -- Play the specified sound effect
 function context.PlaySound(sound) end
 
+-- If the player is in combat, exits combat
+function context.ExitCombat() end
+
 --- Constructs a new dialogue with the specified text
 ---@param text any
 function Dialogue(text)

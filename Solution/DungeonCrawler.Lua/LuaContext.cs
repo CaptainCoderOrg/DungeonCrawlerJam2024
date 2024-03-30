@@ -172,6 +172,10 @@ public class LuaContext(IScriptContext context)
     {
         _target.PlaySound(sound);
     }
+    public void ExitCombat()
+    {
+        _target.ExitCombat();
+    }
 }
 
 public interface IScriptContext
@@ -187,6 +191,7 @@ public interface IScriptContext
     public void StartCombat(string mapSetup, string onWinScript, string onGiveUpScript);
     public void GiveWeapon(Weapon weapon);
     public void PlaySound(int sound);
+    public void ExitCombat();
 }
 
 public enum ScriptSound

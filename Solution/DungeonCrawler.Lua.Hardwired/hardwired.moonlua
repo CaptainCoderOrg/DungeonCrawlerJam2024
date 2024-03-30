@@ -1380,6 +1380,25 @@ ${
 					},
 				},
 			},
+			ExitCombat = ${
+				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
+				name = "ExitCombat",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
+				overloads = ${
+					[1] = ${
+						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
+						name = "ExitCombat",
+						ctor = false,
+						special = false,
+						visibility = "public",
+						ret = "System.Void",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
+						static = false,
+						extension = false,
+						params = ${ },
+					},
+				},
+			},
 			GetType = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "GetType",

@@ -242,6 +242,14 @@ public class CombatMapController : MonoBehaviour
         CombatModeController.Shared.gameObject.SetActive(false);
         CrawlingModeController.Shared.Initialize(_onGiveUpScript);
     }
+
+    internal void ExitCombat()
+    {
+        DisableAllCombatControllers([]);
+        gameObject.SetActive(false);
+        CombatModeController.Shared.gameObject.SetActive(false);
+        CrawlingModeController.Shared.Initialize();
+    }
 }
 
 public static class PositionExtensions
