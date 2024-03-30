@@ -28,35 +28,15 @@ public class DialogueController : MonoBehaviour
     public Color NormalColor { get; set; } = Color.black;
     private readonly List<DialogueOptionController> _allOptions = [];
     private int _selectedIx = 0;
+
     public void OnEnable()
     {
-        PlayerInputHandler.OnDialogueAction?.AddListener(HandleUserInput);
-        PlayerInputHandler.OnMovementAction?.RemoveListener(CrawlingController.HandleMovement);
+        PlayerInputHandler.Shared.DisableCrawling();
     }
+
     public void OnDisable()
     {
-        PlayerInputHandler.OnDialogueAction?.RemoveListener(HandleUserInput);
-        PlayerInputHandler.OnMovementAction?.AddListener(CrawlingController.HandleMovement);
-    }
-    private void TestDialogue()
-    {
-        Dialogue dialogue = new(
-            """
-            This is a sample dialogue to test how it looks in the game view.
-
-            I've added some extra spaces <b>bold</b> text and <i>italic</i> text.
-
-            Additionally I've added <color=red>colors</color>!
-            """
-        );
-
-        Dialogue more = new("I have nothing else to say.");
-
-        dialogue.AddOption(new ContinueDialogueOption("Tell <b>Me</b> More", more));
-        dialogue.AddOption(new RunScriptDialogueOption("Teleport <i>me</i>!", "teleport.lua"));
-        dialogue.AddOption(new CloseDialogueOption("C<color=yellow>l</color>ose"));
-
-        Show(dialogue);
+        PlayerInputHandler.Shared.EnableCrawling();
     }
 
     public void Show(Dialogue dialogue)
@@ -98,14 +78,16 @@ public class DialogueController : MonoBehaviour
         current.Text.color = SelectedColor;
     }
 
-    public void HandleUserInput(DialogueAction action)
+    public void Update() => PlayerInputHandler.Shared.InputMapping.OnMenuAction(HandleUserInput);
+
+    public void HandleUserInput(MenuControl action)
     {
         Action result = action switch
         {
-            DialogueAction.Next => () => Next(1),
-            DialogueAction.Previous => () => Next(-1),
-            DialogueAction.Select => ExecuteOption,
-            DialogueAction.Exit => Close,
+            MenuControl.Right or MenuControl.Down => () => Next(1),
+            MenuControl.Left or MenuControl.Up => () => Next(-1),
+            MenuControl.Select => ExecuteOption,
+            // MenuControl.Exit => Close,
             _ => () => { }
         };
         result.Invoke();
