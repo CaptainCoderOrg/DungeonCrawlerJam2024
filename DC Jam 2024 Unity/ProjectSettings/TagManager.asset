@@ -56,3 +56,6 @@ TagManager:
   - name: Grid
     uniqueID: 2929812377
     locked: 0
+  - name: TextInfo
+    uniqueID: 3232574689
+    locked: 0

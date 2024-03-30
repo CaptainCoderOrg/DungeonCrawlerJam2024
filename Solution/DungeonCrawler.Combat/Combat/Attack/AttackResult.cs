@@ -21,4 +21,11 @@ public static class AttackResultEventExtensions
         if (evt is AttackResultEvents(var evts)) { evts.Any(IsTargetKilledEvent); }
         return false;
     }
+
+    public static int TotalDamage(this AttackResultEvent evt)
+    {
+        if (evt is AttackHitEvent hit) { return hit.Damage; }
+        else if (evt is AttackResultEvents evts) { return evts.Results.Sum(TotalDamage); }
+        return 0;
+    }
 }

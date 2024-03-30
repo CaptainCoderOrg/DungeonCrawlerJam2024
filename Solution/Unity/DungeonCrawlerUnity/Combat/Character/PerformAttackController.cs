@@ -7,6 +7,8 @@ public class PerformAttackController : MonoBehaviour
 {
     public static PerformAttackController Shared { get; private set; } = default!;
     public PerformAttackController() { Shared = this; }
+    public DamageMessage DamageMessageTemplate = default!;
+    public Transform DamageMessageParent = default!;
     private CombatMap Map => CombatMapController.Shared.CombatMap;
     private int _exert = 0;
     private Action<AttackResultEvent> _onFinish = default!;
@@ -59,7 +61,7 @@ public class PerformAttackController : MonoBehaviour
     private IAttackRoll GetAttackRoll()
     {
         PlayerCharacter pc = Map.GetCharacter(_card);
-        SimpleAttack roll = new(pc.Weapon.AttackRoll.Min, pc.Weapon.AttackRoll.Max + _exert);
+        SimpleAttack roll = new(pc.Weapon.AttackRoll.Min + (_exert / 2), pc.Weapon.AttackRoll.Max + _exert);
         return roll;
     }
 
@@ -68,6 +70,12 @@ public class PerformAttackController : MonoBehaviour
         PlayerCharacter pc = Map.GetCharacter(_card);
         Map.UpdateCharacter(pc with { Exertion = pc.Exertion + _exert });
         AttackResultEvent result = Map.DoAttack(_card, GetAttackRoll(), _target);
+        int damage = result.TotalDamage();
+        if (damage > 0)
+        {
+            DamageMessage newMessage = Instantiate(DamageMessageTemplate, DamageMessageParent);
+            newMessage.Render(result.TotalDamage(), _target);
+        }
         _onFinish.Invoke(result);
         gameObject.SetActive(false);
     }
