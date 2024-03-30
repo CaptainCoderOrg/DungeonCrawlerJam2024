@@ -105,6 +105,7 @@ public class EnemyTurnController : MonoBehaviour
         CanGuard[] guards = [.. Map.CanGuard(start, [])];
         if (guards.Length > 0)
         {
+            SFXController.Shared.PlaySound(Sound.Guard);
             string keys = PlayerInputHandler.Shared.GetKeys(MenuControl.Select);
             foreach (CanGuard guard in guards)
             {
@@ -129,6 +130,7 @@ public class EnemyTurnController : MonoBehaviour
         {
             int damage = attackEvent.TotalDamage();
             if (damage > 0) { SFXController.Shared.PlaySound(Sound.Hit); }
+            else { SFXController.Shared.PlaySound(Sound.Miss); }
             DamageMessage newMessage = Instantiate(DamageMessageTemplate, DamageMessageParent);
             newMessage.Render(attackEvent.TotalDamage(), target);
             yield return new WaitForSeconds(CombatConstants.ShortEnemyInfoDuration);
@@ -167,6 +169,7 @@ public class EnemyTurnController : MonoBehaviour
         CanGuard[] guards = [.. Map.CanGuard(start, path)];
         if (guards.Length > 0)
         {
+            SFXController.Shared.PlaySound(Sound.Guard);
             string keys = PlayerInputHandler.Shared.GetKeys(MenuControl.Select);
             foreach (CanGuard guard in guards)
             {

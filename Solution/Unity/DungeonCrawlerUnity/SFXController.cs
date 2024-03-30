@@ -37,6 +37,10 @@ public enum Sound
     Hit,
     Die,
     Footstep,
+    Eat,
+    Miss,
+    Rest,
+    Guard,
 }
 
 [Serializable]

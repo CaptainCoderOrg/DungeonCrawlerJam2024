@@ -1,5 +1,6 @@
 using System.Collections;
 
+using CaptainCoder.DungeonCrawler.Unity;
 using CaptainCoder.Dungeoneering.Game.Unity;
 
 using UnityEngine;
@@ -54,6 +55,7 @@ public class StartPhaseController : MonoBehaviour
         {
             MessageRenderer.Shared.AddMessage($"{character.Card.Name} rests. Energy restored!");
             character = character with { Exertion = 0 };
+            SFXController.Shared.PlaySound(Sound.Rest);
         }
         if (character.State is CharacterState.Guard)
         {

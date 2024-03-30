@@ -169,6 +169,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
 
     internal void Initialize(string? nameOfScript = null)
     {
+        MusicPlayerController.Shared.Play(Music.Crawling);
         CrawlingViewPortController.Shared.gameObject.SetActive(true);
         gameObject.SetActive(true);
         if (nameOfScript is not null)

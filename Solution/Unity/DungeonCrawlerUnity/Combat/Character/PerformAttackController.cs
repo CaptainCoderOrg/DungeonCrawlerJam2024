@@ -76,6 +76,7 @@ public class PerformAttackController : MonoBehaviour
         {
             int damage = result.TotalDamage();
             if (damage > 0) { SFXController.Shared.PlaySound(Sound.Hit); }
+            else { SFXController.Shared.PlaySound(Sound.Miss); }
             DamageMessage newMessage = Instantiate(DamageMessageTemplate, DamageMessageParent);
             newMessage.Render(damage, _target);
         }
