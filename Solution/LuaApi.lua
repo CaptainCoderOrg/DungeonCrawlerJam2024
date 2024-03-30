@@ -97,6 +97,9 @@ function context.AddPartyMember(ix) end
 -- Adds the specified party member to the party
 function context.RemovePartyMember(ix) end
 
+-- Moves the player back to their previous position
+function context.PushBack() end
+
 --- Constructs a new dialogue with the specified text
 ---@param text any
 function Dialogue(text)

@@ -11,6 +11,7 @@ public class CrawlerMode(DungeonCrawlerManifest manifest, Dungeon currentDungeon
     private readonly Dictionary<Location, int> _visited = [];
     public int VisitedCount(Location location) => _visited.GetValueOrDefault(location, 0);
     public Location CurrentLocation => new(CurrentDungeon.Name, CurrentView.Position);
+    public PlayerView LastView { get; private set; } = playerView;
     public Dungeon CurrentDungeon
     {
         get => _currentDungeon;
@@ -34,6 +35,7 @@ public class CrawlerMode(DungeonCrawlerManifest manifest, Dungeon currentDungeon
         {
             if (_currentView == value) { return; }
             Position prevPosition = _currentView.Position;
+            LastView = _currentView;
             PlayerView previous = _currentView;
             _currentView = value;
             OnViewChange?.Invoke(new ViewChangeEvent(previous, _currentView));

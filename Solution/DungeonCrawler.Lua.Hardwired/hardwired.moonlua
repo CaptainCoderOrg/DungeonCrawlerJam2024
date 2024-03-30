@@ -1262,6 +1262,25 @@ ${
 					},
 				},
 			},
+			PushBack = ${
+				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
+				name = "PushBack",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
+				overloads = ${
+					[1] = ${
+						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
+						name = "PushBack",
+						ctor = false,
+						special = false,
+						visibility = "public",
+						ret = "System.Void",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
+						static = false,
+						extension = false,
+						params = ${ },
+					},
+				},
+			},
 			IsFirstVisit = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "IsFirstVisit",

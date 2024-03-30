@@ -1,0 +1,1 @@
+context.SetVariable("defeated-green-room.lua", true)

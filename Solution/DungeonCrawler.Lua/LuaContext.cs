@@ -150,6 +150,11 @@ public class LuaContext(IScriptContext context)
         return _target.Crawler.VisitedCount(current);
     }
 
+    public void PushBack()
+    {
+        _target.View = _target.Crawler.LastView;
+    }
+
     public bool IsFirstVisit()
     {
         return VisitedLocationCount() == 0;
