@@ -132,6 +132,18 @@ public class LuaContext(IScriptContext context)
         toInvoke.Invoke();
     }
 
+    public void RemovePartyMember(int ix)
+    {
+        Action toInvoke = ix switch
+        {
+            1 => () => _target.Party.TopRight = new() { Card = Characters.NoBody },
+            2 => () => _target.Party.BottomLeft = new() { Card = Characters.NoBody },
+            3 => () => _target.Party.BottomRight = new() { Card = Characters.NoBody },
+            _ => () => WriteInfo($"Unknown party member {ix}"),
+        };
+        toInvoke.Invoke();
+    }
+
     public int VisitedLocationCount()
     {
         Location current = new(_target.CurrentDungeon.Name, _target.View.Position);

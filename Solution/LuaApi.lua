@@ -91,12 +91,19 @@ function context.IsFirstVisit() end
 -- Heals the party to full
 function context.HealParty() end
 
+-- Adds the specified party member to the party
+function context.AddPartyMember(ix) end
+
+-- Adds the specified party member to the party
+function context.RemovePartyMember(ix) end
+
 --- Constructs a new dialogue with the specified text
 ---@param text any
-function Dialogue(text) 
+function Dialogue(text)
     local dialogue = {}
     --- Add an option to this dialogue
     function dialogue.AddOption(option) end
+
     return dialogue
 end
 

@@ -66,7 +66,7 @@ public class Party : IEnumerable<PlayerCharacter>
     public event Action<PlayerCharacter>? OnBottomLeftChange;
     public event Action<PlayerCharacter>? OnBottomRightChange;
 
-    public bool IsDead => ToArray.All(pc => pc.IsDead());
+    public bool IsDead => ToArray.All(pc => pc.IsDead() || pc.Card == Characters.NoBody);
 
     public void UpdateCharacter(PlayerCharacter toUpdate)
     {
