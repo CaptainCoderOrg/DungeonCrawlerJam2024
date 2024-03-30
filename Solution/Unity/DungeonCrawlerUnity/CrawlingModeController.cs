@@ -196,6 +196,10 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public void PlaySound(int sound) => SFXController.Shared.PlaySound((Sound)sound);
 
     public void ExitCombat() => CombatMapController.Shared.ExitCombat();
+
+    public void WinCombat() => CombatMapController.Shared.EndCombat();
+
+    public void LoseCombat() => CombatMapController.Shared.GiveUpCombat();
 }
 
 [Serializable]

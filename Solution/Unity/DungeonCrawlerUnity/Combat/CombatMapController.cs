@@ -198,10 +198,13 @@ public class CombatMapController : MonoBehaviour
     };
     internal static Enemy? EnemyMapping(char ch) => ch switch
     {
-        'B' => new Enemy() { Card = Enemies.EmployeeCard },
+        'B' => new Enemy() { Card = Enemies.MouthBreather },
+        'H' => new Enemy() { Card = Enemies.HangryEmployee },
+        'D' => new Enemy() { Card = Enemies.EmployeeCard },
         'S' => new Enemy() { Card = Enemies.SkeletonCard },
         'E' => new Enemy() { Card = Enemies.EyeKeyUh },
         'M' => new Enemy() { Card = Enemies.Meatball },
+        'W' => new Enemy() { Card = Enemies.Wardrobe },
         _ => null,
     };
 

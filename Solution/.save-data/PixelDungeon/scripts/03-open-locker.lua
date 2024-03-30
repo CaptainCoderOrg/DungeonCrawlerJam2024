@@ -1,10 +1,10 @@
 context.WriteInfo("It's a meat locker! And it is filled with Cosmic Meatballs!")
 local setup = [[
-    #####    ###E 
-    #####   3#####
-    ###MM###1#####E
-    ###MM###2#####E
+    M####    ###D 
+    #M###   3#####
+    #M#######1####B
+    M########2####B
             4#####
-             ###E
+             ###H
 ]]
 context.StartCombat(setup, "03-win-meat-locker.lua", "return-to-altar.lua")

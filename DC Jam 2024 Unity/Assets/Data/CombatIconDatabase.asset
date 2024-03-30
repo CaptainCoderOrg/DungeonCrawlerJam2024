@@ -13,22 +13,20 @@ MonoBehaviour:
   m_Name: CombatIconDatabase
   m_EditorClassIdentifier: 
   <Entries>k__BackingField:
-  - Name: Bob
+  - Name: Mouth Breather
     Icon: {fileID: 11400000, guid: d8f70bad0011ad645a155e9f0335ab1e, type: 2}
-  - Name: Alice
-    Icon: {fileID: 11400000, guid: f5dacbbbf591f6c47b003edadb64244e, type: 2}
-  - Name: Sally
-    Icon: {fileID: 11400000, guid: 9cb50f4c0d1753c4ba11ed0a9aacca88, type: 2}
-  - Name: Greg
+  - Name: Hangry Employee
     Icon: {fileID: 11400000, guid: 57106953e36e9a643a536aee1b0b6d64, type: 2}
   - Name: Skeleton
     Icon: {fileID: 11400000, guid: 408115c39b77b644ba82e519160115e3, type: 2}
-  - Name: Beast
+  - Name: Disgruntled Employee
     Icon: {fileID: 11400000, guid: 943e36e0ec1f7b6408dc07c03232758b, type: 2}
-  - Name: Meatball
+  - Name: Cosmic Meatball
     Icon: {fileID: 11400000, guid: 0d2a00d494d13864bba8fa2fce7911e4, type: 2}
   - Name: Eye Key Uh
     Icon: {fileID: 11400000, guid: 6d68cb5f325d4f84c8dca271ce9cf67d, type: 2}
+  - Name: Cosmic Wardrobe
+    Icon: {fileID: 11400000, guid: 1c5c2ea603d031d41a9366c950dc5a05, type: 2}
   - Name: Zooperdan
     Icon: {fileID: 11400000, guid: 4126299e69183a547b8c0ef9b7256371, type: 2}
   - Name: Kordanor

@@ -37,6 +37,24 @@ public static class Enemies
         AttackRoll = new SimpleAttack(2, 4),
     };
 
+    public static EnemyCard HangryEmployee { get; } = new()
+    {
+        Name = "Hangry Employee",
+        Speed = 2,
+        Armor = 0,
+        MaxHealth = 8,
+        AttackRoll = new SimpleAttack(0, 4),
+    };
+
+    public static EnemyCard MouthBreather { get; } = new()
+    {
+        Name = "Mouth Breather",
+        Speed = 2,
+        Armor = 2,
+        MaxHealth = 1,
+        AttackRoll = new SimpleAttack(1, 4),
+    };
+
     public static EnemyCard EyeKeyUh { get; } = new()
     {
         Name = "Eye Key Uh",
@@ -48,10 +66,19 @@ public static class Enemies
 
     public static EnemyCard Meatball { get; } = new()
     {
-        Name = "Meatball",
+        Name = "Cosmic Meatball",
         Speed = 6,
         Armor = 0,
         MaxHealth = 1,
         AttackRoll = new SimpleAttack(1, 10),
+    };
+
+    public static EnemyCard Wardrobe { get; } = new()
+    {
+        Name = "Cosmic Wardrobe",
+        Speed = 1,
+        Armor = 3,
+        MaxHealth = 4,
+        AttackRoll = new SimpleAttack(6, 6),
     };
 }
