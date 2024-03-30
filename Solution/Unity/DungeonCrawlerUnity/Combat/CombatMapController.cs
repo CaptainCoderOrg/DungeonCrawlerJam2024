@@ -54,6 +54,7 @@ public class CombatMapController : MonoBehaviour
     public void TryAgain() => StartCombat(OriginalParty, OriginalSetup);
     public void StartCombat(Party party, string setup)
     {
+        MusicPlayerController.Shared.Play(Music.Combat);
         CrawlingModeController.Shared.Party.ApplyValues(party);
         CombatMap map = CombatMapExtensions.ParseMap(setup, PCMapping, EnemyMapping);
         RemoveNobody(map);

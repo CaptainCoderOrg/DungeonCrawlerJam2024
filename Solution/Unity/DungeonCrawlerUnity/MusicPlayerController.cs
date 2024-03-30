@@ -19,11 +19,12 @@ public class MusicPlayerController : MonoBehaviour
         AudioSource.volume = value;
     }
 
-    public void Play(Music toPlay)
+    public void Play(Music toPlay, bool loop = true)
     {
         MusicEntry? entry = Entries.Where(e => e.Sound == toPlay).FirstOrDefault();
         if (entry is null) { Debug.Log($"No music file for {toPlay}."); return; }
         if (entry.Clip == AudioSource.clip) { return; }
+        AudioSource.loop = loop;
         StartCoroutine(FadeIn(entry));
     }
 
@@ -63,6 +64,7 @@ public enum Music
     Combat,
     Victory,
     Credits,
+    GameOver,
 }
 
 [Serializable]
