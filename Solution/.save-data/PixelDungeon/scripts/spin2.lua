@@ -5,5 +5,4 @@ function NewFacing()
     end
     return dir
 end
-context.WriteInfo("The stench makes you spin")
 context.SetPlayerFacing(NewFacing())

@@ -3,7 +3,8 @@ using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Player;
-
+using Weapon = CaptainCoder.DungeonCrawler.Combat.Weapon;
+using SimpleAttack = CaptainCoder.DungeonCrawler.Combat.SimpleAttack;
 using MoonSharp.Interpreter;
 
 namespace CaptainCoder.Dungeoneering.Lua;
@@ -159,6 +160,11 @@ public class LuaContext(IScriptContext context)
     {
         return VisitedLocationCount() == 0;
     }
+
+    public void GiveWeapon(string name, int min, int max)
+    {
+        _target.GiveWeapon(new Weapon() { Name = name, AttackRoll = new SimpleAttack(min, max) });
+    }
 }
 
 public interface IScriptContext
@@ -172,4 +178,5 @@ public interface IScriptContext
     public void SendMessage(Message message);
     public void ShowDialogue(Dialogue.Dialogue dialogue);
     public void StartCombat(string mapSetup, string onWinScript, string onGiveUpScript);
+    public void GiveWeapon(Weapon weapon);
 }

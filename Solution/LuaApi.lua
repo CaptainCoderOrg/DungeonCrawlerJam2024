@@ -100,6 +100,9 @@ function context.RemovePartyMember(ix) end
 -- Moves the player back to their previous position
 function context.PushBack() end
 
+-- Give the party a weapon
+function context.GiveWeapon(name, min, max) end
+
 --- Constructs a new dialogue with the specified text
 ---@param text any
 function Dialogue(text)

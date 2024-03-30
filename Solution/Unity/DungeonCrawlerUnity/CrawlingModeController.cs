@@ -1,6 +1,7 @@
 using System.Collections;
 
 using CaptainCoder.DungeonCrawler;
+using CaptainCoder.DungeonCrawler.Combat;
 using CaptainCoder.DungeonCrawler.Combat.Unity;
 using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
@@ -176,6 +177,8 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     }
 
     public void StartCombat(string mapSetup, string onWinScript, string onGiveUpScript) => CombatMapController.Shared.Initialize(mapSetup, onWinScript, onGiveUpScript);
+
+    public void GiveWeapon(Weapon weapon) => WeaponDialogueScreen.Shared.Initialize(weapon);
 }
 
 [Serializable]
