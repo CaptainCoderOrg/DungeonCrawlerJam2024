@@ -11,7 +11,7 @@ public class MusicPlayerController : MonoBehaviour
     public AudioSource AudioSource = default!;
     public MusicEntry[] Entries = [];
     private float _volume = 0.25f;
-    public float FadeTime = 1f;
+    public float FadeTime = 2f;
 
     public void OnVolumeChange(float value)
     {
@@ -23,6 +23,7 @@ public class MusicPlayerController : MonoBehaviour
     {
         MusicEntry? entry = Entries.Where(e => e.Sound == toPlay).FirstOrDefault();
         if (entry is null) { Debug.Log($"No music file for {toPlay}."); return; }
+        if (entry.Clip == AudioSource.clip) { return; }
         StartCoroutine(FadeIn(entry));
     }
 

@@ -40,6 +40,31 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
     internal string GetKeys(MenuControl control) => string.Join(" or ", InputMapping.MenuActionMappings.Where(mapping => mapping.Action == control).Select(m => m.Key.ToString()));
+    internal string GetKeys(MovementAction control) => string.Join(" or ", InputMapping.MovementActions.Where(mapping => mapping.Action == control).Select(m => m.Key.ToString()));
+
+    internal void SetKey(MovementAction control, KeyCode code)
+    {
+        for (int ix = 0; ix < InputMapping.MovementActions.Length; ix++)
+        {
+            MovementActionMapping mapping = InputMapping.MovementActions[ix];
+            if (mapping.Action == control)
+            {
+                InputMapping.MovementActions[ix].Key = code;
+            }
+        }
+    }
+
+    internal void SetKey(MenuControl control, KeyCode code)
+    {
+        for (int ix = 0; ix < InputMapping.MovementActions.Length; ix++)
+        {
+            MenuActionMapping mapping = InputMapping.MenuActionMappings[ix];
+            if (mapping.Action == control)
+            {
+                InputMapping.MenuActionMappings[ix].Key = code;
+            }
+        }
+    }
 }
 
 

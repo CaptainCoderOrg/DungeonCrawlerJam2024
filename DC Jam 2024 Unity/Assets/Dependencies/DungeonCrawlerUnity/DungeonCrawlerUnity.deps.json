@@ -19,6 +19,7 @@
           "UnityEngine.CoreModule": "0.0.0.0",
           "UnityEngine.GridModule": "0.0.0.0",
           "UnityEngine.ImageConversionModule": "0.0.0.0",
+          "UnityEngine.IMGUIModule": "0.0.0.0",
           "UnityEngine.InputLegacyModule": "0.0.0.0",
           "UnityEngine.InputModule": "0.0.0.0",
           "UnityEngine.TilemapModule": "0.0.0.0",
@@ -118,6 +119,14 @@
       "UnityEngine.ImageConversionModule/0.0.0.0": {
         "runtime": {
           "UnityEngine.ImageConversionModule.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "UnityEngine.IMGUIModule/0.0.0.0": {
+        "runtime": {
+          "UnityEngine.IMGUIModule.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
           }
@@ -231,6 +240,11 @@
       "sha512": ""
     },
     "UnityEngine.ImageConversionModule/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UnityEngine.IMGUIModule/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
