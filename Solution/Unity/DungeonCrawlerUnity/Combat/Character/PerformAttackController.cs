@@ -1,3 +1,4 @@
+using CaptainCoder.DungeonCrawler.Unity;
 using CaptainCoder.Dungeoneering.Game.Unity;
 using CaptainCoder.Dungeoneering.Player.Unity;
 
@@ -73,9 +74,12 @@ public class PerformAttackController : MonoBehaviour
 
         if (!result.IsTargetKilledEvent())
         {
+            int damage = result.TotalDamage();
+            if (damage > 0) { SFXController.Shared.PlaySound(Sound.Hit); }
             DamageMessage newMessage = Instantiate(DamageMessageTemplate, DamageMessageParent);
-            newMessage.Render(result.TotalDamage(), _target);
+            newMessage.Render(damage, _target);
         }
+        if (result.IsTargetKilledEvent()) { SFXController.Shared.PlaySound(Sound.Die); }
         _onFinish.Invoke(result);
         gameObject.SetActive(false);
     }

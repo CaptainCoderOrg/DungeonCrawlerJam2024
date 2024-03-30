@@ -3,6 +3,7 @@ using System.Collections;
 using CaptainCoder.DungeonCrawler;
 using CaptainCoder.DungeonCrawler.Combat;
 using CaptainCoder.DungeonCrawler.Combat.Unity;
+using CaptainCoder.DungeonCrawler.Unity;
 using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
@@ -98,6 +99,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         CrawlerMode.OnViewChange += HandleMoveTransition;
         CrawlerMode.OnPositionChange += HandleOnEnterEvents;
         CrawlerMode.OnPositionChange += HandleOnExitEvents;
+        CrawlerMode.OnPositionChange += (_) => SFXController.Shared.PlaySound(Sound.Footstep);
         CrawlerMode.OnDungeonChange += ChangeDungeon;
         StartCoroutine(InitNextFrame());
     }

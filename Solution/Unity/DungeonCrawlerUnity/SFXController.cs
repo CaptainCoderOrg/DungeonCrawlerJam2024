@@ -39,6 +39,7 @@ public enum Sound
     Footstep,
 }
 
+[Serializable]
 public class SoundEffectEntry
 {
     public Sound Sound;
