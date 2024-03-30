@@ -32,6 +32,8 @@ public class SFXController : MonoBehaviour
     }
 }
 
+// Hack: If you change this you must also change LuaContext.Sound -- they must be the same order
+// You must also update LuaApi.lua
 public enum Sound
 {
     Hit,

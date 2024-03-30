@@ -192,6 +192,8 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public void StartCombat(string mapSetup, string onWinScript, string onGiveUpScript) => CombatMapController.Shared.Initialize(mapSetup, onWinScript, onGiveUpScript);
 
     public void GiveWeapon(Weapon weapon) => WeaponDialogueScreen.Shared.Initialize(weapon);
+
+    public void PlaySound(int sound) => SFXController.Shared.PlaySound((Sound)sound);
 }
 
 [Serializable]
