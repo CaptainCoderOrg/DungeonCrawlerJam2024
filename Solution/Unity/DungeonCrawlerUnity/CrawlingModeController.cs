@@ -115,7 +115,14 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     private void HandleMoveTransition(ViewChangeEvent evt)
     {
         if (_currentTransition != null) { StopCoroutine(_currentTransition); }
-        _currentTransition = StartCoroutine(PlayerCamera.LerpTransitionToPlayerView(evt.Exited, evt.Entered));
+        if (_instantMove)
+        {
+            PlayerCamera.InstantTransitionToPlayerView(evt.Entered);
+        }
+        else
+        {
+            _currentTransition = StartCoroutine(PlayerCamera.LerpTransitionToPlayerView(evt.Exited, evt.Entered));
+        }
     }
 
     public void ChangeDungeon(DungeonChangeEvent evt)
@@ -125,6 +132,9 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     }
 
     public void SendMessage(Message message) => CrawlerMode.AddMessage(message);
+
+    private bool _instantMove = false;
+    public void SetInstantMovement(bool toggle) => _instantMove = toggle;
 
     public void OnEnable()
     {
