@@ -2,9 +2,9 @@
 
 context.RunScript("begin-quest.lua")
 context.AddPartyMember(1)
-context.AddPartyMember(2)
 context.RemovePartyMember(3)
-context.SetPlayerPosition(13,21)
+context.RemovePartyMember(2)
+context.SetPlayerView(13,21, North)
 context.SetVariable("has-green-key", true)
-context.SetVariable("ronadrok-in-party", true)
+context.SetVariable("has-purple-key", true)
 context.SetVariable("defeated-green-room.lua", true)
