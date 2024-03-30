@@ -3,6 +3,7 @@ using System.Collections;
 using CaptainCoder.DungeonCrawler;
 using CaptainCoder.DungeonCrawler.Combat;
 using CaptainCoder.DungeonCrawler.Combat.Unity;
+using CaptainCoder.DungeonCrawler.Unity;
 using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
 using CaptainCoder.Dungeoneering.DungeonMap;
@@ -98,6 +99,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         CrawlerMode.OnViewChange += HandleMoveTransition;
         CrawlerMode.OnPositionChange += HandleOnEnterEvents;
         CrawlerMode.OnPositionChange += HandleOnExitEvents;
+        CrawlerMode.OnPositionChange += (_) => SFXController.Shared.PlaySound(Sound.Footstep);
         CrawlerMode.OnDungeonChange += ChangeDungeon;
         StartCoroutine(InitNextFrame());
     }
@@ -113,7 +115,14 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     private void HandleMoveTransition(ViewChangeEvent evt)
     {
         if (_currentTransition != null) { StopCoroutine(_currentTransition); }
-        _currentTransition = StartCoroutine(PlayerCamera.LerpTransitionToPlayerView(evt.Exited, evt.Entered));
+        if (_instantMove)
+        {
+            PlayerCamera.InstantTransitionToPlayerView(evt.Entered);
+        }
+        else
+        {
+            _currentTransition = StartCoroutine(PlayerCamera.LerpTransitionToPlayerView(evt.Exited, evt.Entered));
+        }
     }
 
     public void ChangeDungeon(DungeonChangeEvent evt)
@@ -123,6 +132,9 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     }
 
     public void SendMessage(Message message) => CrawlerMode.AddMessage(message);
+
+    private bool _instantMove = false;
+    public void SetInstantMovement(bool toggle) => _instantMove = toggle;
 
     public void OnEnable()
     {
@@ -167,6 +179,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
 
     internal void Initialize(string? nameOfScript = null)
     {
+        MusicPlayerController.Shared.Play(Music.Crawling);
         CrawlingViewPortController.Shared.gameObject.SetActive(true);
         gameObject.SetActive(true);
         if (nameOfScript is not null)
@@ -179,6 +192,8 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public void StartCombat(string mapSetup, string onWinScript, string onGiveUpScript) => CombatMapController.Shared.Initialize(mapSetup, onWinScript, onGiveUpScript);
 
     public void GiveWeapon(Weapon weapon) => WeaponDialogueScreen.Shared.Initialize(weapon);
+
+    public void PlaySound(int sound) => SFXController.Shared.PlaySound((Sound)sound);
 }
 
 [Serializable]

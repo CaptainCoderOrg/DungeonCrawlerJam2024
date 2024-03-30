@@ -32,6 +32,7 @@ public static class Interpreter
         lua.Globals.Set("LuaAPI", UserData.Create(new LuaAPI()));
         lua.RegisterEnum<Facing>();
         lua.RegisterEnum<WallType>();
+        lua.RegisterEnum<ScriptSound>();
         return lua;
     }
 

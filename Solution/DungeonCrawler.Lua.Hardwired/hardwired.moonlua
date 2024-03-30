@@ -1350,6 +1350,36 @@ ${
 					},
 				},
 			},
+			PlaySound = ${
+				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
+				name = "PlaySound",
+				decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
+				overloads = ${
+					[1] = ${
+						class = "MoonSharp.Interpreter.Interop.MethodMemberDescriptor",
+						name = "PlaySound",
+						ctor = false,
+						special = false,
+						visibility = "public",
+						ret = "System.Void",
+						decltype = "CaptainCoder.Dungeoneering.Lua.LuaContext",
+						static = false,
+						extension = false,
+						params = ${
+							[1] = ${
+								name = "sound",
+								type = "System.Int32",
+								origtype = "System.Int32",
+								default = false,
+								out = false,
+								ref = false,
+								varargs = false,
+								restricted = false,
+							},
+						},
+					},
+				},
+			},
 			GetType = ${
 				class = "MoonSharp.Interpreter.Interop.OverloadedMethodMemberDescriptor",
 				name = "GetType",

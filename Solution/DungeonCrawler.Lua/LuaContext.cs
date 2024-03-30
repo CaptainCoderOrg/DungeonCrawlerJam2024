@@ -167,6 +167,11 @@ public class LuaContext(IScriptContext context)
     {
         _target.GiveWeapon(new Weapon() { Name = name, AttackRoll = new SimpleAttack(min, max) });
     }
+
+    public void PlaySound(int sound)
+    {
+        _target.PlaySound(sound);
+    }
 }
 
 public interface IScriptContext
@@ -181,4 +186,16 @@ public interface IScriptContext
     public void ShowDialogue(Dialogue.Dialogue dialogue);
     public void StartCombat(string mapSetup, string onWinScript, string onGiveUpScript);
     public void GiveWeapon(Weapon weapon);
+    public void PlaySound(int sound);
+}
+
+public enum ScriptSound
+{
+    Hit,
+    Die,
+    Footstep,
+    Eat,
+    Miss,
+    Rest,
+    Guard,
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 
+using CaptainCoder.DungeonCrawler.Unity;
 using CaptainCoder.Dungeoneering.Game.Unity;
 using CaptainCoder.Dungeoneering.Player.Unity;
 using CaptainCoder.Dungeoneering.Unity;
@@ -104,6 +105,7 @@ public class EnemyTurnController : MonoBehaviour
         CanGuard[] guards = [.. Map.CanGuard(start, [])];
         if (guards.Length > 0)
         {
+            SFXController.Shared.PlaySound(Sound.Guard);
             string keys = PlayerInputHandler.Shared.GetKeys(MenuControl.Select);
             foreach (CanGuard guard in guards)
             {
@@ -127,12 +129,15 @@ public class EnemyTurnController : MonoBehaviour
         if (!attackEvent.IsTargetKilledEvent())
         {
             int damage = attackEvent.TotalDamage();
+            if (damage > 0) { SFXController.Shared.PlaySound(Sound.Hit); }
+            else { SFXController.Shared.PlaySound(Sound.Miss); }
             DamageMessage newMessage = Instantiate(DamageMessageTemplate, DamageMessageParent);
             newMessage.Render(attackEvent.TotalDamage(), target);
             yield return new WaitForSeconds(CombatConstants.ShortEnemyInfoDuration);
         }
         if (attackEvent.IsTargetKilledEvent())
         {
+            SFXController.Shared.PlaySound(Sound.Die);
             CombatMapController.Shared.CharacterMap.SetTile(target.ToVector3Int(), CombatMapController.Shared.IconDatabase.Dead);
             if (CrawlingModeController.Shared.Party.IsDead)
             {
@@ -164,6 +169,7 @@ public class EnemyTurnController : MonoBehaviour
         CanGuard[] guards = [.. Map.CanGuard(start, path)];
         if (guards.Length > 0)
         {
+            SFXController.Shared.PlaySound(Sound.Guard);
             string keys = PlayerInputHandler.Shared.GetKeys(MenuControl.Select);
             foreach (CanGuard guard in guards)
             {
@@ -189,6 +195,7 @@ public class EnemyTurnController : MonoBehaviour
             characterMap.SetTile(last.ToVector3Int(), toSet);
             toSet = characterMap.GetTile(position.ToVector3Int());
             characterMap.SetTile(position.ToVector3Int(), tile);
+            SFXController.Shared.PlaySound(Sound.Footstep);
             yield return new WaitForSeconds(CombatConstants.EnemyMoveDelay);
             yield return new WaitUntil(() => !_isPaused);
             last = position;

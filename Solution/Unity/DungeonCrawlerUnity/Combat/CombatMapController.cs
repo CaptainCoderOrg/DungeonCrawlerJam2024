@@ -1,5 +1,6 @@
 using System.Collections;
 
+using CaptainCoder.DungeonCrawler.Unity;
 using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Game.Unity;
 using CaptainCoder.Dungeoneering.Unity;
@@ -40,6 +41,7 @@ public class CombatMapController : MonoBehaviour
 
     public void Initialize(string setup, string onWinScript, string onGiveUpScript)
     {
+        MusicPlayerController.Shared.Play(Music.Combat);
         CombatModeController.Shared.Initialize();
         _onGiveUpScript = onGiveUpScript;
         _onWinScript = onWinScript;
@@ -52,6 +54,7 @@ public class CombatMapController : MonoBehaviour
     public void TryAgain() => StartCombat(OriginalParty, OriginalSetup);
     public void StartCombat(Party party, string setup)
     {
+        MusicPlayerController.Shared.Play(Music.Combat);
         CrawlingModeController.Shared.Party.ApplyValues(party);
         CombatMap map = CombatMapExtensions.ParseMap(setup, PCMapping, EnemyMapping);
         RemoveNobody(map);
@@ -91,6 +94,7 @@ public class CombatMapController : MonoBehaviour
             CharacterMap.SetTile(last.ToVector3Int(), toSet);
             toSet = CharacterMap.GetTile(position.ToVector3Int());
             CharacterMap.SetTile(position.ToVector3Int(), tile);
+            SFXController.Shared.PlaySound(Sound.Footstep);
             yield return new WaitForSeconds(MoveAnimationSpeed);
             last = position;
         }

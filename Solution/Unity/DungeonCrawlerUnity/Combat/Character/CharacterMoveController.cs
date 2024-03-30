@@ -86,6 +86,12 @@ public class CharacterMoveController : MonoBehaviour
         _card = card;
         _previousPath = [];
         PlayerCharacter character = CombatMap.GetCharacter(card);
+        if (character.MovementPoints <= 0)
+        {
+            MessageRenderer.Shared.AddMessage(new Message($"{card.Name} has no movement points."));
+            ReturnToActionMenu();
+            return;
+        }
         MessageRenderer.Shared.AddMessage(new Message($"{card.Name} has {character.MovementPoints} movement points."));
         string keys = string.Join(" or ", PlayerInputHandler.Shared.InputMapping.MenuActionMappings.Where(mapping => mapping.Action is MenuControl.Cancel).Select(m => m.Key.ToString()));
         MessageRenderer.Shared.AddMessage(new Message($"Press {keys} to cancel."));

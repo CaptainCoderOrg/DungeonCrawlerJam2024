@@ -1,3 +1,5 @@
+using CaptainCoder.DungeonCrawler.Unity;
+
 namespace CaptainCoder.DungeonCrawler.Combat.Unity;
 
 public class PartySlainController : AbstractMenuController<PartySlainAction>
@@ -9,6 +11,7 @@ public class PartySlainController : AbstractMenuController<PartySlainAction>
     {
         base.OnEnable();
         CombatMapController.Shared.DisableAllCombatControllers([this]);
+        MusicPlayerController.Shared.Play(Music.GameOver, false);
     }
 
     public override void OnDisable()

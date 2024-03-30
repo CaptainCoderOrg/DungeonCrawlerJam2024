@@ -10,6 +10,15 @@ Solid = 1
 Door = 2
 Secret = 3
 
+
+Hit = 0
+Die = 1
+Footstep = 2
+Eat = 3
+Miss = 4
+Rest = 5
+Guard = 6
+
 ---@class context
 context = {}
 
@@ -102,6 +111,9 @@ function context.PushBack() end
 
 -- Give the party a weapon
 function context.GiveWeapon(name, min, max) end
+
+-- Play the specified sound effect
+function context.PlaySound(sound) end
 
 --- Constructs a new dialogue with the specified text
 ---@param text any

@@ -59,6 +59,12 @@
     <Reference Include="UnityEngine.GridModule">
       <HintPath>$(_UnityManagedPath)\UnityEngine.GridModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>$(_UnityManagedPath)\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(_UnityManagedPath)\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

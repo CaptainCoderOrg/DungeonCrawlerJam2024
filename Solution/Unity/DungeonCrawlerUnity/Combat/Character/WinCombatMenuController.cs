@@ -1,3 +1,5 @@
+using CaptainCoder.DungeonCrawler.Unity;
+
 namespace CaptainCoder.DungeonCrawler.Combat.Unity;
 
 public class WinCombatMenuController : AbstractMenuController<WinCombatActions>
@@ -11,6 +13,7 @@ public class WinCombatMenuController : AbstractMenuController<WinCombatActions>
     {
         base.OnEnable();
         CombatMapController.Shared.DisableAllCombatControllers([this]);
+        MusicPlayerController.Shared.Play(Music.Victory);
     }
 
     public override void OnDisable()
