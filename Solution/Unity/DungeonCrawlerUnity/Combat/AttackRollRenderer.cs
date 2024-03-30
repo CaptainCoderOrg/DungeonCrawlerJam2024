@@ -1,3 +1,5 @@
+using CaptainCoder.Dungeoneering.Player.Unity;
+
 using TMPro;
 
 using UnityEngine;
@@ -14,7 +16,7 @@ public class AttackRollRenderer : MonoBehaviour
     public void Render(Weapon weapon, int exert, int energy, IAttackRoll roll)
     {
         gameObject.SetActive(true);
-        CombatHelpPanel.Shared.Text = "Spend energy to increase the damage of this attack.";
+        CombatHelpPanel.Shared.Text = $"Spend energy to increase the damage of this attack.";
         WeaponName.text = weapon.Name;
         DamageText.text = $"Damage: {roll.Min} - {roll.Max}";
         ExertText.text = $"Exert: {exert} / {energy}";

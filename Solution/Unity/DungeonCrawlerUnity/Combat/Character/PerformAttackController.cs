@@ -35,8 +35,9 @@ public class PerformAttackController : MonoBehaviour
         _exert = 0;
 
         var keys = string.Join(" or ", [PlayerInputHandler.Shared.GetKeys(MenuControl.Up), PlayerInputHandler.Shared.GetKeys(MenuControl.Down)]);
-        MessageRenderer.Shared.AddMessage($"Press {keys} to spend energy to exert this attack.");
+        MessageRenderer.Shared.AddMessage($"Increase/Decrease Energy: {keys}");
         MessageRenderer.Shared.AddMessage($"Press {PlayerInputHandler.Shared.GetKeys(MenuControl.Cancel)} to cancel.");
+        MessageRenderer.Shared.AddMessage($"Press {PlayerInputHandler.Shared.GetKeys(MenuControl.Select)} to confirm.");
         PlayerCharacter pc = Map.GetCharacter(_card);
         AttackRollRenderer.Render(pc.Weapon, _exert, pc.Energy(), GetAttackRoll());
         gameObject.SetActive(true);
