@@ -13,6 +13,8 @@ public class EnemyTurnController : MonoBehaviour
 {
     public static EnemyTurnController Shared { get; private set; } = default!;
     public EnemyTurnController() { Shared = this; }
+    public DamageMessage DamageMessageTemplate = default!;
+    public Transform DamageMessageParent = default!;
     private CombatMap Map => CombatMapController.Shared.CombatMap;
     private Queue<Position>? _enemyPositions;
     private Queue<Position> EnemyPositions => _enemyPositions ?? throw new Exception("Enemy positions is not initialized");
@@ -122,6 +124,13 @@ public class EnemyTurnController : MonoBehaviour
         AttackResult result = e.Card.AttackRoll.GetRoll(IRandom.Default);
         AttackResultEvent attackEvent = Map.ApplyAttack(target, result);
         MessageRenderer.Shared.AddMessage(EventMessage(e, attackEvent));
+        if (!attackEvent.IsTargetKilledEvent())
+        {
+            int damage = attackEvent.TotalDamage();
+            DamageMessage newMessage = Instantiate(DamageMessageTemplate, DamageMessageParent);
+            newMessage.Render(attackEvent.TotalDamage(), target);
+            yield return new WaitForSeconds(CombatConstants.ShortEnemyInfoDuration);
+        }
         if (attackEvent.IsTargetKilledEvent())
         {
             CombatMapController.Shared.CharacterMap.SetTile(target.ToVector3Int(), CombatMapController.Shared.IconDatabase.Dead);

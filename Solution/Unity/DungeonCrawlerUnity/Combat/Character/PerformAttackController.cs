@@ -70,8 +70,8 @@ public class PerformAttackController : MonoBehaviour
         PlayerCharacter pc = Map.GetCharacter(_card);
         Map.UpdateCharacter(pc with { Exertion = pc.Exertion + _exert });
         AttackResultEvent result = Map.DoAttack(_card, GetAttackRoll(), _target);
-        int damage = result.TotalDamage();
-        if (damage > 0)
+
+        if (!result.IsTargetKilledEvent())
         {
             DamageMessage newMessage = Instantiate(DamageMessageTemplate, DamageMessageParent);
             newMessage.Render(result.TotalDamage(), _target);

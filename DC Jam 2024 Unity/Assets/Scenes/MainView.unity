@@ -991,7 +991,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 390
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1027,7 +1027,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 195
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1097,7 +1097,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 390
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1133,7 +1133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 195
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1714,7 +1714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 390
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1750,7 +1750,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 195
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6959,7 +6959,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 390
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6995,7 +6995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 195
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -10548,7 +10548,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 390
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_SizeDelta.y
@@ -10584,7 +10584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 195
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -10971,6 +10971,8 @@ MonoBehaviour:
   m_Script: {fileID: -1743759164, guid: fedbc3b3104189f45a78c49b874a13f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DamageMessageTemplate: {fileID: 3423424527478544478, guid: e5507714529f109479984cacc5d9d9e7, type: 3}
+  DamageMessageParent: {fileID: 1123588234}
 --- !u!1 &1839908119 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5990035650292355915, guid: 00edd5858438746339579743ccf7bcd2, type: 3}
@@ -11029,7 +11031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 390
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_SizeDelta.y
@@ -11065,7 +11067,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 195
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -11229,7 +11231,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 390
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_SizeDelta.y
@@ -11265,7 +11267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 195
       objectReference: {fileID: 0}
     - target: {fileID: 30716676311132418, guid: 3e25dc2c0a846cb4b88a8eae5a9ec354, type: 3}
       propertyPath: m_AnchoredPosition.y
