@@ -4,7 +4,7 @@ public static class Characters
     public static CharacterCard CharacterA { get; } = new()
     {
         Name = "Zooperdan",
-        BaseHealth = 10,
+        BaseHealth = 12,
         BaseArmor = 0,
         BaseEnergy = 3,
         BaseSpeed = 3,
@@ -16,9 +16,9 @@ public static class Characters
     {
         Name = "Kordanor",
         BaseHealth = 8,
-        BaseArmor = 0,
-        BaseEnergy = 6,
-        BaseSpeed = 3,
+        BaseArmor = 1,
+        BaseEnergy = 5,
+        BaseSpeed = 4,
     };
 
     public static CharacterCard CharacterC { get; } = new()
@@ -27,15 +27,15 @@ public static class Characters
         BaseHealth = 10,
         BaseArmor = 1,
         BaseEnergy = 4,
-        BaseSpeed = 4,
+        BaseSpeed = 5,
     };
 
     public static CharacterCard CharacterD { get; } = new()
     {
         Name = "Nadrepooz",
-        BaseHealth = 16,
-        BaseArmor = 1,
-        BaseEnergy = 4,
-        BaseSpeed = 3,
+        BaseHealth = 12,
+        BaseArmor = 3,
+        BaseEnergy = 3,
+        BaseSpeed = 2,
     };
 }
