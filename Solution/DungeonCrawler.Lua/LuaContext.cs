@@ -3,9 +3,11 @@ using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Player;
-using Weapon = CaptainCoder.DungeonCrawler.Combat.Weapon;
-using SimpleAttack = CaptainCoder.DungeonCrawler.Combat.SimpleAttack;
+
 using MoonSharp.Interpreter;
+
+using SimpleAttack = CaptainCoder.DungeonCrawler.Combat.SimpleAttack;
+using Weapon = CaptainCoder.DungeonCrawler.Combat.Weapon;
 
 namespace CaptainCoder.Dungeoneering.Lua;
 
