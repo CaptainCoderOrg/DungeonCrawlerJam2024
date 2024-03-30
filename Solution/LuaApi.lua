@@ -18,6 +18,7 @@ Eat = 3
 Miss = 4
 Rest = 5
 Guard = 6
+Cheat = 7
 
 ---@class context
 context = {}

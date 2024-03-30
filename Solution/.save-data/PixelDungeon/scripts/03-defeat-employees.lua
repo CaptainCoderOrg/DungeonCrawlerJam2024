@@ -45,7 +45,7 @@ end
 -- Select a random smell
 local randomSmell = selectRandomSmell(smells)
 local name = randomSmell .. " " .. randomTool
-local min = math.random(2, 3)
-local range = math.random(1, 3)
+local min = math.random(2, 4)
+local range = math.random(2, 3)
 context.WriteInfo("The employees drops their " .. name .. " and run away!")
 context.GiveWeapon(name, min, min + range)

@@ -213,4 +213,5 @@ public enum ScriptSound
     Miss,
     Rest,
     Guard,
+    Cheat,
 }

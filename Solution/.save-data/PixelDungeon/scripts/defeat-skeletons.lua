@@ -41,7 +41,7 @@ end
 -- Select a random adjective and print it
 local randomAdjective = selectRandomAdjective(adjectives)
 local name = randomAdjective .. " " .. randomItem
-local min = math.random(1, 2)
+local min = math.random(2, 3)
 local range = math.random(1, 2)
 context.WriteInfo("Searching the closet you find a " .. name)
 context.GiveWeapon(name, min, min + range)

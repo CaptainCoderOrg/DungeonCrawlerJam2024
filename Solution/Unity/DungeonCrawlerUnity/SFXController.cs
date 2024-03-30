@@ -43,6 +43,7 @@ public enum Sound
     Miss,
     Rest,
     Guard,
+    Cheat,
 }
 
 [Serializable]

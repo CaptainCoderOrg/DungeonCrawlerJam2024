@@ -45,6 +45,6 @@ end
 -- Select a random adjective and print it
 local randomAdjective = selectRandomAdjective(adjectives)
 local name = randomAdjective .. " " .. randomItem
-local min = math.random(2, 4)
-local range = math.random(2, 4)
+local min = math.random(3, 5)
+local range = math.random(3, 5)
 context.GiveWeapon(name, min, min + range)
