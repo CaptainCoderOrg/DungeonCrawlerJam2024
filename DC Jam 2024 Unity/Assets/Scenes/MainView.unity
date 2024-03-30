@@ -2080,6 +2080,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4148814985551011038, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
+      propertyPath: Cabinet
+      value: 
+      objectReference: {fileID: 1368379541}
+    - target: {fileID: 4148814985551011038, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: CharacterIx
       value: 2
       objectReference: {fileID: 0}
@@ -8213,6 +8217,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4148814985551011038, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
+      propertyPath: Cabinet
+      value: 
+      objectReference: {fileID: 2035805560}
+    - target: {fileID: 4148814985551011038, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: CharacterIx
       value: 3
       objectReference: {fileID: 0}
@@ -10462,6 +10470,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4148814985551011038, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
+      propertyPath: Cabinet
+      value: 
+      objectReference: {fileID: 1004347968}
     - target: {fileID: 4148814985551011038, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: CharacterIx
       value: 1
@@ -13060,6 +13072,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4148814985551011038, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
+      propertyPath: Cabinet
+      value: 
+      objectReference: {fileID: 2127205223}
     - target: {fileID: 4818250693822182227, guid: 4e4d5a06ae11eb342be11b7af59e2299, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

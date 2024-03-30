@@ -10,6 +10,7 @@
       "DungeonCrawler.Lua/1.0.0": {
         "dependencies": {
           "DungeonCrawler": "1.0.0",
+          "DungeonCrawler.Combat": "1.0.0",
           "MoonSharp": "2.0.0"
         },
         "runtime": {
@@ -28,6 +29,11 @@
         "runtime": {
           "DungeonCrawler.dll": {}
         }
+      },
+      "DungeonCrawler.Combat/1.0.0": {
+        "runtime": {
+          "DungeonCrawler.Combat.dll": {}
+        }
       }
     }
   },
@@ -45,6 +51,11 @@
       "hashPath": "moonsharp.2.0.0.nupkg.sha512"
     },
     "DungeonCrawler/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DungeonCrawler.Combat/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

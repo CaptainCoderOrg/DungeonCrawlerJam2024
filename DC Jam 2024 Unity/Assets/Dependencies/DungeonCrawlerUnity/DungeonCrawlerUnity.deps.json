@@ -66,6 +66,7 @@
       "DungeonCrawler.Lua/1.0.0": {
         "dependencies": {
           "DungeonCrawler": "1.0.0",
+          "DungeonCrawler.Combat": "1.0.0",
           "MoonSharp": "2.0.0"
         },
         "runtime": {

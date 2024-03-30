@@ -66,7 +66,7 @@ public class CombatMapController : MonoBehaviour
 
     private void RemoveNobody(CombatMap map)
     {
-        var toRemove = map.PlayerCharacters.Where(kvp => kvp.Value.Card != Characters.NoBody).Select(kvp => kvp.Key).ToArray();
+        var toRemove = map.PlayerCharacters.Where(kvp => kvp.Value.Card == Characters.NoBody).Select(kvp => kvp.Key).ToArray();
         foreach (Position p in toRemove)
         {
             map.PlayerCharacters.Remove(p);
