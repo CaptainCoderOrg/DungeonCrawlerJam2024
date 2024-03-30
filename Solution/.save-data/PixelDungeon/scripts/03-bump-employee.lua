@@ -1,4 +1,4 @@
-local chance = math.random(1, 4)
+local chance = math.random(1, 3)
 if chance == 1 then
     local dialogue = Dialogue([[You accidentally bump shoulders with a disgruntled employee! 'HEY! Watch where yer goin!' The employee raises their fists ready to fight.]])
     dialogue.AddOption(RunScriptDialogueOption("Fight Employee", "03-fight-employee.lua"))
