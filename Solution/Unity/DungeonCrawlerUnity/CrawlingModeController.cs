@@ -93,6 +93,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         CrawlerMode = new CrawlerMode(manifest, EmptyDungeon, new PlayerView(PlayerViewData.X, PlayerViewData.Y, PlayerViewData.Facing));
         PlayerCamera.InstantTransitionToPlayerView(CrawlerMode.CurrentView);
         CrawlerMode.OnViewChange += (viewChangeEvent) => PlayerViewData = new(viewChangeEvent.Entered);
+        CrawlerMode.OnViewChange += (viewChangeEvent) => CompassController.Shared.Render(viewChangeEvent.Entered);
         CrawlerMode.OnViewChange += HandleMoveTransition;
         CrawlerMode.OnPositionChange += HandleOnEnterEvents;
         CrawlerMode.OnPositionChange += HandleOnExitEvents;
@@ -106,6 +107,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         yield return new WaitForEndOfFrame();
         Initialize("start.lua");
     }
+
 
     private void HandleMoveTransition(ViewChangeEvent evt)
     {

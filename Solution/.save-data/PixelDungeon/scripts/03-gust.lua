@@ -1,0 +1,1 @@
+context.WriteInfo("A gust of rank air blows at you from the west.")
