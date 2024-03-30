@@ -22,7 +22,6 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public static CrawlingModeController Shared { get; private set; } = default!;
     public CrawlingModeController() { Shared = this; }
     public Party Party { get; set; } = new();
-    // public static CrawlerMode? CrawlerMode { get; private set; }
     public static event Action<CrawlerMode>? OnCrawlerModeChange;
     private static CrawlerMode? s_crawlerMode;
     public static CrawlerMode CrawlerMode
@@ -87,6 +86,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
 
     public void Init(string projectJson)
     {
+        Party.ApplyValues(new Party());
         State = new GameState();
         DungeonCrawlerManifest manifest = JsonExtensions.LoadModel<DungeonCrawlerManifest>(projectJson);
         _ = DungeonBuilder.InitializeMaterialCache(manifest);
