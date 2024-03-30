@@ -54,6 +54,7 @@ public class CombatMapController : MonoBehaviour
     {
         CrawlingModeController.Shared.Party.ApplyValues(party);
         CombatMap map = CombatMapExtensions.ParseMap(setup, PCMapping, EnemyMapping);
+        RemoveNobody(map);
         BuildMap(map);
         map.OnCharacterChange += CrawlingModeController.Shared.Party.UpdateCharacter;
         map.OnMoveAction += HandleMove;
@@ -61,6 +62,15 @@ public class CombatMapController : MonoBehaviour
         gameObject.SetActive(true);
         DisableAllCombatControllers([StartPhaseController.Shared]);
         StartPhaseController.Shared.Initialize();
+    }
+
+    private void RemoveNobody(CombatMap map)
+    {
+        var toRemove = map.PlayerCharacters.Where(kvp => kvp.Value.Card != Characters.NoBody).Select(kvp => kvp.Key).ToArray();
+        foreach (Position p in toRemove)
+        {
+            map.PlayerCharacters.Remove(p);
+        }
     }
 
     private void RemoveEnemy(Position position) => CharacterMap.SetTile(position.ToVector3Int(), null);

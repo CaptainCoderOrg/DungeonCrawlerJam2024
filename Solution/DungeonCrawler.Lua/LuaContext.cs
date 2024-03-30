@@ -1,3 +1,4 @@
+using CaptainCoder.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.Game;
@@ -111,6 +112,26 @@ public class LuaContext(IScriptContext context)
     public void ReloadFile() => LoadCrawlerFromURL("file:///D:/tmp/project.json");
     public void RebuildFile() => RebuildCrawlerFromURL("file:///D:/tmp/project.json");
 
+    public void HealParty()
+    {
+        for (int ix = 0; ix < 4; ix++)
+        {
+            _target.Party.UpdateCharacter(_target.Party[ix] with { Wounds = 0, Exertion = 0 });
+        }
+    }
+
+    public void AddPartyMember(int ix)
+    {
+        Action toInvoke = ix switch
+        {
+            1 => () => _target.Party.TopRight = new() { Card = Characters.CharacterB },
+            2 => () => _target.Party.BottomLeft = new() { Card = Characters.CharacterC },
+            3 => () => _target.Party.BottomRight = new() { Card = Characters.CharacterD },
+            _ => () => WriteInfo($"Unknown party member {ix}"),
+        };
+        toInvoke.Invoke();
+    }
+
     public int VisitedLocationCount()
     {
         Location current = new(_target.CurrentDungeon.Name, _target.View.Position);
@@ -130,6 +151,7 @@ public interface IScriptContext
     public CrawlerMode Crawler { get; }
     public Dungeon CurrentDungeon { get; set; }
     public DungeonCrawlerManifest Manifest { get; set; }
+    public Party Party { get; set; }
     public void SendMessage(Message message);
     public void ShowDialogue(Dialogue.Dialogue dialogue);
     public void StartCombat(string mapSetup, string onWinScript, string onGiveUpScript);

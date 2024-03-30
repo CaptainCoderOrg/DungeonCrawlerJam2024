@@ -88,6 +88,9 @@ function context.VisitedLocationCount() end
 -- returns true if this is the first time the player has enterd this position
 function context.IsFirstVisit() end
 
+-- Heals the party to full
+function context.HealParty() end
+
 --- Constructs a new dialogue with the specified text
 ---@param text any
 function Dialogue(text) 

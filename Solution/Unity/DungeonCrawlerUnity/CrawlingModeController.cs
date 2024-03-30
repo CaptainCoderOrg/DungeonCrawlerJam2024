@@ -21,7 +21,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
 {
     public static CrawlingModeController Shared { get; private set; } = default!;
     public CrawlingModeController() { Shared = this; }
-    public Party Party { get; private set; } = new();
+    public Party Party { get; set; } = new();
     // public static CrawlerMode? CrawlerMode { get; private set; }
     public static event Action<CrawlerMode>? OnCrawlerModeChange;
     private static CrawlerMode? s_crawlerMode;

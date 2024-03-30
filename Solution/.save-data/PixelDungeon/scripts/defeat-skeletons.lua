@@ -1,0 +1,1 @@
+context.WriteInfo("TODO: Loot dialogue")

@@ -4,11 +4,13 @@ public static class Characters
     public static CharacterCard CharacterA { get; } = new()
     {
         Name = "Zooperdan",
-        BaseHealth = 12,
-        BaseArmor = 2,
+        BaseHealth = 10,
+        BaseArmor = 0,
         BaseEnergy = 3,
         BaseSpeed = 3,
     };
+
+    public static CharacterCard NoBody { get; } = new CharacterCard() { Name = "NoBody" };
 
     public static CharacterCard CharacterB { get; } = new()
     {
