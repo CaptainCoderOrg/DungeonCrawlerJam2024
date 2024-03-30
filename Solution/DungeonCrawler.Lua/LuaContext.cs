@@ -1,3 +1,4 @@
+using CaptainCoder.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.Game;
@@ -5,12 +6,16 @@ using CaptainCoder.Dungeoneering.Player;
 
 using MoonSharp.Interpreter;
 
+using SimpleAttack = CaptainCoder.DungeonCrawler.Combat.SimpleAttack;
+using Weapon = CaptainCoder.DungeonCrawler.Combat.Weapon;
+
 namespace CaptainCoder.Dungeoneering.Lua;
 
 [MoonSharpUserData]
 public class LuaContext(IScriptContext context)
 {
     public static Action<string>? LoadFromURL { get; set; }
+    public static Action<string>? RebuildFromURL { get; set; }
     private readonly IScriptContext _target = context;
     public DynValue PlayerView => UserData.Create(_target.View);
     public void SetPlayerPosition(int x, int y)
@@ -82,6 +87,12 @@ public class LuaContext(IScriptContext context)
         LoadFromURL.Invoke(url);
     }
 
+    public void RebuildCrawlerFromURL(string url)
+    {
+        if (RebuildFromURL is null) { throw new InvalidOperationException("No URL loader specified."); }
+        RebuildFromURL.Invoke(url);
+    }
+
     public DynValue RunScript(string scriptName)
     {
         string script = _target.Manifest.Scripts[scriptName].Script;
@@ -102,15 +113,72 @@ public class LuaContext(IScriptContext context)
 
     public void Reload() => LoadCrawlerFromURL("./project.json");
     public void ReloadFile() => LoadCrawlerFromURL("file:///D:/tmp/project.json");
+    public void RebuildFile() => RebuildCrawlerFromURL("file:///D:/tmp/project.json");
+
+    public void HealParty()
+    {
+        for (int ix = 0; ix < 4; ix++)
+        {
+            _target.Party.UpdateCharacter(_target.Party[ix] with { Wounds = 0, Exertion = 0 });
+        }
+    }
+
+    public void AddPartyMember(int ix)
+    {
+        Action toInvoke = ix switch
+        {
+            1 => () => _target.Party.TopRight = new() { Card = Characters.CharacterB },
+            2 => () => _target.Party.BottomLeft = new() { Card = Characters.CharacterC },
+            3 => () => _target.Party.BottomRight = new() { Card = Characters.CharacterD },
+            _ => () => WriteInfo($"Unknown party member {ix}"),
+        };
+        toInvoke.Invoke();
+    }
+
+    public void RemovePartyMember(int ix)
+    {
+        Action toInvoke = ix switch
+        {
+            1 => () => _target.Party.TopRight = new() { Card = Characters.NoBody },
+            2 => () => _target.Party.BottomLeft = new() { Card = Characters.NoBody },
+            3 => () => _target.Party.BottomRight = new() { Card = Characters.NoBody },
+            _ => () => WriteInfo($"Unknown party member {ix}"),
+        };
+        toInvoke.Invoke();
+    }
+
+    public int VisitedLocationCount()
+    {
+        Location current = new(_target.CurrentDungeon.Name, _target.View.Position);
+        return _target.Crawler.VisitedCount(current);
+    }
+
+    public void PushBack()
+    {
+        _target.View = _target.Crawler.LastView;
+    }
+
+    public bool IsFirstVisit()
+    {
+        return VisitedLocationCount() == 0;
+    }
+
+    public void GiveWeapon(string name, int min, int max)
+    {
+        _target.GiveWeapon(new Weapon() { Name = name, AttackRoll = new SimpleAttack(min, max) });
+    }
 }
 
 public interface IScriptContext
 {
     public GameState State { get; set; }
     public PlayerView View { get; set; }
+    public CrawlerMode Crawler { get; }
     public Dungeon CurrentDungeon { get; set; }
     public DungeonCrawlerManifest Manifest { get; set; }
+    public Party Party { get; set; }
     public void SendMessage(Message message);
     public void ShowDialogue(Dialogue.Dialogue dialogue);
     public void StartCombat(string mapSetup, string onWinScript, string onGiveUpScript);
+    public void GiveWeapon(Weapon weapon);
 }

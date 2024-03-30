@@ -12,6 +12,7 @@ public class CharacterCardRenderer : MonoBehaviour
     public GameObject Selected = default!;
     public GameObject Finished = default!;
     public GameObject Dead = default!;
+    public GameObject Cabinet = default!;
     public CharacterCardIconDatabase Icons = default!;
 
     public Image StateIcon = default!;
@@ -42,6 +43,7 @@ public class CharacterCardRenderer : MonoBehaviour
 
     public void Render(PlayerCharacter character)
     {
+        Cabinet.SetActive(character.Card == Characters.NoBody);
         Name.text = character.Card.Name;
         Health.Value = character.Health();
         Health.BaseValue = character.Card.BaseHealth;

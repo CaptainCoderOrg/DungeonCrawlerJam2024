@@ -1,7 +1,5 @@
 using System.Collections;
 
-using CaptainCoder.DungeonCrawler.Combat;
-
 namespace CaptainCoder.DungeonCrawler;
 
 public class Party : IEnumerable<PlayerCharacter>
@@ -19,10 +17,10 @@ public class Party : IEnumerable<PlayerCharacter>
     {
         get => ToArray[ix];
     }
-    private PlayerCharacter _topLeft = new() { Card = Characters.CharacterA, Weapon = Weapons.Sword };
-    private PlayerCharacter _topRight = new() { Card = Characters.CharacterB, Weapon = Weapons.Sword };
-    private PlayerCharacter _bottomLeft = new() { Card = Characters.CharacterC, Weapon = Weapons.Sword };
-    private PlayerCharacter _bottomRight = new() { Card = Characters.CharacterD, Weapon = Weapons.Sword };
+    private PlayerCharacter _topLeft = new() { Card = Characters.CharacterA };
+    private PlayerCharacter _topRight = new() { Card = Characters.NoBody };
+    private PlayerCharacter _bottomLeft = new() { Card = Characters.NoBody };
+    private PlayerCharacter _bottomRight = new() { Card = Characters.NoBody };
     private PlayerCharacter[] ToArray => [_topLeft, _topRight, _bottomLeft, _bottomRight];
 
     public PlayerCharacter TopLeft
@@ -68,7 +66,7 @@ public class Party : IEnumerable<PlayerCharacter>
     public event Action<PlayerCharacter>? OnBottomLeftChange;
     public event Action<PlayerCharacter>? OnBottomRightChange;
 
-    public bool IsDead => ToArray.All(pc => pc.IsDead());
+    public bool IsDead => ToArray.All(pc => pc.IsDead() || pc.Card == Characters.NoBody);
 
     public void UpdateCharacter(PlayerCharacter toUpdate)
     {

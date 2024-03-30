@@ -65,6 +65,8 @@ public class DungeonEditorScreen(string projectName) : IScreen
             SaveAs();
             return;
         }
+        CurrentDungeon.Name = Path.GetFileNameWithoutExtension(_filename);
+        Console.WriteLine($"Dungeon name: {CurrentDungeon.Name}");
         File.WriteAllText(_filename, JsonExtensions.ToJson(CurrentDungeon));
         _overlay.AddMessage($"File saved: {Path.GetFileNameWithoutExtension(_filename)}!", Color.Green);
         Program.Screen = this;

@@ -24,13 +24,14 @@ public static class Enemies
     {
         Name = "Skeleton",
         Speed = 5,
+        MaxHealth = 2,
         AttackRoll = new SimpleAttack(1, 3)
     };
 
-    public static EnemyCard BeastCard { get; } = new()
+    public static EnemyCard EmployeeCard { get; } = new()
     {
-        Name = "Beast",
-        Speed = 3,
+        Name = "Disgruntled Employee",
+        Speed = 2,
         Armor = 1,
         MaxHealth = 4,
         AttackRoll = new SimpleAttack(2, 4),

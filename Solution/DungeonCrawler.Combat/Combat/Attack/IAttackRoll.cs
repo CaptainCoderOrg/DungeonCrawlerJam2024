@@ -3,6 +3,8 @@ namespace CaptainCoder.DungeonCrawler.Combat;
 public interface IAttackRoll
 {
     public AttackResult GetRoll(IRandom randomSource);
+    public int Min { get; }
+    public int Max { get; }
 }
 
 

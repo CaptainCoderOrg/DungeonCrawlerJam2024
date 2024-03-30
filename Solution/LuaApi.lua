@@ -82,12 +82,34 @@ function context.ShowDialogue(dialogue) end
 -- Initializes combat
 function context.StartCombat(mapSetup, onWin, onGiveUp) end
 
+-- returns the number of times the player has visted this location
+function context.VisitedLocationCount() end
+
+-- returns true if this is the first time the player has enterd this position
+function context.IsFirstVisit() end
+
+-- Heals the party to full
+function context.HealParty() end
+
+-- Adds the specified party member to the party
+function context.AddPartyMember(ix) end
+
+-- Adds the specified party member to the party
+function context.RemovePartyMember(ix) end
+
+-- Moves the player back to their previous position
+function context.PushBack() end
+
+-- Give the party a weapon
+function context.GiveWeapon(name, min, max) end
+
 --- Constructs a new dialogue with the specified text
 ---@param text any
-function Dialogue(text) 
+function Dialogue(text)
     local dialogue = {}
     --- Add an option to this dialogue
     function dialogue.AddOption(option) end
+
     return dialogue
 end
 

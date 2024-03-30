@@ -53,29 +53,33 @@ public class GuardMenuController : AbstractMenuController<GuardActions>
         Map.UpdateCharacter(updated);
 
         // Perform the attack
-        AttackResultEvent result = Map.DoAttack(guard.Character.Card, _enemyPosition);
-
-        // If the target is killed, resume enemy turn
-        if (result.IsTargetKilledEvent())
+        PerformAttackController.Shared.Initialize(updated.Card, _enemyPosition, OnFinish, OnCancel);
+        void OnCancel() => Initialize(_guards, _enemyPosition);
+        void OnFinish(AttackResultEvent result)
         {
-            EnemyTurnController.Shared.Resume(new EnemyIsDead());
-            return;
-        }
 
-        // Remove this character from possible guards
-        _guards = [.. _guards.Where(g => g != guard)];
+            // If the target is killed, resume enemy turn
+            if (result.IsTargetKilledEvent())
+            {
+                EnemyTurnController.Shared.Resume(new EnemyIsDead());
+                return;
+            }
 
-        // If there are no more possible guards, resume
-        if (_guards.Length == 0)
-        {
-            EnemyTurnController.Shared.Resume(new Continue());
-            return;
-        }
+            // Remove this character from possible guards
+            _guards = [.. _guards.Where(g => g != guard)];
 
-        // Otherwise, display who can guard
-        foreach (CanGuard g in _guards)
-        {
-            MessageRenderer.Shared.AddMessage($"{guard.Character.Card.Name} can <color=red>Guard</color> the enemy.");
+            // If there are no more possible guards, resume
+            if (_guards.Length == 0)
+            {
+                EnemyTurnController.Shared.Resume(new Continue());
+                return;
+            }
+
+            // Otherwise, display who can guard
+            foreach (CanGuard g in _guards)
+            {
+                MessageRenderer.Shared.AddMessage($"{guard.Character.Card.Name} can <color=red>Guard</color> the enemy.");
+            }
         }
     }
 
@@ -92,14 +96,6 @@ public class GuardMenuController : AbstractMenuController<GuardActions>
             return;
         }
         MessageRenderer.Shared.AddMessage($"{character.Card.Name} cannot guard this enemy.");
-    }
-
-    private void TestKill()
-    {
-        MessageRenderer.Shared.AddMessage($"Zooperdan kills the enemy.");
-        Map.Enemies.Remove(_enemyPosition);
-        CombatMapController.Shared.CharacterMap.SetTile(_enemyPosition.ToVector3Int(), null);
-        EnemyTurnController.Shared.Resume(new EnemyIsDead());
     }
 
 }

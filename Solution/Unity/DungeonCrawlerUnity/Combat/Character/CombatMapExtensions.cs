@@ -3,10 +3,10 @@ using CaptainCoder.Dungeoneering.Game.Unity;
 namespace CaptainCoder.DungeonCrawler.Combat.Unity;
 public static class CombatExtensions
 {
-    public static AttackResultEvent DoAttack(this CombatMap map, CharacterCard card, Position target)
+    public static AttackResultEvent DoAttack(this CombatMap map, CharacterCard card, IAttackRoll roll, Position target)
     {
         PlayerCharacter character = map.GetCharacter(card);
-        AttackResult result = character.Weapon.AttackRoll.GetRoll(IRandom.Default);
+        AttackResult result = roll.GetRoll(IRandom.Default);
         AttackResultEvent eventResult = map.ApplyAttack(target, result);
 
         string message = eventResult switch

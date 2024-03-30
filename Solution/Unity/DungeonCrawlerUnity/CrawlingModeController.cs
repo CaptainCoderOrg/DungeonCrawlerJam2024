@@ -1,4 +1,7 @@
+using System.Collections;
+
 using CaptainCoder.DungeonCrawler;
+using CaptainCoder.DungeonCrawler.Combat;
 using CaptainCoder.DungeonCrawler.Combat.Unity;
 using CaptainCoder.Dungeoneering.DungeonCrawler;
 using CaptainCoder.Dungeoneering.DungeonCrawler.Scripting;
@@ -19,8 +22,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
 {
     public static CrawlingModeController Shared { get; private set; } = default!;
     public CrawlingModeController() { Shared = this; }
-    public Party Party { get; private set; } = new();
-    // public static CrawlerMode? CrawlerMode { get; private set; }
+    public Party Party { get; set; } = new();
     public static event Action<CrawlerMode>? OnCrawlerModeChange;
     private static CrawlerMode? s_crawlerMode;
     public static CrawlerMode CrawlerMode
@@ -53,11 +55,18 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public DungeonCrawlerManifest Manifest { get => CrawlerMode.Manifest; set => CrawlerMode.Manifest = value; }
     [field: SerializeField]
     public DialogueController DialogueController { get; set; } = default!;
+    public CrawlerMode Crawler => CrawlerMode;
+
     private Coroutine? _currentTransition;
 
     public void Awake()
     {
-        LuaContext.LoadFromURL = (string url) => StartCoroutine(WebLoader.GetTextFromURL(url, LoadCrawler, Fail));
+        LuaContext.LoadFromURL = (string url) => StartCoroutine(WebLoader.GetTextFromURL(url, Init, Fail));
+        LuaContext.RebuildFromURL = (string url) => StartCoroutine(WebLoader.GetTextFromURL(url, Rebuild, Fail));
+    }
+
+    public void Start()
+    {
         Init(DungeonData.ManifestJson!.text);
     }
 
@@ -65,37 +74,44 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     {
         throw new Exception("Failed to load URL");
     }
+    private static readonly Dungeon EmptyDungeon = new();
 
-    public void LoadCrawler(string projectJson)
+    public void Rebuild(string projectJson)
     {
-        Debug.Log("Loading Crawler...");
         DungeonCrawlerManifest manifest = JsonExtensions.LoadModel<DungeonCrawlerManifest>(projectJson);
         _ = DungeonBuilder.InitializeMaterialCache(manifest);
-        CrawlerMode.Manifest = manifest;
-        CrawlerMode.CurrentDungeon = manifest.Dungeons["Town"];
-        CrawlerMode.CurrentView = new PlayerView(0, 0, Facing.North);
-        Debug.Log("Done!");
+        PlayerView previousView = CrawlerMode.CurrentView;
+        CrawlerMode.CurrentDungeon = manifest.Dungeons[CrawlerMode.CurrentDungeon.Name];
+        CrawlerMode.CurrentView = previousView;
     }
-
-    private static readonly Dungeon EmptyDungeon = new();
 
     public void Init(string projectJson)
     {
+        Party.ApplyValues(new Party());
+        State = new GameState();
         DungeonCrawlerManifest manifest = JsonExtensions.LoadModel<DungeonCrawlerManifest>(projectJson);
         _ = DungeonBuilder.InitializeMaterialCache(manifest);
         CrawlerMode = new CrawlerMode(manifest, EmptyDungeon, new PlayerView(PlayerViewData.X, PlayerViewData.Y, PlayerViewData.Facing));
         PlayerCamera.InstantTransitionToPlayerView(CrawlerMode.CurrentView);
         CrawlerMode.OnViewChange += (viewChangeEvent) => PlayerViewData = new(viewChangeEvent.Entered);
+        CrawlerMode.OnViewChange += (viewChangeEvent) => CompassController.Shared.Render(viewChangeEvent.Entered);
         CrawlerMode.OnViewChange += HandleMoveTransition;
         CrawlerMode.OnPositionChange += HandleOnEnterEvents;
         CrawlerMode.OnPositionChange += HandleOnExitEvents;
         CrawlerMode.OnDungeonChange += ChangeDungeon;
+        StartCoroutine(InitNextFrame());
+    }
+
+    private IEnumerator InitNextFrame()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
         Initialize("start.lua");
     }
 
+
     private void HandleMoveTransition(ViewChangeEvent evt)
     {
-        // PlayerCamera.InstantTransitionToPlayerView(viewChangeEvent.Entered);
         if (_currentTransition != null) { StopCoroutine(_currentTransition); }
         _currentTransition = StartCoroutine(PlayerCamera.LerpTransitionToPlayerView(evt.Exited, evt.Entered));
     }
@@ -161,6 +177,8 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     }
 
     public void StartCombat(string mapSetup, string onWinScript, string onGiveUpScript) => CombatMapController.Shared.Initialize(mapSetup, onWinScript, onGiveUpScript);
+
+    public void GiveWeapon(Weapon weapon) => WeaponDialogueScreen.Shared.Initialize(weapon);
 }
 
 [Serializable]

@@ -13,6 +13,8 @@ public class EnemyTurnController : MonoBehaviour
 {
     public static EnemyTurnController Shared { get; private set; } = default!;
     public EnemyTurnController() { Shared = this; }
+    public DamageMessage DamageMessageTemplate = default!;
+    public Transform DamageMessageParent = default!;
     private CombatMap Map => CombatMapController.Shared.CombatMap;
     private Queue<Position>? _enemyPositions;
     private Queue<Position> EnemyPositions => _enemyPositions ?? throw new Exception("Enemy positions is not initialized");
@@ -79,7 +81,7 @@ public class EnemyTurnController : MonoBehaviour
         Position[] attacks = [.. Map.GetValidAttackTargets(position)];
         if (attacks.Count() > 0)
         {
-            foreach (var pause in ShowAttack(e, attacks))
+            foreach (var pause in ShowAttack(e, position, attacks))
             {
                 yield return pause;
             }
@@ -91,16 +93,44 @@ public class EnemyTurnController : MonoBehaviour
         DoNextMove();
     }
 
-    public IEnumerable ShowAttack(Enemy e, Position[] options)
+    public IEnumerable ShowAttack(Enemy e, Position start, Position[] options)
     {
+    startAttack:
         Position target = options.OrderBy(p => Map.PlayerCharacters[p].Health()).First();
         PlayerCharacter character = Map.PlayerCharacters[target];
         MessageRenderer.Shared.AddMessage($"{e.Card.Name} prepares to attack {character.Card.Name}.");
         CombatMapController.Shared.SelectTiles(target);
-        yield return new WaitForSeconds(CombatConstants.ShowEnemyInfoDuration);
+
+        CanGuard[] guards = [.. Map.CanGuard(start, [])];
+        if (guards.Length > 0)
+        {
+            string keys = PlayerInputHandler.Shared.GetKeys(MenuControl.Select);
+            foreach (CanGuard guard in guards)
+            {
+                MessageRenderer.Shared.AddMessage($"{guard.Character.Card.Name} can <color=red>Guard</color> the enemy. Press {keys} to interrupt.");
+            }
+            _possibleGuards = new Some<(CanGuard[], Position)>((guards, start));
+            yield return new WaitForSeconds(CombatConstants.GuardWaitDuration);
+            yield return new WaitUntil(() => !_isPaused);
+            if (_resumeInfo is EnemyIsDead) { yield break; }
+            else { goto startAttack; }
+
+        }
+        else
+        {
+            yield return new WaitForSeconds(CombatConstants.ShowEnemyInfoDuration);
+        }
+
         AttackResult result = e.Card.AttackRoll.GetRoll(IRandom.Default);
         AttackResultEvent attackEvent = Map.ApplyAttack(target, result);
         MessageRenderer.Shared.AddMessage(EventMessage(e, attackEvent));
+        if (!attackEvent.IsTargetKilledEvent())
+        {
+            int damage = attackEvent.TotalDamage();
+            DamageMessage newMessage = Instantiate(DamageMessageTemplate, DamageMessageParent);
+            newMessage.Render(attackEvent.TotalDamage(), target);
+            yield return new WaitForSeconds(CombatConstants.ShortEnemyInfoDuration);
+        }
         if (attackEvent.IsTargetKilledEvent())
         {
             CombatMapController.Shared.CharacterMap.SetTile(target.ToVector3Int(), CombatMapController.Shared.IconDatabase.Dead);

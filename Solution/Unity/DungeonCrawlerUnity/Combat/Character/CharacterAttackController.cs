@@ -45,15 +45,21 @@ public class CharacterAttackController : MonoBehaviour
 
     private void PerformAttack(Position target)
     {
-        Map.DoAttack(Card, target);
-        if (Map.Enemies.Count == 0)
+        PerformAttackController.Shared.Initialize(Card, target, OnFinish, OnCancel);
+        void OnFinish(AttackResultEvent _)
         {
-            WinCombatMenuController.Shared.Initialize();
+            if (Map.Enemies.Count == 0)
+            {
+                WinCombatMenuController.Shared.Initialize();
+            }
+            else
+            {
+                ReturnToMenuSelect();
+            }
         }
-        else
-        {
-            ReturnToMenuSelect();
-        }
+
+        void OnCancel() => ReturnToMenuSelect();
+
     }
 
     public void Initialize(CharacterCard card)

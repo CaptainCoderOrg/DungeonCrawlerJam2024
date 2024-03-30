@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DungeonCrawler\DungeonCrawler.csproj" />
+    <ProjectReference Include="..\DungeonCrawler.Combat\DungeonCrawler.Combat.csproj" />
   </ItemGroup>
 
   <Target Name="CopyToUnity" AfterTargets="Build">
