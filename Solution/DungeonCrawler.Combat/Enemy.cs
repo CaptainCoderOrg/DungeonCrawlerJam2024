@@ -59,9 +59,9 @@ public static class Enemies
     {
         Name = "Eye Key Uh",
         Speed = 4,
-        Armor = 2,
-        MaxHealth = 16,
-        AttackRoll = new SimpleAttack(3, 6),
+        Armor = 10,
+        MaxHealth = 100,
+        AttackRoll = new SimpleAttack(1, 20),
     };
 
     public static EnemyCard Meatball { get; } = new()
