@@ -1,6 +1,6 @@
--- context.ChangeDungeon("Ikea", 11, 11, West)
+context.ChangeDungeon("Ikea", 11, 11, West)
 
-context.RunScript("begin-quest.lua")
+-- context.RunScript("begin-quest.lua")
 -- context.AddPartyMember(1)
 -- context.AddPartyMember(2)
 -- context.AddPartyMember(3)
