@@ -184,6 +184,10 @@ public class LuaContext(IScriptContext context)
     {
         _target.LoseCombat();
     }
+    public void ShowCredits()
+    {
+        _target.ShowCredits();
+    }
 }
 
 public interface IScriptContext
@@ -202,6 +206,7 @@ public interface IScriptContext
     public void ExitCombat();
     public void WinCombat();
     public void LoseCombat();
+    public void ShowCredits();
 }
 
 public enum ScriptSound

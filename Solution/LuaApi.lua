@@ -119,6 +119,9 @@ function context.PlaySound(sound) end
 -- If the player is in combat, exits combat
 function context.ExitCombat() end
 
+-- Show Credits
+function context.ShowCredits() end
+
 --- Constructs a new dialogue with the specified text
 ---@param text any
 function Dialogue(text)

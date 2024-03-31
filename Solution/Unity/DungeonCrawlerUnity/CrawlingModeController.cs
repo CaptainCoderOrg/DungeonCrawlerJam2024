@@ -204,6 +204,7 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public void WinCombat() => CombatMapController.Shared.EndCombat();
 
     public void LoseCombat() => CombatMapController.Shared.GiveUpCombat();
+    public void ShowCredits() => CreditsController.Shared.Initialize();
 }
 
 [Serializable]
