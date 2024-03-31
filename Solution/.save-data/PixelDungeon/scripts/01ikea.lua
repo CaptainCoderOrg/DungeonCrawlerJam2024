@@ -14,7 +14,7 @@ local third = Dialogue([['Have you already forgotten the deal you made with me? 
 second.AddOption(ContinueDialogueOption('What deal?', third))
 
 
-local fourth = Dialogue([[Suddenly, it all comes rushing back... It was the week of Dungeon Crawler Jam 2045 and Zooperdan began grinding away playing thousands of entries determined to rate them all.]])
+local fourth = Dialogue([[Suddenly, it all comes rushing back... It was the week of Dungeon Crawler Jam 2024 and Zooperdan began grinding away playing thousands of entries determined to rate them all.]])
 third.AddOption(ContinueDialogueOption('This sounds serious', fourth))
 third.AddOption(ContinueDialogueOption('tl;dr', tldr))
 

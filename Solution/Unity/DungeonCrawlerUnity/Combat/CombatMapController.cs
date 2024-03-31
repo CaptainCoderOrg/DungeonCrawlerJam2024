@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Diagnostics;
 
 using CaptainCoder.DungeonCrawler.Unity;
 using CaptainCoder.Dungeoneering.Game;
@@ -196,22 +197,43 @@ public class CombatMapController : MonoBehaviour
         '4' => CrawlingModeController.Shared.Party[3],
         _ => null,
     };
-    internal static Enemy? EnemyMapping(char ch) => ch switch
+    public Difficulty Difficulty = Difficulty.Easy;
+    public void SetDifficulty(int ix)
     {
-        'P' => new Enemy() { Card = Enemies.WeakSkeletonCard },
-        'B' => new Enemy() { Card = Enemies.MouthBreather },
-        'H' => new Enemy() { Card = Enemies.HangryEmployee },
-        'D' => new Enemy() { Card = Enemies.EmployeeCard },
-        'S' => new Enemy() { Card = Enemies.SkeletonCard },
-        'E' => new Enemy() { Card = Enemies.EyeKeyUh },
-        'M' => new Enemy() { Card = Enemies.Meatball },
-        'W' => new Enemy() { Card = Enemies.Wardrobe },
-        'Y' => new Enemy() { Card = Enemies.CosmicBed },
-        'K' => new Enemy() { Card = Enemies.Karen },
-        'C' => new Enemy() { Card = Enemies.Chad },
-        'F' => new Enemy() { Card = Enemies.BloodShot },
-        _ => null,
-    };
+        Difficulty = ix switch
+        {
+            0 => Difficulty.Easy,
+            1 => Difficulty.Normal,
+            2 => Difficulty.Hard,
+            _ => throw new Exception($"Unknown difficulty {ix}"),
+        };
+    }
+    internal Enemy? EnemyMapping(char ch)
+    {
+        IEnemyCards enemies = Difficulty switch
+        {
+            Difficulty.Easy => EasyEnemies.Enemies,
+            Difficulty.Normal => NormalEnemies.Enemies,
+            Difficulty.Hard => HardEnemies.Enemies,
+            _ => throw new Exception($"Unknown difficulty: {Difficulty}"),
+        };
+        return ch switch
+        {
+            'P' => new Enemy() { Card = enemies.WeakSkeletonCard },
+            'B' => new Enemy() { Card = enemies.MouthBreather },
+            'H' => new Enemy() { Card = enemies.HangryEmployee },
+            'D' => new Enemy() { Card = enemies.EmployeeCard },
+            'S' => new Enemy() { Card = enemies.SkeletonCard },
+            'E' => new Enemy() { Card = enemies.EyeKeyUh },
+            'M' => new Enemy() { Card = enemies.Meatball },
+            'W' => new Enemy() { Card = enemies.Wardrobe },
+            'Y' => new Enemy() { Card = enemies.CosmicBed },
+            'K' => new Enemy() { Card = enemies.Karen },
+            'C' => new Enemy() { Card = enemies.Chad },
+            'F' => new Enemy() { Card = enemies.BloodShot },
+            _ => null,
+        };
+    }
 
     internal void DisableAllCombatControllers(IEnumerable<MonoBehaviour> skip)
     {
@@ -263,6 +285,13 @@ public class CombatMapController : MonoBehaviour
         CrawlingModeController.Shared.Initialize();
         CrawlingModeController.Shared.Party.ClearActions();
     }
+}
+
+public enum Difficulty
+{
+    Easy,
+    Normal,
+    Hard
 }
 
 public static class PositionExtensions
