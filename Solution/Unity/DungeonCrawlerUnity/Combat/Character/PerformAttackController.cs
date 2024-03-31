@@ -42,7 +42,7 @@ public class PerformAttackController : MonoBehaviour
         MessageRenderer.Shared.AddMessage($"Press {PlayerInputHandler.Shared.GetKeys(MenuControl.Cancel)} to cancel.");
         MessageRenderer.Shared.AddMessage($"Press {PlayerInputHandler.Shared.GetKeys(MenuControl.Select)} to confirm.");
         PlayerCharacter pc = Map.GetCharacter(_card);
-        AttackRollRenderer.Render(pc.Weapon, _exert, pc.Energy(), GetAttackRoll());
+        AttackRollRenderer.Render(Map.Enemies[_target], _exert, pc.Energy(), GetAttackRoll());
         gameObject.SetActive(true);
     }
 
@@ -89,7 +89,7 @@ public class PerformAttackController : MonoBehaviour
     {
         PlayerCharacter pc = Map.GetCharacter(_card);
         _exert = Math.Clamp(_exert + delta, 0, pc.Energy());
-        AttackRollRenderer.Render(pc.Weapon, _exert, pc.Energy(), GetAttackRoll());
+        AttackRollRenderer.Render(Map.Enemies[_target], _exert, pc.Energy(), GetAttackRoll());
     }
 
     private void Cancel()

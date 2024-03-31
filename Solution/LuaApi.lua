@@ -18,6 +18,7 @@ Eat = 3
 Miss = 4
 Rest = 5
 Guard = 6
+Cheat = 7
 
 ---@class context
 context = {}
@@ -114,6 +115,9 @@ function context.GiveWeapon(name, min, max) end
 
 -- Play the specified sound effect
 function context.PlaySound(sound) end
+
+-- If the player is in combat, exits combat
+function context.ExitCombat() end
 
 --- Constructs a new dialogue with the specified text
 ---@param text any

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4147622956599994081}
   - component: {fileID: 1729894422361232546}
   - component: {fileID: 901225431269795422}
+  - component: {fileID: 97817391411895523}
   m_Layer: 5
   m_Name: Name (1)
   m_TagString: Untagged
@@ -33,10 +34,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3138980527259185675}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -7.199976}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 59.61, y: 0}
+  m_SizeDelta: {x: 120, y: 28.8}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4147622956599994081
 CanvasRenderer:
@@ -66,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Screw driver
+  m_text: Astral sword of vorpaling
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f531b166f50b344c925f71388cbe59f, type: 2}
   m_sharedMaterial: {fileID: 7986194728697150729, guid: 2f531b166f50b344c925f71388cbe59f, type: 2}
@@ -100,8 +101,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -149,6 +150,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &97817391411895523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2770097880586011959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 120
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &3133176668072343069
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,10 +203,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3138980527259185675}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -27.059996}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 59.61, y: -38.8}
+  m_SizeDelta: {x: 59.62, y: 14.4}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1435241680115122762
 CanvasRenderer:
@@ -331,10 +352,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3138980527259185675}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -44.899994}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 59.61, y: -63.199997}
+  m_SizeDelta: {x: 49.68, y: 14.4}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &2556268620316014019
 CanvasRenderer:
@@ -457,6 +478,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3138980527259185675}
   - component: {fileID: 6920625286511549333}
+  - component: {fileID: 2185973313012734487}
+  - component: {fileID: 2992880646834650517}
   m_Layer: 5
   m_Name: WeaponCard
   m_TagString: Untagged
@@ -500,4 +523,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: {fileID: 1729894422361232546}
   DamageText: {fileID: 9211787520905366017}
-  MaxDamage: {fileID: 9211787520905366017}
+--- !u!114 &2185973313012734487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860504392467801414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 1
+  m_Spacing: 10
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &2992880646834650517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860504392467801414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2

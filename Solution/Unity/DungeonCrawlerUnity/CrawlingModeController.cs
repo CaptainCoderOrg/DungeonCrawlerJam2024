@@ -10,6 +10,7 @@ using CaptainCoder.Dungeoneering.DungeonMap;
 using CaptainCoder.Dungeoneering.DungeonMap.IO;
 using CaptainCoder.Dungeoneering.DungeonMap.Unity;
 using CaptainCoder.Dungeoneering.Game;
+using CaptainCoder.Dungeoneering.Game.Unity;
 using CaptainCoder.Dungeoneering.Lua;
 using CaptainCoder.Dungeoneering.Lua.Dialogue;
 using CaptainCoder.Dungeoneering.Player;
@@ -62,13 +63,8 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
 
     public void Awake()
     {
-        LuaContext.LoadFromURL = (string url) => StartCoroutine(WebLoader.GetTextFromURL(url, Init, Fail));
+        LuaContext.LoadFromURL = (string url) => StartCoroutine(WebLoader.GetTextFromURL(url, (url) => Init(url), Fail));
         LuaContext.RebuildFromURL = (string url) => StartCoroutine(WebLoader.GetTextFromURL(url, Rebuild, Fail));
-    }
-
-    public void Start()
-    {
-        Init(DungeonData.ManifestJson!.text);
     }
 
     public void Fail(string failMessage)
@@ -86,7 +82,13 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         CrawlerMode.CurrentView = previousView;
     }
 
-    public void Init(string projectJson)
+    public void StartFromManifest(Action onFinished)
+    {
+        gameObject.SetActive(true);
+        Init(DungeonData.ManifestJson!.text, onFinished);
+    }
+
+    public void Init(string projectJson, Action? onFinished = null)
     {
         Party.ApplyValues(new Party());
         State = new GameState();
@@ -101,14 +103,16 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         CrawlerMode.OnPositionChange += HandleOnExitEvents;
         CrawlerMode.OnPositionChange += (_) => SFXController.Shared.PlaySound(Sound.Footstep);
         CrawlerMode.OnDungeonChange += ChangeDungeon;
-        StartCoroutine(InitNextFrame());
+        MessageRenderer.Shared.Initialize();
+        StartCoroutine(InitNextFrame(onFinished));
     }
 
-    private IEnumerator InitNextFrame()
+    private IEnumerator InitNextFrame(Action? onFinished = null)
     {
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         Initialize("start.lua");
+        onFinished?.Invoke();
     }
 
 
@@ -194,6 +198,12 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public void GiveWeapon(Weapon weapon) => WeaponDialogueScreen.Shared.Initialize(weapon);
 
     public void PlaySound(int sound) => SFXController.Shared.PlaySound((Sound)sound);
+
+    public void ExitCombat() => CombatMapController.Shared.ExitCombat();
+
+    public void WinCombat() => CombatMapController.Shared.EndCombat();
+
+    public void LoseCombat() => CombatMapController.Shared.GiveUpCombat();
 }
 
 [Serializable]
