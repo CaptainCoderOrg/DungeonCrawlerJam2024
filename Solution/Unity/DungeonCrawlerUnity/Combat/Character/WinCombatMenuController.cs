@@ -13,7 +13,7 @@ public class WinCombatMenuController : AbstractMenuController<WinCombatActions>
     {
         base.OnEnable();
         CombatMapController.Shared.DisableAllCombatControllers([this]);
-        MusicPlayerController.Shared.Play(Music.Victory);
+        MusicPlayerController.Shared.Play(Music.Victory, false);
     }
 
     public override void OnDisable()

@@ -22,7 +22,7 @@ public class CharacterSelectionMode(IEnumerable<PlayerCharacter> characters, Pla
         for (int ix = 0; ix < characters.Length; ix++)
         {
             if (selected == null && characters[ix].ActionPoints > 0) { return ix; }
-            if (selected != null && characters[ix].Card == selected.Card) { return ix; }
+            if (selected != null && characters[ix].Card.Name == selected.Card.Name) { return ix; }
         }
         return -1;
     }

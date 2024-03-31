@@ -106,12 +106,14 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
         MessageRenderer.Shared.Initialize();
         StartCoroutine(InitNextFrame(onFinished));
     }
+    private bool _initialized = false;
 
     private IEnumerator InitNextFrame(Action? onFinished = null)
     {
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         Initialize("start.lua");
+        _initialized = true;
         onFinished?.Invoke();
     }
 
@@ -204,6 +206,21 @@ public class CrawlingModeController : MonoBehaviour, IScriptContext
     public void WinCombat() => CombatMapController.Shared.EndCombat();
 
     public void LoseCombat() => CombatMapController.Shared.GiveUpCombat();
+    public void ShowCredits() => CreditsController.Shared.Initialize();
+    public void Respawn()
+    {
+        if (!_initialized) { return; }
+        if (Crawler.CurrentDungeon.Name == "Meatballs")
+        {
+            string script = CrawlerMode.Manifest.Scripts["000return.lua"].Script;
+            Interpreter.ExecLua(script, this);
+        }
+        else
+        {
+            string script = CrawlerMode.Manifest.Scripts["start.lua"].Script;
+            Interpreter.ExecLua(script, this);
+        }
+    }
 }
 
 [Serializable]

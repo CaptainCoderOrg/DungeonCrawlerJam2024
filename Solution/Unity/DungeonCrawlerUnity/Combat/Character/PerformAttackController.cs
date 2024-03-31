@@ -16,6 +16,7 @@ public class PerformAttackController : MonoBehaviour
     private Action _onCancel = default!;
     private CharacterCard _card = default!;
     private Position _target = default!;
+    public float SkillUpChance = 0.5f;
     public AttackRollRenderer AttackRollRenderer = default!;
     public void OnEnable()
     {
@@ -68,8 +69,9 @@ public class PerformAttackController : MonoBehaviour
 
     private void PerformAttack()
     {
+        EnemyCard enemyCard = Map.Enemies[_target].Card;
         PlayerCharacter pc = Map.GetCharacter(_card);
-        Map.UpdateCharacter(pc with { Exertion = pc.Exertion + _exert });
+        pc = Map.UpdateCharacter(pc with { Exertion = pc.Exertion + _exert });
         AttackResultEvent result = Map.DoAttack(_card, GetAttackRoll(), _target);
 
         if (!result.IsTargetKilledEvent())
@@ -80,9 +82,94 @@ public class PerformAttackController : MonoBehaviour
             DamageMessage newMessage = Instantiate(DamageMessageTemplate, DamageMessageParent);
             newMessage.Render(damage, _target);
         }
-        if (result.IsTargetKilledEvent()) { SFXController.Shared.PlaySound(Sound.Die); }
+        if (result.IsTargetKilledEvent())
+        {
+            SFXController.Shared.PlaySound(Sound.Die);
+            CheckForSkillUp(pc, enemyCard);
+        }
         _onFinish.Invoke(result);
         gameObject.SetActive(false);
+    }
+
+    private void CheckForSkillUp(PlayerCharacter playerCharacter, EnemyCard enemyCard)
+    {
+        float chance = UnityEngine.Random.Range(0, 1);
+        if (chance < SkillUpChance)
+        {
+            for (int ix = 0; ix < 4; ix++)
+            {
+                int choice = UnityEngine.Random.Range(0, 4);
+                Func<bool> action = choice switch
+                {
+                    0 => () => TryIncreaseArmor(playerCharacter, enemyCard.Level, out _),
+                    1 => () => TryIncreaseEnergy(playerCharacter, enemyCard.Level, out _),
+                    2 => () => TryIncreaseHealth(playerCharacter, enemyCard.Level, out _),
+                    3 => () => TryIncreaseSpeed(playerCharacter, enemyCard.Level, out _),
+                    _ => () => { Debug.Log($"Unknown skill increase!"); return false; }
+                };
+                if (action.Invoke()) { break; }
+            }
+            // Armor
+            // Energy
+            // Health
+            // Speed
+        }
+    }
+
+    private bool TryIncreaseArmor(PlayerCharacter playerCharacter, int level, out PlayerCharacter updated)
+    {
+        updated = playerCharacter;
+        int max = (int)Math.Ceiling(level * 1.5);
+        int current = playerCharacter.Card.BaseArmor;
+        if (current >= max) { return false; }
+        CharacterCard newCard = playerCharacter.Card with { BaseArmor = current + 1 };
+        updated = playerCharacter with { Card = newCard };
+        Map.UpdateCharacter(updated);
+        MessageRenderer.Shared.AddMessage($"{playerCharacter.Card.Name} gained a skill point! <color=#022e1f>Armor</color> increased by 1.");
+        SFXController.Shared.PlaySound(Sound.LevelUp);
+        return true;
+    }
+
+    private bool TryIncreaseEnergy(PlayerCharacter playerCharacter, int level, out PlayerCharacter updated)
+    {
+        updated = playerCharacter;
+        int max = level * 2;
+        int current = playerCharacter.Card.BaseEnergy;
+        if (current >= max) { return false; }
+        CharacterCard newCard = playerCharacter.Card with { BaseEnergy = current + 1 };
+        updated = playerCharacter with { Card = newCard };
+        Map.UpdateCharacter(updated);
+        MessageRenderer.Shared.AddMessage($"{playerCharacter.Card.Name} gained a skill point! <color=#022e1f>Max Energy</color> increased by 1.");
+        SFXController.Shared.PlaySound(Sound.LevelUp);
+        return true;
+    }
+
+    private bool TryIncreaseHealth(PlayerCharacter playerCharacter, int level, out PlayerCharacter updated)
+    {
+        updated = playerCharacter;
+        int max = level * 6;
+        int current = playerCharacter.Card.BaseHealth;
+        if (current >= max) { return false; }
+        CharacterCard newCard = playerCharacter.Card with { BaseHealth = current + 1 };
+        updated = playerCharacter with { Card = newCard };
+        Map.UpdateCharacter(updated);
+        MessageRenderer.Shared.AddMessage($"{playerCharacter.Card.Name} gained a skill point! <color=#022e1f>Max Health</color> increased by 1.");
+        SFXController.Shared.PlaySound(Sound.LevelUp);
+        return true;
+    }
+
+    private bool TryIncreaseSpeed(PlayerCharacter playerCharacter, int level, out PlayerCharacter updated)
+    {
+        updated = playerCharacter;
+        int max = (int)Math.Floor(level * 1.5);
+        int current = playerCharacter.Card.BaseSpeed;
+        if (current >= max) { return false; }
+        CharacterCard newCard = playerCharacter.Card with { BaseSpeed = current + 1 };
+        updated = playerCharacter with { Card = newCard };
+        Map.UpdateCharacter(updated);
+        MessageRenderer.Shared.AddMessage($"{playerCharacter.Card.Name} gained a skill point! <color=#022e1f>Speed</color> increased by 1.");
+        SFXController.Shared.PlaySound(Sound.LevelUp);
+        return true;
     }
 
     private void Exert(int delta)

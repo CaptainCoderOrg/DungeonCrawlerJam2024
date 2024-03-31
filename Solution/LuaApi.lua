@@ -19,6 +19,7 @@ Miss = 4
 Rest = 5
 Guard = 6
 Cheat = 7
+LevelUp = 8
 
 ---@class context
 context = {}
@@ -118,6 +119,9 @@ function context.PlaySound(sound) end
 
 -- If the player is in combat, exits combat
 function context.ExitCombat() end
+
+-- Show Credits
+function context.ShowCredits() end
 
 --- Constructs a new dialogue with the specified text
 ---@param text any

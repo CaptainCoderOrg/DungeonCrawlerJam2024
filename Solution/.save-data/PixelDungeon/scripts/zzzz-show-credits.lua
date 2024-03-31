@@ -1,1 +1,2 @@
-context.WriteInfo("TODO: Credits")
+context.ShowCredits()
+context.RunScript("return-to-altar.lua")
