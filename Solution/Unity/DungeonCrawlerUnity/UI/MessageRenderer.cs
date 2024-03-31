@@ -30,10 +30,12 @@ public class MessageRenderer : MonoBehaviour
         TextOutput.DestroyAllChildren(Destroy);
     }
 
-    public void Start()
+    public void Initialize()
     {
+        gameObject.SetActive(true);
         CrawlingModeController.CrawlerMode.OnMessageAdded += AddMessage;
         CrawlingModeController.OnCrawlerModeChange += crawler => crawler.OnMessageAdded += AddMessage;
+        StopAllCoroutines();
         StartCoroutine(RenderText());
     }
 

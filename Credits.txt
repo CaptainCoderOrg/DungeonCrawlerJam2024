@@ -1,0 +1,37 @@
+Zooperdan's
+
+<size=24>Cosmic Encounter</size>
+
+
+
+<size=18>Game Design / Concept</size>
+
+Andrew
+TheCaptainCoder
+
+
+<size=18>Programming</size>
+
+TheCaptainCoder
+
+
+<size=18>Music / Sound Effects</size>
+
+TurtleBox
+TheCaptainCoder
+Kenny Assets
+
+
+<size=18>Art</size>
+
+Selegron
+gojeli
+Andrew
+TheCaptainCoder
+Kenny Assets
+
+<size=18>Special Thanks</size>
+
+Zooperdan
+Kordanor
+The Captain Coder's Crew
