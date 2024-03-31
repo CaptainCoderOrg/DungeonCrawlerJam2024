@@ -198,6 +198,7 @@ public class CombatMapController : MonoBehaviour
     };
     internal static Enemy? EnemyMapping(char ch) => ch switch
     {
+        'P' => new Enemy() { Card = Enemies.WeakSkeletonCard },
         'B' => new Enemy() { Card = Enemies.MouthBreather },
         'H' => new Enemy() { Card = Enemies.HangryEmployee },
         'D' => new Enemy() { Card = Enemies.EmployeeCard },
@@ -240,15 +241,19 @@ public class CombatMapController : MonoBehaviour
         gameObject.SetActive(false);
         CombatModeController.Shared.gameObject.SetActive(false);
         CrawlingModeController.Shared.Initialize(_onWinScript);
+        CrawlingModeController.Shared.Party.ClearActions();
     }
 
     internal void GiveUpCombat()
     {
+        CrawlingModeController.Shared.Party.ClearActions();
         DisableAllCombatControllers([]);
         gameObject.SetActive(false);
         CombatModeController.Shared.gameObject.SetActive(false);
         CrawlingModeController.Shared.Initialize(_onGiveUpScript);
+        CrawlingModeController.Shared.Party.ClearActions();
     }
+
 
     internal void ExitCombat()
     {
@@ -256,6 +261,7 @@ public class CombatMapController : MonoBehaviour
         gameObject.SetActive(false);
         CombatModeController.Shared.gameObject.SetActive(false);
         CrawlingModeController.Shared.Initialize();
+        CrawlingModeController.Shared.Party.ClearActions();
     }
 }
 

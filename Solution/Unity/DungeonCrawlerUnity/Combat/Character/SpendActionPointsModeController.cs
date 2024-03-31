@@ -2,6 +2,7 @@ using CaptainCoder.Dungeoneering.Game;
 using CaptainCoder.Dungeoneering.Player.Unity;
 using CaptainCoder.Dungeoneering.Unity;
 
+using TMPro;
 
 using UnityEngine;
 
@@ -16,6 +17,7 @@ public class SpendActionPointsModeController : MonoBehaviour
     [field: SerializeField]
     public GameObject Menu { get; private set; } = default!;
     public static SpendActionPointsModeController Shared { get; private set; } = default!;
+    public TextMeshProUGUI MoveText = default!;
     private SpendActionPointsMode _spendActionPointsMode = default!;
     private readonly List<SpendActionMenuItem> _actionsSelected = [];
     public SpendActionPointsModeController() { Shared = this; }
@@ -61,6 +63,7 @@ public class SpendActionPointsModeController : MonoBehaviour
     {
         if (CombatHelpPanel.Shared.IsOn) { CombatHelpPanel.Shared.gameObject.SetActive(true); }
         _originalCharacter = character;
+        MoveText.text = $"+{character.Card.BaseSpeed} Movement";
         _actionsSelected.Clear();
         CrawlingModeController.CrawlerMode.AddMessage(new Message($"{character.Card.Name} prepares for battle. Select {character.ActionPoints} actions."));
         _spendActionPointsMode = new SpendActionPointsMode(character);
@@ -95,7 +98,6 @@ public class SpendActionPointsModeController : MonoBehaviour
             _ => throw new NotImplementedException($"Unknown action: {item}"),
         };
     }
-
     private void HandleSpendPoint(SpendPointResult result)
     {
         CrawlingModeController.CrawlerMode.AddMessage(new Message(result.Message));

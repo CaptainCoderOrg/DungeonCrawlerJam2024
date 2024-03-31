@@ -3,21 +3,21 @@ local map = ""
 if chance == 1 then
     map = [[
     4###
-   1####S
+   1S####
    2####S
     3###
 ]]
 elseif chance == 2 then
     map = [[
         #1S######S
-        ######2###
+        #S####2###
         ##########
-        4#######S3
+        4########3
 
     ]]
 elseif chance == 3 then
     map = [[
-        31#####S#S
+        31S####S#S
         42########
 
     ]]

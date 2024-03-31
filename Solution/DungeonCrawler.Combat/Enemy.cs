@@ -22,12 +22,19 @@ public record Enemy
 
 public static class Enemies
 {
+    public static EnemyCard WeakSkeletonCard { get; } = new()
+    {
+        Name = "Weak Skeleton",
+        Speed = 5,
+        MaxHealth = 1,
+        AttackRoll = new SimpleAttack(1, 2)
+    };
     public static EnemyCard SkeletonCard { get; } = new()
     {
         Name = "Skeleton",
         Speed = 5,
         MaxHealth = 2,
-        AttackRoll = new SimpleAttack(1, 3)
+        AttackRoll = new SimpleAttack(1, 2)
     };
 
     public static EnemyCard EmployeeCard { get; } = new()
@@ -36,7 +43,7 @@ public static class Enemies
         Speed = 2,
         Armor = 1,
         MaxHealth = 4,
-        AttackRoll = new SimpleAttack(4, 4),
+        AttackRoll = new SimpleAttack(1, 3),
         Level = 2,
     };
 
@@ -46,7 +53,7 @@ public static class Enemies
         Speed = 2,
         Armor = 0,
         MaxHealth = 8,
-        AttackRoll = new SimpleAttack(2, 6),
+        AttackRoll = new SimpleAttack(1, 5),
         Level = 2,
     };
 
@@ -64,8 +71,8 @@ public static class Enemies
     {
         Name = "Eye Key Uh",
         Speed = 2,
-        Armor = 12,
-        MaxHealth = 75,
+        Armor = 10,
+        MaxHealth = 60,
         AttackRoll = new SimpleAttack(1, 20),
         Level = 5,
     };
@@ -84,8 +91,8 @@ public static class Enemies
     {
         Name = "Cosmic Wardrobe",
         Speed = 2,
-        Armor = 3,
-        MaxHealth = 6,
+        Armor = 2,
+        MaxHealth = 4,
         AttackRoll = new SimpleAttack(6, 6),
         Level = 3,
     };
@@ -94,9 +101,9 @@ public static class Enemies
     {
         Name = "Cosmic Bed",
         Speed = 1,
-        Armor = 5,
-        MaxHealth = 8,
-        AttackRoll = new SimpleAttack(10, 10),
+        Armor = 3,
+        MaxHealth = 6,
+        AttackRoll = new SimpleAttack(8, 8),
         Level = 4,
     };
 
@@ -105,8 +112,8 @@ public static class Enemies
         Name = "Karen",
         Speed = 6,
         Armor = 0,
-        MaxHealth = 16,
-        AttackRoll = new SimpleAttack(6, 10),
+        MaxHealth = 10,
+        AttackRoll = new SimpleAttack(6, 6),
         Level = 4,
     };
 
@@ -116,7 +123,7 @@ public static class Enemies
         Speed = 8,
         Armor = 6,
         MaxHealth = 1,
-        AttackRoll = new SimpleAttack(6, 8),
+        AttackRoll = new SimpleAttack(5, 5),
         Level = 4,
     };
 
@@ -125,8 +132,8 @@ public static class Enemies
         Name = "Bloodshot Meatball",
         Speed = 2,
         Armor = 0,
-        MaxHealth = 10,
-        AttackRoll = new SimpleAttack(10, 10),
+        MaxHealth = 6,
+        AttackRoll = new SimpleAttack(8, 8),
         Level = 4,
     };
 }

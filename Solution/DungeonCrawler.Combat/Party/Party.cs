@@ -79,6 +79,14 @@ public class Party : IEnumerable<PlayerCharacter>
     public IEnumerator<PlayerCharacter> GetEnumerator() => ToArray.AsEnumerable().GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+    public void ClearActions()
+    {
+        TopLeft = TopLeft with { ActionPoints = 0, AttackPoints = 0, MovementPoints = 0, State = CharacterState.Normal };
+        TopRight = TopRight with { ActionPoints = 0, AttackPoints = 0, MovementPoints = 0, State = CharacterState.Normal };
+        BottomLeft = BottomLeft with { ActionPoints = 0, AttackPoints = 0, MovementPoints = 0, State = CharacterState.Normal };
+        BottomRight = BottomRight with { ActionPoints = 0, AttackPoints = 0, MovementPoints = 0, State = CharacterState.Normal };
+    }
+
     public void ApplyValues(Party party)
     {
         foreach (PlayerCharacter character in party)

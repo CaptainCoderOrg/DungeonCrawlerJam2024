@@ -71,9 +71,9 @@ public class PerformAttackController : MonoBehaviour
     {
         EnemyCard enemyCard = Map.Enemies[_target].Card;
         PlayerCharacter pc = Map.GetCharacter(_card);
-        pc = Map.UpdateCharacter(pc with { Exertion = pc.Exertion + _exert });
+        _ = Map.UpdateCharacter(pc with { Exertion = pc.Exertion + _exert });
         AttackResultEvent result = Map.DoAttack(_card, GetAttackRoll(), _target);
-
+        pc = Map.GetCharacter(_card);
         if (!result.IsTargetKilledEvent())
         {
             int damage = result.TotalDamage();
@@ -119,7 +119,7 @@ public class PerformAttackController : MonoBehaviour
     private bool TryIncreaseArmor(PlayerCharacter playerCharacter, int level, out PlayerCharacter updated)
     {
         updated = playerCharacter;
-        int max = (int)Math.Ceiling(level * 1.5);
+        int max = (int)Math.Floor(level * 1.5);
         int current = playerCharacter.Card.BaseArmor;
         if (current >= max) { return false; }
         CharacterCard newCard = playerCharacter.Card with { BaseArmor = current + 1 };
@@ -147,7 +147,7 @@ public class PerformAttackController : MonoBehaviour
     private bool TryIncreaseHealth(PlayerCharacter playerCharacter, int level, out PlayerCharacter updated)
     {
         updated = playerCharacter;
-        int max = level * 6;
+        int max = level * 10;
         int current = playerCharacter.Card.BaseHealth;
         if (current >= max) { return false; }
         CharacterCard newCard = playerCharacter.Card with { BaseHealth = current + 1 };
