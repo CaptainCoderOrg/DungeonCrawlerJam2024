@@ -96,7 +96,6 @@ public class EnemyTurnController : MonoBehaviour
 
     public IEnumerable ShowAttack(Enemy e, Position start, Position[] options)
     {
-    startAttack:
         Position target = options.OrderBy(p => Map.PlayerCharacters[p].Health()).First();
         PlayerCharacter character = Map.PlayerCharacters[target];
         MessageRenderer.Shared.AddMessage($"{e.Card.Name} prepares to attack {character.Card.Name}.");
@@ -115,7 +114,6 @@ public class EnemyTurnController : MonoBehaviour
             yield return new WaitForSeconds(CombatConstants.GuardWaitDuration);
             yield return new WaitUntil(() => !_isPaused);
             if (_resumeInfo is EnemyIsDead) { yield break; }
-            else { goto startAttack; }
 
         }
         else

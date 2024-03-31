@@ -9,7 +9,7 @@ if chance == 1 then
 ]]
 elseif chance == 2 then
     map = [[
-        #1S#####HS
+        #1S######S
         ######2###
         ##########
         4#######S3

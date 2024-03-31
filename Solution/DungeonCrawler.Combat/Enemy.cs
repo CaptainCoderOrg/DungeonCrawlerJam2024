@@ -36,7 +36,7 @@ public static class Enemies
         Speed = 2,
         Armor = 1,
         MaxHealth = 4,
-        AttackRoll = new SimpleAttack(2, 4),
+        AttackRoll = new SimpleAttack(4, 4),
         Level = 2,
     };
 
@@ -46,7 +46,7 @@ public static class Enemies
         Speed = 2,
         Armor = 0,
         MaxHealth = 8,
-        AttackRoll = new SimpleAttack(0, 4),
+        AttackRoll = new SimpleAttack(2, 6),
         Level = 2,
     };
 
@@ -56,16 +56,16 @@ public static class Enemies
         Speed = 2,
         Armor = 2,
         MaxHealth = 1,
-        AttackRoll = new SimpleAttack(1, 4),
+        AttackRoll = new SimpleAttack(2, 6),
         Level = 2,
     };
 
     public static EnemyCard EyeKeyUh { get; } = new()
     {
         Name = "Eye Key Uh",
-        Speed = 4,
+        Speed = 2,
         Armor = 12,
-        MaxHealth = 150,
+        MaxHealth = 75,
         AttackRoll = new SimpleAttack(1, 20),
         Level = 5,
     };
@@ -83,9 +83,9 @@ public static class Enemies
     public static EnemyCard Wardrobe { get; } = new()
     {
         Name = "Cosmic Wardrobe",
-        Speed = 1,
+        Speed = 2,
         Armor = 3,
-        MaxHealth = 4,
+        MaxHealth = 6,
         AttackRoll = new SimpleAttack(6, 6),
         Level = 3,
     };
@@ -95,18 +95,18 @@ public static class Enemies
         Name = "Cosmic Bed",
         Speed = 1,
         Armor = 5,
-        MaxHealth = 5,
-        AttackRoll = new SimpleAttack(6, 6),
+        MaxHealth = 8,
+        AttackRoll = new SimpleAttack(10, 10),
         Level = 4,
     };
 
     public static EnemyCard Karen { get; } = new()
     {
         Name = "Karen",
-        Speed = 4,
+        Speed = 6,
         Armor = 0,
         MaxHealth = 16,
-        AttackRoll = new SimpleAttack(1, 6),
+        AttackRoll = new SimpleAttack(6, 10),
         Level = 4,
     };
 
@@ -116,7 +116,7 @@ public static class Enemies
         Speed = 8,
         Armor = 6,
         MaxHealth = 1,
-        AttackRoll = new SimpleAttack(3, 6),
+        AttackRoll = new SimpleAttack(6, 8),
         Level = 4,
     };
 

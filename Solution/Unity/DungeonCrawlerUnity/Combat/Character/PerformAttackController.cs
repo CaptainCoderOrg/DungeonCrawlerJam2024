@@ -125,7 +125,7 @@ public class PerformAttackController : MonoBehaviour
         CharacterCard newCard = playerCharacter.Card with { BaseArmor = current + 1 };
         updated = playerCharacter with { Card = newCard };
         Map.UpdateCharacter(updated);
-        MessageRenderer.Shared.AddMessage($"{playerCharacter.Card.Name} gained a skill point! <color=#022e1f>Armor</color> increased by 1.");
+        MessageRenderer.Shared.AddMessage($"<color=yellow>{playerCharacter.Card.Name}</color> gained a skill point! <color=yellow>Armor</color> increased by 1.");
         SFXController.Shared.PlaySound(Sound.LevelUp);
         return true;
     }
@@ -139,7 +139,7 @@ public class PerformAttackController : MonoBehaviour
         CharacterCard newCard = playerCharacter.Card with { BaseEnergy = current + 1 };
         updated = playerCharacter with { Card = newCard };
         Map.UpdateCharacter(updated);
-        MessageRenderer.Shared.AddMessage($"{playerCharacter.Card.Name} gained a skill point! <color=#022e1f>Max Energy</color> increased by 1.");
+        MessageRenderer.Shared.AddMessage($"<color=yellow>{playerCharacter.Card.Name}</color> gained a skill point! <color=yellow>Max Energy</color> increased by 1.");
         SFXController.Shared.PlaySound(Sound.LevelUp);
         return true;
     }
@@ -153,7 +153,7 @@ public class PerformAttackController : MonoBehaviour
         CharacterCard newCard = playerCharacter.Card with { BaseHealth = current + 1 };
         updated = playerCharacter with { Card = newCard };
         Map.UpdateCharacter(updated);
-        MessageRenderer.Shared.AddMessage($"{playerCharacter.Card.Name} gained a skill point! <color=#022e1f>Max Health</color> increased by 1.");
+        MessageRenderer.Shared.AddMessage($"<color=yellow>{playerCharacter.Card.Name}</color> gained a skill point! <color=yellow>Max Health</color> increased by 1.");
         SFXController.Shared.PlaySound(Sound.LevelUp);
         return true;
     }
@@ -167,7 +167,7 @@ public class PerformAttackController : MonoBehaviour
         CharacterCard newCard = playerCharacter.Card with { BaseSpeed = current + 1 };
         updated = playerCharacter with { Card = newCard };
         Map.UpdateCharacter(updated);
-        MessageRenderer.Shared.AddMessage($"{playerCharacter.Card.Name} gained a skill point! <color=#022e1f>Speed</color> increased by 1.");
+        MessageRenderer.Shared.AddMessage($"<color=yellow>{playerCharacter.Card.Name}</color> gained a skill point! <color=yellow>Speed</color> increased by 1.");
         SFXController.Shared.PlaySound(Sound.LevelUp);
         return true;
     }

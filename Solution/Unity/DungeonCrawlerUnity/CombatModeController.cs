@@ -41,4 +41,11 @@ public class CombatModeController : MonoBehaviour
             CrawlingModeController.Shared.Party.UpdateCharacter(character with { Wounds = character.Card.BaseHealth - 1, Exertion = character.Card.BaseEnergy - 1 });
         }
     }
+
+    public void UpdateEnemySpeed(float speed)
+    {
+        CombatConstants.ShowEnemyInfoDuration = 0.01f + speed * 2;
+        CombatConstants.ShortEnemyInfoDuration = 0.01f + speed;
+        CombatConstants.GuardWaitDuration = 1.5f + speed * 2;
+    }
 }

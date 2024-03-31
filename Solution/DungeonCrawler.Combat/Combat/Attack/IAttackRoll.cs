@@ -10,5 +10,5 @@ public interface IAttackRoll
 
 public record SimpleAttack(int Min, int Max) : IAttackRoll
 {
-    public AttackResult GetRoll(IRandom rng) => new() { Damage = rng.Next(Min, Max) };
+    public AttackResult GetRoll(IRandom rng) => new() { Damage = rng.Next(Min, Max + 1 ) };
 }

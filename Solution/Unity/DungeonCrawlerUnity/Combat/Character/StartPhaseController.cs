@@ -48,7 +48,7 @@ public class StartPhaseController : MonoBehaviour
     {
         PlayerCharacter character = Map.PlayerCharacters[position];
         CombatMapController.Shared.SelectTiles([position]);
-        CombatMapController.Shared.PanToward(position);
+        CombatMapController.Shared.PanTo(position);
         MessageRenderer.Shared.AddMessage($"{character.Card.Name} gains 2 action points.");
         character = character with { ActionPoints = 2 };
         if (character.State is CharacterState.Rest)
