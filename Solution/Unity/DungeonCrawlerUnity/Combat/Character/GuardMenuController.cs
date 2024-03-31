@@ -90,7 +90,7 @@ public class GuardMenuController : AbstractMenuController<GuardActions>
             MessageRenderer.Shared.AddMessage($"{character.Card.Name} is not guarding.");
             return;
         }
-        foreach (CanGuard guard in _guards.Where(g => g.Character.Card == character.Card))
+        foreach (CanGuard guard in _guards.Where(g => g.Character.Card.Name == character.Card.Name))
         {
             PerformGuard(guard);
             return;

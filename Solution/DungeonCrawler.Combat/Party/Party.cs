@@ -70,10 +70,10 @@ public class Party : IEnumerable<PlayerCharacter>
 
     public void UpdateCharacter(PlayerCharacter toUpdate)
     {
-        if (TopLeft.Card == toUpdate.Card) { TopLeft = toUpdate; }
-        else if (TopRight.Card == toUpdate.Card) { TopRight = toUpdate; }
-        else if (BottomLeft.Card == toUpdate.Card) { BottomLeft = toUpdate; }
-        else if (BottomRight.Card == toUpdate.Card) { BottomRight = toUpdate; }
+        if (TopLeft.Card.Name == toUpdate.Card.Name) { TopLeft = toUpdate; }
+        else if (TopRight.Card.Name == toUpdate.Card.Name) { TopRight = toUpdate; }
+        else if (BottomLeft.Card.Name == toUpdate.Card.Name) { BottomLeft = toUpdate; }
+        else if (BottomRight.Card.Name == toUpdate.Card.Name) { BottomRight = toUpdate; }
     }
 
     public IEnumerator<PlayerCharacter> GetEnumerator() => ToArray.AsEnumerable().GetEnumerator();

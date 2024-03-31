@@ -19,6 +19,7 @@ Miss = 4
 Rest = 5
 Guard = 6
 Cheat = 7
+LevelUp = 8
 
 ---@class context
 context = {}

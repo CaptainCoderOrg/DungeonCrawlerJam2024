@@ -60,7 +60,7 @@ public static class CombatMapExtensions
     {
         foreach (PlayerCharacter pc in map.PlayerCharacters.Values)
         {
-            if (pc.Card == card) { return pc; }
+            if (pc.Card.Name == card.Name) { return pc; }
         }
         throw new ArgumentOutOfRangeException($"No character found: {card}");
     }
@@ -75,7 +75,7 @@ public static class CombatMapExtensions
     {
         foreach ((Position p, PlayerCharacter pc) in map.PlayerCharacters)
         {
-            if (pc.Card == card) { return p; }
+            if (pc.Card.Name == card.Name) { return p; }
         }
         throw new ArgumentOutOfRangeException($"No character found: {card}");
     }

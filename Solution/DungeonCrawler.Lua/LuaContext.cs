@@ -127,9 +127,9 @@ public class LuaContext(IScriptContext context)
     {
         Action toInvoke = ix switch
         {
-            1 => () => _target.Party.TopRight = new() { Card = Characters.CharacterB },
-            2 => () => _target.Party.BottomLeft = new() { Card = Characters.CharacterC },
-            3 => () => _target.Party.BottomRight = new() { Card = Characters.CharacterD },
+            1 => () => _target.Party.TopRight = new() { Card = Characters.CharacterB, Weapon = new Weapon() { Name = "Graph Paper", AttackRoll = new SimpleAttack(2, 3) } },
+            2 => () => _target.Party.BottomLeft = new() { Card = Characters.CharacterC, Weapon = new Weapon { Name = "Sharp Stick", AttackRoll = new SimpleAttack(3, 5) } },
+            3 => () => _target.Party.BottomRight = new() { Card = Characters.CharacterD, Weapon = new Weapon { Name = "Dungeon Manual", AttackRoll = new SimpleAttack(2, 6) } },
             _ => () => WriteInfo($"Unknown party member {ix}"),
         };
         toInvoke.Invoke();
@@ -219,4 +219,5 @@ public enum ScriptSound
     Rest,
     Guard,
     Cheat,
+    LevelUp,
 }

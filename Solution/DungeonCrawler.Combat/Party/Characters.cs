@@ -4,9 +4,9 @@ public static class Characters
     public static CharacterCard CharacterA { get; } = new()
     {
         Name = "Zooperdan",
-        BaseHealth = 12,
+        BaseHealth = 5,
         BaseArmor = 0,
-        BaseEnergy = 3,
+        BaseEnergy = 2,
         BaseSpeed = 3,
     };
 
@@ -17,7 +17,7 @@ public static class Characters
         Name = "Kordanor",
         BaseHealth = 8,
         BaseArmor = 1,
-        BaseEnergy = 5,
+        BaseEnergy = 3,
         BaseSpeed = 4,
     };
 

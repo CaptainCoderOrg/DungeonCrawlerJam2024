@@ -44,6 +44,7 @@ public enum Sound
     Rest,
     Guard,
     Cheat,
+    LevelUp,
 }
 
 [Serializable]
