@@ -35,7 +35,7 @@ MonoBehaviour:
     Icon: {fileID: 11400000, guid: 4cb96582a70a19b4c86bfd4be503b198, type: 2}
   - Name: Nadrepooz
     Icon: {fileID: 11400000, guid: 6631bbcf989b46d4eb411a123263cc1d, type: 2}
-  - Name: CosmicBed
+  - Name: Cosmic Bed
     Icon: {fileID: 11400000, guid: 4da10e55b8ce31148b6bc5ce30f1d036, type: 2}
   - Name: Karen
     Icon: {fileID: 11400000, guid: c53acb96e2a5e614ebe57d0f552e6960, type: 2}
