@@ -17,7 +17,7 @@ elseif count == 4 then
 elseif count == 5 then
     context.WriteInfo([["You're almost here..."]])
 elseif count == 6 then
-    context.WriteInfo([[The smell of rotting meat is almost too much to bare]])
+    context.WriteInfo([[The smell of rotting meat is almost too much to bear]])
 else
     context.RunScript("01ikea.lua")
 end
